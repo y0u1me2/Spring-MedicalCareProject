@@ -293,7 +293,7 @@
 					<button type="submit" id="btn-insert">등록</button>
 
 					<input type="hidden" name="noticeNo" value="<%=n.getnNo()%>"/>
-					<input type="hidden" name="commentWriter" value="<%=loginMember!=null?loginMember.getM_No():""%>
+					<input type="hidden" name="commentWriter" value="">
 					<input type="hidden" name="commentLevel" value="1"/>
 					<input type="hidden" name="commentNo" value="0"/>
 
@@ -309,7 +309,7 @@
 
 	<script>
 	//목록으로이동
-	function goList(){
+<%-- 	function goList(){
 	location.replace("<%=request.getContextPath()%>/notice/noticeList");
 	}
 	
@@ -327,10 +327,10 @@
 				alert("로그인후 이용하세요!!")
 			}
 		})
-	});
+	}); --%>
 	
 	//대댓글 클릭시 아래뜨게하기
-	$(".btn-reply").click(function(){
+<%-- 	$(".btn-reply").click(function(){
 		if(<%=loginMember!=null%>){
 			const tr=$("<tr>").attr("class","reply");
 			const td=$("<td>").css({
@@ -390,7 +390,7 @@
 		}else{
 			return true;
 		}
-	}
+	} --%>
 	
 </script>
 
