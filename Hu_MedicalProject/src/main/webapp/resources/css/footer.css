@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+/* footer */
+#footerLogo{
+    color:white;
+    font-weight: bolder;
+    font-size: 23px;
+    padding-left:100px;
+    padding-top:70px;
+
+display:flex;}
+#useTerm{
+   
+    margin-right: 100px;
+    margin-left: 900px;
+    text-align: right;
+}
+#useTerm a{
+text-decoration: none;
+color:white;
+font-size:15px;
+/* \\display: inline-flex;
+margin-left: 300px; */
+}
+#companyInform{
+    padding-left: 100px;
+    color:#80878F;
+}
+#companyInform p:last-child{
+    color:white;
+}

@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+nav>a:first-child{
+    color:black;
+    font-size: 30px;
+}
+nav>ul:first-child{
+    padding-left:200px;
+}
+ul>li>a{
+    color:black;
+}
+ul>li{
+    padding-right: 30px;
+}
+
+.navbar-nav li ul {
+display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+height:auto;
+padding:0px;
+margin:0px;
+border:0px;
+position:absolute;
+width:200px;
+z-index:200;
+list-style: none;
+}
+.navbar-nav li:hover ul {
+display:block;   /* 마우스 커서 올리면 서브메뉴 보이게 하기 */
+color:grey;
+}
+.navbar-nav li ul a{
+    text-decoration: none;
+}
+
+
