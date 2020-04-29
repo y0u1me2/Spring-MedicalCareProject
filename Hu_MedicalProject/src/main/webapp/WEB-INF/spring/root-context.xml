@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
    
    <!-- Root Context: defines shared resources visible to all other web components -->
    <!-- dataBase 설정내용을 작성 -->
@@ -35,4 +39,25 @@
    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
       <property name="dataSource" ref="dataSource"></property>
    </bean>
+     <!--트랜잭션 어노테이션 방식 적용하기  -->
+<!--    <tx:annotation-driven transaction-manager="transactionManager"/> -->
+   <!-- transaction-manager 은 위의 빈객체등록한 id! -->
+    
+   <!-- 선언적방식으로 트랜잭션 처리하기 / 얘를 다시 AOP포인트것으로 지정해야함!-->
+   <tx:advice id="txAdvice" transaction-manager="transactionManager">
+   		<tx:attributes><!--어떤 메서드의 적용할것인지 속성설정하기 tx:attributes  -->
+		<!--insert*로 시작하는 모든 것  -->
+   			<tx:method name="insert*" rollback-for="Exception"/><!--exception이면 모든 예외전부(범위)  -->
+   			<tx:method name="update*"/>
+   			<tx:method name="delete*"/>
+   		</tx:attributes>
+   </tx:advice>
+   
+   <aop:config>
+   	<aop:pointcut expression="execution(* com.web.spring..*ServiceImpl.*(..))" id="serviceMethod"/>
+	<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/><!-- advice-ref참조한 어드바이스  -->
+   </aop:config>
+   
+   
+   
 </beans>

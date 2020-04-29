@@ -3,6 +3,7 @@
 <configuration>
 
 	<typeAliases>
+	<typeAlias type="com.web.spring.ask.model.vo.Ask" alias="ask" />
 		<!-- <typeAlias type="com.kh.spring.demo.model.vo.Demo" alias="demo" />
 		<typeAlias type="com.kh.spring.member.model.vo.Member" alias="member" />
 		<typeAlias type="com.kh.spring.common.StringArrayType" alias="arrayType" />

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+
+<!--aop적용하기  -->
+<!-- aspect bean등록하기 -->
+<!-- <bean id="loggerAspect" class="com.kh.spring.common.aop.LoggerAspect"/>
+	aop설정하기 
+	<aop:config>
+	여기서 등록된 aspect 실행하라고 명령하는곳 
+		<aop:aspect ref="loggerAspect">
+			<aop:pointcut expression="execution(* com.kh.spring.member..*(..))" id="loggerTest"/>
+			멤버패키지 모든 걸 찍어라 
+			pointcout실행하기전포인트 /언제 실행할건지 advice ,method=얘가 가지고 있는 메서드중에 하나 적기
+			<aop:before method="before" pointcut-ref="loggerTest"/>
+			**loggerAspect 객체에 메모패키지의 모든메서드가 실행되기전 aop등록된 메서드 실행하고 실행해라~ 
+			<aop:around method="loggerAdvice" pointcut-ref="loggerTest"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	<!--aop 어노테이션 적용하기  -->
+	<aop:aspectj-autoproxy/>
+
+</beans>

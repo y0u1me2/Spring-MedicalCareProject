@@ -7,10 +7,10 @@ nav>a:first-child{
 nav>ul:first-child{
     padding-left:200px;
 }
-ul>li>a{
+nav>ul>li>a{
     color:black;
 }
-ul>li{
+nav>ul>li{
     padding-right: 30px;
 }
 

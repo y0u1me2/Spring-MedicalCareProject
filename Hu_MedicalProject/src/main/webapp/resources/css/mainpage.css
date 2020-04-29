@@ -1,0 +1,144 @@
+@charset "UTF-8";
+.col-sm{
+    font-size:40px;
+}
+#line{
+position: absolute;
+    top: 30%;
+    display: inline-block;
+    width: 75px;
+    margin-left: 0.5em;
+    vertical-align: middle;
+    border-top: 1px solid rgb(0, 0, 0);
+}
+#intro{
+    padding-top: 25px;
+    font-size:20px;
+}
+.w3-container{
+    position:absolute;
+    left: 900px;
+    top: 160px;
+}
+.row #block{
+    margin-bottom: 60px;
+    color:#DAF1DE;
+}
+/* .row #present{
+    width:500px;
+    background-color: white;
+    height:200px;
+} */
+.row .presentInform{
+    width:0px;
+    background-color: white;
+    /* padding-left:200px; */
+    float:left;
+    height:130px;
+
+}
+
+#possible{
+    font-size:15px;
+    padding-top:30px;
+    padding-left:70px;
+} 
+.presentInform>strong{
+    margin-left:60px;
+}
+.inform{
+    opacity: 0;
+}
+#sec2{
+    float:left;
+    padding-left: 200px;
+    padding-right: 300px;
+    padding-top:150px;
+}
+/* 의사사진 */
+#guide{
+    float:left;
+    padding-top:150px;
+    position:absolute;
+}#sec2 p{
+    font-weight: bolder;
+    font-size: 30px;
+    line-height: 60px;
+}
+#finder{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bolder;
+}
+#finder2{
+    text-align: center;
+    margin-top: 28px;
+    font-size:16px;
+    color:gray;
+    font-weight: bolder;
+}
+#middleinform{
+    width:200px;
+    height: 260px;
+    background-color: white; 
+    margin-left:80px;
+     margin-top:40px;
+     float:left;
+     position:relative;
+     z-index: 10; 
+}
+#left{
+  background-color:#FAFAFA;
+  margin-top:320px;
+  height:320px;
+  position:absolute;
+
+}
+
+/* section2nd */
+#family{
+            margin-left:100px;
+            position: absolute;
+            float: left;
+        }
+#intro2{
+  float:right; 
+  padding-right:250px;
+  padding-top:10px; 
+  font-weight: bolder;
+  font-size: 30px;
+  line-height: 60px;
+}
+.right{
+  margin-left:300px;
+  background-color:#FAFAFA;
+  margin-top:200px;
+  width:1300px;
+  height:320px;
+  position: absolute;
+}
+#listing{
+  margin-left: 67px; margin-top: 20px; margin-bottom: 30px;
+
+}
+
+  #line2 {
+    position: absolute;
+    top: 390%;
+    display: inline-block;
+    width: 100px;
+    margin-left: 45em;
+    vertical-align: middle;
+    border-top: 1px solid rgb(0, 0, 0);
+}
+
+  #last{
+    position: absolute;
+    font-size:35px;
+    padding-left:185px;
+    line-height: 60px;  }
+    
+    #lastlogo{
+      margin-left: 200px;
+      margin-bottom: 8px;
+    }
