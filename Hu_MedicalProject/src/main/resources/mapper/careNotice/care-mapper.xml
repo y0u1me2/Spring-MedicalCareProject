@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="care">
+  
+  <!-- 돌보미 찾기 게시판 페이징처리 -->
+    <select id="careNotice" resultType="care">
+     	SELECT * FROM CARENOTICE ORDER BY CAREDATE DESC
+    </select>
+    
+    <!-- 돌보미 찾기 게시판 글개수 -->
+    <select id="careCount" resultType="_int">
+       SELECT COUNT(*) FROM CARENOTICE
+    </select>
+    
+  <!--   돌보미 글 등록하기 -->
+    <insert id="insertCare" parameterType="map">
+       INSERT INTO CARENOTICE VALUES(SEQ_CARENOTICE.NEXTVAL,
+                            #{careTitle},#{careWriter},
+                            #{careContent},DEFAULT, DEFAULT,DEFAULT)
+       
+       <selectKey keyProperty="careNo" resultType="String" order="AFTER">
+          SELECT SEQ_CARENO.CURRVAL FROM DUAL
+       </selectKey>
+    </insert>
+    
+   <!--  돌보미 첨부파일 등록하기 -->
+    <insert id="insertAttachment" parameterType="attachment">
+       INSERT INTO CAREATTACHMENT VALUES(SEQ_ATTACHMENT.NEXTVAL, 
+                               #{careNo}, #{originalFilename},
+                                #{renamedFilename},DEFAULT,DEFAULT,
+                                DEFAULT)
+    </insert> 
+    
+    
+  <!--   
+    <select id="boardView" parameterType="_int" resultType="board">
+    	SELECT * FROM BOARD WHERE BOARDNO=#{bno}
+ 
+    </select> -->
+  
+    
+</mapper>

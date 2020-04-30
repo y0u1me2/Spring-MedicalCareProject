@@ -14,6 +14,7 @@
       서울 특별시 강남구 강남대로(역삼동)&nbsp;&nbsp;|&nbsp;&nbsp;대표 이사 : 김말똥&nbsp;&nbsp;|&nbsp;&nbsp;사업자 번호 114-123-45678<br>
       대표 전화 1588-1588&nbsp;&nbsp;|&nbsp;&nbsp;이메일 : rClass@gmail.com</p><br>
       <p>Copyright © r-Class Corp. All rights reserved.</p></div>
+  </footer>
   </div>
 </body>
 <script>

@@ -17,9 +17,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://wowjs.uk/css/libs/animate.css">
     <script src="https://wowjs.uk/dist/wow.min.js"></script>
-    <title>header</title>
+   
+<!-- 파비콘 -->
+   <link rel ="icon" type="image/png"
+        href="/resources/images/logo5.png"/>
+    <title>Hospital for You</title>
+    
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/header.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/footer.css"/>
+
 
 </head>
 <body>
@@ -45,7 +51,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">돌보미 찾기</a>
+            <a class="dropdown-item" href="${path }/care/careNotice">돌보미 찾기</a>
             <a class="dropdown-item" href="${path }/ask/ask.do">문의 게시판</a>
         </div>
     </li>

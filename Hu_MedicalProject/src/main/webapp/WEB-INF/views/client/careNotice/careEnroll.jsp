@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-	<c:set var="path" value="${pageContext.request.contextPath}"/>
+	pageEncoding="UTF-8"%>
 
-
-<jsp:include page="/WEB-INF/views/client/common/header.jsp">
+<jsp:include page="/WEB-INF/views/client/common/header.jsp" />
 
 
 <style>
@@ -106,6 +101,10 @@
         background: rgb(251, 251, 249);
         outline: none;
     }
+    footer {
+	position: relative;
+	top: 300px;
+}
 </style>
 
 
@@ -128,9 +127,10 @@
         <div class="container" role="main">
 
 
-
-            <form name="form" id="form" role="form" method="post">
-
+	
+	 <form name="boardFrm" action="${pageContext.request.contextPath}/care/careEnrollEnd"
+         method="post" onsubmit="return validate();"  enctype="multipart/form-data" >
+         
                 <div class="mb-3">
 
                     <label for="title">제목</label>
@@ -167,7 +167,7 @@
                     <label for="tag">자격증 등록</label>
                     <span> *요양보호사 자격증을 업로드 해주세요.</span>
 
-                    <input type="file" class="form-control" name="tag" id="tag">
+                    <input type="file" class="form-control" name="upFile" id="upFile">
 
                 </div>
 
@@ -179,7 +179,8 @@
 
                 <button type="button" id="btnSave">등록</button>
 
-                <button type="button" id="btnList">목록</button>
+                <button type="button" id="btnList"
+                 onclick="location.replace('${path}/care/careNotice');">목록</button>
 
             </div>
 
@@ -190,7 +191,26 @@
     <script>
 
         new WOW().init();
+        
+        <script>
+    	function validate(){
+    		const content = $("[name=content]").val();
+    		if(content.trim().length==0){
+    			alert("내용을 입력하세요!");
+    			return false;
+    		}
+    	}
+    	
+    	$(function(){
+    		$('[name=upFile]').on("change",function(){
+    			const fileName=this.files[0].name;
+    		$(this).next('.custom-file-label').html(fileName);
+    		})
+    	})
+    	
+    
     </script>
+ 
 
     </section>
 

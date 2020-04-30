@@ -9,14 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CareNotice {
+public class CareAttachment {
 	
+	private int attachNo;
 	private int careNo;
-	private String careTitle;
-	private String careWriter;
-	private String careContent;
-	private Date careDate;
-	private int careReadCount;
-	private String careStatus;
+	private String originalFilename;
+	private String renamedFilename;
+	private Date uploadDate;
+	private int downloadCount;
+	private String attachStatus;
 }
-
