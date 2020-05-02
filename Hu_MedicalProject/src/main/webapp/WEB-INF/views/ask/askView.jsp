@@ -9,17 +9,17 @@
 <jsp:include page="/WEB-INF/views/client/common/header.jsp">
 	<jsp:param value="Hello Spring" name="title"/>
 </jsp:include>
-
+	<input type="hidden" name="askNo" value="${a.askNo }">
    <div class="container-fluid" style="padding-top: 100px;">
         <div class="row">
           <div class="col-xl-2">
           </div>
           <div class=" col-xl-8 " style="height: 500px; margin-bottom: 100px;">
-           <h2>나는 제목입니다.</h2>
-           <p style="padding-top: 13px; color:lightgray;">2019-04-23</p>
+           <h2>${a.askTitle }</h2>
+           <p style="padding-top: 13px; color:lightgray;">${a.askDate }</p>
            <hr>
            <div style="height: 200px; ">
-            어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구어쩌구저쩌구
+            ${a.askContent }
 
            </div>
            <hr>

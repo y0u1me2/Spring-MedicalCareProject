@@ -19,7 +19,8 @@ public class AskController {
 	@Autowired
 	private AskService service;
 
-	
+
+//selectList 및 페이징처리
 	@RequestMapping("/ask/ask.do")
 	public ModelAndView ask(ModelAndView mv,@RequestParam(required=false, defaultValue="1") int cPage,
 			@RequestParam(required=false, defaultValue="5") int numPerpage) {
@@ -35,13 +36,13 @@ public class AskController {
 		return mv;
 	}
 	
-	
-
+//insert
+	//전환용
 	@RequestMapping("/ask/insertAsk.do")
 	public String insertAsk() {
 		return "ask/askWrite";
 	}
-	
+	//등록
 	@RequestMapping("/ask/insertEndAsk.do")
 	public String insertEndAsk(Ask ask,Model model) {
 		System.out.println(ask);
@@ -58,8 +59,16 @@ public class AskController {
 		model.addAttribute("msg",msg);
 		model.addAttribute("loc",loc);
 		return "client/common/msg";
-		
 	}
 	
+//selectOne
+	@RequestMapping("/ask/askView.do")
+	public ModelAndView askView(ModelAndView mv,@RequestParam("no") int no) {
+		Ask a=service.selectAskView(no);
+		
+		mv.addObject("a",a);
+		mv.setViewName("ask/askView");
+		return mv;
+	}
 	
 }

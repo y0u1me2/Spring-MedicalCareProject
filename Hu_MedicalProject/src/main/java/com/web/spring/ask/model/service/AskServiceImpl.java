@@ -22,6 +22,7 @@ public class AskServiceImpl implements AskService {
 	@Autowired
 	private AskDao dao;
 
+//selectList 및 페이징처리
 	@Override
 	public int selectAskCount() {
 		return dao.selectAskCount(session);
@@ -32,11 +33,19 @@ public class AskServiceImpl implements AskService {
 		return dao.selectAskList(session,cPage,numPerpage);
 	}
 
+//insert
 	@Override
 	public int insertAsk(Ask ask) {
 		return dao.insertAsk(session,ask);
 	}
+//selectOne
+	@Override
+	public Ask selectAskView(int no) {
+		return dao.selectAskView(session,no);
+	}
 
+
+	
 	
 
 	 

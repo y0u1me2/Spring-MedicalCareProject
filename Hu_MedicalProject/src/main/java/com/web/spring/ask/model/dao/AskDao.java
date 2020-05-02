@@ -15,4 +15,6 @@ public interface AskDao {
 
 	int insertAsk(SqlSessionTemplate session, Ask ask);
 
+	Ask selectAskView(SqlSessionTemplate session, int no);
+
 }

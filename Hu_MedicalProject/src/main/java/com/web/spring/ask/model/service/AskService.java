@@ -13,4 +13,6 @@ public interface AskService {
 
 	int insertAsk(Ask ask);
 
+	Ask selectAskView(int no);
+
 }

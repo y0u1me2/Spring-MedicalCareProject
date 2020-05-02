@@ -74,7 +74,7 @@ div#pageBar a {
                 <tr>
                   <td><c:out value="${a.askNo }"/></td>
                   <td>답변완료</a></td>
-                  <td style="text-align: center;"><a href="문의게시판 상세조회.html" style="text-decoration: none;"><c:out value="${a.askTitle }"/></td>
+                  <td style="text-align: center;"><a href="${path }/ask/askView.do?no=${a.askNo }" style="text-decoration: none;"><c:out value="${a.askTitle }"/></td>
                   <td><c:out value="${a.askWriter }"/></td>
                   <td><c:out value="${a.askDate }"/></td>
                 </tr>
