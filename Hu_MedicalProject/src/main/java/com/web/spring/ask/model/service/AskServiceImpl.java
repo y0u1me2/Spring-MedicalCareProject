@@ -1,6 +1,7 @@
 package com.web.spring.ask.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -31,7 +32,12 @@ public class AskServiceImpl implements AskService {
 		return dao.selectAskList(session,cPage,numPerpage);
 	}
 
+	@Override
+	public int insertAsk(Ask ask) {
+		return dao.insertAsk(session,ask);
+	}
 
+	
 
 	 
 

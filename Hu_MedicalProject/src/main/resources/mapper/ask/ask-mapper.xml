@@ -8,4 +8,8 @@
 	<select id="selectAskList" resultType="ask">
 		SELECT * FROM ASK
 	</select>
+	
+	<insert id="insertAsk" parameterType="ask">
+		INSERT INTO ASK VALUES(SEQ_ASKNO.NEXTVAL,#{askWriter},#{askTitle},#{askContent},SYSDATE,NULL,NULL,NULL,NULL)
+	</insert>
 </mapper>

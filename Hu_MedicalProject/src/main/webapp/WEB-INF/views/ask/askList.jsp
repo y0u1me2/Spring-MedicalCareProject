@@ -9,6 +9,43 @@
 <jsp:include page="/WEB-INF/views/client/common/header.jsp">
 	<jsp:param value="Hello Spring" name="title"/>
 </jsp:include>
+<style>
+/* 페이지바 */
+ #pageBar {
+  /*  position: relative; */
+   left:100px;
+   top: 200px;
+}
+
+div#pageBar a {
+   text-decoration:none;
+   color: rgb(95, 93, 93);
+}
+
+/* 페이지바 */
+    #pageBar{
+      width:80%;
+      margin-left:390px;
+      margin-top:30px;
+      margin-bottom:20px;
+      /* text-align:center; */
+   }
+   #pageBar>a,#pageBar>span{
+      width: 40px;
+       height: 40px;
+       text-align: center;
+       line-height: 40px;
+       border: 1px solid #eee;
+       color: #999;
+       background-color: #fff;
+       margin: 0 2px;
+      position: relative;
+       font-size: 13px;
+       font-family: "YoonGothicPro760";
+       display: inline-block;
+       vertical-align: top;
+   }
+   </style>  
     <section>
         <div class="container-fluid">
           <div class="row">
@@ -42,17 +79,15 @@
                   <td><c:out value="${a.askDate }"/></td>
                 </tr>
               </c:forEach>
-               
-              </tbody>
-            </table>
-           <div id="page-container">
-        	${pageBar }
-        </div>
-        
           </div>
-          <button type="button" class="btn btn-outline-success my-2 my-sm-0" style="margin-left:1160px;"onclick="location.href='문의게시판 작성.html'"> 문의하기</button>
+             
+            </table>
+         </tbody>
+        
+         
+          <button type="button" class="btn btn-outline-success my-2 my-sm-0" style="margin-left:1020px;"onclick="askInsert();"> 문의하기</button>
           <div style="text-align:center; font-size:20px;">
-            <select name="searchContent" id="searchContent" style="background-color:white; height:35px;margin-bottom:100px;">
+            <select name="searchContent" id="searchContent" style="background-color:white; height:35px;">
               <option value="titleContent" selected disabled>선택</option>
               <option value="title">제목만</option>
               <option value="writer">글작성자</option>
@@ -60,6 +95,18 @@
             <input type="text" id="searchText" placeholder="검색어를 입력해주세요" size="20">
             <input type="submit" id="searchBtn" class="search_btn" value="검색"/>
           </div>
+          
+        <div id="pageBar">
+        	${pageBar }
+        </div>
+         
       </section>
+      
+      <script>
+
+		function askInsert(){
+			location.replace('${path }/ask/insertAsk.do');
+		}
+      </script>
 
 	<jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>

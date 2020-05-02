@@ -23,7 +23,7 @@
        </selectKey>
     </insert>
     
-   <!--  돌보미 첨부파일 등록하기 -->
+   <!-- 돌보미 첨부파일 등록하기 -->
     <insert id="insertAttachment" parameterType="attachment">
        INSERT INTO CAREATTACHMENT VALUES(SEQ_ATTACHMENT.NEXTVAL, 
                                #{careNo}, #{originalFilename},

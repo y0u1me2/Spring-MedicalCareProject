@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0/EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+<settings>
+	<setting name="jdbcTypeForNull" value="NULL"></setting>
+	<!--셋팅사용예시  JDBC타입을 파라미터에 제공하지 않을때 null값을 처리한 JDBC타입을 명시한다.
+	 일부 드라이버는 칼럼의 JDBC타입을 정의하도록 요구하지만
+	 대부분은 NULL, VARCHAR 나 OTHER 처럼 일반적인 값을 사용해서 동작한다.-->
+</settings>
 
 	<typeAliases>
 	<typeAlias type="com.web.spring.ask.model.vo.Ask" alias="ask" />

@@ -229,7 +229,13 @@
 		    <version>2.9.8</version>
 		</dependency>
 	
-	
+		<!-- 웹소켓 적용하기 -->
+				<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
 	
 	
 	
