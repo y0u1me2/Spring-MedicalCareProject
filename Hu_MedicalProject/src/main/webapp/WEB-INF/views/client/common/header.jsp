@@ -39,7 +39,7 @@
             <a class="nav-link" href="#">공지사항</a>
           </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" >병원예약</a>
+        <a class="nav-link" href="${path }/rv/reservationList" >병원예약</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">건강정보</a>

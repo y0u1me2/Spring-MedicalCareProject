@@ -78,27 +78,27 @@ footer {
                     
                     <p>중국 방문 후 14일 이내에 발열 또는 호흡기 증상이 있나요?</p>                 
 
-                    <input type="radio" class="yes one" id="yes1" value="" />
-                    <label for="yes1">예</label>
+                    <input type="radio" name="yes" id="yes" value="" />
+                    <label for="yes">예</label>
 
-                    <input type="radio" class="no" id="no1" value="" />
-                    <label for="no1">아니오</label>
+                    <input type="radio" name="no" id="no" value="" />
+                    <label for="no">아니오</label>
 
                     <p>확진자 접촉 후 14일 이내에 발열 또는 호흡기 증상이 있나요?</p>
 
-                    <input type="radio" class="yes two" id="yes2" value="" />
-                    <label for="yes2">예</label>
+                    <input type="radio" name="yes" id="yes" value="" />
+                    <label for="yes">예</label>
 
-                    <input type="radio" class="no" id="no2" value="" />
-                    <label for="no2">아니오</label>
+                    <input type="radio" name="no" id="no" value="" />
+                    <label for="no">아니오</label>
 
                     <p>코로나19 발생 국가/지역 방문 후 14일 이내에 발열 또는 호흡기 증상이 있나요?</p>
 
-                    <input type="radio" class="yes three" id="yes3" value="" />
-                    <label for="yes3">예</label>
+                    <input type="radio" name="yes" id="yes" value="" />
+                    <label for="yes">예</label>
 
-                    <input type="radio"  class="no" id="no3" value="" />
-                    <label for="no3">아니오</label>
+                    <input type="radio" name="no" id="no" value="" />
+                    <label for="no">아니오</label>
 
 
                     <div id="corona-btn" >
@@ -111,29 +111,5 @@ footer {
         </div>
     </div>
 
-    <script>
-   // $(document).ready(function(){
-    	$complete = $('#complete-btn').attr('disabled', true);
-		
-    	var no = $('input.no');
-    	console.log($('input.no'));
-    	$('input').click(function() {
-    		for(var i=0;i<$('input.no').length;i++) {
-		    	if($(no[i]).attr('checked')==true) {
-		    		console.log("롸?");
-		    	}
-    			
-    		}
-    		
-    	})
-    	//$("input:radio[name=no1]").click(function(){
-    	//	$complete = $('#complete-btn').attr('disabled', false);
-    	//})
-
-   // });
-
-
-    
-    </script>
     
  <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>  

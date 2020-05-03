@@ -5,7 +5,7 @@
 	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	<c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<jsp:include page="/WEB-INF/views/client/common/header.jsp">
+<jsp:include page="/WEB-INF/views/client/common/header.jsp" />
     <style>
 
     div#reception-container{
@@ -153,6 +153,11 @@ div.select{
          outline: none;
      }
 
+footer {
+	position: relative;
+	top: 400px;
+}
+
     </style>
 
 
@@ -165,8 +170,9 @@ div.select{
 
                 <div id="reception-container">
 
-                    <button id="paperweight-btn">
-                        <img src="images/warning.png" width="30px;" />
+                    <button id="paperweight-btn" 
+                    onclick="location.replace('${path}/rv/coronaUpdate')">
+                        <img src="${path }/resources/images/warning.png" width="30px;" />
                         <p>원내 감염 방지를 위한 사전문진</p>
                         <p>확인/수정하기</p>
                         <p>></p>
@@ -180,7 +186,7 @@ div.select{
                     
                     <div id="patient">
                         <div class="card">
-                            <img src="images/profile.png" alt="진료대상" width="100px;">
+                            <img src="${path }/resources/images/profile.png" alt="진료대상" width="100px;">
                             
                             <div class="container">
                                 <p>환자이름</p>
@@ -188,7 +194,7 @@ div.select{
                         </div>
 
                         <div class="family">
-                            <img src="images/family.png" id="plus" alt="플러스" width="60px;">
+                            <img src="${path }/resources/images/family.png" id="plus" alt="플러스" width="60px;">
 
                             <div class="container">
                                 <p>가족추가</p>
@@ -224,7 +230,7 @@ div.select{
                         </p>
                     </div>
                     
-                    <button id="reception-btn">접수하기</button>
+                    <button id="reception-btn">날짜/시간 선택</button>
                     </div>
                 </div>
             </div>
