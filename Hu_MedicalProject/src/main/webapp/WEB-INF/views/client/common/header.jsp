@@ -42,7 +42,7 @@
         <a class="nav-link" href="#" >병원예약</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">건강정보</a>
+        <a class="nav-link" href="healthInfo/healthInfoMain">건강정보</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
