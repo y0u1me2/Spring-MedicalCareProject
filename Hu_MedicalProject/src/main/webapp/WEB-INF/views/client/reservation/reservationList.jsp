@@ -5,7 +5,7 @@
 	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	<c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<jsp:include page="/WEB-INF/views/client/common/header.jsp">
+<jsp:include page="/WEB-INF/views/client/common/header.jsp" />
 
   <style>
     * {
@@ -118,7 +118,7 @@
 
     /* 전체병원보기 버튼 */
     button#lookup {
-     background-color:#DAF1DE;;
+     background-color:#DAF1DE;
       border-radius: 20px;
       border: none;
       position: relative;
@@ -197,6 +197,26 @@
     div#weather-text {
       color: rgb(206, 204, 204);
     }
+    
+    div.circle{
+    	width:80px;
+    	height:80px;
+    	border-radius:50%;
+    	background:#DAF1DE;
+    	font-size:12px;
+    	text-align:center;/* 가로정렬 */
+    	line-height:80px;/* 세로정렬 */
+    }
+    
+     div.circle a{
+     	text-decoration:none;
+     }
+    
+ 
+    footer {
+	position: relative;
+	top: 300px;
+}
   </style>
 
 
@@ -214,9 +234,9 @@
           <!-- ================================================================ -->
           <div id="menu">
             <div id="btns">
-              <button id="subject">전체 진료과목<img src="images/triangle.png" width="10px;" /></button>
+              <button id="subject">전체 진료과목<img src="${path }/resources/images/triangle.png" width="10px;" /></button>
               <p id="bar">|</p>
-              <button id="location">Google location api?<img src="images/triangle.png" width="10px;" /></button>
+              <button id="location">Google location api?<img src="${path }/resources/images/triangle.png" width="10px;" /></button>
             </div>
 
             <div id="tag">
@@ -234,7 +254,7 @@
             <div id="hospital_content">
               <p>예약병원</p>
               <h3>우리동네이비인후과의원</h3>
-              <p><img src="images/location.png" width="15px;" />5km</p>
+              <p><img src="${path }/resources/images/location.png" width="15px;" />5km</p>
               <p id="bar">|</p>
               <p>서울특별시 강남구 강남대로 21길</p>
 
@@ -247,8 +267,13 @@
               <p>예방접종</p>
               <p>혈액검사</p>
               <p>수액</p>
+              
+              <div class="circle">
+              	<a href="${path }/rv/corona">바로예약</a>
+              	
+              </div>
 
-              <p><img src="images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
+              <p><img src="${path }/resources/images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
 
               <div id="notice">
                 <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
@@ -340,7 +365,7 @@
             지도에서 병원을 찾아보세요.
           </p>
 
-          <button id="lookup"><img src="images/hospital.png" width="20px" />&nbsp;&nbsp;전체 병원 보기</button>
+          <button id="lookup"><img src="${path }/resources/images/hospital.png" width="20px" />&nbsp;&nbsp;전체 병원 보기</button>
 
 
           <div id="tag2">
