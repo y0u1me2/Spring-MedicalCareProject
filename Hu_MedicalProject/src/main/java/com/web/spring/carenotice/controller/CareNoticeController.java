@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import com.web.spring.carenotice.model.service.CareNoticeService;
 import com.web.spring.carenotice.model.vo.CareAttachment;
 import com.web.spring.carenotice.model.vo.CareNotice;
@@ -123,6 +124,22 @@ public class CareNoticeController {
 		mv.addObject("msg",msg);
 		mv.addObject("loc",loc);
 		
+		return mv;
+	}
+	
+//돌보미글 상세페이지로 이동============================================
+	//게시판 상세페이지
+	@RequestMapping("/care/careView")
+	public ModelAndView boardView(int cno, ModelAndView mv) {
+		
+		CareNotice c = service.careView(cno);
+		
+		List<CareAttachment> files = service.selectCareFile(cno);
+		
+		mv.addObject("care", c);
+		mv.addObject("files",files);
+		mv.setViewName("careNotice/careView");
+	
 		return mv;
 	}
 }

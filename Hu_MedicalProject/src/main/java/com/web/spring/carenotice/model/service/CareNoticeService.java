@@ -17,8 +17,11 @@ public interface CareNoticeService {
 		//게시글 작성
 		int insertCare(Map<String,String> param, List<CareAttachment> files);
 	 
-	  //게시글 상세보기 Board boardView(int bno);
+	   //게시글 상세보기
+		CareNotice careView(int cno);
 	  
-	  //게시글 첨부파일 가져오기 List<Attachment> selectBoardFile(int bno);
+	   //게시글 첨부파일 가져오기 
+		List<CareAttachment> selectCareFile(int cno);
+		
 	 
 }

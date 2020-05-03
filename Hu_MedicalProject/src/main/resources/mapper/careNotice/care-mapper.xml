@@ -32,11 +32,14 @@
     </insert> 
     
     
-  <!--   
-    <select id="boardView" parameterType="_int" resultType="board">
-    	SELECT * FROM BOARD WHERE BOARDNO=#{bno}
- 
-    </select> -->
+   
+    <select id="careView" parameterType="_int" resultType="care">
+    	SELECT * FROM CARENOTICE WHERE CARENO=#{cno}
+    </select> 
+     
+    <select id="selectCareFile" parameterType="_int" resultType="attachment">
+    	SELECT * FROM CAREATTACHMENT WHERE CARENO=#{cno}
+    </select>
   
     
 </mapper>

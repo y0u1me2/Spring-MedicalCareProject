@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+
 import com.web.spring.carenotice.model.vo.CareAttachment;
 import com.web.spring.carenotice.model.vo.CareNotice;
 
@@ -46,8 +47,20 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 	
 		return session.insert("care.insertAttachment");
 	}
+
+	@Override
+	public CareNotice careView(SqlSession session, int cno) {
 	
+		return session.selectOne("care.careView",cno);
+	}
+
+	@Override
+	public List<CareAttachment> selectCareFile(SqlSession session, int cno) {
 	
+		return session.selectList("care.selectCareFile",cno);
+	}
+	
+
 	
 	
 	

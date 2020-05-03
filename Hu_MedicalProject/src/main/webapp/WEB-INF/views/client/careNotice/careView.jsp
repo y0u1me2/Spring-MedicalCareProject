@@ -1,11 +1,7 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-	<c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<jsp:include page="/WEB-INF/views/client/common/header.jsp">
+<jsp:include page="/WEB-INF/views/client/common/header.jsp"/>
 
 <style>
 
@@ -201,23 +197,13 @@
 	
 	<div class="back-div bottom">
 		<h2>제목</h2>
+		   <input type="text" class="form-control" placeholder="제목" name="boardTitle" id="boardTitle" value="${c.careTitle }" required>
 		<p id="time">2020.04.24 15:30</p>
 	<hr>
 		<p><img src="images/logo.png" width="20px;"/>&nbsp;작성자</p>		
 	</div>
 
-	<!-- <div class="upfile">
-		파일
-        <p>
-        <a href="<%=request.getContextPath()%>/notice/noticeFileDownload?fileName=<%=s%>">
-        <img src="<%=request.getContextPath()%>/images/notice/file.png" width="15px" height="15px">
-        파일
-        </a>
-        </p>
-       
-         <p>파일</p>
-
-	</div> -->
+	
 
 	<div class="content">
 		<pre class="context">내용</pre>
@@ -241,10 +227,10 @@
 			<tr class="level1">
 				<td>
 					<sup class="cm-writer"><img src="images/logo.png" width="20px;"/>
-						&nbsp;기린</sup>&nbsp&nbsp&nbsp
+						&nbsp;기린</sup>&nbsp;&nbsp;&nbsp;
 					<sup>2020.04.24 18:03</sup>
 				
-					&nbsp&nbsp&nbsp<sup><a href="">
+					&nbsp;&nbsp;&nbsp;<sup><a href="">
 						<img src="images/reply.png" width="10px;"/>
 						답글</a></sup>
 
@@ -265,10 +251,10 @@
 			<tr class="level2" style="background-color:#f7f7f7">
 				<td>
 					<sup class="cm-writer"><img src="images/logo.png" width="20px;"/>
-						&nbsp;기린</sup>&nbsp&nbsp&nbsp
+						&nbsp;기린</sup>&nbsp;&nbsp;&nbsp;
 					<sup>2020.04.24 18:03</sup>
 			
-					&nbsp&nbsp&nbsp<sup><a href="">
+					&nbsp;&nbsp;&nbsp;<sup><a href="">
 						<img src="images/reply.png" width="10px;"/>
 						답글</a></sup>
 				
@@ -292,7 +278,7 @@
 					<input type="text" name="commentContent" class="comment-content" id="comment-con" />
 					<button type="submit" id="btn-insert">등록</button>
 
-					<input type="hidden" name="noticeNo" value="<%=n.getnNo()%>"/>
+					<input type="hidden" name="noticeNo" value=""/>
 					<input type="hidden" name="commentWriter" value="">
 					<input type="hidden" name="commentLevel" value="1"/>
 					<input type="hidden" name="commentNo" value="0"/>

@@ -64,19 +64,20 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 	
 		return result;
 	}
+
 	  
-/*	 * //============================================================
-	 * 
-	 * //게시글 상세보기
-	 * 
-	 * @Override public Board boardView(int bno) {
-	 * 
-	 * return dao.boardView(session,bno); }
-	 * 
-	 * @Override public List<Attachment> selectBoardFile(int bno) {
-	 * 
-	 * return dao.selectBoardFile(session,bno); }
-	 */
+//게시글상세보기================================================
 	
+	@Override
+	public CareNotice careView(int cno) {
+		
+		return dao.careView(session,cno);
+	}
+	
+	@Override
+	public List<CareAttachment> selectCareFile(int cno) {
+		
+		return dao.selectCareFile(session,cno);
+	}
 	
 }

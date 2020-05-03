@@ -17,4 +17,6 @@ public interface CareNoticeDao {
 	int insertCare(SqlSession session, Map<String,String> param);
 	int insertCareAttachment(SqlSession session, CareAttachment a);
 
+	CareNotice careView(SqlSession session,int cno);
+	List<CareAttachment> selectCareFile(SqlSession session, int cno); 
 }
