@@ -3,11 +3,15 @@
 <mapper namespace="healthInfo">
   
   <!-- 건강정보 #태그 검색어 리스트 -->
-    <select id="selectTagInfo" resultType="map">
+    <select id="healthTagInfo" resultType="map">
      	SELECT * FROM HEALTHINFOMATIONTEST
     </select>
     <!-- 건강정보 #태그 총개수 -->
     <select id="healthTagCount" resultType="_int">
     	SELECT COUNT(*) FROM HEALTHINFOMATIONTEST
+    </select>
+    <!-- 건강정보 버튼 분류 리스트 -->
+    <select id="healthBtnInfo" resultType="map">
+    	SELECT * FROM HEALTHINFOBTNTEST
     </select>
 </mapper>

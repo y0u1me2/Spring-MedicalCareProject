@@ -18,16 +18,25 @@ public class HealthInfoServiceImpl implements HealthInfoService {
 	@Autowired
 	private SqlSession session;
 	
+	//태그 검색어
 	@Override
 	public List<Map<String, String>> healthTagInfo(int cPage, int numPerpage) {
 		// TODO Auto-generated method stub
 		return dao.healthTagInfo(session, cPage, numPerpage);
 	}
-
+	//태그 검색어 총 수
 	@Override
 	public int healthTagCount() {
 		// TODO Auto-generated method stub
 		return dao.healthTagCount(session);
 	}
+	//버튼 분류 
+	@Override
+	public List<Map<String, String>> healthBtnInfo() {
+		// TODO Auto-generated method stub
+		return dao.healthBtnInfo(session);
+	}
+	
+	
 	
 }

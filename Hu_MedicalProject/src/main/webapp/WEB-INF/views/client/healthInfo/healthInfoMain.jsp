@@ -21,7 +21,7 @@
 		box-sizing: content-box;
 		color: black;
 		border: 1px solid rgba(44, 55, 68, 0.1);
-		margin: 5px auto;
+		margin: 5px 2px;
 		background-color:#FBFCFD;
 	}
 	
@@ -145,44 +145,14 @@
 				</div>
 				<div class="tagSearch-container">
 					<div class="tagSearch">
-						<span class=tagSerach-link>
-							<!-- <a class="tagSearch-keyword" href="#">#수족구병</a>
-							<a class="tagSearch-keyword" href="#">#설사</a>
-							<a class="tagSearch-keyword" href="#">#편도염</a>
-							<a class="tagSearch-keyword" href="#">#구내염</a>
-							<a class="tagSearch-keyword" href="#">#여드름</a>
-							<a class="tagSearch-keyword" href="#">#주름</a>
-							<a class="tagSearch-keyword" href="#">#두드러기</a> -->
-						</span>
+						<span class=tagSerach-link></span>
 						<span class="tagSearch-btn">
 							<span id="viewBefore">&nbsp;<&nbsp;</span>
 							<span id="viewAfter">&nbsp;>&nbsp;</span>
 						</span>
 					</div>
 				</div>
-				<div class="healthInfo-button-div">					
-						<button class="healthInfo">피부미용</button>
-						<button class="healthInfo">성형</button>
-						<button class="healthInfo">치과</button>
-						<button class="healthInfo">안과</button>
-						<button class="healthInfo">한의원</button>
-						<button class="healthInfo">출산</button>
-						<button class="healthInfo">소아질환</button>
-						<button class="healthInfo">육아</button>
-						<button class="healthInfo">건강정보</button>
-						<button class="healthInfo">피부질환</button>
-						<button class="healthInfo">산부인과</button>
-						<button class="healthInfo">비뇨기과</button>
-						<button class="healthInfo">성병</button>
-						<button class="healthInfo">내과</button>
-						<button class="healthInfo">이비인후과</button>
-						<button class="healthInfo">성인병</button>
-						<button class="healthInfo">정신과</button>
-						<button class="healthInfo">정형외과</button>
-						<button class="healthInfo">신경외과</button>
-						<button class="healthInfo">외과</button>
-						<button class="healthInfo">코로나진료소</button>
-				</div>
+				<div class="healthInfo-button-div"></div>
 				<div class="bottom">
 					<div class="bottom-quote d-flex justify-content-around">
 						<div class="small p-2">미리알고 대비하세요</div>
@@ -321,25 +291,29 @@
 				for(var i=0; i<data.list.length; i++) {
 					$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+data.list[i].NAME+"</a>");
 				}
+				var cPage=Number(data.cPage);
+				var totalPage=Number(data.totalPage);
 				
 				$('#viewBefore').click(function(){
-					console.log(data.cPage-1);
-					if(data.cPage=='1') {
+					cPage--;
+					if(cPage<=0) {
 						$.ajax({
 							url:"${path}/healthInfo/healthTagInfo",
-							data:{cPage: data.totalPage},
+							data:{cPage: totalPage},
 							success:function(before1) {
-								$('span.tagSerach-link').remove('.tagSearch-keyword');
+								$('.tagSearch-keyword').remove();
 								for(var i=0; i<before1.list.length; i++) {
 									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+before1.list[i].NAME+"</a>");
 								}
+								cPage=totalPage;
 							}
 						})
 					}else {
 						$.ajax({
 							url:"${path}/healthInfo/healthTagInfo",
-							data:{cPage: data.cPage-1},
+							data:{cPage: cPage},
 							success:function(before2) {
+								$('.tagSearch-keyword').remove();
 								for(var i=0; i<before2.list.length; i++) {
 									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+before2.list[i].NAME+"</a>");
 								}
@@ -348,32 +322,43 @@
 					}
 				})
 				$('#viewAfter').click(function(){
-					if(data.cPage==data.totalPage) {
+					cPage++;
+					if(cPage>totalPage) {
 						$.ajax({
 							url:"${path}/healthInfo/healthTagInfo",
-							data:{cPage: 1},
 							success:function(after1) {
+								$('.tagSearch-keyword').remove();
 								for(var i=0; i<after1.list.length; i++) {
 									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+after1.list[i].NAME+"</a>");
 								}
+								cPage=1;
 							}
 						})
 					}else {
 						$.ajax({
 							url:"${path}/healthInfo/healthTagInfo",
-							data:{cPage: data.cPage+1},
+							data:{cPage: cPage},
 							success:function(after2) {
+								$('.tagSearch-keyword').remove();
 								for(var i=0; i<after2.list.length; i++) {
 									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+after2.list[i].NAME+"</a>");
 								}
 							}
 						})
 					}
-				})
-				
-				
+				})	
 			}
-		})		
+		})//#태그 겁색 좌우 검색어 페이징 끝
+		
+		//과목분류 버튼 처리
+		$.ajax({
+			url:"${path}/healthInfo/healthBtnInfo",
+			success:function(data) {
+				for(var i=0; i<data.list.length; i++) {
+					$('div.healthInfo-button-div').append("<button class='healthInfo'>"+data.list[i].BTNNAME+"</button>");
+				}
+			}
+		})//과목분류 버튼 처리 끝
 	})
 </script>
 
