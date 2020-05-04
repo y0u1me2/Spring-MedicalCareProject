@@ -30,7 +30,7 @@ public class AskController {
 				//별도의 페이징 처리 객체를 생성해서 PAGE처리를 해보자!
 				List<Ask> list=service.selectAskList(cPage,numPerpage);
 				mv.addObject("list",list);
-				mv.setViewName("ask/askList");
+				mv.setViewName("client/ask/askList");
 				mv.addObject("count",totalCount);
 				mv.addObject("pageBar",PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/ask/ask.do"));
 		return mv;
@@ -40,7 +40,7 @@ public class AskController {
 	//전환용
 	@RequestMapping("/ask/insertAsk.do")
 	public String insertAsk() {
-		return "ask/askWrite";
+		return "client/ask/askWrite";
 	}
 	//등록
 	@RequestMapping("/ask/insertEndAsk.do")
@@ -67,7 +67,7 @@ public class AskController {
 		Ask a=service.selectAskView(no);
 		
 		mv.addObject("a",a);
-		mv.setViewName("ask/askView");
+		mv.setViewName("client/ask/askView");
 		return mv;
 	}
 //update 페이지 전환
@@ -75,7 +75,7 @@ public class AskController {
 	public ModelAndView updateAsk(ModelAndView mv,@RequestParam("no") int no) {
 		Ask a = service.selectAskView(no);
 		mv.addObject("a",a);
-		mv.setViewName("ask/askUpdate");
+		mv.setViewName("client/ask/askUpdate");
 		return mv;
 		/*
 		 * int result=service.updatetAsk(no); String msg=""; String loc=""; if(result>0)

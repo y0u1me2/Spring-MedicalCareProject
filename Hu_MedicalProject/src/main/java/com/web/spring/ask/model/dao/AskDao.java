@@ -21,4 +21,6 @@ public interface AskDao {
 
 	int deleteAsk(SqlSessionTemplate session, int no);
 
+	int insertReply(SqlSessionTemplate session, Map map);
+
 }

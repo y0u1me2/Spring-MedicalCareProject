@@ -19,4 +19,7 @@ public interface AskService {
 
 	int deleteAsk(int no);
 
+	//답변등록
+	int insertReply(Map map);
+
 }

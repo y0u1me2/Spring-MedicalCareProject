@@ -53,13 +53,12 @@ public class AskServiceImpl implements AskService {
 	public int deleteAsk(int no) {
 		return dao.deleteAsk(session,no);
 	}
-
-
-
-
+//답변등록
+	@Override
+	public int insertReply(Map map) {
+		return dao.insertReply(session,map);
+	}
 	
-	
-
 	 
 
 }

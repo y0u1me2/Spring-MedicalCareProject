@@ -5,12 +5,11 @@
 	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	<c:set var="path" value="${pageContext.request.contextPath}"/>
 	
-	
 <jsp:include page="/WEB-INF/views/client/common/header.jsp">
 	<jsp:param value="Hello Spring" name="title"/>
 </jsp:include>
 	<input type="hidden" name="askNo" value="${a.askNo }">
-   <div class="container-fluid" style="padding-top: 100px;">
+   <div class="container-fluid" style="padding-top:60px;">
         <div class="row">
           <div class="col-xl-2">
           </div>
@@ -29,11 +28,18 @@
             ${a.askContent }
            </div>
           <hr>
+       <form action="${path}/reply/insertReply.do?askNoRef=${a.askNo}" method="post">
+         <div style="padding-top:10px;">
+         	<textarea style="margin-bottom:20px;" placeholder="문의에 대한 답을 입력하세요" name="replyContent" class="form-control" rows="4" id="replyContent" ></textarea>
+         	<button id="replyBtn" class="btn btn-outline-success my-2 my-sm-0" style="margin-left:783px; ">답변등록</button>
+         </div> 
+       </form>
+        <%-- 
           <div style="height: 130px; ">
            	<img src="${path }/resources/images/logo6.png"  style="width:70px; float:left; padding-right:20px;">
 			  <div style="margin-top:30px;">에듀온학습에 불편드려 죄송합니다.최근 윈도우 사용 중 생기는 오류로 인해 자세한 해결 방법을 아래 링크를 통해 확인 해 보시고,
 			그래도 동일한 오류가 지속 될 경우 학습지원팀으로 연락 주시면 안내 도와드리도록 하겠습니다.</div>
-          </div>
+          </div> --%>
           
           <hr>
             
@@ -58,9 +64,27 @@ function askDelete(){
 		location.replace('${path }/ask/deleteAsk.do?no=${a.askNo}');
 	}
 }
+/* 
+function replyInsert(){
+	if(confirm("답변을 등록하시겠습니까?")){
+		location.replace('${path }/reply/insertReply.do?no=${a.askNo}');
+	}
+} */
+/* $('#reply').click(function(){
+	$.ajax({
+		url:"${path}/reply/insertReply.do",
+		dataType:"json",
+		type:"post",
+		data:{'replyContent':$('#replyContent').val()},
+		success:function()
+		
+		
+	});
+})
+ */
 
 
 </script>
       
         
-	<jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>
+<jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>

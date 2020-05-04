@@ -43,7 +43,11 @@ public class AskDaoImpl implements AskDao {
 	public int deleteAsk(SqlSessionTemplate session, int no) {
 		return session.delete("ask.deleteAsk",no);
 	}
-	
+
+	@Override
+	public int insertReply(SqlSessionTemplate session, Map map) {
+		return session.insert("reply.insertReply",map);
+	}
 
 	
 
