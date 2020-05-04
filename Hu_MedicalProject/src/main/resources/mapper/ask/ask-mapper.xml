@@ -6,14 +6,22 @@
 	</select>
 	
 	<select id="selectAskList" resultType="ask">
-		SELECT * FROM ASK ORDER BY ASKDATE DESC
+		SELECT * FROM ASK
 	</select>
 	
 	<insert id="insertAsk" parameterType="ask">
-		INSERT INTO ASK VALUES(SEQ_ASKNO.NEXTVAL,#{askWriter},#{askTitle},#{askContent},SYSDATE,NULL,NULL,NULL,NULL)
+		INSERT INTO ASK VALUES(SEQ_ASKNO.NEXTVAL,#{askWriter},#{askTitle},#{askContent},SYSDATE)
 	</insert>
 	
 	<select id="selectAsk" parameterType="_int" resultType="ask">
 		SELECT * FROM ASK WHERE ASKNO=#{no}
 	</select>
+	
+	<update id="updateAsk" parameterType="ask">
+		UPDATE ASK SET ASKTITLE=#{askTitle}, ASKCONTENT=#{askContent} where ASKNO=#{askNo}
+	</update>
+	
+	<delete id="deleteAsk" parameterType="_int">
+		DELETE FROM ASK WHERE ASKNO=#{askNo} 
+	</delete>
 </mapper>

@@ -15,4 +15,8 @@ public interface AskService {
 
 	Ask selectAskView(int no);
 
+	int updateAsk(Ask ask);
+
+	int deleteAsk(int no);
+
 }

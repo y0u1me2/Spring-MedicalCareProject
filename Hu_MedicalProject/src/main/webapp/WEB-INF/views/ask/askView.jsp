@@ -16,7 +16,14 @@
           </div>
           <div class=" col-xl-8 " style="height: 500px; margin-bottom: 100px;">
            <h2>${a.askTitle }</h2>
-           <p style="padding-top: 13px; color:lightgray;">${a.askDate }</p>
+           <div style="float: right;">
+	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="askUpdate();">수정</button>
+	           
+	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" onclick="askDelete();">삭제</button>
+	           <button class="btn btn-outline-success my-2 my-sm-0" onclick="askList();" >목록</button>
+           </div>
+           <p style="padding-top: 0px; color:lightgray;">${a.askDate }</p>
+           
            <hr>
            <div style="height: 200px; ">
             ${a.askContent }
@@ -29,19 +36,31 @@
           </div>
           
           <hr>
-           <div style="float: right;">
-           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;">수정</button>
-           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;">삭제</button>
-           <button class="btn btn-outline-success my-2 my-sm-0" onclick="location.href='문의게시판.html'" >목록</button>
-           </div> 
-    
+            
            </div>
           </div>
           <div class="col-xl-2">
           </div>
           
         </div>
-        
+<script>
+
+function askUpdate(){
+	location.replace('${path }/ask/updateAsk.do?no=${a.askNo}');
+}
+
+function askList(){
+	location.replace('${path }/ask/ask.do');
+}
+
+function askDelete(){
+	if(confirm("삭제하시겠습니까?")){
+		location.replace('${path }/ask/deleteAsk.do?no=${a.askNo}');
+	}
+}
+
+
+</script>
       
         
 	<jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>

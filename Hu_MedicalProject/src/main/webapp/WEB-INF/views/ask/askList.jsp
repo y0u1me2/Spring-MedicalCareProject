@@ -85,7 +85,8 @@ div#pageBar a {
          </tbody>
         
          
-          <button type="button" class="btn btn-outline-success my-2 my-sm-0" style="margin-left:1020px;"onclick="askInsert();"> 문의하기</button>
+          <button type="button" class="btn btn-outline-success my-2 my-sm-0" style="margin-left:1020px;"onclick="
+          askInsert();"> 문의하기</button>
           <div style="text-align:center; font-size:20px;">
             <select name="searchContent" id="searchContent" style="background-color:white; height:35px;">
               <option value="titleContent" selected disabled>선택</option>
