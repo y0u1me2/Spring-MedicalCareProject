@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.web.spring.ask.model.dao.AskDao;
 import com.web.spring.ask.model.vo.Ask;
+import com.web.spring.ask.model.vo.AskReply;
 
 @Service
 public class AskServiceImpl implements AskService {
@@ -55,9 +56,15 @@ public class AskServiceImpl implements AskService {
 	}
 //답변등록
 	@Override
-	public int insertReply(Map map) {
-		return dao.insertReply(session,map);
+	public int insertReply(AskReply reply) {
+		return dao.insertReply(session,reply);
 	}
+
+	@Override
+	public AskReply selectReplyView(int no) {
+		return dao.selectReplyView(session,no);
+	}
+	
 	
 	 
 

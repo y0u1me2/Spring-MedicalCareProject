@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.web.spring.ask.model.vo.Ask;
+import com.web.spring.ask.model.vo.AskReply;
 
 public interface AskService {
 
@@ -20,6 +21,8 @@ public interface AskService {
 	int deleteAsk(int no);
 
 	//답변등록
-	int insertReply(Map map);
+	int insertReply(AskReply reply);
+
+	AskReply selectReplyView(int no);
 
 }

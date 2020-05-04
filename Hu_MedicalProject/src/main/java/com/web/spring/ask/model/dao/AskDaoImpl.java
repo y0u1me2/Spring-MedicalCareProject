@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.web.spring.ask.model.vo.Ask;
+import com.web.spring.ask.model.vo.AskReply;
 
 @Repository
 public class AskDaoImpl implements AskDao {
@@ -45,9 +46,16 @@ public class AskDaoImpl implements AskDao {
 	}
 
 	@Override
-	public int insertReply(SqlSessionTemplate session, Map map) {
-		return session.insert("reply.insertReply",map);
+	public int insertReply(SqlSessionTemplate session,AskReply reply) {
+		return session.insert("reply.insertReply",reply);
 	}
+
+	@Override
+	public AskReply selectReplyView(SqlSessionTemplate session, int no) {
+		return session.selectOne("reply.selectReplyView",no);
+	}
+	
+	
 
 	
 

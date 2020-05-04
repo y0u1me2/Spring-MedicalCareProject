@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.web.spring.ask.model.vo.Ask;
+import com.web.spring.ask.model.vo.AskReply;
 
 public interface AskDao {
 
@@ -21,6 +22,8 @@ public interface AskDao {
 
 	int deleteAsk(SqlSessionTemplate session, int no);
 
-	int insertReply(SqlSessionTemplate session, Map map);
+	int insertReply(SqlSessionTemplate session, AskReply reply);
+
+	AskReply selectReplyView(SqlSessionTemplate session, int no);
 
 }

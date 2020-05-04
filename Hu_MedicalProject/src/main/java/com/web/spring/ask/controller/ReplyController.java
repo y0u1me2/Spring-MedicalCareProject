@@ -22,21 +22,20 @@ public class ReplyController {
 	private AskService service;
 	
 	@RequestMapping("/reply/insertReply.do")
-	public ModelAndView insertReply(@RequestParam Map map,ModelAndView mv) {
-		
-		int result=service.insertReply(map);
+	public String insertReply(AskReply reply,Model model,@RequestParam("replyRefNo") int no) {
+		System.out.println("??????????????????"+no);
+		int result=service.insertReply(reply);
 		String msg="";
 		String loc="";
 		if(result>0) {
 			msg="답변을 등록하였습니다.";
-			loc="/ask/askView.do";
+			loc="/ask/askView.do?no="+no;
 		}else {
 			msg="답변등록을 실패하였습니다.";
-			loc="/ask/askView.do";
+			loc="/ask/askView.do?no="+no;
 		}
-		mv.addObject("msg",msg);
-		mv.setViewName(loc);
-		return mv;
+		model.addAttribute("msg", msg);
+		model.addAttribute("loc", loc);
+		return "client/common/msg";
 	}
-	
 }

@@ -14,4 +14,5 @@
     <select id="healthBtnInfo" resultType="map">
     	SELECT * FROM HEALTHINFOBTNTEST
     </select>
+    
 </mapper>

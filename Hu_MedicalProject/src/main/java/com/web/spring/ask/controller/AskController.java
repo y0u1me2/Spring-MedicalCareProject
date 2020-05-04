@@ -1,7 +1,6 @@
 package com.web.spring.ask.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.web.spring.common.PageFactory;
 import com.web.spring.ask.model.service.AskService;
 import com.web.spring.ask.model.vo.Ask;
+import com.web.spring.ask.model.vo.AskReply;
+import com.web.spring.common.PageFactory;
 
 @Controller
 public class AskController {
@@ -65,6 +65,8 @@ public class AskController {
 	@RequestMapping("/ask/askView.do")
 	public ModelAndView askView(ModelAndView mv,@RequestParam("no") int no) {
 		Ask a=service.selectAskView(no);
+		AskReply reply=service.selectReplyView(no);
+		System.out.println("jas;fj;sdfj;sld"+reply);
 		
 		mv.addObject("a",a);
 		mv.setViewName("client/ask/askView");

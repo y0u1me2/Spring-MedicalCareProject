@@ -28,12 +28,16 @@
             ${a.askContent }
            </div>
           <hr>
-       <form action="${path}/reply/insertReply.do?askNoRef=${a.askNo}" method="post">
+       
+       <form action="${path}/reply/insertReply.do?replyRefNo=${a.askNo}" method="post">
+       <input type="text" name="replyRefNo" value="${a.askNo }">
          <div style="padding-top:10px;">
+         
          	<textarea style="margin-bottom:20px;" placeholder="문의에 대한 답을 입력하세요" name="replyContent" class="form-control" rows="4" id="replyContent" ></textarea>
          	<button id="replyBtn" class="btn btn-outline-success my-2 my-sm-0" style="margin-left:783px; ">답변등록</button>
          </div> 
        </form>
+       
         <%-- 
           <div style="height: 130px; ">
            	<img src="${path }/resources/images/logo6.png"  style="width:70px; float:left; padding-right:20px;">
