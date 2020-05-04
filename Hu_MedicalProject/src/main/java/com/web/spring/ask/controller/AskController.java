@@ -120,16 +120,5 @@ public class AskController {
 		model.addAttribute("loc",loc);
 		return "client/common/msg";
 	}
-	
-	/*
-	 * @RequestMapping("/demo/deleteDemo.do") public String
-	 * deleteDemo(@RequestParam(value="devNo") int devNo,Model model) {
-	 * System.out.println(devNo); int result=service.deleteDemo(devNo); String
-	 * msg=result>0?"성공":"실패"; model.addAttribute("msg",msg); return "common/msg";
-	 * //request알아서 스프링이 받아온다. }
-	 */
-	
-	
-	
 
 }
