@@ -5,11 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.web.spring.member.model.service.MemberService;
 import com.web.spring.member.model.vo.Member;
 
 @Controller
+@SessionAttributes(value= {"loginMember"})
 public class MemberController {
 	
 	@Autowired
@@ -56,4 +59,12 @@ public class MemberController {
 	     
 		 return "client/common/msg";
 	 }
+	
+	@RequestMapping("/member/logout.do")
+	public String logout(SessionStatus status) {
+		if(!status.isComplete() == true) {
+			status.setComplete(); //session을 종료
+		}
+		return "redirect:/";
+	}
 }
