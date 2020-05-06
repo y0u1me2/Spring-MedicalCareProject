@@ -36,7 +36,7 @@
     <img src="${pageContext.request.contextPath }/resources/images/logo5.png" style="width:50px; padding-right:8px;">
     <a class="navbar-brand" href="${pageContext.request.contextPath }" style="color:black;">똑똑닥</a>
     <!-- Links -->
-    <ul class="navbar-nav" style="padding-left: 30px;">
+    <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" href="#">공지사항</a>
           </li>
@@ -59,55 +59,43 @@
     </li>
     <c:choose>
          <c:when test = "${empty loginMember }">
-           <li class="nav-item" style="margin-left:250px;">
-            <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">로그인</button>
-          </li>
-          <li class="nav-item">
-             <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">회원가입</button>
+          <!--  <li class="nav-item" style="margin-left:250px;">
+             <button  style="width:auto;">로그인</button>
+          </li> -->
+          <li class="nav-item" style="margin-left:250px;">
+            <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('id01').style.display='block'">로그인</button>
+            <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('id02').style.display='block'" style="width:auto;">회원가입</button>
           </li>
          </c:when>
          <c:when test = "${not empty loginMember }">
-            <span>
-            	<a href="#"><c:out value="${loginMember.name }"></c:out></a>님, 안녕하세요!
-	       </span>
+               	
 			<li class="nav-item" style="margin-left:250px;">
-	             <button onclick="signOut();">Sign out</button>
+				<a href="#" style="align:right;"><c:out value="${loginMember.name }"></c:out> 님</a>
+				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
 	        </li>
          </c:when>
          <c:otherwise>
          </c:otherwise>
       </c:choose>
-     <%--  <c:if test="${empty loginMember }">
-		 <li class="nav-item" style="margin-left:250px;">
-            <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">로그인</button>
-          </li>
-          <li class="nav-item">
-             <button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">회원가입</button>
-          </li>
-	</c:if>
-	<c:if test="${not empty loginMember }">
-		<span>
-            <a href="#"><c:out value="${loginMember.name }"></c:out></a>님, 안녕하세요!
-       </span>
-		<li class="nav-item" style="margin-left:250px;">
-             <button onclick="signOut();">Sign out</button>
-        </li>
-	</c:if> --%>
     </ul>
   </nav>
  <!-- 로그인 -->
 <div id="id01" class="modalLogin" style="display: none;">
   
   <form class="modal-content animate" action="${path }/member/memberLogin.do" method="post" style="width:30%;">
+   
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="loginClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
       <br><br><br>
-     <img src="${path }/resources/images/logo.png" id="loginLogo" style="width:100px;height:100px;">
+     <img src="${path }/resources/images/logo.png" id="loginLogo" style="width:70%;height:50%;">
       <!-- <h1>로고</h1> -->
     </div>
 
     <div class="containerlogin">
-      <input type="text" placeholder="E-mail" id="uname" name="email" autocomplete="off" required>
+    <c:if test="${not empty cookie.user_check}">
+		<c:set value="checked" var="checked"/>
+	</c:if>
+      <input type="text" placeholder="E-mail" id="uemail" name="email" autocomplete="off" required>
       <input type="password" placeholder="Password" id="psw" name="password" required>
       <label>
         <input type="checkbox" id="store" name="saveId">이메일 저장
@@ -115,7 +103,7 @@
       
       <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE">Login</button>
 
-        <p>----------------또 다른 계정으로 로그인--------------</p>
+        <p>---------------또 다른 계정으로 로그인-------------</p>
             
             <!--  <button type="button" id="otherbtn"><img src="${path }/resources/images/google.png" alt=""></button>&nbsp;&nbsp;-->
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
@@ -136,8 +124,9 @@
 
 <div id="id02" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
+  
       <div class="imgcontainer" style="height:10px">
-        <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;&nbsp;&nbsp;</span>
+        <span onclick="document.getElementById('id02').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
         <!-- <br>
           <h2 align="center">[회원가입]</h2>
           <hr> -->
@@ -164,10 +153,10 @@
   new WOW().init();
  
 function personEnroll(){
-	location.href="${path}/member/personEnroll.do"
+	location.href="${path}/member/personEnroll.do";
 }
 function hospitalEnroll(){
-	location.href="${path}/member/hospitalEnroll.do"
+	location.href="${path}/member/hospitalEnroll.do";
 }
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
@@ -182,6 +171,56 @@ function signOut() {
       console.log('User signed out.');
     });
     auth2.disconnect();
+}
+function logoutChk(){
+	location.href="${path}/member/logout.do";
+}
+$(document).ready(function(){
+	var key = getCookie("key");
+	$("uemail").val(key);
+	
+	if($("#uemail").val()!=""){
+		$("store").attr("checked",true);
+	}
+	
+	$("#store").change(function(){ // 체크박스에 변화가 있다면,
+		if($("#store").is(":checked")){ //ID 저장하기 체크했을 때,
+			setCookie("key",$("#uemail").val(),7); //7일 저장
+		}else{
+			deleteCookie("key");
+		}
+	});
+	 // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+    $("#uemail").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+        if($("#store").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+            setCookie("key", $("#uemail").val(), 7); // 7일 동안 쿠키 보관
+        }
+	});
+});
+function setCookie(cookieName, value, exdays){
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+    document.cookie = cookieName + "=" + cookieValue;
+}
+function deleteCookie(cookieName){
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() - 1);
+    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+}
+ 
+function getCookie(cookieName) {
+    cookieName = cookieName + '=';
+    var cookieData = document.cookie;
+    var start = cookieData.indexOf(cookieName);
+    var cookieValue = '';
+    if(start != -1){
+        start += cookieName.length;
+        var end = cookieData.indexOf(';', start);
+        if(end == -1)end = cookieData.length;
+        cookieValue = cookieData.substring(start, end);
+    }
+    return unescape(cookieValue);
 }
 
 </script>

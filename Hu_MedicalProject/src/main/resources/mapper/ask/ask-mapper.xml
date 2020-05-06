@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ask">
 	<select id="selectAskCount" resultType="_int">
-		SELECT COUNT(*) FROM ASK ORDER BY ASKDATE DESC
+		SELECT COUNT(*) FROM ASK
 	</select>
 	
 	<select id="selectAskList" resultType="ask">
-		SELECT * FROM ASK
+		SELECT * FROM ASK ORDER BY ASKDATE DESC
 	</select>
 	
 	<insert id="insertAsk" parameterType="ask">
