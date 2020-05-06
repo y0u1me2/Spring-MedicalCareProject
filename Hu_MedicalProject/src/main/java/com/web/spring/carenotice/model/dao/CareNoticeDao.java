@@ -19,4 +19,9 @@ public interface CareNoticeDao {
 
 	CareNotice careView(SqlSession session,int cno);
 	List<CareAttachment> selectCareFile(SqlSession session, int cno); 
+	
+	CareNotice updateView(SqlSession session,int no);
+	int deleteCare(SqlSession session, int no);
+	
+	int updateCare(SqlSession session, CareNotice c);
 }
