@@ -1,6 +1,8 @@
 package com.web.spring.member.controller;
 
 
+import javax.servlet.http.Cookie;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,9 +43,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/memberLogin.do")
-	 public String memberLogin(Member m, Model model) {
+	 public String memberLogin(Member m, Model model,String saveId) {
 		//System.out.println(m);
+		//System.out.println(saveId);
 		Member loginMember = service.memberLogin(m);
+		
 		System.out.println(loginMember);
 		 String msg = "";
 		 String loc = "/";
@@ -51,6 +55,12 @@ public class MemberController {
 		 if(loginMember != null) {
 			 msg = "로그인 성공";
 			 model.addAttribute("loginMember",loginMember);
+			/*
+			 * if(saveId!=null) { Cookie c = new Cookie("saveId",m.getEmail());
+			 * c.setMaxAge(60*60*24*7);//7일
+			 * 
+			 * }
+			 */
 		 }else {
 			 msg = "로그인 실패!";
 		 }

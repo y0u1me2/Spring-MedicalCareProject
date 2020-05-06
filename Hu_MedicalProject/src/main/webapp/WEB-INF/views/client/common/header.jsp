@@ -92,9 +92,6 @@
     </div>
 
     <div class="containerlogin">
-    <c:if test="${not empty cookie.user_check}">
-		<c:set value="checked" var="checked"/>
-	</c:if>
       <input type="text" placeholder="E-mail" id="uemail" name="email" autocomplete="off" required>
       <input type="password" placeholder="Password" id="psw" name="password" required>
       <label>
@@ -175,7 +172,7 @@ function signOut() {
 function logoutChk(){
 	location.href="${path}/member/logout.do";
 }
-$(document).ready(function(){
+/* $(document).ready(function(){
 	var key = getCookie("key");
 	$("uemail").val(key);
 	
@@ -196,7 +193,10 @@ $(document).ready(function(){
             setCookie("key", $("#uemail").val(), 7); // 7일 동안 쿠키 보관
         }
 	});
-});
+}); */
+window.onload=function(){
+	if(getCookie("#uemail"))
+}
 function setCookie(cookieName, value, exdays){
     var exdate = new Date();
     exdate.setDate(exdate.getDate() + exdays);
