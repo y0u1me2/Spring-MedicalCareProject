@@ -37,4 +37,13 @@ public class ReservationController {
 		
 		return "client/reservation/reservationEnd";
 	}
+	
+//날짜 시간선택 페이지로 이동===========================
+	
+	@RequestMapping("/rv/reservationTime")
+	public String reservationTime() {
+		
+		return "client/reservation/reservationTime";
+	}
+	
 }
