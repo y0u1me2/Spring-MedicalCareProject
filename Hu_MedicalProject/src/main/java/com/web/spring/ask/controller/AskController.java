@@ -1,7 +1,5 @@
 package com.web.spring.ask.controller;
-
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.web.spring.common.PageFactory;
 import com.web.spring.ask.model.service.AskService;
 import com.web.spring.ask.model.vo.Ask;
+import com.web.spring.ask.model.vo.AskReply;
+import com.web.spring.common.PageFactory;
 
 @Controller
 public class AskController {
@@ -29,8 +28,11 @@ public class AskController {
 				//페이징 처리까지하기
 				//별도의 페이징 처리 객체를 생성해서 PAGE처리를 해보자!
 				List<Ask> list=service.selectAskList(cPage,numPerpage);
+				
+				//Reply리스트불러오기
+				
 				mv.addObject("list",list);
-				mv.setViewName("ask/askList");
+				mv.setViewName("client/ask/askList");
 				mv.addObject("count",totalCount);
 				mv.addObject("pageBar",PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/ask/ask.do"));
 		return mv;
@@ -40,7 +42,7 @@ public class AskController {
 	//전환용
 	@RequestMapping("/ask/insertAsk.do")
 	public String insertAsk() {
-		return "ask/askWrite";
+		return "client/ask/askWrite";
 	}
 	//등록
 	@RequestMapping("/ask/insertEndAsk.do")
@@ -65,9 +67,13 @@ public class AskController {
 	@RequestMapping("/ask/askView.do")
 	public ModelAndView askView(ModelAndView mv,@RequestParam("no") int no) {
 		Ask a=service.selectAskView(no);
+		AskReply reply=service.selectReplyView(no);
+		System.out.println("reply객체출력 : "+reply);
 		
 		mv.addObject("a",a);
-		mv.setViewName("ask/askView");
+		mv.addObject("reply",reply);
+		mv.setViewName("client/ask/askView");
+		
 		return mv;
 	}
 //update 페이지 전환
@@ -75,7 +81,7 @@ public class AskController {
 	public ModelAndView updateAsk(ModelAndView mv,@RequestParam("no") int no) {
 		Ask a = service.selectAskView(no);
 		mv.addObject("a",a);
-		mv.setViewName("ask/askUpdate");
+		mv.setViewName("client/ask/askUpdate");
 		return mv;
 		/*
 		 * int result=service.updatetAsk(no); String msg=""; String loc=""; if(result>0)
