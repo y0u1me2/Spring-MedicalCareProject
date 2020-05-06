@@ -1,12 +1,19 @@
 package com.web.spring.member.controller;
 
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -43,9 +50,9 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/memberLogin.do")
-	 public String memberLogin(Member m, Model model,String saveId) {
+	 public String memberLogin(Member m, Model model) {
 		//System.out.println(m);
-		//System.out.println(saveId);
+
 		Member loginMember = service.memberLogin(m);
 		
 		System.out.println(loginMember);
@@ -55,12 +62,7 @@ public class MemberController {
 		 if(loginMember != null) {
 			 msg = "로그인 성공";
 			 model.addAttribute("loginMember",loginMember);
-			/*
-			 * if(saveId!=null) { Cookie c = new Cookie("saveId",m.getEmail());
-			 * c.setMaxAge(60*60*24*7);//7일
-			 * 
-			 * }
-			 */
+			
 		 }else {
 			 msg = "로그인 실패!";
 		 }
@@ -77,4 +79,6 @@ public class MemberController {
 		}
 		return "redirect:/";
 	}
+	
+	
 }
