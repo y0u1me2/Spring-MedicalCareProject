@@ -4,7 +4,7 @@
   
   <!-- 돌보미 찾기 게시판 페이징처리 -->
     <select id="careNotice" resultType="care">
-     	SELECT * FROM CARENOTICE ORDER BY CAREDATE DESC
+     	SELECT * FROM CARENOTICE WHERE CARESTATUS='Y' ORDER BY CAREDATE DESC
     </select>
     
     <!-- 돌보미 찾기 게시판 글개수 -->
@@ -16,10 +16,10 @@
     <insert id="insertCare" parameterType="map">
        INSERT INTO CARENOTICE VALUES(SEQ_CARENOTICE.NEXTVAL,
                             #{careTitle},#{careWriter},
-                            #{careContent},DEFAULT, DEFAULT,DEFAULT)
+                            #{careContent},DEFAULT,DEFAULT,DEFAULT)
        
        <selectKey keyProperty="careNo" resultType="String" order="AFTER">
-          SELECT SEQ_CARENO.CURRVAL FROM DUAL
+          SELECT SEQ_CARENOTICE.CURRVAL FROM DUAL
        </selectKey>
     </insert>
     
@@ -31,8 +31,7 @@
                                 DEFAULT)
     </insert> 
     
-    
-   
+    <!--돌보미 상세페이지  -->
     <select id="careView" parameterType="_int" resultType="care">
     	SELECT * FROM CARENOTICE WHERE CARENO=#{cno}
     </select> 
@@ -40,6 +39,31 @@
     <select id="selectCareFile" parameterType="_int" resultType="attachment">
     	SELECT * FROM CAREATTACHMENT WHERE CARENO=#{cno}
     </select>
-  
+  	
+  	
+   <!--돌보미 수정페이지  -->
+    <select id="updateView" parameterType="_int" resultType="care">
+    	SELECT * FROM CARENOTICE WHERE CARENO=#{no}
+    </select> 
+  	
+  	<!--돌보미 수정하기 -->
+  	<update id="updateCare" parameterType="care">
+		UPDATE CARENOTICE SET CARETITLE=#{careTitle},CARECONTENT=#{careContent}, WHERE CARENO=#{no}
+	</update>
+	
+	 <!-- 돌보미 첨부파일 등록하기 -->
+    <update id="updateAttachment" parameterType="attachment">
+       INSERT INTO CAREATTACHMENT VALUES(SEQ_ATTACHMENT.NEXTVAL, 
+                               #{careNo}, #{originalFilename},
+                                #{renamedFilename},DEFAULT,DEFAULT,
+                                DEFAULT)
+    </update> 
+	
+
+  	<!-- 돌보미 삭제 -->
+  	<update id="deleteCare" parameterType="care">
+		UPDATE CARENOTICE SET CARESTATUS='N' WHERE CARENO=#{no}
+	</update>
+   
     
 </mapper>

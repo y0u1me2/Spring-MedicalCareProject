@@ -1,5 +1,9 @@
   <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 
 <jsp:include page="/WEB-INF/views/client/common/header.jsp"/>
 
@@ -35,7 +39,7 @@
 
 	/* 작성일 */
 	p#time{
-		float: right;
+		float:right;
 		color:#9e9d9d;
 		position: relative;
 		bottom: 20px;
@@ -79,17 +83,7 @@
         background-color: white;
         border: 1px solid rgb(161, 161, 161);
 
-		}
-
-	/* 파일 및 내용 */
-	/* .upfile{
-		position: relative;
-    	padding: 15px 20px;
-    	border-bottom: 1px solid black;
-	}
-	.upfile>p{
-		padding-left:30px;
-	} */
+		}	
 
 	/* 내용박스 */
 	.content{
@@ -188,7 +182,51 @@
 		position: relative;
 	}
 
+	footer{
+		position:relative;
+		top:300px;
+	}
+	
+	div.buttons{
+		position:relative;
+		float:right;
+		bottom:50px;
+		
+	}
+	
+	button#update-btn1{
+        height: 40px;
+        width: 50px;
+        border: solid 1px rgb(147, 147, 194);
+        background: white;
+        border-radius: 5px;
+        font-size: 15px;
+        color: rgb(134, 134, 133);
+        margin-right: 5px;
+    }
 
+   	button#update-btn1:hover {
+        background: rgb(251, 251, 249);
+        outline: none;
+    
+	}
+	
+	button#delete-btn1{
+		   height: 40px;
+        width: 50px;
+        border: solid 1px rgb(147, 147, 194);
+        background: white;
+        border-radius: 5px;
+        font-size: 15px;
+        color: rgb(134, 134, 133);
+        margin-right: 5px;
+	}
+
+	button#update-btn1:hover {
+        background: rgb(251, 251, 249);
+        outline: none;
+    
+	}	
 	
 </style>
 
@@ -196,25 +234,43 @@
 <section class="back">
 	
 	<div class="back-div bottom">
-		<h2>제목</h2>
-		   <input type="text" class="form-control" placeholder="제목" name="boardTitle" id="boardTitle" value="${c.careTitle }" required>
-		<p id="time">2020.04.24 15:30</p>
+		<h2>${c.careTitle }</h2>
+		
+		<div class="buttons">
+			<button id="update-btn1" onclick="updateCare();">수정</button>	
+			<button id="delete-btn1" onclick="gotoList();">목록</button>		
+		</div>
+		  			
 	<hr>
-		<p><img src="images/logo.png" width="20px;"/>&nbsp;작성자</p>		
+		<p><img src="${path }/resources/images/logo5.png" width="20px;"/>&nbsp;<c:out value="${c.careWriter }" /></p>
+		<p id="time">
+		<fmt:formatDate value="${c.careDate }" type="date" pattern="yyyy/MM/dd"/>
+		</p>
+		
 	</div>
 
 	
 
 	<div class="content">
-		<pre class="context">내용</pre>
+	<pre class="context"><c:out value="${c.careContent }" />
+	
+	<%-- <c:if test="${loginMember.name eq 'admin'}"> --%>
+		 <c:forEach items="${files}" var="f" varStatus="vs">    
+	            <button type="button" 
+	                    onclick="fileDownload('${f.originalFilename}','${f.renamedFilename }')">
+	                첨부파일 ${vs.count } - ${f.originalFilename }
+	            </button>
+	      </c:forEach>
+    <%--  </c:if> --%>
+	</pre>
 	</div>
 
 		<ul class="info">
 			<li class="writer">댓글21 </li>
 			<li class="readcount">조회수 </li>
-			<li>좋아요&nbsp;<img  src="images/heart.png" id="heart" />&nbsp;2</li>
+			<li>좋아요&nbsp;<img  src="${path }/resources/images/heart.png" id="heart" />&nbsp;2</li>
 			<li class="copy">인쇄</li>
-			<li class="copy"><button type="button"onclick="goList()" class="btn_Wihte">목록</button></li>
+		
 		</ul>
 
 
@@ -226,12 +282,12 @@
 
 			<tr class="level1">
 				<td>
-					<sup class="cm-writer"><img src="images/logo.png" width="20px;"/>
+					<sup class="cm-writer"><img src="${path }/resources/images/logo5.png" width="20px;"/>
 						&nbsp;기린</sup>&nbsp;&nbsp;&nbsp;
 					<sup>2020.04.24 18:03</sup>
 				
 					&nbsp;&nbsp;&nbsp;<sup><a href="">
-						<img src="images/reply.png" width="10px;"/>
+						<img src="${path }/resources/images/reply.png" width="10px;"/>
 						답글</a></sup>
 
 					</br>
@@ -294,26 +350,37 @@
 
 
 	<script>
+	//수정하기
+		function updateCare(){
+			location.replace('${path}/care/updateView?no=${c.careNo}');
+		}
+			
 	//목록으로이동
-<%-- 	function goList(){
-	location.replace("<%=request.getContextPath()%>/notice/noticeList");
+	function gotoList(){
+		location.replace('${path}/care/careNotice');
 	}
 	
+	//파일다운로드
+	 function fileDownload(ori,rename){
+         ori=encodeURIComponent(ori);
+         location.href="${path}/care/fileDownload?oName="+ori+"&rName="+rename;
+      }
+	 
 	//비로그인시 댓글등록 못하게 막아놈
-	if(<%=loginMember==null%>){
+	<%-- if(<%=loginMember==null%>){
 		$("#btn-insert").prop("disabled",true);
 	}else{
 		$("#btn-insert").prop("disabled",false);
-	}
+	} --%>
 	
 	//비로그인시 로그인하라고 나옴
-	$(function(){
+	<%-- $(function(){
 		$("input[name=commentContent]").click(function(){
 			if(<%=loginMember==null%>){
 				alert("로그인후 이용하세요!!")
 			}
 		})
-	}); --%>
+	}); --%> 
 	
 	//대댓글 클릭시 아래뜨게하기
 <%-- 	$(".btn-reply").click(function(){
@@ -381,4 +448,3 @@
 </script>
 
 <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>
- --%>
