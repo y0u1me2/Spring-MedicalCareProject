@@ -46,7 +46,7 @@ color:grey;
 }
 
 /* 입력 창 스타일 */
-input[type=text]#uname,input[type=password]#psw{
+input[type=text]#uemail,input[type=password]#psw{
 	width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -56,7 +56,8 @@ input[type=text]#uname,input[type=password]#psw{
 }
 /* 로고 사진 설정 */
 #loginLogo{
-  height: 100px;
+	weight:70%;
+  height: 80px;
 }
 /*버튼 스타일 */
 .login-button{
@@ -101,7 +102,7 @@ button:hover {
 }
 
 /* (x) 닫기 버튼 */
-.loginClose {
+.loginClose{
 	position: absolute;
     right: -2%;
     top: -10%;
@@ -109,13 +110,24 @@ button:hover {
     font-size: 35px;
     font-weight: bold;
 }
-
+.joinClose {
+	position: absolute;
+    right: -1%;
+    top: -150%;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
 .loginClose:hover,
 .loginClose:focus {
   color: red;
   cursor: pointer;
 }
-
+.joinClose:hover,
+.joinClose:focus {
+  color: red;
+  cursor: pointer;
+}
 /* 로그인 화면 켜질 때 애니매니션 */
 .animate {
   -webkit-animation: animatezoom 0.6s;

@@ -91,76 +91,76 @@
 <div class="container-fluid-enroll">
 	<form name="personEnrollFrm" action="${path}/member/personEnrollEnd.do" method="post" onsubmit="return validate();" >
 	<div class="row"> 
-	  <div class="col" style="background-color:yellow;"></div>
-	  <div class="col-xl-6" style="background-color:orange;"> <h1 align="center">일반 회원가입</h1></div>
-	  <div class="col" style="background-color:yellow;"></div>
+	  <div class="col"></div>
+	  <div class="col-xl-6"> <h1 align="center">일반 회원가입</h1></div>
+	  <div class="col"></div>
 	</div>
 	
 	<div class="row">
-	  <div class="col-xl-4" style="background-color:yellow;"></div>
-	  <div class="col-xl-4" style="background-color:orange;" >
+	  <div class="col-xl-4"></div>
+	  <div class="col-xl-4">
 	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    <a href="${path}/member/personEnroll.do">일반 회원</a> 
 	    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    <a href="${path}/member/hospitalEnroll.do">병원 관계자 회원</a>
 	  </div>
-	  <div class="col-xl-4" style="background-color:yellow;"></div>
+	  <div class="col-xl-4"></div>
 	</div>
 	
 	<div class="row"> 
-	  <div class="col" style="background-color:yellow;"></div>
-	  <div class="col-xl-6" style="background-color:orange;">
+	  <div class="col"></div>
+	  <div class="col-xl-6">
 	    <label for="email"><b>이메일</b></label>
 	    <input type="text" placeholder="@를 포함한 이메일 입력" id="email" name="email" required>
 	  </div>
-	  <div class="col" style="background-color:yellow;"></div>
+	  <div class="col"></div>
 	</div>
 	
 	<div class="row"> 
-	  <div class="col" style="background-color:yellow;"></div>
-	  <div class="col-xl-6" style="background-color:orange;">
+	  <div class="col"></div>
+	  <div class="col-xl-6">
 	    <label for="name"><b>이름</b></label>
 	    <input type="text" placeholder="Name" name="name" required>
 	  </div>
-	  <div class="col" style="background-color:yellow;"></div>            
+	  <div class="col"></div>            
 	</div>
 	
 	<div class="row"> 
-	  <div class="col" style="background-color:yellow;"></div>
-	  <div class="col-xl-6" style="background-color:orange;">
+	  <div class="col"></div>
+	  <div class="col-xl-6">
 	    <label for="psw"><b>비밀번호</b></label>
 	     <input type="password" placeholder="Enter Password" id="password" name="password" required>
 	 </div>
-	  <div class="col" style="background-color:yellow;"></div> 
+	  <div class="col"></div> 
 	</div>
 	
 	<div class="row"> 
-	  <div class="col" style="background-color:yellow;"></div>
-	  <div class="col-xl-6" style="background-color:orange;">
+	  <div class="col"></div>
+	  <div class="col-xl-6">
 	    <label for="psw-repeat"><b>비밀번호 확인</b></label>
 	    <input type="password" placeholder="Repeat Password" id="psw-repeat" name="psw-repeat" required>
 	  </div>
-	  <div class="col" style="background-color:yellow;"></div> 
+	  <div class="col"></div> 
 	</div>
 	
 	
 	<div class="row"> 
-	  <div class="col" style="background-color:yellow;"></div>
-	  <div class="col-xl-6" style="background-color:orange;">
+	  <div class="col"></div>
+	  <div class="col-xl-6">
 	    <label for="psw-repeat"><b>핸드폰 번호</b></label>
 	    <input type="text" placeholder="-를 제외하고 입력" name="phone" required>
 	 </div>
-	  <div class="col" style="background-color:yellow;"></div>
+	  <div class="col"></div>
 	</div>
 	
 	    
 	<div class="row"> 
-	  <div class="col" style="background-color:yellow;"></div>
-	  <div class="col-xl-6" style="background-color:orange;">
+	  <div class="col"></div>
+	  <div class="col-xl-6">
 	    <button type="button" class="cancelbtn">취소</button>
 	    <button type="submit" class="signupbtn">회원가입</button>
 	   </div>
-	  <div class="col" style="background-color:yellow;"></div>
+	  <div class="col"></div>
 	</div>
 	</form>
 </div>
