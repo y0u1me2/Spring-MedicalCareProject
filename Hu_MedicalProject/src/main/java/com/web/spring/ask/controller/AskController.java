@@ -70,5 +70,55 @@ public class AskController {
 		mv.setViewName("ask/askView");
 		return mv;
 	}
-	
+//update 페이지 전환
+	@RequestMapping("/ask/updateAsk.do")
+	public ModelAndView updateAsk(ModelAndView mv,@RequestParam("no") int no) {
+		Ask a = service.selectAskView(no);
+		mv.addObject("a",a);
+		mv.setViewName("ask/askUpdate");
+		return mv;
+		/*
+		 * int result=service.updatetAsk(no); String msg=""; String loc=""; if(result>0)
+		 * { msg="수정되었습니다."; loc="/ask/ask.do"; }else { msg="수정을 실패하였습니다.";
+		 * loc="/ask/updateAsk.do"; } mv.addObject("msg",msg); mv.setViewName(loc);
+		 * return mv;
+		 */
+	}
+
+//update
+	@RequestMapping("/ask/updateEndAsk.do")
+	public String updateEndAsk(Ask ask,Model model) {
+		int result=service.updateAsk(ask);
+		String msg="";
+		String loc="";
+		if(result>0) {
+			msg="수정되었습니다.";
+			loc="/ask/ask.do";
+		}else {
+			msg="등록을 실패하였습니다.";
+			loc="/ask/askView.do";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		return "client/common/msg";
+	}
+
+//delete
+	@RequestMapping("/ask/deleteAsk.do")
+	public String deleteAsk(@RequestParam(value="no") int no,Model model) {
+		int result=service.deleteAsk(no);
+		String msg="";
+		String loc="";
+		if(result>0) {
+			msg="삭제되었습니다.";
+			loc="/ask/ask.do";
+		}else {
+			msg="삭제를 실패하였습니다.";
+			loc="/ask/updateAsk.do";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		return "client/common/msg";
+	}
+
 }

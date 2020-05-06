@@ -32,6 +32,19 @@ public class AskDaoImpl implements AskDao {
 	public Ask selectAskView(SqlSessionTemplate session, int no) {
 		return session.selectOne("ask.selectAsk",no);
 	}
+//update
+	@Override
+	public int updateAsk(SqlSessionTemplate session, Ask ask) {
+		return session.update("ask.updateAsk", ask);
+	}
+//delete
+
+	@Override
+	public int deleteAsk(SqlSessionTemplate session, int no) {
+		return session.delete("ask.deleteAsk",no);
+	}
+	
+
 	
 
 }

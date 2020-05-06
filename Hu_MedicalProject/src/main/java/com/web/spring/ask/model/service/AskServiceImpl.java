@@ -43,6 +43,18 @@ public class AskServiceImpl implements AskService {
 	public Ask selectAskView(int no) {
 		return dao.selectAskView(session,no);
 	}
+//update
+	@Override
+	public int updateAsk(Ask ask) {
+		return dao.updateAsk(session,ask);
+	}
+//delete
+	@Override
+	public int deleteAsk(int no) {
+		return dao.deleteAsk(session,no);
+	}
+
+
 
 
 	

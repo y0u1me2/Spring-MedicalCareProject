@@ -17,9 +17,6 @@ public class Ask {
 	private String askTitle;
 	private String askContent;
 	private Date askDate;
-	private int originNo;
-	private int groupOrd;
-	private int groupStep;
-	private int groupIndent;
+
 
 }
