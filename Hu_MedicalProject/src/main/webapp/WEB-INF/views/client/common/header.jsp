@@ -69,9 +69,11 @@
          </c:when>
          <c:when test = "${not empty loginMember }">
                	
-			<li class="nav-item" style="margin-left:250px;">
+			<li class="nav-item" style="margin-left:200px;">
 				<a href="#" style="align:right;"><c:out value="${loginMember.name }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
+				<button type="button" class="btn btn-outline-dark" onclick="chatting();">병원chat</button>
+				
 	        </li>
          </c:when>
          <c:otherwise>
@@ -79,6 +81,12 @@
       </c:choose>
     </ul>
   </nav>
+  <script>
+  
+  function chatting(){
+		open("${path}/chattingView","_blank","width=500,height=600");		
+	}
+  </script>
  <!-- 로그인 -->
 <div id="id01" class="modalLogin" style="display: none;">
   

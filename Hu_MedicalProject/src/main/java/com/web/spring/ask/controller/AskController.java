@@ -68,7 +68,6 @@ public class AskController {
 	public ModelAndView askView(ModelAndView mv,@RequestParam("no") int no) {
 		Ask a=service.selectAskView(no);
 		AskReply reply=service.selectReplyView(no);
-		System.out.println("reply객체출력 : "+reply);
 		
 		mv.addObject("a",a);
 		mv.addObject("reply",reply);
@@ -91,7 +90,7 @@ public class AskController {
 		 */
 	}
 
-//update
+//update--------------------------------------------------------ajax로 구현하기!!!!
 	@RequestMapping("/ask/updateEndAsk.do")
 	public String updateEndAsk(Ask ask,Model model) {
 		int result=service.updateAsk(ask);
@@ -126,5 +125,10 @@ public class AskController {
 		model.addAttribute("loc",loc);
 		return "client/common/msg";
 	}
-
+	
+	//채팅
+		@RequestMapping("/chattingView")
+		public String accessChatting() {
+			return "client/chatting/chatting";
+		}
 }
