@@ -43,6 +43,7 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		return result;
 	}
 
+//게시글등록===========================================================================
 	@Override
 	@Transactional
 	public int insertCare(Map<String, String> param, List<CareAttachment> files) throws RuntimeException  {
@@ -53,7 +54,7 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		  
 		  if(!files.isEmpty()) {//파일이 있으면 
 			  for(CareAttachment a : files) {
-				 a.setCareNo(Integer.parseInt(param.get("boardNo")));//mybatis의 selectkey가  도와줌
+				 a.setCareNo(Integer.parseInt(param.get("careNo")));//mybatis의 selectkey가  도와줌
 				 result = dao.insertCareAttachment(session,a);
 		  }
 			  
@@ -79,5 +80,33 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		
 		return dao.selectCareFile(session,cno);
 	}
+
+
+//게시글 수정화면이동============================================
 	
+	@Override
+	public CareNotice updateView(int no) {
+		
+		return dao.updateView(session,no);
+	}
+
+//게시글 수정하기=================================================
+	
+	@Override
+	public int updateCare(CareNotice c) {
+		
+		return dao.updateCare(session,c);
+	}
+	
+	
+//게시글 삭제하기=================================================
+	
+	@Override
+	public int deleteCare(int no) {
+		
+		return dao.deleteCare(session,no);
+	}
+
+
+
 }

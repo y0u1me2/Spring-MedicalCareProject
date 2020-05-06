@@ -33,10 +33,6 @@
         margin-right: 5px;
     }
 
-    button#cancel-btn:hover{
-        background:rgb(251, 251, 249);
-        outline: none;
-    } 
 
     /* 문진완료 버튼 */
     button#complete-btn{
@@ -47,10 +43,6 @@
       border-radius: 7px;
     }
 
-    button#complete-btn:hover{
-        background: rgb(200, 200, 202);
-      outline: none;
-    }
 
 footer {
 	position: relative;
@@ -78,7 +70,7 @@ footer {
                     
                     <p>중국 방문 후 14일 이내에 발열 또는 호흡기 증상이 있나요?</p>                 
 
-                    <input type="radio" class="yes one" id="yes1" value="" />
+                    <input type="radio" class="yes" id="yes1" value="" />
                     <label for="yes1">예</label>
 
                     <input type="radio" class="no" id="no1" value="" />
@@ -86,7 +78,7 @@ footer {
 
                     <p>확진자 접촉 후 14일 이내에 발열 또는 호흡기 증상이 있나요?</p>
 
-                    <input type="radio" class="yes two" id="yes2" value="" />
+                    <input type="radio" class="yes" id="yes2" value="" />
                     <label for="yes2">예</label>
 
                     <input type="radio" class="no" id="no2" value="" />
@@ -94,7 +86,7 @@ footer {
 
                     <p>코로나19 발생 국가/지역 방문 후 14일 이내에 발열 또는 호흡기 증상이 있나요?</p>
 
-                    <input type="radio" class="yes three" id="yes3" value="" />
+                    <input type="radio" class="yes" id="yes3" value="" />
                     <label for="yes3">예</label>
 
                     <input type="radio"  class="no" id="no3" value="" />
@@ -112,27 +104,45 @@ footer {
     </div>
 
     <script>
-   // $(document).ready(function(){
-    	$complete = $('#complete-btn').attr('disabled', true);
-		
-    	var no = $('input.no');
-    	console.log($('input.no'));
-    	$('input').click(function() {
-    		for(var i=0;i<$('input.no').length;i++) {
-		    	if($(no[i]).attr('checked')==true) {
-		    		console.log("롸?");
-		    	}
-    			
-    		}
-    		
-    	})
-    	//$("input:radio[name=no1]").click(function(){
-    	//	$complete = $('#complete-btn').attr('disabled', false);
-    	//})
+   $(document).ready(function(){
+    	$('#complete-btn').attr('disabled', true);
+		  	
+   });
+   
+   
+  //아니오 3개 클릭됐을 때 문진완료버튼 활성화
+	  $("input.no").click(function(){
+  
+		   var count=0;
+	    	$.each($("input.no"),function(i,item){
+	    		
+	    		//radio가 3개체크됐는지 확인하기
+	    		if(item.checked==true){
+	    			count++; 			  			
+	    		}  		
+	    	})	   	
+	    		if(count==3) $('#complete-btn').attr('disabled', false);
+    	
+    	});
 
-   // });
+ 	
+   //예 3개 클릭 됐을 때 경고 팝업창 띄우기
+  /*  $("input.yes").click(function(){
+	   
+	   var yesCount=0;
+	   $.each($("input.yes"),function(i,item){
+		   
+		   if(item.checked==true){
+			   yesCount++;
+		   }
+	   })
+	  		if(yesCount>=1) $('#complete-btn').attr('disabled',false);
+	   
+   })
+  };
+   
 
-
+  } */
     
     </script>
     

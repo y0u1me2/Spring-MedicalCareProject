@@ -135,7 +135,7 @@
 
                     <label for="title">제목</label>
 
-                    <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
+                    <input type="text" class="form-control" name="careTitle" id="title" placeholder="제목을 입력해 주세요" required>
 
                 </div>
 
@@ -145,7 +145,8 @@
 
                     <label for="reg_id">작성자</label>
 
-                    <input type="text" class="form-control" name="reg_id" id="reg_id" placeholder="이름을 입력해 주세요">
+                    <input type="text" class="form-control" name="careWriter" id="reg_id" value="${loginMember.name}"
+                    readonly required>
 
                 </div>
 
@@ -155,7 +156,7 @@
 
                     <label for="content">내용</label>
 
-                    <textarea class="form-control" rows="5" name="content" id="content"
+                    <textarea class="form-control" rows="5" name="careContent" id="content"
                         placeholder="내용을 입력해 주세요"></textarea>
 
                 </div>
@@ -167,22 +168,22 @@
                     <label for="tag">자격증 등록</label>
                     <span> *요양보호사 자격증을 업로드 해주세요.</span>
 
-                    <input type="file" class="form-control" name="upFile" id="upFile">
+                    <input type="file" class="form-control" name="upFile" id="upFile" required> 
 
                 </div>
 
 
 
-            </form>
 
             <div class="btns">
 
-                <button type="button" id="btnSave">등록</button>
+                <button type="submit" id="btnSave" >등록</button>
 
                 <button type="button" id="btnList"
                  onclick="location.replace('${path}/care/careNotice');">목록</button>
 
             </div>
+            </form>
 
         </div>
     </div>

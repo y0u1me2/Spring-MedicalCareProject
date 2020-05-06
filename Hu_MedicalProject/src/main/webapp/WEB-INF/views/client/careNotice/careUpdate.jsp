@@ -5,7 +5,7 @@
 	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	<c:set var="path" value="${pageContext.request.contextPath}"/>
 
-<jsp:include page="/WEB-INF/views/client/common/header.jsp">
+<jsp:include page="/WEB-INF/views/client/common/header.jsp" />
 
 </head>
 <style>
@@ -83,8 +83,8 @@
         outline: none;
     }
 
-    /* 목록버튼 */
-    button#btnList {
+    /* 삭제버튼 */
+    button#delete-btn {
         height: 40px;
         width: 100px;
         border: solid 1px rgb(147, 147, 194);
@@ -103,6 +103,11 @@
     div#section-container{
         position: relative;
         top:100px;
+    }
+    
+    footer{
+    	position:relative;
+    	top:300px;
     }
 </style>
 
@@ -127,13 +132,13 @@
 
 
 
-            <form name="form" id="form" role="form" method="post">
+            <form name="form" id="careFrm" role="form" method="post">
 
                 <div class="mb-3">
 
                     <label for="title">제목</label>
 
-                    <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
+                    <input type="text" class="form-control" name="careTitle" id="title" value="${c.careTitle }">
 
                 </div>
 
@@ -143,7 +148,7 @@
 
                     <label for="reg_id">작성자</label>
 
-                    <input type="text" class="form-control" name="reg_id" id="reg_id" placeholder="이름을 입력해 주세요">
+                    <input type="text" class="form-control" name="careWriter" id="reg_id" value="${c.careWriter }" readonly required>
 
                 </div>
 
@@ -153,8 +158,7 @@
 
                     <label for="content">내용</label>
 
-                    <textarea class="form-control" rows="5" name="content" id="content"
-                        placeholder="내용을 입력해 주세요"></textarea>
+                    <textarea class="form-control" rows="5" name="careContent" id="content"><c:out value="${c.careContent }" /></textarea>
 
                 </div>
 
@@ -165,21 +169,22 @@
                     <label for="tag">자격증 등록</label>
                     <span> *요양보호사 자격증을 업로드 해주세요.</span>
 
-                    <input type="file" class="form-control" name="tag" id="tag">
-
+                    <input type="file" class="form-control" name="upfile" id="upfile">
+					
                 </div>
 
 
 
-            </form>
 
             <div class="btns">
 
-                <button type="button" id="btnSave">수정</button>
+                <button type="button" id="btnSave"
+                onclick="location.replace('${path}/care/updateCare')">수정</button>
 
-                <button type="button" id="btnList">목록</button>
+                <button type="button" id="delete-btn" onclick="deleteCare();">삭제</button>
 
             </div>
+            </form>
 
         </div>
 
@@ -190,6 +195,16 @@
     <script>
 
         new WOW().init();
+        
+      //삭제하기
+		function deleteCare(){
+			if(confirm("정말 삭제하시겠습니까?")){	
+				location.replace('${path}/care/delete.do?no=${c.careNo}');		
+			}
+      }
+
+        
+        
     </script>
 
 <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>

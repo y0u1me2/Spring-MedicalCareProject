@@ -230,7 +230,8 @@ footer {
                         </p>
                     </div>
                     
-                    <button id="reception-btn">날짜/시간 선택</button>
+                    <button id="reception-btn" onclick="location.replace('${path}/rv/reservationTime')">
+                    	접수하기</button>
                     </div>
                 </div>
             </div>
