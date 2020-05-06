@@ -262,14 +262,16 @@
 <script>
 
 	$(function() {
-		
 		//건강정보 호버 색 변화
-		$('.healthInfo').mouseenter(function() {
-			$(this).addClass('healthInfo-selected');
-		})
-		$('.healthInfo').mouseleave(function() {
-			$(this).removeClass('healthInfo-selected');
-		})
+		function healthInfoMouseEvent() {
+			$('.healthInfo').mouseenter(function() {
+				$(this).addClass('healthInfo-selected');
+			})
+			$('.healthInfo').mouseleave(function() {
+				$(this).removeClass('healthInfo-selected');
+			})			
+		}
+		
 		//#태그 화살표 호버 색 변화
 		$('.tagSearch>span>span').mouseenter(function() {
 			$(this).addClass('healthInfo-selected').css("cursor","pointer");
@@ -356,6 +358,7 @@
 			success:function(data) {
 				for(var i=0; i<data.list.length; i++) {
 					$('div.healthInfo-button-div').append("<button class='healthInfo'>"+data.list[i].BTNNAME+"</button>");
+					healthInfoMouseEvent();
 				}
 			}
 		})//과목분류 버튼 처리 끝
