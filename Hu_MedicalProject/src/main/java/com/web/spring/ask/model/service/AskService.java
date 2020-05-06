@@ -19,10 +19,15 @@ public interface AskService {
 	int updateAsk(Ask ask);
 
 	int deleteAsk(int no);
+//-------------------------Reply------------------------------------------------
 
-	//답변등록
+//insert
 	int insertReply(AskReply reply);
-
+//selectOne
 	AskReply selectReplyView(int no);
+//delete
+	int deleteReply(int no);
+
+	int updateReply(AskReply reply);
 
 }

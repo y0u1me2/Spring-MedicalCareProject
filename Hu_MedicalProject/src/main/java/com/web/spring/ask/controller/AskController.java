@@ -1,5 +1,4 @@
 package com.web.spring.ask.controller;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +28,9 @@ public class AskController {
 				//페이징 처리까지하기
 				//별도의 페이징 처리 객체를 생성해서 PAGE처리를 해보자!
 				List<Ask> list=service.selectAskList(cPage,numPerpage);
+				
+				//Reply리스트불러오기
+				
 				mv.addObject("list",list);
 				mv.setViewName("client/ask/askList");
 				mv.addObject("count",totalCount);
@@ -66,10 +68,12 @@ public class AskController {
 	public ModelAndView askView(ModelAndView mv,@RequestParam("no") int no) {
 		Ask a=service.selectAskView(no);
 		AskReply reply=service.selectReplyView(no);
-		System.out.println("jas;fj;sdfj;sld"+reply);
+		System.out.println("reply객체출력 : "+reply);
 		
 		mv.addObject("a",a);
+		mv.addObject("reply",reply);
 		mv.setViewName("client/ask/askView");
+		
 		return mv;
 	}
 //update 페이지 전환

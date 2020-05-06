@@ -22,7 +22,7 @@
                 <div id="present">
                     <div class="presentInform ">
                         <div id="possible">접수/예약 가능한 병원<br>
-                        <h2 style="margin-left: 30px;">11,057</h2></div>
+                        <h2 style="margin-left: 30p3x;">11,057</h2></div>
                     </div>
                     <div class="presentInform">
                     <div id="possible">접수/예약 가능한 병원

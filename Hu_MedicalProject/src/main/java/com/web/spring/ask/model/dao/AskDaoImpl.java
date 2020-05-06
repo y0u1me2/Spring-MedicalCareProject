@@ -40,23 +40,35 @@ public class AskDaoImpl implements AskDao {
 	}
 //delete
 
+
 	@Override
 	public int deleteAsk(SqlSessionTemplate session, int no) {
 		return session.delete("ask.deleteAsk",no);
 	}
-
+	
+//-------------------------Reply------------------------------------------------
+	
+//insert
 	@Override
 	public int insertReply(SqlSessionTemplate session,AskReply reply) {
 		return session.insert("reply.insertReply",reply);
 	}
-
+//selectOne
 	@Override
 	public AskReply selectReplyView(SqlSessionTemplate session, int no) {
 		return session.selectOne("reply.selectReplyView",no);
 	}
 	
-	
+//delete
+	@Override
+	public int deleteReply(SqlSessionTemplate session, int no) {
+		return session.delete("reply.deleteReply",no);
+	}
 
+	@Override
+	public int updateReply(SqlSessionTemplate session, AskReply reply) {
+		return session.update("reply.updateReply",reply);
+	}
 	
 
 }

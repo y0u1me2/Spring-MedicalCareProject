@@ -7,7 +7,16 @@
 	</insert>
 	
 	<select id="selectReplyView" resultType="reply">
-		SELECT * FROM ASKREPLY
+		SELECT * FROM ASKREPLY WHERE REPLYREFNO=#{no}
 	</select>
+	
+	<delete id="deleteReply" parameterType="_int">
+		DELETE FROM ASKREPLY WHERE REPLYREFNO=#{no}
+	
+	</delete>
+	
+	<update id="updateReply" parameterType="reply">
+		UPDATE ASKREPLY SET REPLYCONTENT=#{replyContent} where REPLYREFNO=#{replyRefNo}
+	</update>
 	
 </mapper>

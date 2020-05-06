@@ -20,10 +20,9 @@ public class ReplyController {
 	
 	@Autowired
 	private AskService service;
-	
+//insert	
 	@RequestMapping("/reply/insertReply.do")
 	public String insertReply(AskReply reply,Model model,@RequestParam("replyRefNo") int no) {
-		System.out.println("??????????????????"+no);
 		int result=service.insertReply(reply);
 		String msg="";
 		String loc="";
@@ -38,4 +37,40 @@ public class ReplyController {
 		model.addAttribute("loc", loc);
 		return "client/common/msg";
 	}
+	
+//delete	
+	@RequestMapping("/reply/deleteReply.do")
+	public String deleteAsk(@RequestParam(value="no") int no,Model model) {
+		int result=service.deleteReply(no);
+		String msg="";
+		String loc="";
+		if(result>0) {
+			msg="삭제되었습니다.";
+			loc="/ask/askView.do?no="+no;
+		}else {
+			msg="삭제를 실패하였습니다.";
+			loc="/ask/askView.do?no="+no;
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		return "client/common/msg";
+	}
+	
+	@RequestMapping("/reply/updateReply.do")
+	public String updateReply(AskReply reply, Model model) {
+		int result=service.updateReply(reply);
+		String msg="";
+		String loc="";
+		if(result>0) {
+			msg="수정되었습니다.";
+			loc="/ask/askView.do";
+		}else {
+			msg="등록을 실패하였습니다.";
+			loc="/ask/askView.do";
+		}
+		model.addAttribute("msg",msg);
+		model.addAttribute("loc",loc);
+		return "client/common/msg";
+	}
+
 }
