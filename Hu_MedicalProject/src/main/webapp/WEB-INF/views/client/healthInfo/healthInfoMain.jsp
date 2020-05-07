@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
+<c:set var="pathImages" value="${pageContext.request.contextPath}/resources/images" />
 
 <jsp:include page="/WEB-INF/views/client/common/header.jsp" />
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"/>
@@ -27,7 +28,7 @@
 	
 	.healthInfo-button-div {
 		width: 690px;
-		margin: 5% auto 10% auto;
+		margin: 5% auto;
 	}
 	
 	.healthInfo-selected {
@@ -100,14 +101,13 @@
 	}
 	.bottom-content {
 		width: 70%;
-		margin: 20px auto 10px auto;
+		margin: 5% auto 10px auto;
 	}
 	.bottom-InfoContent {
 		padding: 0 !important;
 		margin: 10px;		
 	}
 	.bottom-InfoContent-Info {
-		border: 1px solid gray;
 		padding: 20px 10px 10px 10px;
 		overflow: hidden;
 	}
@@ -161,77 +161,11 @@
 						<div class="big p-2">요즘 많이 찾는 건강정보</div>							
 					</div>
 					<div class="bottom-content">
-						<div class="d-flex justify-content-between">
-							<div class="bottom-InfoContent p-6">
-								<img src="http://image.sayup.co.kr/contents/56987275b866070300416c10/d64122369f8bf3d0d2a1880812cf70c7.jpg"/>
-								<div class="bottom-InfoContent-Info">
-									<div class="bottom-InfoContent-Info-main">
-										감기
-									</div>
-									<div class="bottom-InfoContent-Info-sub">
-										남녀노소 누구나 걸릴 수 있다!
-									</div>
-								</div>
-							</div>
-							<div class="bottom-InfoContent p-6">
-								<img src="http://image.sayup.co.kr/contents/56987275b866070300416c10/d64122369f8bf3d0d2a1880812cf70c7.jpg"/>
-								<div class="bottom-InfoContent-Info">
-									<div class="bottom-InfoContent-Info-main">
-										감기
-									</div>
-									<div class="bottom-InfoContent-Info-sub">
-										남녀노소 누구나 걸릴 수 있다!
-									</div>
-								</div>
-							</div>
-							<div class="bottom-InfoContent p-6">
-								<img src="http://image.sayup.co.kr/contents/56987275b866070300416c10/d64122369f8bf3d0d2a1880812cf70c7.jpg"/>
-								<div class="bottom-InfoContent-Info">
-									<div class="bottom-InfoContent-Info-main">
-										감기
-									</div>
-									<div class="bottom-InfoContent-Info-sub">
-										남녀노소 누구나 걸릴 수 있다!
-									</div>
-								</div>
-							</div>
+						<!-- <div class="d-flex justify-content-between" id="frquent-info-1">
 						</div>
-						<div class="d-flex justify-content-between">
-							<div class="bottom-InfoContent p-6">
-								<img src="http://image.sayup.co.kr/contents/56987275b866070300416c10/d64122369f8bf3d0d2a1880812cf70c7.jpg"/>
-								<div class="bottom-InfoContent-Info">
-									<div class="bottom-InfoContent-Info-main">
-										감기
-									</div>
-									<div class="bottom-InfoContent-Info-sub">
-										남녀노소 누구나 걸릴 수 있다!
-									</div>
-								</div>
-							</div>
-							<div class="bottom-InfoContent p-6">
-								<img src="http://image.sayup.co.kr/contents/56987275b866070300416c10/d64122369f8bf3d0d2a1880812cf70c7.jpg"/>
-								<div class="bottom-InfoContent-Info">
-									<div class="bottom-InfoContent-Info-main">
-										감기
-									</div>
-									<div class="bottom-InfoContent-Info-sub">
-										남녀노소 누구나 걸릴 수 있다!
-									</div>
-								</div>
-							</div>
-							<div class="bottom-InfoContent p-6">
-								<img src="http://image.sayup.co.kr/contents/56987275b866070300416c10/d64122369f8bf3d0d2a1880812cf70c7.jpg"/>
-								<div class="bottom-InfoContent-Info">
-									<div class="bottom-InfoContent-Info-main">
-										감기
-									</div>
-									<div class="bottom-InfoContent-Info-sub">
-										남녀노소 누구나 걸릴 수 있다!
-									</div>
-								</div>
-							</div>
-																
-						</div>
+							
+						<div class="d-flex justify-content-between" id="frquent-info-2">	
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -280,18 +214,20 @@
 			$(this).removeClass('healthInfo-selected');
 		})
 		//많이찾는 건강정보 스타일 변화
-		$('.bottom-InfoContent').mouseenter(function() {
-			$(this).addClass('InfoContent-selected');
-		})
-		$('.bottom-InfoContent').mouseleave(function() {
-			$(this).removeClass('InfoContent-selected');
-		})
+		function frequentInfoMouseEvent() {
+			$('.bottom-InfoContent').mouseenter(function() {
+				$(this).addClass('InfoContent-selected');
+			})
+			$('.bottom-InfoContent').mouseleave(function() {
+				$(this).removeClass('InfoContent-selected');
+			})			
+		}
 		//#태그 겁색 좌우 검색어 페이징
 		$.ajax({
 			url:"${path}/healthInfo/healthTagInfo",
 			success:function(data) {
 				for(var i=0; i<data.list.length; i++) {
-					$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+data.list[i].NAME+"</a>");
+					$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+data.list[i].DISESASETITLE+"</a>");
 				}
 				var cPage=Number(data.cPage);
 				var totalPage=Number(data.totalPage);
@@ -305,7 +241,7 @@
 							success:function(before1) {
 								$('.tagSearch-keyword').remove();
 								for(var i=0; i<before1.list.length; i++) {
-									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+before1.list[i].NAME+"</a>");
+									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+before1.list[i].DISESASETITLE+"</a>");
 								}
 								cPage=totalPage;
 							}
@@ -317,7 +253,7 @@
 							success:function(before2) {
 								$('.tagSearch-keyword').remove();
 								for(var i=0; i<before2.list.length; i++) {
-									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+before2.list[i].NAME+"</a>");
+									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+before2.list[i].DISESASETITLE+"</a>");
 								}
 							}
 						})
@@ -331,7 +267,7 @@
 							success:function(after1) {
 								$('.tagSearch-keyword').remove();
 								for(var i=0; i<after1.list.length; i++) {
-									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+after1.list[i].NAME+"</a>");
+									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+after1.list[i].DISESASETITLE+"</a>");
 								}
 								cPage=1;
 							}
@@ -343,7 +279,7 @@
 							success:function(after2) {
 								$('.tagSearch-keyword').remove();
 								for(var i=0; i<after2.list.length; i++) {
-									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+after2.list[i].NAME+"</a>");
+									$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"+after2.list[i].DISESASETITLE+"</a>");
 								}
 							}
 						})
@@ -357,13 +293,63 @@
 			url:"${path}/healthInfo/healthBtnInfo",
 			success:function(data) {
 				for(var i=0; i<data.list.length; i++) {
-					$('div.healthInfo-button-div').append("<button class='healthInfo'>"+data.list[i].BTNNAME+"</button>");
+					$('div.healthInfo-button-div').append("<button class='healthInfo'>"+data.list[i].MEDICALNAME+"</button>");
 					healthInfoMouseEvent();
 				}
 			}
 		})//과목분류 버튼 처리 끝
+		
+		//자주찾는 건강정보+${path}+data.list[i].DISESASEFILE
+	$.ajax({
+		url:"${path}/healthInfo/frequentInfo",
+		success:function(data) {
+			for(var i=0; i<6; i++) {
+				for(var j=0;j<3;j++) {
+					if(i==j) {
+						$('div.bottom-content').append("<div class='d-flex justify-content-between' id='frquent-info-1'></div>");
+						$('#frquent-info-1').append("<div class='bottom-InfoContent p-6'></div>");
+						var divTag=$('div.bottom-InfoContent.p-6');
+						$(divTag[j]).html("<img src='${pathImages}"+data.list[j].DISESASEFILE+"'>");
+						$(divTag[j]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"+data.list[i].DISESASETITLE+"</div><div class='bottom-InfoContent-Info-sub'>"+data.list[i].DISESASESUBTITLE+"</div></div></div>");
+						$(divTag[j]).append("<input type='hidden' class='disesaseNo' value='"+data.list[i].DISESASENO+"'/>");
+						$(divTag[j]).click(function(){
+							frequentInfoPicClick($(this).children('input.disesaseNo').val());
+						})
+					}
+				}
+				for(var j=3;j<6;j++) {
+					if(i==j) {
+						$('div.bottom-content').append("<div class='d-flex justify-content-between' id='frquent-info-2'></div>");
+						$('#frquent-info-2').append("<div class='bottom-InfoContent p-6'></div>");
+						var divTag=$('div.bottom-InfoContent.p-6');
+						$(divTag[j]).html("<img src='${pathImages}"+data.list[j].DISESASEFILE+"'>");
+						$(divTag[j]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"+data.list[i].DISESASETITLE+"</div><div class='bottom-InfoContent-Info-sub'>"+data.list[i].DISESASESUBTITLE+"</div></div></div>");
+						$(divTag[j]).append("<input type='hidden' class='disesaseNo' value='"+data.list[i].DISESASENO+"'/>");
+						$(divTag[j]).click(function(){
+							frequentInfoPicClick($(this).children('input.disesaseNo').val());
+						})
+					}
+					frequentInfoMouseEvent();
+				}
+			}
+		}
+	});
+			
+			//자주찾는 건강정보 사진버튼 function화
+		function frequentInfoPicClick(param) {
+			console.log(param);
+			location.href="${path}/healthInfo/frequentInfoPic?disesaseNo="+param;
+			/* $.ajax({
+				url:"${path}/healthInfo/frequentInfoPic",
+				data:{"disesaseNo":param},
+				success:function(data) {
+					
+				}
+			}) */
+		}
 	})
 </script>
+
 
 
 
