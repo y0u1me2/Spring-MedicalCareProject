@@ -65,5 +65,25 @@
 		UPDATE CARENOTICE SET CARESTATUS='N' WHERE CARENO=#{no}
 	</update>
    
+   
+   <!-- 댓글등록 -->
+    <insert id="insertComment" parameterType="comment">
+       INSERT INTO CARECOMMENT VALUES(SEQ_CARECOMMENT.NEXTVAL, 
+                               #{careNo}, #{commentLevel},#{commentContent},
+                                #{commentRef},DEFAULT)
+    </insert>
+    
+    <!-- 댓들 목록 -->
+    <select id="commentList" resultType="comment">
+    	SELECT *
+    	FROM CARECOMMENT C, MEMBER M
+    	WHERE M.MEMBERNO=C.MEMBERNO 
+    	ORDER BY #{commentNo}
+    
+    
+    
+    </select>
+    
+    
     
 </mapper>

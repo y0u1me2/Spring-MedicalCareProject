@@ -42,7 +42,7 @@
             <a class="nav-link" href="#">공지사항</a>
           </li>
       <li class="nav-item">
-        <a class="nav-link" href="${path }/rv/reservationList" >병원예약</a>
+        <a class="nav-link" href="${path }/rv/reservationList" >병원접수</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="healthInfo/healthInfoMain">건강정보</a>
@@ -50,14 +50,19 @@
       <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
       </li>  
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
-        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="${path }/care/careNotice">돌보미 찾기</a>
-            <a class="dropdown-item" href="${path }/ask/ask.do">문의 게시판</a>
-        </div>
-    </li>
+      
+      
+       <c:if test="${loginMember ne null }">
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+	        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+	            <a class="dropdown-item" href="${path }/care/careNotice">돌보미 찾기</a>
+	            <a class="dropdown-item" href="${path }/ask/ask.do">문의 게시판</a>
+	        </div>
+	      </li>
+    </c:if>
+    
     <c:choose>
          <c:when test = "${empty loginMember }">
           <!--  <li class="nav-item" style="margin-left:250px;">

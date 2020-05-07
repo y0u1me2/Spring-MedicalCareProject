@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.web.spring.carenotice.model.vo.CareAttachment;
+import com.web.spring.carenotice.model.vo.CareComment;
 import com.web.spring.carenotice.model.vo.CareNotice;
 
 public interface CareNoticeService {
@@ -31,4 +32,10 @@ public interface CareNoticeService {
 		
 		//게시글 삭제하기
 		int deleteCare(int no);
+		
+		//댓글 달기
+		int insertComment(CareComment c);
+		
+		//댓글 리스트
+		List<CareComment> commentList(int no);
 }

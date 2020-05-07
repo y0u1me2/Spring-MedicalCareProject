@@ -21,16 +21,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.web.spring.ask.model.vo.Ask;
 import com.web.spring.carenotice.model.service.CareNoticeService;
 import com.web.spring.carenotice.model.vo.CareAttachment;
+import com.web.spring.carenotice.model.vo.CareComment;
 import com.web.spring.carenotice.model.vo.CareNotice;
 import com.web.spring.common.PageFactory;
+import com.web.spring.member.model.vo.Member;
 
 @Controller
+@SessionAttributes(value= {"loginMember"})
 public class CareNoticeController {
 
 	@Autowired
@@ -293,5 +296,40 @@ public class CareNoticeController {
 	  return "client/common/msg"; 
 	  
 	  }
+
+//댓글달기======================================  		  
 	 
+	@RequestMapping("/care/commentEnd")
+	public String insertComment(CareComment c, Model m, @RequestParam("cno") int cno) {
+			
+		int result=service.insertComment(c);
+		
+		String msg="";
+		String loc="/care/careView?cno="+cno;
+			
+		if(result>0) {
+				msg="댓글이 등록되었습니다.";	
+			}else {
+				msg="등록을 실패하였습니다.";
+			}
+		
+			m.addAttribute("msg",msg);
+			m.addAttribute("loc",loc);
+			return "client/common/msg";
+		}
+	
+//댓글 목록 불러오기=================================
+	
+	@RequestMapping("/care/commentList")
+	public ModelAndView commentList(@RequestParam int no, ModelAndView mv) {
+		
+		List<CareComment> list = service.commentList(no);
+		
+		
+		mv.addObject("list",list);
+		
+		mv.setViewName("client/careNotice/careView");
+				
+		return mv;
+	}
 }

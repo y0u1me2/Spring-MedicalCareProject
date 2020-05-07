@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.spring.carenotice.model.dao.CareNoticeDao;
 import com.web.spring.carenotice.model.vo.CareAttachment;
+import com.web.spring.carenotice.model.vo.CareComment;
 import com.web.spring.carenotice.model.vo.CareNotice;
 
 
@@ -109,4 +110,21 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 
 
 
+//댓글달기===================================================
+	
+	@Override
+	public int insertComment(CareComment c) {
+		
+		return dao.insertComment(session,c);
+	}
+
+
+//댓글 리스트================================================
+	
+	@Override
+	public List<CareComment> commentList(int no) {
+		
+		return dao.commentList(session,no);
+	}
+	
 }
