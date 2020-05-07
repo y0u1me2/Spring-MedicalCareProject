@@ -269,7 +269,7 @@
               <p>수액</p>
               
               <div class="circle">
-              	<a href="${path }/rv/corona">바로예약</a>
+              	<a href="${path }/rv/corona">바로접수</a>
               	
               </div>
 

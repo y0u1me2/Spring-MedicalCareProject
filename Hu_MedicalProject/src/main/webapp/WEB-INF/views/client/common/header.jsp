@@ -17,6 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://wowjs.uk/css/libs/animate.css">
     <script src="https://wowjs.uk/dist/wow.min.js"></script>
+
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="415129597970-epgotkdffasbd0r2mqq4shuirovnqsqp.apps.googleusercontent.com">
    
@@ -82,7 +83,7 @@
  <!-- 로그인 -->
 <div id="id01" class="modalLogin" style="display: none;">
   
-  <form class="modal-content animate" action="${path }/member/memberLogin.do" method="post" style="width:30%;">
+  <form class="modal-content animate" id="loginForm" name="loginForm" action="${path }/member/memberLogin.do" method="post" style="width:30%;">
    
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="loginClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
@@ -92,9 +93,6 @@
     </div>
 
     <div class="containerlogin">
-    <c:if test="${not empty cookie.user_check}">
-		<c:set value="checked" var="checked"/>
-	</c:if>
       <input type="text" placeholder="E-mail" id="uemail" name="email" autocomplete="off" required>
       <input type="password" placeholder="Password" id="psw" name="password" required>
       <label>
@@ -174,53 +172,6 @@ function signOut() {
 }
 function logoutChk(){
 	location.href="${path}/member/logout.do";
-}
-$(document).ready(function(){
-	var key = getCookie("key");
-	$("uemail").val(key);
-	
-	if($("#uemail").val()!=""){
-		$("store").attr("checked",true);
-	}
-	
-	$("#store").change(function(){ // 체크박스에 변화가 있다면,
-		if($("#store").is(":checked")){ //ID 저장하기 체크했을 때,
-			setCookie("key",$("#uemail").val(),7); //7일 저장
-		}else{
-			deleteCookie("key");
-		}
-	});
-	 // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-    $("#uemail").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
-        if($("#store").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-            setCookie("key", $("#uemail").val(), 7); // 7일 동안 쿠키 보관
-        }
-	});
-});
-function setCookie(cookieName, value, exdays){
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + exdays);
-    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
-    document.cookie = cookieName + "=" + cookieValue;
-}
-function deleteCookie(cookieName){
-    var expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() - 1);
-    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
-}
- 
-function getCookie(cookieName) {
-    cookieName = cookieName + '=';
-    var cookieData = document.cookie;
-    var start = cookieData.indexOf(cookieName);
-    var cookieValue = '';
-    if(start != -1){
-        start += cookieName.length;
-        var end = cookieData.indexOf(';', start);
-        if(end == -1)end = cookieData.length;
-        cookieValue = cookieData.substring(start, end);
-    }
-    return unescape(cookieValue);
 }
 
 </script>

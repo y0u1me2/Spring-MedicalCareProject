@@ -23,5 +23,12 @@ public interface CareNoticeService {
 	   //게시글 첨부파일 가져오기 
 		List<CareAttachment> selectCareFile(int cno);
 		
+		//게시글 수정화면 이동 
+		CareNotice updateView(int no);
 	 
+		//게시글 수정하기
+		int updateCare(CareNotice c);
+		
+		//게시글 삭제하기
+		int deleteCare(int no);
 }

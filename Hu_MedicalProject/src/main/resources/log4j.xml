@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.web.spring">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
