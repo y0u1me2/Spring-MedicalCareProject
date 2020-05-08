@@ -195,6 +195,9 @@ footer {
 				size="20"> <input type="submit" id="searchBtn"
 				class="search_btn" value="검색" />
 		</div>
+		
+		
+		
 	</div>
 
 

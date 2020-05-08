@@ -89,7 +89,7 @@
  }
  </style>
 <div class="container-fluid-enroll">
-	<form name="personEnrollFrm" action="${path}/member/personEnrollEnd.do" method="post" onsubmit="return validate();" >
+	<form name="personEnrollFrm" id="personEnrollFrm" action="${path}/member/personEnrollEnd.do" method="post" onsubmit="return validate()" >
 	<div class="row"> 
 	  <div class="col"></div>
 	  <div class="col-xl-6"> <h1 align="center">일반 회원가입</h1></div>
@@ -111,7 +111,7 @@
 	  <div class="col"></div>
 	  <div class="col-xl-6">
 	    <label for="email"><b>이메일</b></label>
-	    <input type="text" placeholder="@를 포함한 이메일 입력" id="email" name="email" required>
+	    <input type="text" placeholder="@를 포함한 이메일 입력" id="email" name="email" required></p>
 	  </div>
 	  <div class="col"></div>
 	</div>
@@ -120,7 +120,7 @@
 	  <div class="col"></div>
 	  <div class="col-xl-6">
 	    <label for="name"><b>이름</b></label>
-	    <input type="text" placeholder="Name" name="name" required>
+	    <input type="text" placeholder="Name" name="name" id="name" required>
 	  </div>
 	  <div class="col"></div>            
 	</div>
@@ -130,6 +130,7 @@
 	  <div class="col-xl-6">
 	    <label for="psw"><b>비밀번호</b></label>
 	     <input type="password" placeholder="Enter Password" id="password" name="password" required>
+	      <p id="pwCheckFF" style="color: #FF6600; margin: 0;">
 	 </div>
 	  <div class="col"></div> 
 	</div>
@@ -137,23 +138,21 @@
 	<div class="row"> 
 	  <div class="col"></div>
 	  <div class="col-xl-6">
-	    <label for="psw-repeat"><b>비밀번호 확인</b></label>
-	    <input type="password" placeholder="Repeat Password" id="psw-repeat" name="psw-repeat" required>
+	    <label for="psw-repeat"><b>비밀번호 확인</b></p></label>
+	    <input type="password" placeholder="Repeat Password"  id="psw-repeat" name="psw-repeat" required>
 	  </div>
 	  <div class="col"></div> 
 	</div>
 	
-	
 	<div class="row"> 
 	  <div class="col"></div>
 	  <div class="col-xl-6">
-	    <label for="psw-repeat"><b>핸드폰 번호</b></label>
-	    <input type="text" placeholder="-를 제외하고 입력" name="phone" required>
+	    <label for="phone"><b>핸드폰 번호</b></label>
+	    <input type="text" placeholder="-를 제외하고 입력" name="phone" id="phone" required>
 	 </div>
 	  <div class="col"></div>
 	</div>
 	
-	    
 	<div class="row"> 
 	  <div class="col"></div>
 	  <div class="col-xl-6">
@@ -165,23 +164,90 @@
 	</form>
 </div>
 <script>
-var regExp=/^[a-z][a-z\d]{3,11}/;
+/* var regExp=/^[a-z][a-z\d]{3,11}/;
 function validate(){
-	if(RegExp.test("#${email}".value.trim())){
-        if(regExp.test("#${email}".value.trim())){
-            return true;
-        }
-        false;
-    }else {
-        false;
-    }
 	if($("#${password}").val() != $("#${psw-repeat}").val()) {
 		alert("비밀번호가 일치 하지 않습니다.");
 		$("#${password}").focus();
 		return false;
 	}
+} */
+$(document).ready(function(){
+	$("#password").keyup(function(){
+		$("#pwCheckFF").text("");
+	});
+	$('#psw-repeat').keyup(function(){
+		if($('#password').val()!=$('#psw-repeat').val()){
+			$('#pwCheckFF').text(''); 
+			$('#pwCheckFF').html("패스워드 확인이 불일치 합니다"); 
+		}else{
+			$('#pwCheckFF').text(''); 
+			$('#pwCheckFF').html("<font color='#70AD47'>패스워드가 일치 합니다.</font>"); 
+			} 
+		});
+});
+function validate(){
+/* 	var id = $("#eamil").val();
+	var name = $("#name").val();
+	var psw = $("#password").val();
+	var pswChk = $("#psw-repeat").val();
+	var call = $("#phone").val(); */
 	
-}
+	var pswCheck= /^(?=.*[A-Za-z])(?=.*[^a-zA-Z0-9])(?=.*[$@$!%*#?&])(?=.*[0-9]).{6,}$/; 
+	var nameCheck=/^[가-힣]|[a-zA-Z]+$/; 
+	var phoneCheck = /^\d{3}\d{3,4}\d{4}$/;
 
+	//빈칸 검사
+	if($("#eamil").val()==""){ 
+		// alert("이메일을 입력하세요");         
+		 $("#eamil").focus();   
+		 return false;
+	 }
+	
+	if($("#name").val()==""){
+		// alert("이름을 입력하세요");
+		 $("#name").focus();
+		 return false;	 
+	 }else if(!nameCheck.test($("#name").val())){
+		//유효성 검사
+		alert("이름을 알맞게 작성해주세요.");
+		$("#name").focus();
+		 return false;
+	}
+	
+	if($("#password").val()==""){
+		// alert("비밀번호를 입력하세요");
+		 $("#password").focus();
+		 return false;
+	 }else if(!pswCheck.test($("#password").val())){
+		alert("비밀번호는 6자 이상 영문자, 숫자, 특수문자를 포함해야 합니다.");
+		 $("#password").focus();
+		 return false;
+	}
+	
+	if($("#psw-repeat").val()==""){
+		// alert("비밀번호 확인을 입력하세요");
+		 $("#psw-repeat").focus();
+		 return false;
+	 }
+	
+	if($("#phone").val()==""){
+		// alert("전화번호를 입력하세요");
+		 $("#phone").focus();
+		 return false; 
+	}else if(phoneCheck.test($("#phone").val())==false){
+		alert("핸드폰 번호를 알맞게 작성해주세요");
+		$("#phone").focus();
+		 return false;
+	}
+	
+	//비밀번호 확인 체크
+	if($('#password').val()!=$('#psw-repeat').val()){
+		// alert("비밀번호 확인이 일치하지 않습니다.");
+		$('#psw-repeat').focus();
+		return false;
+	}
+	$("#personEnrollFrm").submit();
+}
 </script>
 <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>

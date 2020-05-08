@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.spring.healthInfo.dao.HealthInfoDao;
+import com.web.spring.healthInfo.vo.HealthInformation;
 
 @Service
 public class HealthInfoServiceImpl implements HealthInfoService {
@@ -35,6 +36,16 @@ public class HealthInfoServiceImpl implements HealthInfoService {
 	public List<Map<String, String>> healthBtnInfo() {
 		// TODO Auto-generated method stub
 		return dao.healthBtnInfo(session);
+	}
+	@Override
+	public List<Map<String, String>> frequentInfo() {
+		// TODO Auto-generated method stub
+		return dao.frequentInfo(session);
+	}
+	@Override
+	public List<HealthInformation> frequentInfoPic(HealthInformation hi) {
+		// TODO Auto-generated method stub
+		return dao.frequentInfoPic(session, hi);
 	}
 	
 	

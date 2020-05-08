@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.web.spring.carenotice.model.dao.CareNoticeDao;
 import com.web.spring.carenotice.model.vo.CareAttachment;
+import com.web.spring.carenotice.model.vo.CareComment;
 import com.web.spring.carenotice.model.vo.CareNotice;
 
 
@@ -43,6 +44,7 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		return result;
 	}
 
+//게시글등록===========================================================================
 	@Override
 	@Transactional
 	public int insertCare(Map<String, String> param, List<CareAttachment> files) throws RuntimeException  {
@@ -53,7 +55,7 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		  
 		  if(!files.isEmpty()) {//파일이 있으면 
 			  for(CareAttachment a : files) {
-				 a.setCareNo(Integer.parseInt(param.get("boardNo")));//mybatis의 selectkey가  도와줌
+				 a.setCareNo(Integer.parseInt(param.get("careNo")));//mybatis의 selectkey가  도와줌
 				 result = dao.insertCareAttachment(session,a);
 		  }
 			  
@@ -78,6 +80,51 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 	public List<CareAttachment> selectCareFile(int cno) {
 		
 		return dao.selectCareFile(session,cno);
+	}
+
+
+//게시글 수정화면이동============================================
+	
+	@Override
+	public CareNotice updateView(int no) {
+		
+		return dao.updateView(session,no);
+	}
+
+//게시글 수정하기=================================================
+	
+	@Override
+	public int updateCare(CareNotice c) {
+		
+		return dao.updateCare(session,c);
+	}
+	
+	
+//게시글 삭제하기=================================================
+	
+	@Override
+	public int deleteCare(int no) {
+		
+		return dao.deleteCare(session,no);
+	}
+
+
+
+//댓글달기===================================================
+	
+	@Override
+	public int insertComment(CareComment c) {
+		
+		return dao.insertComment(session,c);
+	}
+
+
+//댓글 리스트================================================
+	
+	@Override
+	public List<CareComment> commentList(int no) {
+		
+		return dao.commentList(session,no);
 	}
 	
 }

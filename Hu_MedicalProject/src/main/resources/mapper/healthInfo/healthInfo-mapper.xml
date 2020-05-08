@@ -4,14 +4,22 @@
   
   <!-- 건강정보 #태그 검색어 리스트 -->
     <select id="healthTagInfo" resultType="map">
-     	SELECT * FROM HEALTHINFOMATIONTEST
+     	SELECT * FROM DISESASECATEGORY
     </select>
     <!-- 건강정보 #태그 총개수 -->
     <select id="healthTagCount" resultType="_int">
-    	SELECT COUNT(*) FROM HEALTHINFOMATIONTEST
+    	SELECT COUNT(*) FROM DISESASECATEGORY
     </select>
     <!-- 건강정보 버튼 분류 리스트 -->
     <select id="healthBtnInfo" resultType="map">
-    	SELECT * FROM HEALTHINFOBTNTEST
+    	SELECT * FROM MEDICALCATEGORY
+    </select> 
+    <!-- 자주찾는 건강정보 사진 클릭시 리스트 -->
+    <resultMap type="healthInfo" id="healthInformation">
+		<result column="healthinfocontentpic" property="healthInfoContentPic" typeHandler="arrayType"/>
+	</resultMap>
+    <select id="frequentInfoPic" parameterType="healthInfo" resultMap="healthInformation">
+    	SELECT * FROM HEALTHINFO WHERE DISESASENO = #{disesaseNo}
     </select>
+    
 </mapper>

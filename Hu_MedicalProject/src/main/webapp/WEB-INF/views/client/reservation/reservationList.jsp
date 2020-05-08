@@ -229,7 +229,6 @@
       <div class="row">
         <div class="col-sm-12">
 
-          <img src="images/treatment_status.png" width="50px;" />
 
           <!-- ================================================================ -->
           <div id="menu">
@@ -269,9 +268,10 @@
               <p>수액</p>
               
               <div class="circle">
-              	<a href="${path }/rv/corona">바로예약</a>
-              	
-              </div>
+              	<a href="${path }/rv/corona">바로접수</a>
+              </div><br>
+             <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
+              
 
               <p><img src="${path }/resources/images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
 
@@ -290,6 +290,7 @@
 
             </div>
 
+<<<<<<< HEAD
             <div id="hospital_content">
               <p>예약병원</p>
               <h3>우리동네이비인후과의원</h3>
@@ -332,6 +333,7 @@
               <p>서울특별시 강남구 강남대로 21길</p>
 
               <p>오늘의 진료시간 09:00~18:00</p>
+              
               </hr>
 
               <p>진료항목</p>
@@ -357,6 +359,8 @@
               </div>
 
             </div>
+
+            
           </div>
 
           <!-- ================================================================ -->
@@ -395,40 +399,7 @@
               </div>
             </div>
 
-            <div id="pharmacy_content">
-              <p>영업중</p>
-              <p>연중무휴</p>
-              <h3>사당365약국</h3>
-              <p><img src="images/location.png" width="15px;" />70km</p>
-              <p id="bar">|</p>
-              <p>서울특별시 강남구 강남대로 21길</p>
-
-              <p>오늘의 영업시간 09:00~23:00</p>
-              </hr>
-
-              <div id="pharm">
-                <button id="pharm-btn">전화</button>
-                <button id="pharm-btn">찾아가기</button>
-              </div>
-            </div>
-
-            <div id="pharmacy_content">
-              <p>영업중</p>
-              <p>연중무휴</p>
-              <h3>사당365약국</h3>
-              <p><img src="images/location.png" width="15px;" />70km</p>
-              <p id="bar">|</p>
-              <p>서울특별시 강남구 강남대로 21길</p>
-
-              <p>오늘의 영업시간 09:00~23:00</p>
-              </hr>
-
-              <div id="pharm">
-                <button id="pharm-btn">전화</button>
-                <button id="pharm-btn">찾아가기</button>
-              </div>
-            </div>
-
+           
 </div>
             <!-- ================================================================ -->
             <!-- 날씨정보 -->
@@ -452,7 +423,13 @@
           </div>
      
     </div>
-    
+ <script>
+  function chatting(){
+		open("${path}/chattingView","_blank","width=500,height=600");		
+	}
+  
+  </script>
+
     
  <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>     
    

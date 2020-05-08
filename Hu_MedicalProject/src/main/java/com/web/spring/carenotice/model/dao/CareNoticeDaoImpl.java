@@ -9,12 +9,14 @@ import org.springframework.stereotype.Repository;
 
 
 import com.web.spring.carenotice.model.vo.CareAttachment;
+import com.web.spring.carenotice.model.vo.CareComment;
 import com.web.spring.carenotice.model.vo.CareNotice;
 
 
 @Repository
 public class CareNoticeDaoImpl implements CareNoticeDao {
-
+	
+	//돌보미 리스트 페이징처리
 	@Override	
 	public List<CareNotice> careNotice(SqlSession session, int cPage, int numPerPage) {
 		
@@ -36,18 +38,20 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 		return session.selectOne("care.careCount");
 	}
 
+	//돌보미 글 등록
 	@Override
 	public int insertCare(SqlSession session, Map<String, String> param) {
 		
-		return session.insert("care.inserCare",param);
+		return session.insert("care.insertCare",param);
 	}
 
 	@Override
 	public int insertCareAttachment(SqlSession session, CareAttachment a) {
 	
-		return session.insert("care.insertAttachment");
+		return session.insert("care.insertAttachment",a);
 	}
-
+	
+	//돌보미상세 페이지
 	@Override
 	public CareNotice careView(SqlSession session, int cno) {
 	
@@ -60,8 +64,45 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 		return session.selectList("care.selectCareFile",cno);
 	}
 	
+	//게시글 수정페이지 이동
+	@Override
+	public CareNotice updateView(SqlSession session, int no) {
+		
+		return session.selectOne("care.updateView",no);
+	}
 
 	
+	//게시글 삭제하기
+	@Override
+	public int deleteCare(SqlSession session, int no) {
+		
+		return session.update("care.deleteCare",no);
+	}
+	
+	//게시글 수정하기
+	@Override
+	public int updateCare(SqlSession session, CareNotice c) {
+		
+		return session.update("care.updateCare",c);
+	}
+
+
+	
+	//updateAttachment
+	
+	//댓글 달기
+	@Override
+	public int insertComment(SqlSession session, CareComment c) {
+		
+		return session.insert("care.insertComment",c);
+	}
+
+	//댓글 리스트
+	@Override
+	public List<CareComment> commentList(SqlSession session, int no) {
+		
+		return session.selectList("care.commentList",no);
+	}
 	
 	
 	

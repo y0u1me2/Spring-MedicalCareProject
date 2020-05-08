@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.spring.healthInfo.service.HealthInfoService;
+import com.web.spring.healthInfo.vo.HealthInformation;
 
 @Controller
 public class HealthInfoController {
@@ -62,6 +63,35 @@ public class HealthInfoController {
 		
 		//view를 설정하기
 		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	//자주찾는 정보 이미지 버튼
+	@RequestMapping("healthInfo/frequentInfo")
+	public ModelAndView frequentInfo() {
+		ModelAndView mv=new ModelAndView();
+		List<Map<String,String>> list=service.frequentInfo();
+		
+		mv.addObject("list",list);
+		
+		//view를 설정하기
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	//자주찾는정보 이미지 클릭시 콘트롤러
+	@RequestMapping("healthInfo/frequentInfoPic")
+	public ModelAndView frequentInfoPic(HealthInformation hi) {
+		System.out.println(hi);
+		ModelAndView mv=new ModelAndView();
+		
+		List<HealthInformation> list=service.frequentInfoPic(hi);
+		mv.addObject("list",list);
+		System.out.println(list);
+		//view를 설정하기
+		mv.setViewName("client/healthInfo/healthInfoSub");
 		
 		return mv;
 	}

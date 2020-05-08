@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import com.web.spring.carenotice.model.vo.CareAttachment;
+import com.web.spring.carenotice.model.vo.CareComment;
 import com.web.spring.carenotice.model.vo.CareNotice;
 
 
@@ -19,4 +20,13 @@ public interface CareNoticeDao {
 
 	CareNotice careView(SqlSession session,int cno);
 	List<CareAttachment> selectCareFile(SqlSession session, int cno); 
+	
+	CareNotice updateView(SqlSession session,int no);
+	int deleteCare(SqlSession session, int no);
+	
+	int updateCare(SqlSession session, CareNotice c);
+	
+	int insertComment(SqlSession session, CareComment c);
+	
+	List<CareComment> commentList(SqlSession session, int no);
 }
