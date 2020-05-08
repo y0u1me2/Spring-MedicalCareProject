@@ -17,7 +17,7 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService service;
-
+	
 	@RequestMapping("/member/personEnroll.do")
 	public String personEnroll() {
 		return "client/member/personEnroll";

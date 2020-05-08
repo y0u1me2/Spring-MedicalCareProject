@@ -125,10 +125,11 @@ public class AskController {
 		model.addAttribute("loc",loc);
 		return "client/common/msg";
 	}
+
 	
-	//채팅
-		@RequestMapping("/chattingView")
-		public String accessChatting() {
-			return "client/chatting/chatting";
-		}
+	@RequestMapping("/chattingView")
+	public String accessChatting() {
+		return "client/chatting/chatting";
+	}
+	
 }

@@ -270,8 +270,9 @@
               
               <div class="circle">
               	<a href="${path }/rv/corona">바로접수</a>
-              	
-              </div>
+              </div><br>
+             <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
+              
 
               <p><img src="${path }/resources/images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
 
@@ -332,6 +333,7 @@
               <p>서울특별시 강남구 강남대로 21길</p>
 
               <p>오늘의 진료시간 09:00~18:00</p>
+              
               </hr>
 
               <p>진료항목</p>
@@ -452,7 +454,13 @@
           </div>
      
     </div>
-    
+ <script>
+  function chatting(){
+		open("${path}/chattingView","_blank","width=500,height=600");		
+	}
+  
+  </script>
+
     
  <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>     
    

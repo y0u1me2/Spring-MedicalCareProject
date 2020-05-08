@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SocketMessage {
-
+public class AlramMessage {
+	
+//알람을 띄워주는 객체!
 	private String type;
-	private String sender;
-	private String reciever;
 	private String msg;
-	private String room;
+	private String sender;
+	private String receiver;
 }
