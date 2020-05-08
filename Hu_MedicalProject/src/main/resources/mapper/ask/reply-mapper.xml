@@ -15,7 +15,7 @@
 	
 	</delete>
 	
-	<update id="updateReply" parameterType="reply">
+	<update id="updateReply" parameterType="map">
 		UPDATE ASKREPLY SET REPLYCONTENT=#{replyContent} where REPLYREFNO=#{replyRefNo}
 	</update>
 	

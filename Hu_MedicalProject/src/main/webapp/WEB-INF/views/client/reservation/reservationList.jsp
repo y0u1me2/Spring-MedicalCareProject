@@ -423,13 +423,7 @@
           </div>
      
     </div>
- <script>
-  function chatting(){
-		open("${path}/chattingView","_blank","width=500,height=600");		
-	}
-  
-  </script>
-
+ 
     
  <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>     
    
