@@ -103,9 +103,14 @@
 		width: 70%;
 		margin: 5% auto 10px auto;
 	}
+	.picContentBox {
+		/* display: inline-flex; */
+		width: 100%;
+	}
 	.bottom-InfoContent {
 		padding: 0 !important;
 		margin: 10px;		
+		width: 150px;
 	}
 	.bottom-InfoContent-Info {
 		padding: 20px 10px 10px 10px;
@@ -303,35 +308,18 @@
 	$.ajax({
 		url:"${path}/healthInfo/frequentInfo",
 		success:function(data) {
+			$('div.bottom-content').append("<span class='picContentBox'></span>");
 			for(var i=0; i<6; i++) {
-				for(var j=0;j<3;j++) {
-					if(i==j) {
-						$('div.bottom-content').append("<div class='d-flex justify-content-between' id='frquent-info-1'></div>");
-						$('#frquent-info-1').append("<div class='bottom-InfoContent p-6'></div>");
-						var divTag=$('div.bottom-InfoContent.p-6');
-						$(divTag[j]).html("<img src='${pathImages}"+data.list[j].DISESASEFILE+"'>");
-						$(divTag[j]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"+data.list[i].DISESASETITLE+"</div><div class='bottom-InfoContent-Info-sub'>"+data.list[i].DISESASESUBTITLE+"</div></div></div>");
-						$(divTag[j]).append("<input type='hidden' class='disesaseNo' value='"+data.list[i].DISESASENO+"'/>");
-						$(divTag[j]).click(function(){
-							frequentInfoPicClick($(this).children('input.disesaseNo').val());
-						})
-					}
-				}
-				for(var j=3;j<6;j++) {
-					if(i==j) {
-						$('div.bottom-content').append("<div class='d-flex justify-content-between' id='frquent-info-2'></div>");
-						$('#frquent-info-2').append("<div class='bottom-InfoContent p-6'></div>");
-						var divTag=$('div.bottom-InfoContent.p-6');
-						$(divTag[j]).html("<img src='${pathImages}"+data.list[j].DISESASEFILE+"'>");
-						$(divTag[j]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"+data.list[i].DISESASETITLE+"</div><div class='bottom-InfoContent-Info-sub'>"+data.list[i].DISESASESUBTITLE+"</div></div></div>");
-						$(divTag[j]).append("<input type='hidden' class='disesaseNo' value='"+data.list[i].DISESASENO+"'/>");
-						$(divTag[j]).click(function(){
-							frequentInfoPicClick($(this).children('input.disesaseNo').val());
-						})
-					}
-					frequentInfoMouseEvent();
-				}
+				$('.picContentBox').append("<div class='bottom-InfoContent p-6'></div>");
+				var divTag=$('div.bottom-InfoContent.p-6');
+				$(divTag[i]).html("<img src='${pathImages}"+data.list[i].DISESASEFILE+"'>");
+				$(divTag[i]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"+data.list[i].DISESASETITLE+"</div><div class='bottom-InfoContent-Info-sub'>"+data.list[i].DISESASESUBTITLE+"</div></div></div>");
+				$(divTag[i]).append("<input type='hidden' class='disesaseNo' value='"+data.list[i].DISESASENO+"'/>");
+				$(divTag[i]).click(function(){
+					frequentInfoPicClick($(this).children('input.disesaseNo').val());
+				})				
 			}
+			frequentInfoMouseEvent();
 		}
 	});
 			
@@ -339,13 +327,6 @@
 		function frequentInfoPicClick(param) {
 			console.log(param);
 			location.href="${path}/healthInfo/frequentInfoPic?disesaseNo="+param;
-			/* $.ajax({
-				url:"${path}/healthInfo/frequentInfoPic",
-				data:{"disesaseNo":param},
-				success:function(data) {
-					
-				}
-			}) */
 		}
 	})
 </script>
