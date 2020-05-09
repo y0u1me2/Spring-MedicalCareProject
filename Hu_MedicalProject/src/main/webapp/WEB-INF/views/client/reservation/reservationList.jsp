@@ -272,12 +272,90 @@
               <p>혈액검사</p>
               <p>수액</p>
               
+<<<<<<< HEAD
               <div class="circle" id="check">
               	<a>바로접수</a>
               	
               </div>
+=======
+              <div class="circle">
+              	<a href="${path }/rv/corona">바로접수</a>
+              </div><br>
+             <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
+              
+>>>>>>> branch 'develop' of https://github.com/y0u1me2/Spring-MedicalCareProject.git
 
               <p><img src="${path }/resources/images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
+
+              <div id="notice">
+                <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
+                  다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
+
+                  월,화,목,금 9:00~18:00
+                  수 9:00~13:00
+                  토 9:00~14:00
+
+                  점심시간 13:00~14:00
+                  일,공휴일 휴무
+                </p>
+              </div>
+
+            </div>
+
+<<<<<<< HEAD
+            <div id="hospital_content">
+              <p>예약병원</p>
+              <h3>우리동네이비인후과의원</h3>
+              <p><img src="images/location.png" width="15px;" />5km</p>
+              <p id="bar">|</p>
+              <p>서울특별시 강남구 강남대로 21길</p>
+
+              <p>오늘의 진료시간 09:00~18:00</p>
+              </hr>
+
+              <p>진료항목</p>
+
+              <p>일반진료</p>피부질환<p>영유아검진</p>
+              <p>예방접종</p>
+              <p>혈액검사</p>
+              <p>수액</p>
+
+              <p><img src="images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
+
+              <div id="notice">
+                <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
+                  다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
+
+                  월,화,목,금 9:00~18:00
+                  수 9:00~13:00
+                  토 9:00~14:00
+
+                  점심시간 13:00~14:00
+                  일,공휴일 휴무
+                </p>
+              </div>
+
+            </div>
+
+            <div id="hospital_content">
+              <p>예약병원</p>
+              <h3>우리동네이비인후과의원</h3>
+              <p><img src="images/location.png" width="15px;" />5km</p>
+              <p id="bar">|</p>
+              <p>서울특별시 강남구 강남대로 21길</p>
+
+              <p>오늘의 진료시간 09:00~18:00</p>
+              
+              </hr>
+
+              <p>진료항목</p>
+
+              <p>일반진료</p>피부질환<p>영유아검진</p>
+              <p>예방접종</p>
+              <p>혈액검사</p>
+              <p>수액</p>
+
+              <p><img src="images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
 
               <div id="notice">
                 <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
@@ -357,6 +435,7 @@
           </div>
      
     </div>
+<<<<<<< HEAD
     
 
     
@@ -387,6 +466,7 @@
     	});
     
     </script>
+
     
  <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>     
    

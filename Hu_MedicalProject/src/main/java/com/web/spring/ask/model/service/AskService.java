@@ -28,6 +28,7 @@ public interface AskService {
 //delete
 	int deleteReply(int no);
 
-	int updateReply(AskReply reply);
+
+	int updateReply(Map<String, Object> param);
 
 }

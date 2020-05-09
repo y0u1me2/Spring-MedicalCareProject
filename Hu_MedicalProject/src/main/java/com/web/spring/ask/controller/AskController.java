@@ -1,5 +1,6 @@
 package com.web.spring.ask.controller;
 import java.util.List;
+import org.slf4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,9 @@ import com.web.spring.common.PageFactory;
 public class AskController {
 	@Autowired
 	private AskService service;
+	
+	@Autowired
+	Logger logger;
 
 
 //selectList 및 페이징처리
@@ -47,7 +51,6 @@ public class AskController {
 	//등록
 	@RequestMapping("/ask/insertEndAsk.do")
 	public String insertEndAsk(Ask ask,Model model) {
-		System.out.println(ask);
 		int result=service.insertAsk(ask);
 		String msg="";
 		String loc="";
@@ -68,8 +71,6 @@ public class AskController {
 	public ModelAndView askView(ModelAndView mv,@RequestParam("no") int no) {
 		Ask a=service.selectAskView(no);
 		AskReply reply=service.selectReplyView(no);
-		System.out.println("reply객체출력 : "+reply);
-		
 		mv.addObject("a",a);
 		mv.addObject("reply",reply);
 		mv.setViewName("client/ask/askView");
@@ -91,7 +92,7 @@ public class AskController {
 		 */
 	}
 
-//update
+//update--------------------------------------------------------ajax로 구현하기!!!!
 	@RequestMapping("/ask/updateEndAsk.do")
 	public String updateEndAsk(Ask ask,Model model) {
 		int result=service.updateAsk(ask);
@@ -127,4 +128,10 @@ public class AskController {
 		return "client/common/msg";
 	}
 
+	
+	@RequestMapping("/chattingView")
+	public String accessChatting() {
+		return "client/chatting/chatting";
+	}
+	
 }

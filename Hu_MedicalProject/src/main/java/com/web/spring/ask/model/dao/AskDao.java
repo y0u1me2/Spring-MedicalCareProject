@@ -31,6 +31,6 @@ public interface AskDao {
 //delete
 	int deleteReply(SqlSessionTemplate session, int no);
 
-	int updateReply(SqlSessionTemplate session, AskReply reply);
+	int updateReply(SqlSessionTemplate session, Map<String, Object> param);
 
 }

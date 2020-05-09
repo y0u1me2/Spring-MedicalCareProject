@@ -75,9 +75,11 @@
          </c:when>
          <c:when test = "${not empty loginMember }">
                	
-			<li class="nav-item" style="margin-left:250px;">
+			<li class="nav-item" style="margin-left:100px;">
 				<a href="#" style="align:right;"><c:out value="${loginMember.name }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
+				<%-- <button class="btn btn-outline-dark" type="button"
+						onclick="accessChatting('${loginMember.email}');">관리자 실시간 문의</button> --%>
 	        </li>
          </c:when>
          <c:otherwise>
@@ -85,6 +87,7 @@
       </c:choose>
     </ul>
   </nav>
+ 
  <!-- 로그인 -->
 <div id="id01" class="modalLogin" style="display: none;">
   
@@ -179,4 +182,53 @@ function logoutChk(){
 	location.href="${path}/member/logout.do";
 }
 
+//채팅 알람띄워주기
+		function accessChatting(room){
+			//room은 로그인된 userId가 매개변수로 들어간다.
+			if(${loginMember.email ne "admin"}){
+				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
+				requestChatting();
+			}
+			open("${path}/chattingView?room="+room,"_blank","width=300,height=600");
+		}
 </script>
+	<c:if test="${not empty loginMember }">
+	<!--로그인이 되었을때 문의하기!  -->
+		<script>
+			//채팅알람받는 웹소켓 구성하기
+			let alram=new WebSocket("ws://localhost:9090${path}/alram");
+			alram.onopen=function(msg){
+				alram.send(JSON.stringify(new AlramMessage("client","접속","${loginMember.email}","")));
+				//AlramMessage(type,msg,sender,receiver)
+			}
+			alram.onmessage=function(msg){
+				//웹소켓은 메시지를 보내면 자동으로 onmessage를 통해서 받게된다
+				const data=JSON.parse(msg.data);
+				switch(data.type){
+				//관리자에게 알림이 뜨는 메서드
+					case "newchat" : openChatting(data);break; 
+				}
+			}
+			
+			function openChatting(data){
+				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
+					accessChatting(data.sender);//관리자도 창을 띄워줘야하므로!
+				}
+			}
+			
+			function requestChatting(){
+				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));
+			//일반회원이 admin에게 채팅보냄
+			}
+			
+			function AlramMessage(type,msg,sender,receiver){
+				this.type=type;
+				this.msg=msg;
+				this.sender=sender;
+				this.receiver=receiver;			
+			}
+		
+			
+		
+		</script>
+	</c:if>

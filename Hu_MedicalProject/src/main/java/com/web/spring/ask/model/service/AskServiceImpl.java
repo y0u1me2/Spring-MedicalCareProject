@@ -70,12 +70,15 @@ public class AskServiceImpl implements AskService {
 		return dao.deleteReply(session,no);
 	}
 
-	@Override
-	public int updateReply(AskReply reply) {
-		return dao.updateReply(session,reply);
-	}
+	/*
+	 * @Override public int updateReply(AskReply reply) { return
+	 * dao.updateReply(session,reply); }
+	 */
 	
+	@Override
+	public int updateReply(Map<String, Object> param) {
+		return dao.updateReply(session,param);
+	}
 
-	 
-
+	
 }
