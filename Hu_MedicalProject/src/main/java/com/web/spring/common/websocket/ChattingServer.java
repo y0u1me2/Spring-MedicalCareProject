@@ -81,7 +81,7 @@ public class ChattingServer extends TextWebSocketHandler{
 		//현재접속회원을 전송
 		try {
 			//session.sendMessage(new TextMessage("a,admin, ,채팅접속을 환영합니다."));
-			session.sendMessage(new TextMessage(mapper.writeValueAsString(new SocketMessage("a","admin","","실시간 문의는 9시부터 6시까지 이며 그 이후에는 1:1문의 게시판을 이용해주시기 바랍니다. ",""))));
+			session.sendMessage(new TextMessage(mapper.writeValueAsString(new SocketMessage("a","admin","","",""))));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

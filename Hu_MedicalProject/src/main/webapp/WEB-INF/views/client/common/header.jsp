@@ -78,8 +78,8 @@
 			<li class="nav-item" style="margin-left:100px;">
 				<a href="#" style="align:right;"><c:out value="${loginMember.name }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
-				<%-- <button class="btn btn-outline-dark" type="button"
-						onclick="accessChatting('${loginMember.email}');">관리자 실시간 문의</button> --%>
+				<%--  <button class="btn btn-outline-dark" type="button"
+						onclick="accessChatting('${loginMember.email}');">관리자 --%> 실시간 문의</button> 
 	        </li>
          </c:when>
          <c:otherwise>
@@ -189,7 +189,7 @@ function logoutChk(){
 				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
 				requestChatting();
 			}
-			open("${path}/chattingView?room="+room,"_blank","width=300,height=600");
+			open("${path}/chattingView?room="+room,"_blank","width=500,height=490");
 		}
 </script>
 	<c:if test="${not empty loginMember }">
@@ -220,6 +220,12 @@ function logoutChk(){
 				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));
 			//일반회원이 admin에게 채팅보냄
 			}
+/* 
+			function requestChatting(){
+				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","${loginHospital.email}")));
+			//일반회원이 admin에게 채팅보냄
+			} */
+			
 			
 			function AlramMessage(type,msg,sender,receiver){
 				this.type=type;
