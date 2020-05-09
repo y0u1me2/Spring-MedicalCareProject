@@ -217,6 +217,11 @@
 	position: relative;
 	top: 300px;
 }
+
+	/* 바로접수 호버  */
+	.rv-selected{
+		color:white;
+	}
   </style>
 
 
@@ -267,8 +272,8 @@
               <p>혈액검사</p>
               <p>수액</p>
               
-              <div class="circle">
-              	<a href="${path }/rv/corona">바로접수</a>
+              <div class="circle" id="check">
+              	<a>바로접수</a>
               	
               </div>
 
@@ -353,6 +358,35 @@
      
     </div>
     
+
+    
+    <script>   
+    
+    //바로접수 호버시 마우스 커서 변화
+   	$('.circle').mouseenter(function() {
+    	    $(this).addClass('rv-selected').css("cursor","pointer");
+   	})
+    $('.circle').mouseleave(function() {
+    	    $(this).removeClass('rv-selected');
+    });
+    	
+    //바로접수 클릭했을 때 비로그인시 로그인하라고 알림창 띄우기
+    $(function(){ 		
+    		$(".circle").click(function(){
+    			if(${loginMember.name eq null}){
+    				alert("로그인후 이용하세요!"); 				
+    			}else{
+    			loc = document.getElementById("check");
+    	
+		    	loc.addEventListener("click", function() {
+		    		location.replace('${path}/rv/corona');
+    				});
+    			
+    			}
+    		})
+    	});
+    
+    </script>
     
  <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>     
    

@@ -11,7 +11,7 @@
 
     div#corona-container{
         position: relative;
-        top:200px;
+        top:120px;
        text-align: center;
     }
 
@@ -185,31 +185,32 @@ footer {
                     
                     <p>중국 방문 후 14일 이내에 발열 또는 호흡기 증상이 있나요?</p>                 
 
-                    <input type="radio" class="yes" id="yes1" value="" />
+                    <input type="radio" class="yes" id="yes1" name="radio1" value="" />
                     <label for="yes1">예</label>
 
-                    <input type="radio" class="no" id="no1" value="" />
+                    <input type="radio" class="no" id="no1" name="radio1" value="" />
                     <label for="no1">아니오</label>
 
                     <p>확진자 접촉 후 14일 이내에 발열 또는 호흡기 증상이 있나요?</p>
 
-                    <input type="radio" class="yes" id="yes2" value="" />
+                    <input type="radio" class="yes" id="yes2" name="radio2" value="" />
                     <label for="yes2">예</label>
 
-                    <input type="radio" class="no" id="no2" value="" />
+                    <input type="radio" class="no" id="no2" name="radio2" value="" />
                     <label for="no2">아니오</label>
 
                     <p>코로나19 발생 국가/지역 방문 후 14일 이내에 발열 또는 호흡기 증상이 있나요?</p>
 
-                    <input type="radio" class="yes" id="yes3" value="" />
+                    <input type="radio" class="yes" id="yes3" name="radio3" value="" />
                     <label for="yes3">예</label>
 
-                    <input type="radio"  class="no" id="no3" value="" />
+                    <input type="radio"  class="no" id="no3" name="radio3" value="" />
                     <label for="no3">아니오</label>
 
 
                     <div id="corona-btn" >
-                        <button id="cancel-btn">접수취소</button>
+                        <button id="cancel-btn"
+                        onclick="location.replace('${path}/rv/reservationList');">접수취소</button>
                         <button id="complete-btn" type="button">문진완료</button>
                     </div>
 
@@ -273,22 +274,22 @@ footer {
 	    		if(item.checked==true){
 	    			count++; 			  			
 	    		}  		
-	    	})	  
 	    		    		
-	    		if(count==3) {
-	    			var fn_loc = location.replace('${path}/rv/reservationView');
-	    			var clickEvent = new Function(fn_loc);
+	    		if(count==3) {  		
 	    			
 	    			$('#complete-btn').attr('disabled', false);
-	    			$('#complete-btn').attr("onclick",clickEvent);
+	    			
+			    	btn = document.getElementById("complete-btn");
+			    	
+			    	btn.addEventListener("click", function() {
+			    		location.replace('${path}/rv/reservationView');
+			    	});
+	    			
 	    		}   			
 	    	
-	    	/* btnEle = document.getElementById("myBtn");
-	    	btnEle.addEventListener("click", function() {
-	    	  alert("Click!");
-	    	}); */
-    	});
+    		});
 
+	    })	  
  	
    //예가 1개이상 클릭 됐을 때 경고 팝업창 띄우기
     $("input.yes").click(function(){
@@ -296,23 +297,22 @@ footer {
 	   var yesCount=0;
 	   $.each($("input.yes"),function(i,item){
 		   
-		   if(item.checked==true){
-			   yesCount++;
-		   }
-	   });	
-	  		if(yesCount>=1){
-	  			var fn_pop = function popupOn(){
-	  		 	 				 $(".modal-back").show();  	 	  	  
-	  		   				}
-	  			
-	  			$('#complete-btn').attr('disabled',false);
-	  			$('#complete-btn').attr("onclick",fn_pop);
-    			//location.replace('${path}/rv/reservationView');
-	  		}
-   
- 
-   
-   });
+			 if(item.checked==true){
+				 yesCount++;
+			  }
+		  		if(yesCount>=1){
+		  			
+		  			$('#complete-btn').attr('disabled',false);
+		     			
+		  			btn = document.getElementById("complete-btn");
+			    	
+			    	btn.addEventListener("click", function() {
+	  		 	 				 $(".modal-back").show();
+	  		 	 				 
+	  		   					});	
+		    	}	    		
+	  		});  	  
+   		})
    
     function popupOff(){
   	  $(".modal-back").hide();
