@@ -217,6 +217,11 @@
 	position: relative;
 	top: 300px;
 }
+
+	/* 바로접수 호버  */
+	.rv-selected{
+		color:white;
+	}
   </style>
 
 
@@ -267,11 +272,18 @@
               <p>혈액검사</p>
               <p>수액</p>
               
+<<<<<<< HEAD
+              <div class="circle" id="check">
+              	<a>바로접수</a>
+              	
+              </div>
+=======
               <div class="circle">
               	<a href="${path }/rv/corona">바로접수</a>
               </div><br>
              <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
               
+>>>>>>> branch 'develop' of https://github.com/y0u1me2/Spring-MedicalCareProject.git
 
               <p><img src="${path }/resources/images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
 
@@ -423,7 +435,38 @@
           </div>
      
     </div>
- 
+<<<<<<< HEAD
+    
+
+    
+    <script>   
+    
+    //바로접수 호버시 마우스 커서 변화
+   	$('.circle').mouseenter(function() {
+    	    $(this).addClass('rv-selected').css("cursor","pointer");
+   	})
+    $('.circle').mouseleave(function() {
+    	    $(this).removeClass('rv-selected');
+    });
+    	
+    //바로접수 클릭했을 때 비로그인시 로그인하라고 알림창 띄우기
+    $(function(){ 		
+    		$(".circle").click(function(){
+    			if(${loginMember.name eq null}){
+    				alert("로그인후 이용하세요!"); 				
+    			}else{
+    			loc = document.getElementById("check");
+    	
+		    	loc.addEventListener("click", function() {
+		    		location.replace('${path}/rv/corona');
+    				});
+    			
+    			}
+    		})
+    	});
+    
+    </script>
+
     
  <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>     
    
