@@ -158,6 +158,45 @@ footer {
 	top: 400px;
 }
 
+/* 가족추가 팝업창 */
+	.modal-family{
+	 display: none;
+        z-index: 4;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        position: fixed;
+        /* border: 1px solid black; */
+        background-color: rgba(0, 0, 0, 0.5);
+	}
+
+	.modal-f{
+	width: 500px;
+        height:500px;
+        max-height: 650px;
+        padding: 40px;
+        background-color: #fefefe;
+        margin: 2% auto 15% auto;
+        position: relative;
+        top:200px;
+	}
+
+ /* 팝업 텍스트 */
+	div.poptext2{
+		position:relative;
+		top:40px;
+	}
+	
+	div.poptext2>h3{
+		position:relative;
+		left:160px;
+	}
+	
+	div#textP2{
+		position:relative;
+		top:30px;
+	}
+
 
 /* 접수전 팝업창 */
     .modal-back {
@@ -184,7 +223,7 @@ footer {
     }
     
     /* Add Zoom Animation 
-    팝업시 줌 애니메이션*/
+   	 팝업시 줌 애니메이션*/
     .animate {
         animation: animatezoom 0.6s
     }
@@ -309,17 +348,21 @@ footer {
                             </div>                      
                         </div>
 
-                        <div class="family">
-	                        <a href="${path }/rv/family.do">
+                        <div class="family" onclick="popupFamilyAdd();">
+	                  
 	                            <img src="${path }/resources/images/family.png" id="plus" alt="플러스" width="60px;">
 	
 	                            <div class="container">
-	                                	가족추가
+	                                <p>가족추가</p>
 	                            </div> 
-	                            
-	                         </a> 
+	                       
                         </div>
-                    </div>
+                    </div> 
+	      
+	   
+	                           
+	                            
+	                        
 
                 <div class="select">
                     <p>진료실<strong>[필수]</strong></p>
@@ -358,6 +401,7 @@ footer {
             </div>
         </div>
         
+         <!------------- 접수전 모달창 ------------->       
         <div class="modal-back" id="login">
 			<div class="modal-login animate">
 				<img src="${path }/resources/images/warning.png" width="30px;" id="warning" />
@@ -381,6 +425,47 @@ footer {
 				
 			</div>
 		</div>
+		
+		 <!------------- 가족추가 모달창 ------------->                      
+	     <div class="modal-family">
+			<div class="modal-f animate">
+				<img src="${path }/resources/images/logo5.png" width="30px;" id="warning" />
+					
+					<div class="poptext2">
+						<h3>가족추가</h3>
+						
+						<div id="textP2">
+							<input type="text" placeholder="이름" />
+							<select>
+								<option>내국인</option>
+								<option>외국인</option>
+							</select>
+							
+							<br/><br/>
+							<input type="text" placeholder="생년월일 (ex.19000101)" />
+							
+							<input type="radio" name="gender" id="gender0" value="M" checked> 
+							<label for="gender0">남</label> 
+						
+							<input type="radio" name="gender" id="gender1" value="F"> 
+							<label for="gender1">여</label>
+							
+							<br/>
+							<p>※ 벙원에서 접수 관련 연락을 받을 휴대폰 번호를 입력하세요.</p>
+							<input type="text" placeholder="01012345678"/>
+							
+						</div>
+					</div>		
+					
+				<button type="button" class="big-gray-btn" 
+				onclick="location.replace('')">완료</button>
+				
+				<div class="close-btn">
+					<span onclick="popupOff2();" class="close" title="Close Modal">&times;</span>
+				</div>
+				
+			</div>
+		</div>
         
       <script>
       
@@ -392,6 +477,22 @@ footer {
       function popupOff(){
     	  $(".modal-back").hide();
       }
+      
+         
+      function popupFamilyAdd(){
+    	  $(".modal-family").show();
+    	  	  
+      }
+      
+      function popupOff2(){
+    	  $(".modal-family").hide();
+      }
+      
+      //가족추가 호버시 
+      	$('.family').mouseenter(function() {
+    	    $(this).css("cursor","pointer");
+   	})
+      
       
         
       </script>  

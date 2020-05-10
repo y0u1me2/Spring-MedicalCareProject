@@ -1,5 +1,6 @@
 package com.web.spring.ask.controller;
 import java.util.List;
+import org.slf4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,9 @@ import com.web.spring.common.PageFactory;
 public class AskController {
 	@Autowired
 	private AskService service;
+	
+	@Autowired
+	Logger logger;
 
 
 //selectList 및 페이징처리
@@ -47,7 +51,6 @@ public class AskController {
 	//등록
 	@RequestMapping("/ask/insertEndAsk.do")
 	public String insertEndAsk(Ask ask,Model model) {
-		System.out.println(ask);
 		int result=service.insertAsk(ask);
 		String msg="";
 		String loc="";
@@ -68,7 +71,6 @@ public class AskController {
 	public ModelAndView askView(ModelAndView mv,@RequestParam("no") int no) {
 		Ask a=service.selectAskView(no);
 		AskReply reply=service.selectReplyView(no);
-		
 		mv.addObject("a",a);
 		mv.addObject("reply",reply);
 		mv.setViewName("client/ask/askView");
@@ -79,6 +81,7 @@ public class AskController {
 	@RequestMapping("/ask/updateAsk.do")
 	public ModelAndView updateAsk(ModelAndView mv,@RequestParam("no") int no) {
 		Ask a = service.selectAskView(no);
+		logger.debug(""+a);
 		mv.addObject("a",a);
 		mv.setViewName("client/ask/askUpdate");
 		return mv;

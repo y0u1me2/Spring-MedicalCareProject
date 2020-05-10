@@ -50,11 +50,11 @@ public class ReservationController {
 	
 //가족추가 페이지로 이동==================================
 	
-	@RequestMapping("/rv/family.do")
-	public String familyAdd() {
-		
-		return "client/reservation/familyAdd";
-	}
+	/*
+	 * @RequestMapping("/rv/family.do") public String familyAdd() {
+	 * 
+	 * return "client/reservation/familyAdd"; }
+	 */
 	
 //병원 접수하기========================================	
 	

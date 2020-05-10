@@ -11,7 +11,7 @@
 
     div#corona-container{
         position: relative;
-        top:200px;
+        top:120px;
        text-align: center;
     }
 
@@ -209,7 +209,8 @@ footer {
 
 
                     <div id="corona-btn" >
-                        <button id="cancel-btn">접수취소</button>
+                        <button id="cancel-btn"
+                        onclick="location.replace('${path}/rv/reservationList');">접수취소</button>
                         <button id="complete-btn" type="button">문진완료</button>
                     </div>
 

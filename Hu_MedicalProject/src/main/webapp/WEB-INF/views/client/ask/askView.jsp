@@ -8,7 +8,7 @@
 <jsp:include page="/WEB-INF/views/client/common/header.jsp">
 	<jsp:param value="Hello Spring" name="title"/>
 </jsp:include>
-	<input type="hidden" name="askNo" value="${a.askNo }">
+	<input type="hidden" name="askNo" id="askNo" value="${a.askNo }">
    <div class="container-fluid" style="padding-top:60px;">
         <div class="row">
           <div class="col-xl-2">
@@ -17,16 +17,16 @@
            <h2>${a.askTitle }</h2>
            <div style="float: right;">
 	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="askUpdate();">수정</button>
-	           
 	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" onclick="askDelete();">삭제</button>
 	           <button class="btn btn-outline-success my-2 my-sm-0" onclick="askList();" >목록</button>
            </div>
            <p style="padding-top: 0px; color:lightgray;">${a.askDate }</p>
            
            <hr>
-           <div style="height: 200px; ">
+           <div id="content" style="height: 200px; ">
             ${a.askContent }
            </div>
+           
           <hr>
          <c:choose>
          <c:when test = "${empty reply}">
@@ -41,15 +41,22 @@
       <c:when test = "${not empty reply }">
           <div style="height: 130px;">
            	<img src="${path }/resources/images/logo6.png"  style="width:70px; float:left; padding-right:20px;">
-			  <div style="margin-top:30px;">${reply.replyContent }</div>
+           	<form id="askFrm">
+           	<input type="hidden" id="contentRe" value="${reply.replyContent }">
+			  <div id="replyContent" style="margin-top:30px;">
+				  ${reply.replyContent }
+				</div>
+			</form>
           </div>
-          <div style="float:right; margin-top:50px;">
-	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" id="replyUpdateBtn" onclick="replyUpdate();">답변수정</button>
-	           <button class="btn btn-outline-success my-2 my-sm-0" onclick="replyDelete();" >답변 삭제</button>
-	      </div>
+          
+	          <div style="float:right; margin-top:50px;">
+		           <button type="button" class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" id="replyUpdateBtn" onclick="replyUpdate();">답변수정</button>
+		           <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="replyDelete();" >답변 삭제</button>
+		      </div>
+	      
   	</c:when>
   	</c:choose>
-  	<hr>      
+  	<hr>
           </div>
           </div>
           <div class="col-xl-2">
@@ -78,14 +85,48 @@ function replyDelete(){
 	}
 }
  
+function replyUpdate() {
+	var no=$("#askNo").val();
+	$.ajax({
+		url:'${path}/reply/selectReply.do',
+		data:{"no":no},
+		success:function(result){
+			console.log(result.reply);
+			$('#askFrm').html('<textarea id="replyContent" style="float:left" class="form-control col-sm-10" rows="4">'+result.reply.replyContent+'</textarea><br/>'+
+			'<button type="button" onclick="replyUpdateEnd();" class="btn btn-outline-success my-2 my-sm-0"style="margin-left:710px;float:left;" >수정완료</button>');
+		}
+	});
+}
 
-$(function(){
-	$("#replyUpdateBtn").on("click",function(){
-		location.replace('${path}/reply/updateReply.do?no=${reply.replyRefNo}');
-	})
-});
+/* function replyUpdateEnd(){
+	var reply=new AskReply();
+	var reContent=$("#replyContent").val();
+	var no=$("#askNo").val();
+	 $.ajax({
+		url:'${path}/reply/updateReply.do',
+		data:,
+		success:function(result){
+			console.log(result.reply);
+			
+		}
+	}) 
+}  */
 
+function replyUpdateEnd(){
+	
+	var result={'replyContent':$('#replyContent').val(),'replyRefNo':'${reply.replyRefNo}'};
+	console.log(result);
+	  $.ajax({
+		url:'${path}/reply/updateReply.do',
+		type:'POST',
+		dataType:"json",
+		data:result,
+		success:function(result){
+			console.log(result.reply.replyContent);
+			alert("성공");
+		}
+	});
+}  
 </script>
-      
-        
+    
 <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>
