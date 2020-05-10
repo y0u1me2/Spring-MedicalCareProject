@@ -66,9 +66,10 @@ public class AskDaoImpl implements AskDao {
 	}
 
 	@Override
-	public int updateReply(SqlSessionTemplate session, AskReply reply) {
-		return session.update("reply.updateReply",reply);
+	public int updateReply(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("reply.updateReply", param);
 	}
+
 	
 
 }

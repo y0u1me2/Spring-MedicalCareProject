@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 
 import com.web.spring.carenotice.model.vo.CareAttachment;
+import com.web.spring.carenotice.model.vo.CareComment;
 import com.web.spring.carenotice.model.vo.CareNotice;
 
 
@@ -84,9 +85,24 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 		
 		return session.update("care.updateCare",c);
 	}
-	
+
+
 	
 	//updateAttachment
+	
+	//댓글 달기
+	@Override
+	public int insertComment(SqlSession session, CareComment c) {
+		
+		return session.insert("care.insertComment",c);
+	}
+
+	//댓글 리스트
+	@Override
+	public List<CareComment> commentList(SqlSession session, int no) {
+		
+		return session.selectList("care.commentList",no);
+	}
 	
 	
 	

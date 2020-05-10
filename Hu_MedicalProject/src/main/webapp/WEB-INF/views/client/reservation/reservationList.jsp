@@ -217,6 +217,11 @@
 	position: relative;
 	top: 300px;
 }
+
+	/* 바로접수 호버  */
+	.rv-selected{
+		color:white;
+	}
   </style>
 
 
@@ -229,7 +234,6 @@
       <div class="row">
         <div class="col-sm-12">
 
-          <img src="images/treatment_status.png" width="50px;" />
 
           <!-- ================================================================ -->
           <div id="menu">
@@ -268,10 +272,18 @@
               <p>혈액검사</p>
               <p>수액</p>
               
-              <div class="circle">
-              	<a href="${path }/rv/corona">바로접수</a>
+<<<<<<< HEAD
+              <div class="circle" id="check">
+              	<a>바로접수</a>
               	
               </div>
+=======
+              <div class="circle">
+              	<a href="${path }/rv/corona">바로접수</a>
+              </div><br>
+             <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
+              
+>>>>>>> branch 'develop' of https://github.com/y0u1me2/Spring-MedicalCareProject.git
 
               <p><img src="${path }/resources/images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
 
@@ -290,6 +302,7 @@
 
             </div>
 
+<<<<<<< HEAD
             <div id="hospital_content">
               <p>예약병원</p>
               <h3>우리동네이비인후과의원</h3>
@@ -332,6 +345,7 @@
               <p>서울특별시 강남구 강남대로 21길</p>
 
               <p>오늘의 진료시간 09:00~18:00</p>
+              
               </hr>
 
               <p>진료항목</p>
@@ -357,6 +371,8 @@
               </div>
 
             </div>
+
+            
           </div>
 
           <!-- ================================================================ -->
@@ -395,40 +411,7 @@
               </div>
             </div>
 
-            <div id="pharmacy_content">
-              <p>영업중</p>
-              <p>연중무휴</p>
-              <h3>사당365약국</h3>
-              <p><img src="images/location.png" width="15px;" />70km</p>
-              <p id="bar">|</p>
-              <p>서울특별시 강남구 강남대로 21길</p>
-
-              <p>오늘의 영업시간 09:00~23:00</p>
-              </hr>
-
-              <div id="pharm">
-                <button id="pharm-btn">전화</button>
-                <button id="pharm-btn">찾아가기</button>
-              </div>
-            </div>
-
-            <div id="pharmacy_content">
-              <p>영업중</p>
-              <p>연중무휴</p>
-              <h3>사당365약국</h3>
-              <p><img src="images/location.png" width="15px;" />70km</p>
-              <p id="bar">|</p>
-              <p>서울특별시 강남구 강남대로 21길</p>
-
-              <p>오늘의 영업시간 09:00~23:00</p>
-              </hr>
-
-              <div id="pharm">
-                <button id="pharm-btn">전화</button>
-                <button id="pharm-btn">찾아가기</button>
-              </div>
-            </div>
-
+           
 </div>
             <!-- ================================================================ -->
             <!-- 날씨정보 -->
@@ -452,7 +435,38 @@
           </div>
      
     </div>
+<<<<<<< HEAD
     
+
+    
+    <script>   
+    
+    //바로접수 호버시 마우스 커서 변화
+   	$('.circle').mouseenter(function() {
+    	    $(this).addClass('rv-selected').css("cursor","pointer");
+   	})
+    $('.circle').mouseleave(function() {
+    	    $(this).removeClass('rv-selected');
+    });
+    	
+    //바로접수 클릭했을 때 비로그인시 로그인하라고 알림창 띄우기
+    $(function(){ 		
+    		$(".circle").click(function(){
+    			if(${loginMember.name eq null}){
+    				alert("로그인후 이용하세요!"); 				
+    			}else{
+    			loc = document.getElementById("check");
+    	
+		    	loc.addEventListener("click", function() {
+		    		location.replace('${path}/rv/corona');
+    				});
+    			
+    			}
+    		})
+    	});
+    
+    </script>
+
     
  <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>     
    

@@ -1,12 +1,5 @@
 package com.web.spring.member.controller;
 
-
-import java.util.Map;
-import java.util.Random;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,7 +24,6 @@ public class MemberController {
 	//암호화
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder; //단방향 암호화 객체
-	
 	
 	@RequestMapping("/member/personEnroll.do")
 	public String personEnroll() {
