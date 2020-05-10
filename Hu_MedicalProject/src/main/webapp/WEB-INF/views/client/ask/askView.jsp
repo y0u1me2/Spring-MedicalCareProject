@@ -114,7 +114,7 @@ function replyUpdate() {
 
 function replyUpdateEnd(){
 	
-	var result={'replyContent':$('#replyContent').val(),'replyRefNo':${reply.replyRefNo}};
+	var result={'replyContent':$('#replyContent').val(),'replyRefNo':'${reply.replyRefNo}'};
 	console.log(result);
 	  $.ajax({
 		url:'${path}/reply/updateReply.do',
@@ -125,8 +125,8 @@ function replyUpdateEnd(){
 			console.log(result.reply.replyContent);
 			alert("성공");
 		}
-	})  
-} 
+	});
+}  
 </script>
     
 <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>

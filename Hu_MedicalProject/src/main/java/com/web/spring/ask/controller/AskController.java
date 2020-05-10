@@ -81,6 +81,7 @@ public class AskController {
 	@RequestMapping("/ask/updateAsk.do")
 	public ModelAndView updateAsk(ModelAndView mv,@RequestParam("no") int no) {
 		Ask a = service.selectAskView(no);
+		logger.debug(""+a);
 		mv.addObject("a",a);
 		mv.setViewName("client/ask/askUpdate");
 		return mv;
