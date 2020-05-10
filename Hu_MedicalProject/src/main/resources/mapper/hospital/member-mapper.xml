@@ -3,8 +3,11 @@
 <mapper namespace="hospital">
 
 	<insert id="enrollMember" parameterType="hospital">
-		INSERT INTO HOSPITAL_MEMBER VALUES(SEQ_HOSPITAL_NO.NEXTVAL, #{id}, #{pw}, #{hospitalName}, #{hospitalNo}, #{managerName}, #{email}, #{phone}, default)
+		INSERT INTO HOSPITAL_MEMBER VALUES(SEQ_HOSPITAL_NO.NEXTVAL, #{id}, #{password}, #{hospitalName}, #{hospitalNo}, #{managerName}, #{email}, #{phone}, default)
 	</insert>
-
+	
+	<select id="loginMember" parameterType="hospital" resultType="hospital">
+		SELECT * FROM HOSPITAL_MEMBER WHERE ID = #{id}
+	</select>
 
 </mapper>

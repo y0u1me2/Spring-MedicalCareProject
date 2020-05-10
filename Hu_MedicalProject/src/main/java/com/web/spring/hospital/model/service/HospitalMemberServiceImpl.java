@@ -21,4 +21,9 @@ public class HospitalMemberServiceImpl implements HospitalMemberService {
 		return result;
 	}
 
+	@Override
+	public Hospital hospitalLogin(Hospital h) {
+		return dao.hospitalLogin(session, h);
+	}
+
 }

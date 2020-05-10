@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Hospital {
 	private int no;
 	private String id;
-	private String pw;
+	private String password;
 	private String hospitalName;
 	private int hospitalNo;
 	private String managerName;

@@ -27,9 +27,9 @@ body{
 
 </style>
 <div class="container-fluid bg-light border">
-	<div class="container bg-white my-5 border" style="width: 40%;">
+	<div class="container bg-white my-5 pb-5" style="width: 40%;">
 	
-		<div class="container border my-5" style="width:90%;">
+		<div class="container" style="width:90%;">
 			<div class="d-flex justify-content-center" style="border-bottom: 1px solid #dfe0e2;">
 				<img class="my-5" src="${path }/resources/images/logo.png" height="50"/>
 			</div>
@@ -38,7 +38,7 @@ body{
 			
 			
 			<form action="${path}/hospitalEnrollEnd.do" method="post" id="form1" class="needs-validation" novalidate onsubmit="return validate();">
-				<div class="border mb-5">
+				<div class="mb-5">
 					<p><b>기본 정보</b></p>
 					 <div class="form-group">
 					   <input type="text" class="form-control" id="id" placeholder="아이디 (영문+숫자, 4~20자)" name="id" required autocomplete="off">
@@ -46,7 +46,7 @@ body{
 					   <div class="invalid-feedback">Please fill out this field.</div>
 					 </div>
 					 <div class="form-group">
-					   <input type="password" class="form-control" id="pw" placeholder="비밀번호 (영문+숫자+특수문자 각 1자리 이상 포함, 총 6~18자)" name="pw" required>
+					   <input type="password" class="form-control" id="pw" placeholder="비밀번호 (영문+숫자+특수문자 각 1자리 이상 포함, 총 6~18자)" name="password" required>
 					   <div class="valid-feedback">Valid.</div>
 					   <div class="invalid-feedback">Please fill out this field.</div>
 					 </div>
@@ -58,19 +58,19 @@ body{
 				</div>
 			  
 			
-				<div class="border mb-5">
+				<div class="mb-5">
 					<p><b>병원 정보</b></p>
 					 <div class="form-group">
 					   <input type="text" class="form-control" id="hospital_name" placeholder="병원명을 입력하세요" name="hospitalName" required autocomplete="off">
 					 	<div class="invalid-feedback"></div>
 					 </div>
 					 <div class="form-group">
-					   <input type="password" class="form-control" id="hospital_number" placeholder="요양기관 번호 (숫자, 8자)" name="hospitalNo" required autocomplete="off">
+					   <input type="text" class="form-control" id="hospital_number" placeholder="요양기관 번호 (숫자, 8자)" name="hospitalNo" required autocomplete="off">
 					 	<div class="invalid-feedback"></div>
 					 </div>
 				</div>
 			  
-				<div class="border mb-5">
+				<div class="mb-5">
 					<p><b>담당자 정보</b></p>
 					<div class="form-group">
 					  <input type="text" class="form-control" id="manager_name" placeholder="병원 담당자 이름" name="managerName" required autocomplete="off">
@@ -268,7 +268,7 @@ function checkPw2(){
 			return false;
 		}
 	}else{
-		pw2.next().next().html('<p>비밀번호를 먼저 입력해주세요.</p>').show();
+		/* pw2.next().next().html('<p>비밀번호를 먼저 입력해주세요.</p>').show(); */
 		return false;
 	}
 	

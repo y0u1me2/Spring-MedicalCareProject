@@ -13,4 +13,9 @@ public class HospitalMemberDaoImpl implements HospitalMemberDao {
 		return session.insert("hospital.enrollMember", h);
 	}
 
+	@Override
+	public Hospital hospitalLogin(SqlSessionTemplate session, Hospital h) {
+		return session.selectOne("hospital.loginMember");
+	}
+
 }
