@@ -37,7 +37,7 @@ body{
 			<h4 class="py-4">가입 정보 입력 후 가입 승인 요청을 해주세요.</h4>
 			
 			
-			<form action="/action_page.php" id="form1" class="needs-validation" novalidate onsubmit="return validate();">
+			<form action="${path}/hospitalEnrollEnd.do" method="post" id="form1" class="needs-validation" novalidate onsubmit="return validate();">
 				<div class="border mb-5">
 					<p><b>기본 정보</b></p>
 					 <div class="form-group">
@@ -61,11 +61,11 @@ body{
 				<div class="border mb-5">
 					<p><b>병원 정보</b></p>
 					 <div class="form-group">
-					   <input type="text" class="form-control" id="hospital_name" placeholder="병원명을 입력하세요" name="hospital_name" required autocomplete="off">
+					   <input type="text" class="form-control" id="hospital_name" placeholder="병원명을 입력하세요" name="hospitalName" required autocomplete="off">
 					 	<div class="invalid-feedback"></div>
 					 </div>
 					 <div class="form-group">
-					   <input type="password" class="form-control" id="hospital_number" placeholder="요양기관 번호 (숫자, 8자)" name="hospital_number" required autocomplete="off">
+					   <input type="password" class="form-control" id="hospital_number" placeholder="요양기관 번호 (숫자, 8자)" name="hospitalNo" required autocomplete="off">
 					 	<div class="invalid-feedback"></div>
 					 </div>
 				</div>
@@ -73,21 +73,22 @@ body{
 				<div class="border mb-5">
 					<p><b>담당자 정보</b></p>
 					<div class="form-group">
-					  <input type="text" class="form-control" id="manager_name" placeholder="병원 담당자 이름" name="manager_name" required autocomplete="off">
+					  <input type="text" class="form-control" id="manager_name" placeholder="병원 담당자 이름" name="managerName" required autocomplete="off">
 						<div class="invalid-feedback"></div>
 					</div>
 					<div class="form-group">
 					  <input type="email" class="form-control" id="email" placeholder="수신 가능한 이메일" name="email" required autocomplete="off">
+					  <div class="invalid-feedback"></div>
 					</div>
 					<div class="form-group">
 					  <input type="tel" class="form-control" id="phone" placeholder="휴대폰 번호 입력" name="phone" required autocomplete="off">
+					  <div class="invalid-feedback"></div>
 					</div>
 				</div>
 				
 			  <div class="form-group form-check">
 			    <label class="form-check-label">
-			      <input class="form-check-input" type="checkbox" name="remember" required>서비스 이용약관 및 개인정보 취급방침에 동의합니다.
-			      <div class="valid-feedback">Valid.</div>
+			      <input class="form-check-input" type="checkbox" name="remember" id="agree" required>서비스 이용약관 및 개인정보 취급방침에 동의합니다.
 			      <div class="invalid-feedback">Check this checkbox to continue.</div>
 			    </label>
 			  </div>
@@ -178,6 +179,18 @@ $(function(){
 	$("#manager_name").blur(function(){
 		checkManagerName();
 	});
+	
+	$("#email").blur(function(){
+		checkEmail();
+	});
+	
+	$("#phone").blur(function(){
+		checkPhone();
+	});
+	
+	$("#agree").change(function(){
+		checkAgree();
+	});
 })
 
 //아이디 유효성 검사
@@ -200,7 +213,7 @@ function checkId(){
 		return false;
 	}else{//사용가능한 아이디(유효성 검사는 통과)
 		//디비에 중복 아이디 있는지 확인
-		$.ajax({
+		/* $.ajax({
 			url: "",
 			data: {'id' : id},
 			success: function(result){
@@ -210,7 +223,7 @@ function checkId(){
 					id.next().next().html('<p>사용할 수 없는 아이디입니다.<br>중복된 아이디가 이미 존재합니다.</p>').show();
 				}
 			}
-		});
+		}); */
 		
 		
 	}
@@ -298,22 +311,85 @@ function checkManagerName(){
 
 function checkEmail(){
 	var email = $("#email");
-	managerName.next().hide();
+	var email_reg = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+	email.next().hide();
+	
+	if(email.val().trim()==''){
+		email.next().html('<p>필수 입력 항목입니다.</p>').show();
+		return false;
+	}
+	if(!email_reg.test(email.val())){
+		email.next().html('<p>이메일 주소를 잘못 입력하였습니다.</p>').show();
+		return false;
+	}
+}
+
+function checkPhone(){
+	var phone = $("#phone");
+	var phone_reg1 = /^01[0179][0-9]{7,8}$/;
+	var phone_reg2 = /^01[0179]-[0-9]{3,4}-[0-9]{4}$/;
+	phone.next().hide();
+	
+	if(phone.val().trim()==''){
+		phone.next().html('<p>필수 입력 항목입니다.</p>').show();
+		return false;
+	}
+	if(!phone_reg1.test(phone.val())&&!phone_reg2.test(phone.val())){
+		phone.next().html('<p>휴대폰 번호를 잘못 입력하였습니다.</p>').show();
+		return false;
+	}
+}
+
+function checkAgree(){
+	var agree = $("#agree");
+	agree.next().hide();
+	
+	if(agree.is(":checked")==false){
+		agree.next().show();
+		return false;
+	}
 }
 
 
+
 function validate(){
+	var result = true;
+	
+	if(checkId()==false) result = false;
+	if(checkPw()==false) result = false;
+	if(checkPw2()==false) result = false;
+	if(checkHospitalName()==false) result = false;
+	if(checkHospitalNumber()==false) result = false;
+	if(checkManagerName()==false) result = false;
+	if(checkEmail()==false) result = false;
+	if(checkPhone()==false) result = false;
+	if(checkAgree()==false) result = false;
+	
+	return result;
 	
 	
+	/* checkPw();
+	checkPw2();
+	checkHospitalName();
+	checkHospitalNumber();
+	checkManagerName();
+	checkEmail();
+	checkPhone(); */
 	
-	//병원명 입력 여부 확인
-	//요양기관 번호 입력 여부 확인
-	//담당자 이름 입력 여부
 	
-	//**이메일 주소 유효성 검사
-	//**휴대폰 번호 유효성 검사
-	
-	
+	/* if(checkId()==false) return false;
+	if(checkPw()==false) return false;
+	if(checkPw2()==false) return false;
+	if(checkHospitalName()==false) return false;
+	if(checkHospitalNumber()==false) return false;
+	if(checkManagerName()==false) return false;
+	if(checkEmail()==false) return false;
+	if(checkPhone()==false) return false; */
+	/* if(checkId()==false || checkPw()==false || checkPw2()==false || checkHospitalName()==false || checkHospitalNumber()==false || checkManagerName()==false || checkEmail()==false || checkPhone()==false){
+		return false;	
+	}else{
+		return true;
+	} */
 }
 
 </script>
