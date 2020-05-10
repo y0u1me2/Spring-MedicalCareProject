@@ -104,14 +104,16 @@
 	    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	    <a href="${path}/member/hospitalEnroll.do">병원 관계자 회원</a>
 	  </div>
-	  <div class="col-xl-4"></div>
-	</div>
-	
+	  <div class="col-xl-4"></div></div>
+	<br><br>
 	<div class="row"> 
 	  <div class="col"></div>
 	  <div class="col-xl-6">
-	    <label for="email"><b>이메일</b></label>
-	    <input type="text" placeholder="@를 포함한 이메일 입력" id="email" name="email" required></p>
+	    <label for="email"><b>이메일</b></label><br>
+	    <input type="text" placeholder="@를 포함한 이메일 입력" id="email" name="email" style="width:550px;" required>
+	   <!--  <button type="button" id="emailCheck" name="emailCheck" onclick="emailCheck()">이메일 인증</button> -->
+	 	<!-- <input type="text" placeholder="인증번호 입력" id="emailCode" name="code" style="width:550px;">
+	 	<button type="button" id="emailOK" name="emailOK" onclick="emailOK();">확인</button> -->
 	  </div>
 	  <div class="col"></div>
 	</div>
@@ -164,12 +166,59 @@
 	</form>
 </div>
 <script>
-/* var regExp=/^[a-z][a-z\d]{3,11}/;
-function validate(){
-	if($("#${password}").val() != $("#${psw-repeat}").val()) {
-		alert("비밀번호가 일치 하지 않습니다.");
-		$("#${password}").focus();
+/* function emailCheck(){
+	var email - document.getElementById("email").value;
+	if(email == ""){
+		alert("이메일을 입력해 주세요");
 		return false;
+	}
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function(){
+		if(xhttp.readyState == 4){
+			var data = JSON.parse(xhttp.responseText);
+			if(data != null){
+				alert("이미 가입되어있는 이메일 입니다!");
+			}else{
+				sendMail(email);
+			}
+		}
+	};
+	xhttp.open("POST",'checkMail/', true);
+	xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+	xhttp.send('email='+ email);
+	return false;
+} */
+/* function sendMail(email){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function(){
+		if(xhttp.readyState == 4){
+			if(xhttp.status == 200){
+				alert("메일을 정상적으로 보냈습니다.");
+			}else{
+				alert("올바르지 않은 메일 형식입니다.");
+			}
+		}	
+	};
+	xhttp.open("POST",'sendMail/', true);
+	xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
+	xhttp.send('email='+ email);
+	return false;
+		
+} */
+/* function emailOK(){
+	var emailCode = $("")
+	if($("#emailCode").val()==""){
+		//alert("인증번호를 입력하세요!");
+		$("#emailCode").focus();  
+		 return false;
+	}
+	if($("#joinCode").val() != $("#emailCode").val()){
+		alert("이메일 인증 실패하였습니다!");
+		$("#emailCode").focus(); 
+		return false;
+		
+	}else{
+		alert("이메일 인증 확인되었습니다!");
 	}
 } */
 $(document).ready(function(){

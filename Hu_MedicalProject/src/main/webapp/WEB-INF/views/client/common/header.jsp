@@ -101,7 +101,7 @@
       
       <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE">Login</button>
 
-        <p>---------------또 다른 계정으로 로그인-------------</p>
+        <div style="text-align:center;">간편한 SNS로그인</div>
             
             <!--  <button type="button" id="otherbtn"><img src="${path }/resources/images/google.png" alt=""></button>&nbsp;&nbsp;-->
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
@@ -113,13 +113,45 @@
        --%>
     </div>
     <div class="containerlogin" style="background-color:white; margin:0 auto;">
-        <a href="#">아이디 찾기</a> &nbsp;/&nbsp;
-        <a href="#">비밀번호 찾기</a>
+    	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
+        &nbsp;/&nbsp;
+         <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findPsw').style.display='block'">비밀번호 찾기</button>
     </div>
     
   </form>
 </div>
-
+<!-- 비밀번호 찾기 -->
+<!-- <div id="findPsw" class="modal" >
+  <form class="modal-content animate" method="post" style="width:50%;">
+  
+      <div class="imgcontainer" style="height:10px">
+        <span onclick="document.getElementById('findPsw').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
+      </div>
+      <br>
+   <div class="containerNewPSW" style="margin:0 auto;">
+      <input type="text" placeholder="E-mail" id="email" name="email" autocomplete="off" required><br>
+      <button onclick="findPsw();" class="findPswBtn" type="submit" style="background-color:#DAF1DE">비밀번호 찾기</button>
+  <div><br><br></div>
+     
+  </form>
+</div> -->
+<!-- 아이디 찾기 -->
+<!-- <div id="findEmail" class="modal" >
+  <form class="modal-content animate" method="post" style="width:50%;">
+  
+      <div class="imgcontainer" style="height:10px">
+        <span onclick="document.getElementById('findEmail').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
+      </div>
+      <br>
+   <div class="containerNewPSW" style="margin:0 auto;">
+      <input type="text" placeholder="이름 입력" name="name" id="name" required><br>
+      <input type="text" placeholder="핸드폰 번호 입력 (-를 제외하고 입력)" name="phone" id="phone" required><br>
+      <button onclick="findEmail();" class="findEmailBtn" type="submit" style="background-color:#DAF1DE">아이디 찾기</button>
+  <div><br><br></div>
+     
+  </form>
+</div> -->
+<!-- 회원가입 선택 모달 -->
 <div id="id02" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
   
@@ -156,6 +188,9 @@ function personEnroll(){
 function hospitalEnroll(){
 	location.href="${path}/member/hospitalEnroll.do";
 }
+/* function newPSW(){
+	location.href="${path}/newPassword";
+} */
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.

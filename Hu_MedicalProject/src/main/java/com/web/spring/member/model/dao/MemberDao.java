@@ -11,4 +11,5 @@ public interface MemberDao {
 	
 	Member memberLogin(SqlSessionTemplate session, Member m);
 
+
 }

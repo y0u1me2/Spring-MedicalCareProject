@@ -1,19 +1,18 @@
 package com.web.spring.member.controller;
 
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -27,6 +26,13 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 
+	@Autowired
+	private Logger logger;
+	//암호화
+	@Autowired
+	private BCryptPasswordEncoder pwEncoder; //단방향 암호화 객체
+	
+	
 	@RequestMapping("/member/personEnroll.do")
 	public String personEnroll() {
 		return "client/member/personEnroll";
@@ -36,8 +42,14 @@ public class MemberController {
 		return "client/member/hospitalEnroll";
 	}
 	
+	
 	@RequestMapping("/member/personEnrollEnd.do")
-	public String insertPerson(Member m,Model model) {
+	public String insertPerson(Member m,Model model) throws Exception {
+		
+		logger.debug("암호화 전 : " + m.getPassword());
+		m.setPassword(pwEncoder.encode(m.getPassword()));
+		logger.debug("암호화 후 :" + m.getPassword());
+		
 		int result = service.insertPerson(m);
 		System.out.println(result);
 		
@@ -50,19 +62,25 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/member/memberLogin.do")
-	 public String memberLogin(Member m, Model model) {
+	 public String memberLogin(Member m, Model model) throws Exception{
 		//System.out.println(m);
 
+		logger.debug(""+m);
 		Member loginMember = service.memberLogin(m);
 		
 		System.out.println(loginMember);
+		logger.debug("db : " + loginMember.getPassword());
+		logger.debug("param : " + pwEncoder.encode(m.getPassword()));
 		 String msg = "";
 		 String loc = "/";
 		 
 		 if(loginMember != null) {
-			 msg = "로그인 성공";
-			 model.addAttribute("loginMember",loginMember);
-			
+			 if(pwEncoder.matches(m.getPassword(), loginMember.getPassword())) {
+				 msg = "로그인 성공";
+				 model.addAttribute("loginMember",loginMember);
+			 }else {
+				 msg="로그인 실패, 비밀번호를 확인하세요!";
+			 }
 		 }else {
 			 msg = "로그인 실패!";
 		 }
