@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hospital">
+
+	<insert id="enrollMember" parameterType="hospital">
+		INSERT INTO HOSPITAL_MEMBER VALUES(SEQ_HOSPITAL_NO.NEXTVAL, #{id}, #{password}, #{hospitalName}, #{hospitalNo}, #{managerName}, #{email}, #{phone}, default)
+	</insert>
+	
+	<select id="loginMember" parameterType="hospital" resultType="hospital">
+		SELECT * FROM HOSPITAL_MEMBER WHERE ID = #{id}
+	</select>
+
+</mapper>

@@ -17,6 +17,6 @@ public class Ask {
 	private String askTitle;
 	private String askContent;
 	private Date askDate;
-
+	private int replyCnt;
 
 }

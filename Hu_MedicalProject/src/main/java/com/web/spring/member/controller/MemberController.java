@@ -75,7 +75,7 @@ public class MemberController {
 			 }
 		 }else {
 			 msg = "로그인 실패!";
-		 }
+		 }	 
 		 model.addAttribute("msg", msg);
 		 model.addAttribute("loc", loc);
 	     

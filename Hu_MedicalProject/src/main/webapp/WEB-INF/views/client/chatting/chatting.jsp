@@ -88,11 +88,13 @@ border-radius:10px;
 
 	let websocket=new WebSocket("ws://localhost:9090${pageContext.request.contextPath}/chatting");
 	let room='${param.room}';
+	
 	websocket.onopen=function(data){
 		console.log(data);
 		console.log('${param.room}');//userId
 		//접속정보를 server에 알려주기
 		websocket.send(JSON.stringify(new SocketMessage("open","${loginMember.email}","","",room)));
+		//chattingServer에 보내는거임 type과 맞춰줌
 	}
 	
 	websocket.onmessage=function(data){
@@ -117,6 +119,7 @@ border-radius:10px;
            $('.portlet-body') .stop();
             $('.portlet-body') .animate({ scrollTop: $('.portlet-body')[0].scrollHeight }, 800);
 	}
+//////////////////////////////////////////////////////////////////////////////////////////////////병원분기처리?	
 	$(function(){
 		$("#sendBtn").click(function(){
 			const msg=$("#msg").val();

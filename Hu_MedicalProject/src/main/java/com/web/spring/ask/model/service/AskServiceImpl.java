@@ -74,11 +74,40 @@ public class AskServiceImpl implements AskService {
 	 * @Override public int updateReply(AskReply reply) { return
 	 * dao.updateReply(session,reply); }
 	 */
-	
+//update	
 	@Override
 	public int updateReply(Map<String, Object> param) {
 		return dao.updateReply(session,param);
 	}
+	
+//ReplyCount
+	@Override
+	public int selectReplyCount() {
+		return dao.selectReplyCount(session);
+	}
+	
+//selectList
+@Override
+public List<AskReply> selectReplyList(int cPage, int numPerpage) {
+	return dao.selectReplyList(session,cPage,numPerpage);
+}
 
+//답변 완료 replycnt+1
+@Override
+public int replyCnt(int no) {
+	return dao.replyCnt(session,no);
+}
+
+//답변 완료 replycnt-1
+@Override
+public int deleteReplyCnt(int no) {
+	return dao.deleteReplyCnt(session,no);
+}
+
+
+
+
+
+	
 	
 }
