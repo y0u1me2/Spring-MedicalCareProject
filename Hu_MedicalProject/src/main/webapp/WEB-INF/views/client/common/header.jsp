@@ -78,8 +78,8 @@
 			<li class="nav-item" style="margin-left:100px;">
 				<a href="#" style="align:right;"><c:out value="${loginMember.name }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
-				<%--  <button class="btn btn-outline-dark" type="button"
-						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button> --%>
+				  <%-- <button class="btn btn-outline-dark" type="button"
+						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>   --%>
 	        </li>
          </c:when>
          <c:otherwise>
@@ -109,7 +109,7 @@
       
       <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE">Login</button>
 
-        <p>---------------또 다른 계정으로 로그인-------------</p>
+        <div style="text-align:center;">간편한 SNS로그인</div>
             
             <!--  <button type="button" id="otherbtn"><img src="${path }/resources/images/google.png" alt=""></button>&nbsp;&nbsp;-->
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
@@ -121,13 +121,45 @@
        --%>
     </div>
     <div class="containerlogin" style="background-color:white; margin:0 auto;">
-        <a href="#">아이디 찾기</a> &nbsp;/&nbsp;
-        <a href="#">비밀번호 찾기</a>
+    	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
+        &nbsp;/&nbsp;
+         <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findPsw').style.display='block'">비밀번호 찾기</button>
     </div>
     
   </form>
 </div>
-
+<!-- 비밀번호 찾기 -->
+<!-- <div id="findPsw" class="modal" >
+  <form class="modal-content animate" method="post" style="width:50%;">
+  
+      <div class="imgcontainer" style="height:10px">
+        <span onclick="document.getElementById('findPsw').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
+      </div>
+      <br>
+   <div class="containerNewPSW" style="margin:0 auto;">
+      <input type="text" placeholder="E-mail" id="email" name="email" autocomplete="off" required><br>
+      <button onclick="findPsw();" class="findPswBtn" type="submit" style="background-color:#DAF1DE">비밀번호 찾기</button>
+  <div><br><br></div>
+     
+  </form>
+</div> -->
+<!-- 아이디 찾기 -->
+<!-- <div id="findEmail" class="modal" >
+  <form class="modal-content animate" method="post" style="width:50%;">
+  
+      <div class="imgcontainer" style="height:10px">
+        <span onclick="document.getElementById('findEmail').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
+      </div>
+      <br>
+   <div class="containerNewPSW" style="margin:0 auto;">
+      <input type="text" placeholder="이름 입력" name="name" id="name" required><br>
+      <input type="text" placeholder="핸드폰 번호 입력 (-를 제외하고 입력)" name="phone" id="phone" required><br>
+      <button onclick="findEmail();" class="findEmailBtn" type="submit" style="background-color:#DAF1DE">아이디 찾기</button>
+  <div><br><br></div>
+     
+  </form>
+</div> -->
+<!-- 회원가입 선택 모달 -->
 <div id="id02" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
   
@@ -164,6 +196,9 @@ function personEnroll(){
 function hospitalEnroll(){
 	location.href="${path}/member/hospitalEnroll.do";
 }
+/* function newPSW(){
+	location.href="${path}/newPassword";
+} */
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -183,9 +218,11 @@ function logoutChk(){
 }
 
 //채팅 알람띄워주기
-		function accessChatting(room){
+		function accessChatting(room){//병원회원-일반회원일때 매개변수 2개 받기
 			//room은 로그인된 userId가 매개변수로 들어간다.
 			if(${loginMember.email ne "admin"}){
+				//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
+				
 				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
 				requestChatting();
 			}
@@ -198,7 +235,7 @@ function logoutChk(){
 			//채팅알람받는 웹소켓 구성하기
 			let alram=new WebSocket("ws://localhost:9090${path}/alram");
 			alram.onopen=function(msg){
-				alram.send(JSON.stringify(new AlramMessage("client","접속","${loginMember.email}","")));
+				alram.send(JSON.stringify(new AlramMessage("client","접속","${loginMember.email}","")));//공란병원회원
 				//AlramMessage(type,msg,sender,receiver)
 			}
 			alram.onmessage=function(msg){
@@ -212,12 +249,12 @@ function logoutChk(){
 			
 			function openChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
-					accessChatting(data.sender);//관리자도 창을 띄워줘야하므로!
+					accessChatting(data.sender);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
 			
 			function requestChatting(){
-				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));
+				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));//
 			//일반회원이 admin에게 채팅보냄
 			}
 /* 

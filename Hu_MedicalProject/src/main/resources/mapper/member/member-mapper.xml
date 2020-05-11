@@ -12,4 +12,14 @@
 	<select id="memberLogin" parameterType="member" resultType="com.web.spring.member.model.vo.Member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
 	</select>
+	<select id="findEmail" parameterType="member" resultType="com.web.spring.member.model.vo.Member">
+		SELECT * FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	<update id="newPassword" parameterType="member">
+		UPDATE MEMBER SET PASSWORD = #{password} WHERE EMAIL=#{email}
+	</update>
+	<select id="selectMember" parameterType="member" resultType="com.web.spring.member.model.vo.Member">
+		SELECT * FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	
 </mapper>
