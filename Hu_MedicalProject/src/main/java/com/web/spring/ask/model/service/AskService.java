@@ -38,5 +38,9 @@ public interface AskService {
 
 //ReplyList
 	List<AskReply> selectReplyList(int cPage, int numPerpage);
+//답변 완료 replycnt+1
+	int replyCnt(int no);
+//답변 대기 replycnt-1
+	int deleteReplyCnt(int no);
 
 }

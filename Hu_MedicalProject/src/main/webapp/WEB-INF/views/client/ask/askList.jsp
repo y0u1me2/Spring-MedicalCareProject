@@ -47,6 +47,7 @@ div#pageBar a {
    }
    </style>  
     <section>
+    <input type="text" value="${replyCount }">
         <div class="container-fluid">
           <div class="row">
             <div class="col-xl-1 ">
@@ -73,7 +74,14 @@ div#pageBar a {
            <c:forEach items="${list }" var="a" varStatus="board">
                 <tr>
                   <td><c:out value="${a.askNo }"/></td>
-                  <td>답변완료</a></td>
+                  <td>
+                  	<c:if test="${a.replyCnt > 0}">
+                  	답변완료
+                  	</c:if>
+                  	<c:if test="${a.replyCnt == 0}">
+                  	답변대기
+                  	</c:if>
+                  </td>
                   <td style="text-align: center;"><a href="${path }/ask/askView.do?no=${a.askNo }" style="text-decoration: none;"><c:out value="${a.askTitle }"/></td>
                   <td><c:out value="${a.askWriter }"/></td>
                   <td><c:out value="${a.askDate }"/></td>
@@ -99,6 +107,8 @@ div#pageBar a {
         <div id="pageBar">
         	${pageBar }
         </div>
+        
+        
          
       </section>
       

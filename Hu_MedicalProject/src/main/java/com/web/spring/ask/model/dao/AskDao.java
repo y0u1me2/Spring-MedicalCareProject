@@ -41,5 +41,9 @@ public interface AskDao {
 
 //selectList
 	List<AskReply> selectReplyList(SqlSessionTemplate session, int cPage, int numPerpage);
+//답변 완료 replycnt+1
+	int replyCnt(SqlSessionTemplate session, int no);
+//답변 완료 replycnt-1
+	int deleteReplyCnt(SqlSessionTemplate session, int no);
 
 }
