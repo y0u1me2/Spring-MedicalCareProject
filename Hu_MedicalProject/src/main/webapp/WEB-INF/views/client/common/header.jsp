@@ -210,10 +210,10 @@
     	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
         &nbsp;/&nbsp;
          <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findPsw').style.display='block'">비밀번호 찾기</button>
-    </div>
-    
-  </form>
+    </div>    
 </div>
+  </form>
+  </div>
 <!-- 비밀번호 찾기 -->
 <!-- <div id="findPsw" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">

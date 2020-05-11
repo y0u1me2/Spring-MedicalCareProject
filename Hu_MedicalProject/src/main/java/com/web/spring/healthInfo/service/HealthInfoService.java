@@ -13,6 +13,8 @@ public interface HealthInfoService {
 	List<Map<String,String>> healthBtnInfo();
 	//자주찾는 정보
 	List<Map<String,String>> frequentInfo();
-	//자주찾는 정보 클릭시
+	//메인에서 자주찾는 정보 클릭시
 	List<HealthInformation> frequentInfoPic(HealthInformation hi);
+	//서브에서 정보 클릭시
+	HealthInformation subFrequentInfoPic(HealthInformation hi);
 }

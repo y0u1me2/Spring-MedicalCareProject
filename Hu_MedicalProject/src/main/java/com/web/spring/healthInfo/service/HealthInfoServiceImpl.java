@@ -47,6 +47,11 @@ public class HealthInfoServiceImpl implements HealthInfoService {
 		// TODO Auto-generated method stub
 		return dao.frequentInfoPic(session, hi);
 	}
+	@Override
+	public HealthInformation subFrequentInfoPic(HealthInformation hi) {
+		// TODO Auto-generated method stub
+		return dao.subFrequentInfoPic(session, hi);
+	}
 	
 	
 	
