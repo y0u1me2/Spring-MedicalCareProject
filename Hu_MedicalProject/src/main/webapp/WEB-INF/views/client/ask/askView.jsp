@@ -101,18 +101,25 @@ function replyUpdate() {
 function replyUpdateEnd(){
 	
 	var result={'replyContent':$('#replyContent').val(),'replyRefNo':'${reply.replyRefNo}'};
-	  $.ajax({
+	console.log(result);
+	  
+	$.ajax({
 		url:'${path}/reply/updateReply.do',
 		type:'POST',
 		dataType:"json",
 		data:result,
 		success:function(result){
-			console.log(result.reply.replyContent);
-			alert("성공");
-			$("#askFrm").html('<div style="margin-top:30px;>'+result.reply.replyContent+'</div>');
+			console.log(result);
+			/* console.log(result.reply.replyContent);
+			alert("성공");*/
+			if(result.result==1){
+				location.reload();
+
+			
+			}
 		}
 	});
-}  
+}
 </script>
     
 <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>

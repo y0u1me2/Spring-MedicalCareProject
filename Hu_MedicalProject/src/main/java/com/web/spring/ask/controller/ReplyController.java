@@ -70,35 +70,54 @@ public class ReplyController {
 		mv.setViewName("jsonView");
 		return mv;
 	}
-//ajax update update하기	
+	
+	//update하기	
 	@RequestMapping("/reply/updateReply.do")
-	public String updateReply(@RequestParam(value="replyContent") String replyContent,
-			@RequestParam(value="replyRefNo") int replyRefNo,Model model) {
-		logger.debug("no"+replyRefNo);
-		logger.debug("content"+replyContent);
+	public ModelAndView updateReply(@RequestParam(value="replyContent") String replyContent,
+			@RequestParam(value="replyRefNo") int replyRefNo,ModelAndView mv) {
+		//no,content잘 받아옴..
+		logger.debug("no :"+replyRefNo);
+		logger.debug("content :"+replyContent);
 		
 		Map<String,Object> param=new HashMap<String,Object>();
 		param.put("replyContent",replyContent);
 		param.put("replyNo",replyRefNo);
 
-		logger.debug(""+param);
+		logger.debug("param :"+param);
 		
 		int result=service.updateReply(param);
-		logger.debug(""+result);
-		String msg="";
-		String loc="";
-		if(result>0) {
-			msg="수정되었습니다.";
-			loc="/ask/ask.do";
-		}else {
-			msg="등록을 실패하였습니다.";
-			loc="/ask/askView.do";
-		}
-		model.addAttribute("msg",msg);
-		model.addAttribute("loc",loc);
-		return "client/common/msg";
+		logger.debug("result : "+result);
+		
+		mv.addObject("result",result);
+		mv.setViewName("jsonView");
+		return mv;
 	}
+
 	
+	/*
+	 * //update하기
+	 * 
+	 * @RequestMapping("/reply/updateReply.do") public String
+	 * updateReply(@RequestParam(value="replyContent") String replyContent,
+	 * 
+	 * @RequestParam(value="replyRefNo") int replyRefNo,Model model) { //no,content잘
+	 * 받아옴.. logger.debug("no :"+replyRefNo);
+	 * logger.debug("content :"+replyContent);
+	 * 
+	 * Map<String,Object> param=new HashMap<String,Object>();
+	 * param.put("replyContent",replyContent); param.put("replyNo",replyRefNo);
+	 * 
+	 * logger.debug("param :"+param);
+	 * 
+	 * int result=service.updateReply(param); logger.debug("result : "+result);
+	 * 
+	 * String msg=""; String loc=""; if(result>0) { msg="수정되었습니다.";
+	 * loc="/ask/ask.do"; }else { msg="등록을 실패하였습니다."; loc="/ask/askView.do"; }
+	 * model.addAttribute("msg",msg); model.addAttribute("loc",loc); return
+	 * "client/common/msg"; }
+	 */
+	
+
 	
 
 }

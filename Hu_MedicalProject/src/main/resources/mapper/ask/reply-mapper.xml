@@ -16,7 +16,7 @@
 	</delete>
 	
 	<update id="updateReply" parameterType="map">
-		UPDATE ASKREPLY SET REPLYCONTENT=#{replyContent} WHERE REPLYREFNO=#{replyRefNo}
+		UPDATE ASKREPLY SET REPLYCONTENT=#{replyContent} WHERE REPLYREFNO=#{replyNo}
 	</update>
 	
 	<select id="selectReplyCount" resultType="_int">
