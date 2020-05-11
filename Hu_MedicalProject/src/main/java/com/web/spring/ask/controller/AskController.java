@@ -27,6 +27,7 @@ public class AskController {
 	@RequestMapping("/ask/ask.do")
 	public ModelAndView ask(ModelAndView mv,@RequestParam(required=false, defaultValue="1") int cPage,
 			@RequestParam(required=false, defaultValue="5") int numPerpage) {
+			
 		//param은 게시물정보 fileNames 파일
 				int totalCount=service.selectAskCount();
 				//페이징 처리까지하기
@@ -34,8 +35,15 @@ public class AskController {
 				List<Ask> list=service.selectAskList(cPage,numPerpage);
 				
 				//Reply리스트불러오기
+				//int replyCount=service.selectReplyCount();
+				//logger.info(replyCount+"->ReplyCount");
+				//List<AskReply> replyList=service.selectReplyList(cPage,numPerpage);
+				//logger.info(replyList+"->replyList");
+				
 				
 				mv.addObject("list",list);
+				//mv.addObject("replyList",replyList);
+
 				mv.setViewName("client/ask/askList");
 				mv.addObject("count",totalCount);
 				mv.addObject("pageBar",PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/ask/ask.do"));

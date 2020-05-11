@@ -85,7 +85,6 @@ public class ReplyController {
 		
 		int result=service.updateReply(param);
 		logger.debug(""+result);
-		//왜 업데이트가 안되니....................................................
 		String msg="";
 		String loc="";
 		if(result>0) {

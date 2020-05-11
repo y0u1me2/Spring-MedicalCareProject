@@ -16,7 +16,16 @@
 	</delete>
 	
 	<update id="updateReply" parameterType="map">
-		UPDATE ASKREPLY SET REPLYCONTENT=#{replyContent} where REPLYREFNO=#{replyRefNo}
+		UPDATE ASKREPLY SET REPLYCONTENT=#{replyContent} WHERE REPLYREFNO=#{replyRefNo}
 	</update>
+	
+	<select id="selectReplyCount" resultType="_int">
+		SELECT COUNT(*) FROM ASKREPLY
+	</select>
+	
+	<select id="selectReplyList" resultType="ask">
+		SELECT * FROM ASKREPLY ORDER BY REPLYDATE DESC
+	</select>
+	
 	
 </mapper>

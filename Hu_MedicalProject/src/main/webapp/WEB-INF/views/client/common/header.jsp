@@ -78,8 +78,8 @@
 			<li class="nav-item" style="margin-left:100px;">
 				<a href="#" style="align:right;"><c:out value="${loginMember.name }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
-				<%--  <button class="btn btn-outline-dark" type="button"
-						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button> --%>
+				  <%-- <button class="btn btn-outline-dark" type="button"
+						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>   --%>
 	        </li>
          </c:when>
          <c:otherwise>
@@ -183,9 +183,11 @@ function logoutChk(){
 }
 
 //채팅 알람띄워주기
-		function accessChatting(room){
+		function accessChatting(room){//병원회원-일반회원일때 매개변수 2개 받기
 			//room은 로그인된 userId가 매개변수로 들어간다.
 			if(${loginMember.email ne "admin"}){
+				//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
+				
 				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
 				requestChatting();
 			}
@@ -198,7 +200,7 @@ function logoutChk(){
 			//채팅알람받는 웹소켓 구성하기
 			let alram=new WebSocket("ws://localhost:9090${path}/alram");
 			alram.onopen=function(msg){
-				alram.send(JSON.stringify(new AlramMessage("client","접속","${loginMember.email}","")));
+				alram.send(JSON.stringify(new AlramMessage("client","접속","${loginMember.email}","")));//공란병원회원
 				//AlramMessage(type,msg,sender,receiver)
 			}
 			alram.onmessage=function(msg){
@@ -212,12 +214,12 @@ function logoutChk(){
 			
 			function openChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
-					accessChatting(data.sender);//관리자도 창을 띄워줘야하므로!
+					accessChatting(data.sender);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
 			
 			function requestChatting(){
-				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));
+				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));//
 			//일반회원이 admin에게 채팅보냄
 			}
 /* 

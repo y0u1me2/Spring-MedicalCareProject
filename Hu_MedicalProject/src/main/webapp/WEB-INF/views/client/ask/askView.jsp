@@ -50,7 +50,7 @@
           </div>
           
 	          <div style="float:right; margin-top:50px;">
-		           <button type="button" class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" id="replyUpdateBtn" onclick="replyUpdate();">답변수정</button>
+		           <input type="button" class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" id="replyUpdateBtn" onclick="replyUpdate();" value="답변수정">
 		           <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="replyDelete();" >답변 삭제</button>
 		      </div>
 	      
@@ -97,25 +97,10 @@ function replyUpdate() {
 		}
 	});
 }
-
-/* function replyUpdateEnd(){
-	var reply=new AskReply();
-	var reContent=$("#replyContent").val();
-	var no=$("#askNo").val();
-	 $.ajax({
-		url:'${path}/reply/updateReply.do',
-		data:,
-		success:function(result){
-			console.log(result.reply);
-			
-		}
-	}) 
-}  */
-
+////////////////////////////////////////////////////////////////////////질문
 function replyUpdateEnd(){
 	
 	var result={'replyContent':$('#replyContent').val(),'replyRefNo':'${reply.replyRefNo}'};
-	console.log(result);
 	  $.ajax({
 		url:'${path}/reply/updateReply.do',
 		type:'POST',
@@ -124,6 +109,7 @@ function replyUpdateEnd(){
 		success:function(result){
 			console.log(result.reply.replyContent);
 			alert("성공");
+			$("#askFrm").html('<div style="margin-top:30px;>'+result.reply.replyContent+'</div>');
 		}
 	});
 }  

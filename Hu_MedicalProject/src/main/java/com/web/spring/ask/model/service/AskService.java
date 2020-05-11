@@ -23,12 +23,20 @@ public interface AskService {
 
 //insert
 	int insertReply(AskReply reply);
+	
 //selectOne
 	AskReply selectReplyView(int no);
+	
 //delete
 	int deleteReply(int no);
-
-
+	
+//update
 	int updateReply(Map<String, Object> param);
+
+//ReplyCount
+	int selectReplyCount();
+
+//ReplyList
+	List<AskReply> selectReplyList(int cPage, int numPerpage);
 
 }

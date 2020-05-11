@@ -78,9 +78,8 @@ div#pageBar a {
                   <td><c:out value="${a.askWriter }"/></td>
                   <td><c:out value="${a.askDate }"/></td>
                 </tr>
-              </c:forEach>
+           </c:forEach>
           </div>
-             
             </table>
          </tbody>
         
