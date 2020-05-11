@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.web.spring.common.AESEncrypt;
 import com.web.spring.hospital.model.service.HospitalMemberService;
 import com.web.spring.hospital.model.vo.Hospital;
 
@@ -23,12 +24,15 @@ public class HospitalMemberController {
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;//단방향 암호화
 	
+	@Autowired
+	private AESEncrypt encryptor;
+	
 	//병원 회원가입
 	@RequestMapping("/hospitalEnrollEnd.do")
 	private ModelAndView hospitalEnrollEnd(Hospital h, ModelAndView mv) {
 		h.setPassword(pwEncoder.encode(h.getPassword()));//비밀번호 암호화(단방향)
-//		h.setPhone(encrypt(h.getPhone()));//양방향 암호화
-//		h.setEmail(encrypt(h.getEmail()));//양방향 암호화
+		h.setPhone(encryptor.encrypt(h.getPhone()));//양방향 암호화(휴대폰)
+		h.setEmail(encryptor.encrypt(h.getEmail()));//양방향 암호화(이메일)
 		
 		int result = service.hospitalEnroll(h);
 		
