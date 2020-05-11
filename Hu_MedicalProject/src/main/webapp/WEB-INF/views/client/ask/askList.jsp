@@ -62,6 +62,14 @@ input#searchBtn:hover {
 	background: rgb(251, 251, 249);
 	outline: none;
 }
+/* 답변완료 */
+      .blinking{
+    animation:blink 0.8s ease-in-out infinite alternate;
+}
+@keyframes blink{
+    0% {opacity:0;}
+    50% {opacity:1;}
+}
    </style>  
     <section>
     <input type="text" value="${replyCount }">
@@ -93,13 +101,13 @@ input#searchBtn:hover {
                 <tr>
                   <td><c:out value="${a.askNo }"/></td>
                   <td style="text-align: center;">
-                  	<a href="${path }/ask/askView.do?no=${a.askNo }" style="text-decoration: none;">
+                  	<a href="${path }/ask/askView.do?no=${a.askNo }" style="text-decoration: none; margin-right:10px;">
                   		<span><c:out value="${a.askTitle }"/></span></a>
                   			<c:if test="${a.replyCnt > 0}">
-			                  	<span style="width:80px;border:1px solid red;border-radius:20px; padding:3px 3px 3px 3px;">답변완료</span>
+			                  	<span class="blinking" style="background-color:#f44336;color:white;width:80px;border-radius:20px; padding:3px 3px 3px 3px;">답변완료</span>
 			                </c:if>
 			                <c:if test="${a.replyCnt == 0}">
-			                  	<span style="width:80px;border:1px solid red;border-radius:20px; padding:3px 3px 3px 3px;">답변대기</span>
+			                  	<span style="background-color:grey;width:80px;color:white;border-radius:20px; padding:3px 3px 3px 3px;">답변대기</span>
 			                </c:if>
                   </td>
                   <td><c:out value="${a.askWriter }"/></td>
@@ -130,7 +138,7 @@ input#searchBtn:hover {
         
          
       </section>
-      
+     
       <script>
 
 		function askInsert(){
