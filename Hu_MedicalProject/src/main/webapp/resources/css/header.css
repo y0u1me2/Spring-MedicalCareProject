@@ -46,7 +46,8 @@ color:grey;
 }
 
 /* 입력 창 스타일 */
-input[type=text]#uemail,input[type=password]#psw{
+input[type=text]#uemail,input[type=password]#psw,
+input[type=text]#hospitalEmail,input[type=password]#hospitalPsw{
 	width: 100%;
   padding: 12px 20px;
   margin: 8px 0;

@@ -198,8 +198,8 @@
     </div>
 
     <div class="containerlogin">
-      <input type="text" placeholder="E-mail" id="uemail" name="email" autocomplete="off" required>
-      <input type="password" placeholder="Password" id="psw" name="password" required>
+      <input type="text" placeholder="E-mail" id="hospitalEmail" name="hospitalEmail" autocomplete="off" required>
+      <input type="password" placeholder="Password" id="hospitalPsw" name="hospitalPsw" required>
       <label>
         <input type="checkbox" id="store" name="saveId">이메일 저장
       </label>
