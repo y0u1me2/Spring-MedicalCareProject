@@ -82,12 +82,10 @@ public class ReplyController {
 	public ModelAndView updateReply(@RequestParam(value="replyContent") String replyContent,
 			@RequestParam(value="replyRefNo") int replyRefNo,ModelAndView mv) {
 		
-		
 		Map<String,Object> param=new HashMap<String,Object>();
 		param.put("replyContent",replyContent);
 		param.put("replyNo",replyRefNo);
 
-		
 		int result=service.updateReply(param);
 		
 		mv.addObject("result",result);

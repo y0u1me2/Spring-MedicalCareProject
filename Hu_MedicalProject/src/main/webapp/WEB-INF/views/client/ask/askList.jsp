@@ -12,8 +12,7 @@
 <style>
 /* 페이지바 */
  #pageBar {
-  /*  position: relative; */
-   left:100px;
+  left:100px;
    top: 200px;
 }
 
@@ -25,7 +24,7 @@ div#pageBar a {
 /* 페이지바 */
     #pageBar{
       width:80%;
-      margin-left:390px;
+      margin-left:470px;
       margin-top:30px;
       margin-bottom:20px;
       /* text-align:center; */
@@ -45,6 +44,24 @@ div#pageBar a {
        display: inline-block;
        vertical-align: top;
    }
+   /* 검색버튼 */
+input#searchBtn {
+	height: 40px;
+	width: 70px;
+	border: solid 1px rgb(147, 147, 194);
+	background: white;
+	border-radius: 5px;
+	font-size: 15px;
+	color: rgb(121, 121, 79);
+	position: relative;
+	bottom: 1px;
+	left: 10px;
+}
+
+input#searchBtn:hover {
+	background: rgb(251, 251, 249);
+	outline: none;
+}
    </style>  
     <section>
     <input type="text" value="${replyCount }">
@@ -64,25 +81,27 @@ div#pageBar a {
               <thead>
                 <tr>
                   <th>번호</th>
-                  <th>답변상태</th>
-                  <th style="text-align: center;">제목</th>
-                  <th>문의자</th>
-                  <th>등록일</th>
+                  <th style="text-align: center; width:770px; margin-right:100px;">제목</th>
+                  <th style="width:150px; ">문의자</th>
+                  <th>&nbsp;&nbsp;&nbsp;&nbsp;등록일</th>
+                  <!-- <th>답변상태</th> -->
+                  
                 </tr>
               </thead>
               <tbody>
            <c:forEach items="${list }" var="a" varStatus="board">
                 <tr>
                   <td><c:out value="${a.askNo }"/></td>
-                  <td>
-                  	<c:if test="${a.replyCnt > 0}">
-                  	답변완료
-                  	</c:if>
-                  	<c:if test="${a.replyCnt == 0}">
-                  	답변대기
-                  	</c:if>
+                  <td style="text-align: center;">
+                  	<a href="${path }/ask/askView.do?no=${a.askNo }" style="text-decoration: none;">
+                  		<span><c:out value="${a.askTitle }"/></span></a>
+                  			<c:if test="${a.replyCnt > 0}">
+			                  	<span style="width:80px;border:1px solid red;border-radius:20px; padding:3px 3px 3px 3px;">답변완료</span>
+			                </c:if>
+			                <c:if test="${a.replyCnt == 0}">
+			                  	<span style="width:80px;border:1px solid red;border-radius:20px; padding:3px 3px 3px 3px;">답변대기</span>
+			                </c:if>
                   </td>
-                  <td style="text-align: center;"><a href="${path }/ask/askView.do?no=${a.askNo }" style="text-decoration: none;"><c:out value="${a.askTitle }"/></td>
                   <td><c:out value="${a.askWriter }"/></td>
                   <td><c:out value="${a.askDate }"/></td>
                 </tr>

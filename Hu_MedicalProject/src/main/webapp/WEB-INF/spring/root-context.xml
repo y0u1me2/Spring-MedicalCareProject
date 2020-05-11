@@ -58,6 +58,6 @@
 	<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/><!-- advice-ref참조한 어드바이스  -->
    </aop:config>
    
-   
+    
    
 </beans>
