@@ -85,6 +85,7 @@ button:hover {
 
 .containerlogin {
   padding: 16px;
+  margin: 0 auto;
 }
 /* The Modal (background) */
 .modalLogin {
@@ -153,12 +154,13 @@ button:hover {
   width:50px;
   height:50px;
 }
-#personjoinBtn,#hospitaljoinBtn{
+#personjoinBtn,#hospitaljoinBtn,
+#personLoginsBtn,#hospitalLoginBtn{
        margin: 0 auto;
        width: 200px;
        height: 200px;
 }
-#JoinChoice1{
+#JoinChoice1,#loginChoice1{
     margin:0 auto;
 }
         
