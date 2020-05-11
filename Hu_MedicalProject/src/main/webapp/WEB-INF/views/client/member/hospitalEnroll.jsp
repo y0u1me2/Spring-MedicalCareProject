@@ -25,6 +25,11 @@ body{
 	font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;
 }
 
+a:link, a:visited, a:hover { 
+	color: black; 
+	text-decoration: underline;
+}
+
 </style>
 <div class="container-fluid bg-light border">
 	<div class="container bg-white my-5 pb-5" style="width: 40%;">
@@ -88,7 +93,7 @@ body{
 				
 			  <div class="form-group form-check">
 			    <label class="form-check-label">
-			      <input class="form-check-input" type="checkbox" name="remember" id="agree" required>서비스 이용약관 및 개인정보 취급방침에 동의합니다.
+			      <input class="form-check-input" type="checkbox" name="remember" id="agree" required/><a href="javascript:void(0);" onclick="openModal1();">서비스 이용약관</a> 및 <a href="javascript:void(0);" onclick="openModal2();">개인정보 취급방침</a>에 동의합니다.
 			      <div class="invalid-feedback">Check this checkbox to continue.</div>
 			    </label>
 			  </div>
@@ -99,6 +104,43 @@ body{
 </div>
 
 
+
+<div class="modal fade" id="modal1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content w-100">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">서비스 이용약관</h4>
+          <button type="button" class="close" data-dismiss="modal" onclick="closeModal();">×</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+        	<jsp:include page="/WEB-INF/views/client/member/이용약관.jsp"/>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal2">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content w-100">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">개인정보 취급방침</h4>
+          <button type="button" class="close" data-dismiss="modal" onclick="closeModal();">×</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+        	<jsp:include page="/WEB-INF/views/client/member/개인정보.jsp"/>
+        </div>
+      </div>
+    </div>
+</div>
 
 
 <!-- <script>
@@ -121,9 +163,8 @@ body{
 })();
 </script> -->
 
-<script>
-
-	/* $(function(){
+<!-- <script>
+	$(function(){
 		
 		var forms = document.getElementsByClassName('needs-validation');
 	    // Loop over them and prevent submission
@@ -142,11 +183,9 @@ body{
 			$("#btn1").removeAttr("disabled");
 			$("#btn1").removeClass("btn-secondary");
 			$("#btn1").addClass("btn-success");
-		});
-	}); */
-
-	
-</script>
+		})
+	});
+</script> -->
 
 
 <script>
@@ -192,6 +231,20 @@ $(function(){
 		checkAgree();
 	});
 })
+
+function openModal1(){
+	$("#modal1").modal();
+	$('html').css({'overflow': 'hidden'});
+}
+
+function openModal2(){
+	$("#modal2").modal();
+	$('html, body').css({'overflow': 'hidden'});
+}
+
+function closeModal(){
+	$('html, body').css({'overflow': 'auto'});
+}
 
 //아이디 유효성 검사
 function checkId(){
@@ -342,10 +395,10 @@ function checkPhone(){
 
 function checkAgree(){
 	var agree = $("#agree");
-	agree.next().hide();
+	agree.siblings(".invalid-feedback").hide();
 	
 	if(agree.is(":checked")==false){
-		agree.next().show();
+		agree.siblings(".invalid-feedback").show();
 		return false;
 	}
 }
