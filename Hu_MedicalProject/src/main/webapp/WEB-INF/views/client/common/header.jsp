@@ -87,7 +87,7 @@
          </c:otherwise>
       </c:choose>
     </ul>
-  </nav>
+ 
 <!-- 로그인 선택 모달 -->
 <div id="loginChoice" class="modal" style="z-index:1;">
   <form class="modal-content animate" method="post" style="width:50%;">
@@ -146,7 +146,7 @@
 </div>
 
  <!-- 일반 로그인 -->
-<div id="id01" class="modalLogin" style="display: none; z-index:2;" >
+<div id="id01" class="modalLogin" style="display: none; z-index:2; overflow:hidden;" >
   
   <form class="modal-content animate" id="loginForm" name="loginForm" action="${path }/member/memberLogin.do" method="post" style="width:30%;">
    
@@ -186,7 +186,7 @@
   </form>
 </div>
  <!-- 관계자 로그인 -->
-<div id="id02" class="modalLogin" style="display: none;">
+<div id="id02" class="modalLogin" style="display: none; overflow:hidden;">
   
   <form class="modal-content animate" id="loginForm" name="loginForm" action="${path }/member/hospitalLogin.do" method="post" style="width:30%;">
    
@@ -214,6 +214,7 @@
     
   </form>
 </div>
+ </nav>
 <!-- 비밀번호 찾기 -->
 <!-- <div id="findPsw" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
