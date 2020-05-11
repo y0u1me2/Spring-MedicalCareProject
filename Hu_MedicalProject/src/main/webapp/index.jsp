@@ -42,7 +42,7 @@
                
                 <p data-wow-delay="0.7s" class="wow fadeInLeft">실시간 접수 · 예약<br>이래서 편리합니다.</p>
             </div>
-            <div class="col-xl-9" id="left" style="z-index:0;">
+            <div class="col-xl-9" id="left" style="z-index:0;" >
                 <div data-wow-delay="0.5s" id="middleinform" class="wow fadeInUp">
                     <img id="listing" src="${pageContext.request.contextPath }/resources/images/sick.png" width="50px;" >
                     <p id="finder"> 상황별 증상 찾기</p>
