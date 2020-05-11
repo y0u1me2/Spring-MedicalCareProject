@@ -58,6 +58,9 @@
 	<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/><!-- advice-ref참조한 어드바이스  -->
    </aop:config>
    
-    
+
+   <bean id="encryptor" class="com.web.spring.common.AESEncrypt">
+      <constructor-arg index="0" value="c:\dev\"/>
+   </bean>
    
 </beans>
