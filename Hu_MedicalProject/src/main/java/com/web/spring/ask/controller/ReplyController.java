@@ -30,6 +30,9 @@ public class ReplyController {
 	@RequestMapping("/reply/insertReply.do")
 	public String insertReply(AskReply reply,Model model,@RequestParam("replyRefNo") int no) {
 		int result=service.insertReply(reply);
+		//replyCount
+		int replyCnt=service.replyCnt(no);// update
+		
 		String msg="";
 		String loc="";
 		if(result>0) {
@@ -48,6 +51,8 @@ public class ReplyController {
 	@RequestMapping("/reply/deleteReply.do")
 	public String deleteAsk(@RequestParam(value="no") int no,Model model) {
 		int result=service.deleteReply(no);
+		int result1=service.deleteReplyCnt(no);
+		
 		String msg="";
 		String loc="";
 		if(result>0) {
@@ -66,40 +71,29 @@ public class ReplyController {
 	@RequestMapping("/reply/selectReply.do")
 	public ModelAndView selectReply(@RequestParam(value="no") int no,ModelAndView mv) {
 		AskReply reply1 = service.selectReplyView(no);
+		
 		mv.addObject("reply",reply1);
 		mv.setViewName("jsonView");
 		return mv;
 	}
-//ajax update update하기	
+	
+	//update하기	
 	@RequestMapping("/reply/updateReply.do")
-	public String updateReply(@RequestParam(value="replyContent") String replyContent,
-			@RequestParam(value="replyRefNo") int replyRefNo,Model model) {
-		logger.debug("no"+replyRefNo);
-		logger.debug("content"+replyContent);
+	public ModelAndView updateReply(@RequestParam(value="replyContent") String replyContent,
+			@RequestParam(value="replyRefNo") int replyRefNo,ModelAndView mv) {
 		
 		Map<String,Object> param=new HashMap<String,Object>();
 		param.put("replyContent",replyContent);
 		param.put("replyNo",replyRefNo);
 
-		logger.debug(""+param);
-		
 		int result=service.updateReply(param);
-		logger.debug(""+result);
-		//왜 업데이트가 안되니....................................................
-		String msg="";
-		String loc="";
-		if(result>0) {
-			msg="수정되었습니다.";
-			loc="/ask/ask.do";
-		}else {
-			msg="등록을 실패하였습니다.";
-			loc="/ask/askView.do";
-		}
-		model.addAttribute("msg",msg);
-		model.addAttribute("loc",loc);
-		return "client/common/msg";
+		
+		mv.addObject("result",result);
+		mv.setViewName("jsonView");
+		return mv;
 	}
-	
+
+
 	
 
 }

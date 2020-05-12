@@ -79,7 +79,11 @@
 	요청하신 페이지가 사라졌거나, 잘못된 경로를 이용하셨어요. :)
 	</p>
 
+
 	<a href="${path }/index.jsp"><button type="button" id="home-btn"/>홈으로 이동</button></a>
+
+	<a href="<%=request.getContextPath()%>/index.jsp"><button type="button" id="home-btn">홈으로 이동</button></a>
+
 	</div>
 	
 </body>

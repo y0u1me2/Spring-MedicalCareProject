@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mainpage.css"/>
 
 <section>
-        <div class="container-fluid">
+        <div class="container-fluid" >
           <!-- Control the column width, and how they should appear on different devices -->
           <div class="row">
             <div class="col-sm" style="background-color:#DAF1DE; height:500px; padding-left: 250px;padding-top: 120px;">
@@ -38,11 +38,8 @@
         </div>
 
         <div class="container-fluid" style="height:700px;">
-        
             <div data-wow-delay="1s" id="sec2" class="wow fadeInLeft" >
-                <style>
-
-                </style>
+               
                 <p data-wow-delay="0.7s" class="wow fadeInLeft">실시간 접수 · 예약<br>이래서 편리합니다.</p>
             </div>
             <div class="col-xl-9" id="left" >

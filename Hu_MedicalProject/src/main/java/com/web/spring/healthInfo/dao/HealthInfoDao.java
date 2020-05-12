@@ -15,6 +15,8 @@ public interface HealthInfoDao {
 	List<Map<String,String>> healthBtnInfo(SqlSession session);
 	//자주찾는 사진정보
 	List<Map<String,String>> frequentInfo(SqlSession session);
-	//자주찾는 사진정보 클릭
+	//메인에서 자주찾는 사진정보 클릭
 	List<HealthInformation> frequentInfoPic(SqlSession session, HealthInformation hi);
+	//서브에서 정보 클릭
+	HealthInformation subFrequentInfoPic(SqlSession session, HealthInformation hi);
 }

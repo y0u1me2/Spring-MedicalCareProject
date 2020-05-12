@@ -64,11 +64,35 @@ public class AskDaoImpl implements AskDao {
 	public int deleteReply(SqlSessionTemplate session, int no) {
 		return session.delete("reply.deleteReply",no);
 	}
-
+//update
 	@Override
 	public int updateReply(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.update("reply.updateReply", param);
 	}
+//replyList
+	@Override
+	public int selectReplyCount(SqlSessionTemplate session) {
+		return session.selectOne("reply.selectReplyCount");
+	}
+//selectList
+	@Override
+	public List<AskReply> selectReplyList(SqlSessionTemplate session, int cPage, int numPerpage) {
+		return session.selectList("reply.selectReplyList",null,new RowBounds((cPage-1)*numPerpage,numPerpage));
+	}
+//답변 완료 replycnt+1
+	@Override
+	public int replyCnt(SqlSessionTemplate session, int no) {
+		return session.update("ask.replyCnt",no);
+	}
+//답변 완료 replycnt-1
+	@Override
+	public int deleteReplyCnt(SqlSessionTemplate session, int no) {
+		return session.update("ask.deleteReplyCnt",no);
+	}
+	
+	
+
+	
 
 	
 

@@ -34,7 +34,7 @@ public class ChattingServer extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		//클라이언트가 웹소켓 서버에 접속했을때 
 		//실행되는 메소드
-		logger.info("클라이언트가 접속하였습니다.");	
+		//logger.info("클라이언트가 접속하였습니다.");	
 	}
 
 	@Override
@@ -43,14 +43,19 @@ public class ChattingServer extends TextWebSocketHandler{
 		//클라이언트가 보낸 메세지 확인
 		logger.info(message.getPayload());
 		//0 : type(새로생성(open), 메세지, 파일, 관리자가 보내는 메세지)
-		//1 : 보낸사람 아이디
-		
+		//1 : 보낸사람 아이디 2:받는사람 3:받는사람 4:msg 5:room(id)
+		//{"type":"open","sender":"admin","reciever":"","msg":"","room":"admin"}
+
 		//String[] data=message.getPayload().split(",");
 		SocketMessage sm=getMessage(message.getPayload());
+		//소켓메시지의 객체데이터 getPayload
 		session.getAttributes().put("data",sm);
+		//세션이 사용자id를 저장하고
 		clients.put(sm.getSender(), session);
+		//그 세션을 clients Map에 추가
 		//websocket통신을 위한 메시징을 파싱하여 관리해야함.
 		//switch(data[0]){
+		logger.info("타입은"+sm.getType());
 		switch(sm.getType()){
 			//case "open" : newClient(session, data);break;
 			case "open" : newClient(session, sm);break;
@@ -81,7 +86,8 @@ public class ChattingServer extends TextWebSocketHandler{
 		//현재접속회원을 전송
 		try {
 			//session.sendMessage(new TextMessage("a,admin, ,채팅접속을 환영합니다."));
-			session.sendMessage(new TextMessage(mapper.writeValueAsString(new SocketMessage("a","admin","","실시간 문의는 9시부터 6시까지 이며 그 이후에는 1:1문의 게시판을 이용해주시기 바랍니다. ",""))));
+			session.sendMessage(new TextMessage(mapper.writeValueAsString(new SocketMessage("a","admin","","",""))));
+			//jsp a라는 타입과 맞춰줬다.(이 메서드는 관리자가 메시지를 보내는 메서드)
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,13 +97,14 @@ public class ChattingServer extends TextWebSocketHandler{
 	//private void sendMessage(String[] msg) {
 	private void sendMessage(SocketMessage msg) {
 		//if(msg[2].equals("all")) {
-			logger.debug(""+clients);
+			logger.debug("?"+clients);
 			Set<Map.Entry<String, WebSocketSession>> keys=clients.entrySet();
 			Iterator<Map.Entry<String, WebSocketSession>> it=keys.iterator();
 			while(it.hasNext()) {
 				Map.Entry<String, WebSocketSession> client=it.next();
 				SocketMessage m=(SocketMessage)(client.getValue().getAttributes().get("data"));
 				logger.debug(m.getRoom());
+				//{user01=StandardWebSocketSession[id=0, uri=ws://localhost:9090/spring/alram]}
 				if(m.getRoom().equals(msg.getRoom())) {
 					try {
 						//client.getValue().sendMessage(new TextMessage(String.join(",",msg)));

@@ -27,4 +27,5 @@ public class MemberServiceImpl implements MemberService{
 	public Member memberLogin(Member m) {
 		return dao.memberLogin(session,m);
 	}
+	
 }

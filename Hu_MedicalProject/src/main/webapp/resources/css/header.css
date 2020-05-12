@@ -46,7 +46,8 @@ color:grey;
 }
 
 /* 입력 창 스타일 */
-input[type=text]#uemail,input[type=password]#psw{
+input[type=text]#uemail,input[type=password]#psw,
+input[type=text]#hospitalEmail,input[type=password]#hospitalPsw{
 	width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -85,6 +86,7 @@ button:hover {
 
 .containerlogin {
   padding: 16px;
+  margin: 0 auto;
 }
 /* The Modal (background) */
 .modalLogin {
@@ -153,12 +155,13 @@ button:hover {
   width:50px;
   height:50px;
 }
-#personjoinBtn,#hospitaljoinBtn{
+#personjoinBtn,#hospitaljoinBtn,
+#personLoginsBtn,#hospitalLoginBtn{
        margin: 0 auto;
        width: 200px;
        height: 200px;
 }
-#JoinChoice1{
+#JoinChoice1,#loginChoice1{
     margin:0 auto;
 }
         

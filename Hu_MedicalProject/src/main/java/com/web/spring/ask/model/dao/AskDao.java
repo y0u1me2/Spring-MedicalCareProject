@@ -26,11 +26,24 @@ public interface AskDao {
 
 //insert
 	int insertReply(SqlSessionTemplate session, AskReply reply);
+	
 //selectOne
 	AskReply selectReplyView(SqlSessionTemplate session, int no);
+	
 //delete
 	int deleteReply(SqlSessionTemplate session, int no);
-
+	
+//update
 	int updateReply(SqlSessionTemplate session, Map<String, Object> param);
+	
+//ReplyCount
+	int selectReplyCount(SqlSessionTemplate session);
+
+//selectList
+	List<AskReply> selectReplyList(SqlSessionTemplate session, int cPage, int numPerpage);
+//답변 완료 replycnt+1
+	int replyCnt(SqlSessionTemplate session, int no);
+//답변 완료 replycnt-1
+	int deleteReplyCnt(SqlSessionTemplate session, int no);
 
 }

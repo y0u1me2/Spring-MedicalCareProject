@@ -81,17 +81,33 @@ public class HealthInfoController {
 		return mv;
 	}
 	
-	//자주찾는정보 이미지 클릭시 콘트롤러
+	//메인에서 자주찾는정보 이미지 클릭시 콘트롤러
 	@RequestMapping("healthInfo/frequentInfoPic")
 	public ModelAndView frequentInfoPic(HealthInformation hi) {
-		System.out.println(hi);
 		ModelAndView mv=new ModelAndView();
 		
 		List<HealthInformation> list=service.frequentInfoPic(hi);
 		mv.addObject("list",list);
-		System.out.println(list);
 		//view를 설정하기
 		mv.setViewName("client/healthInfo/healthInfoSub");
+		
+		return mv;
+	}
+	
+	//서브에서 정보 이미지 클릭시 콘트롤러
+	@RequestMapping("healthInfo/subFrequentInfoPic")
+	public ModelAndView subFrequentInfoPic(HealthInformation hi) {
+		ModelAndView mv=new ModelAndView();
+		System.out.println(hi);
+		
+		List<HealthInformation> list=service.frequentInfoPic(hi);
+		HealthInformation returnHi=service.subFrequentInfoPic(hi);
+		
+		System.out.println(returnHi.getConfirmerNo());
+		System.out.println(list);
+		mv.addObject("hi",returnHi);
+		mv.addObject("list",list);
+		mv.setViewName("client/healthInfo/healthInfoSubContent");
 		
 		return mv;
 	}
