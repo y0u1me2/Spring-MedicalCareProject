@@ -35,7 +35,7 @@
   <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:150px;">
     <!-- Brand/logo -->
     <img src="${pageContext.request.contextPath }/resources/images/logo5.png" style="width:50px; padding-right:8px;">
-    <a class="navbar-brand" href="${pageContext.request.contextPath }" style="color:black;">똑똑닥</a>
+    <a class="navbar-brand" href="${pageContext.request.contextPath }" style="color:black;">HU</a>
     <!-- Links -->
     <ul class="navbar-nav">
         <li class="nav-item">

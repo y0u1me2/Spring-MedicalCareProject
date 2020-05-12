@@ -22,5 +22,11 @@ public class NoticeDaoImpl implements NoticeDao{
 	public int noticeCount(SqlSessionTemplate session) {
 		return session.selectOne("notice.noticeCount");
 	}
+
+	@Override
+	public Notice noticeView(SqlSessionTemplate session, int no) {
+		return session.selectOne("notice.noticeView",no);
+	}
+	
 	
 }
