@@ -12,5 +12,7 @@ public interface NoticeDao {
 
 	int noticeCount(SqlSessionTemplate session);
 
+	Notice noticeView(SqlSessionTemplate session, int no);
+
 	 
 }

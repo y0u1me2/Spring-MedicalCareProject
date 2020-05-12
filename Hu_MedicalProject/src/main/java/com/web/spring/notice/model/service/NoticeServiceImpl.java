@@ -27,6 +27,9 @@ public class NoticeServiceImpl implements NoticeService {
 		return dao.noticeCount(session);
 	}
 
-	
+	@Override
+	public Notice noticeView(int no) {
+		return dao.noticeView(session,no);
+	}
 	
 }

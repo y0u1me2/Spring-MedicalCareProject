@@ -77,7 +77,7 @@ div#pageBar a {
    			<c:forEach items="${list }" var="notice">
 				<tr>
 					<td><c:out value="${notice.noticeNo }" /></td>
-					<td><a href="${path }/notice/noticeView?cno=${notice.noticeNo }"> 
+					<td><a href="${path }/notice/noticeView?no=${notice.noticeNo }"> 
 					<c:out value="${notice.noticeTitle }" />
 					</a></td>
 						

@@ -4,9 +4,11 @@
   <select id="noticeList" resultType="notice">
      	SELECT * FROM NOTICE WHERE NOTICESTATUS='Y' ORDER BY NOTICEDATE DESC
     </select>
-    
-    <!-- 돌보미 찾기 게시판 글개수 -->
+ 
     <select id="noticeCount" resultType="_int">
        SELECT COUNT(*) FROM NOTICE
     </select>
+    <select id="noticeView" parameterType="_int" resultType="notice">
+		SELECT * FROM NOTICE WHERE NOTICENO=#{no}
+	</select>
 </mapper>

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.web.spring.ask.model.vo.Ask;
+import com.web.spring.ask.model.vo.AskReply;
 import com.web.spring.notice.model.service.NoticeService;
 import com.web.spring.notice.model.vo.Notice;
 
@@ -30,6 +32,15 @@ public class NoticeController {
 		mv.setViewName("client/notice/noticeList");
 		return mv;
 	}
-	
+	@RequestMapping("/notice/noticeView")
+	public ModelAndView noticeView(ModelAndView mv,@RequestParam("no") int no){
+		Notice notice = service.noticeView(no);
+		
+		mv.addObject("notice",notice);
+
+		mv.setViewName("client/notice/noticeView");
+		
+		return mv;
+	}
 	
 }
