@@ -132,8 +132,9 @@
 
 
 
-            <form name="form" id="careFrm" role="form" method="post">
-
+            <form name="form" id="careFrm" role="form" method="post"
+            action="${pageContext.request.contextPath}/care/update.do?no=${c.careNo}" enctype="multipart/form-data">
+				
                 <div class="mb-3">
 
                     <label for="title">제목</label>
@@ -168,18 +169,22 @@
 
                     <label for="tag">자격증 등록</label>
                     <span> *요양보호사 자격증을 업로드 해주세요.</span>
+						<input type="file" class="form-control" name="upFile" id="upFile">
 
-                    <input type="file" class="form-control" name="upfile" id="upfile">
+			
+				<c:forEach items="${files}" var="f" varStatus="vs">				
+								<span><c:out value="기존 업로드한 자격증 : ${f.originalFilename }"/></span>
+								<input type="hidden" name="orifile" value="${f.originalFilename }" />	
+				</c:forEach>	
+				
 					
+																
                 </div>
-
-
 
 
             <div class="btns">
 
-                <button type="button" id="btnSave"
-                onclick="location.replace('${path}/care/updateCare')">수정</button>
+                <button type="submit" id="btnSave">수정</button>
 
                 <button type="button" id="delete-btn" onclick="deleteCare();">삭제</button>
 

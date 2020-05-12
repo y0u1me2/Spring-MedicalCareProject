@@ -1,10 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+     <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+	<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
 
+<meta charset="UTF-8">
+<head>
 <style>
 
 /* 공통스타일 */
@@ -24,7 +27,7 @@
 		position:relative;
 		text-align:center;
 		left:200px;
-		top:50px;
+		top:300px;
 		width:80%;
 	}
 
@@ -61,24 +64,22 @@
 }
 
 
+</head>
 </style>
 
-<head>
-<meta charset="UTF-8">
-<title>굿굿즈</title>
-</head>
+
 <body>
 	
 	
 	
 	<div id="content">
-	<img src="images/logo.png" width="400px;">
+	<img src="${path }/resources/images/logo.png" width="400px;">
 	<h1 id="error">500</h1>
 	<p id="text">찾을 수 없는 페이지 입니다.</br>
 	요청하신 페이지가 사라졌거나, 잘못된 경로를 이용하셨어요. :)
 	</p>
 
-	<a href="<%=request.getContextPath()%>/index.jsp"><button type="button" id="home-btn"/>홈으로 이동</button></a>
+	<a href="${path }/index.jsp"><button type="button" id="home-btn"/>홈으로 이동</button></a>
 	</div>
 	
 </body>

@@ -22,10 +22,14 @@ public interface CareNoticeDao {
 	List<CareAttachment> selectCareFile(SqlSession session, int cno); 
 	
 	CareNotice updateView(SqlSession session,int no);
+	List<CareAttachment> updateViewFile(SqlSession session,int no);
+	
 	int deleteCare(SqlSession session, int no);
 	
-	int updateCare(SqlSession session, CareNotice c);
+	int updateCare(SqlSession session,Map<String,String> param);
+	int updateCareAttachment(SqlSession session, CareAttachment a);
 	
+		
 	int insertComment(SqlSession session, CareComment c);
 	
 	List<CareComment> commentList(SqlSession session, int no);
