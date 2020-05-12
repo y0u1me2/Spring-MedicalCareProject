@@ -32,4 +32,12 @@
 	<update id="deleteReplyCnt" parameterType="_int">
 		UPDATE ASK SET REPLYCNT=REPLYCNT-1 WHERE ASKNO=#{no}
 	</update>
+	
+	<select id="searchAsk" parameterType="map" resultType="ask">
+		SELECT * FROM ASK
+			WHERE 1=1
+		<if test="searchType != null and searchType !='' ">
+			AND ${searchType} like '%'||#{keyword}||'%'
+		</if>
+	</select>
 </mapper>

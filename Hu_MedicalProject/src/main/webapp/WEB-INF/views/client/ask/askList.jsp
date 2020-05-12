@@ -121,13 +121,13 @@ input#searchBtn:hover {
           <button type="button" class="btn btn-outline-success my-2 my-sm-0" style="margin-left:1020px;"onclick="
           askInsert();"> 문의하기</button>
           <div style="text-align:center; font-size:20px;">
-          <form action="${path }/ask/search.do"  method="post">
-            <select name="searchType" id="searchContent" style="background-color:white; height:35px;">
+          <form action="${path }/ask/search.do" method="post">
+            <select name="searchType" id="searchType" style="background-color:white; height:35px;">
               <option value=""  disabled selected>선택</option>
-              <option value="title"  <c:if test="${param.searchType eq 'askContent' }">selected</c:if>>제목만</option>
-              <option value="writer"  <c:if test="${param.searchType eq 'askWriter' }">selected</c:if>>글작성자</option>
+              <option value="askTitle"  <c:if test="${param.searchType eq 'askTitle' }">selected</c:if>>제목만</option>
+              <option value="askWriter"  <c:if test="${param.searchType eq 'askWriter' }">selected</c:if>>글작성자</option>
             </select>
-            <input type="text" id="keyword" placeholder="검색어를 입력해주세요" size="20" value="${param.keyword }" required autocomplete="off">
+            <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력해주세요" size="20" value="${param.keyword }" required autocomplete="off">
             <input type="submit" id="searchBtn" class="search_btn" value="검색"/>
            </form>
           </div>

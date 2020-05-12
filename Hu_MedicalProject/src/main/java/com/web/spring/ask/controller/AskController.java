@@ -148,23 +148,39 @@ public class AskController {
 		return "client/chatting/chatting";
 	}
 	
-//	@RequsetMapping("/ask/search.do")
-//	public ModelAndView searchAsk(@RequestParam(value="s"))
-	
-	//update하기	
-	@RequestMapping("/reply/updateReply.do")
-	public ModelAndView updateReply(@RequestParam(value="replyContent") String replyContent,
-			@RequestParam(value="replyRefNo") int replyRefNo,ModelAndView mv) {
+	@RequestMapping("/ask/search.do")
+	public ModelAndView searchAsk(@RequestParam(value="searchType",required=false) String searchType,
+			@RequestParam(value="keyword",required=false) String keyword,ModelAndView mv) {
 		
-		Map<String,Object> param=new HashMap<String,Object>();
-		param.put("replyContent",replyContent);
-		param.put("replyNo",replyRefNo);
+		logger.debug("searchType"+searchType);
+		logger.debug("keyword"+keyword);
+		Map<String,String> param=new HashMap<String,String>();
+		param.put("searchType",searchType);
+		param.put("keyword",keyword);
+		
+		List<Map<String,String>> list=service.searchAsk(param);
+		logger.debug("검색List -> "+list);
+		
+		mv.addObject("list",list);
+		mv.setViewName("client/ask/askList");
 
-		int result=service.updateReply(param);
-		
-		mv.addObject("result",result);
-		mv.setViewName("jsonView");
 		return mv;
 	}
+	
+//	//update하기	
+//	@RequestMapping("/reply/updateReply.do")
+//	public ModelAndView updateReply(@RequestParam(value="replyContent") String replyContent,
+//			@RequestParam(value="replyRefNo") int replyRefNo,ModelAndView mv) {
+//		
+//		Map<String,Object> param=new HashMap<String,Object>();
+//		param.put("replyContent",replyContent);
+//		param.put("replyNo",replyRefNo);
+//
+//		int result=service.updateReply(param);
+//		
+//		mv.addObject("result",result);
+//		mv.setViewName("jsonView");
+//		return mv;
+//	}
 	
 }

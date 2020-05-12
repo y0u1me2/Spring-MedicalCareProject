@@ -22,6 +22,7 @@ public interface AskDao {
 
 	int deleteAsk(SqlSessionTemplate session, int no);
 
+
 //-------------------------Reply------------------------------------------------
 
 //insert
@@ -45,5 +46,8 @@ public interface AskDao {
 	int replyCnt(SqlSessionTemplate session, int no);
 //답변 완료 replycnt-1
 	int deleteReplyCnt(SqlSessionTemplate session, int no);
+
+	List<Map<String, String>> searchAsk(SqlSessionTemplate session, Map<String, String> param);
+
 
 }
