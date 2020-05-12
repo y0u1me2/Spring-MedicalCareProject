@@ -10,4 +10,6 @@ public interface NoticeService {
 
 	int noticeCount();
 
+	Notice noticeView(int no);
+
 }
