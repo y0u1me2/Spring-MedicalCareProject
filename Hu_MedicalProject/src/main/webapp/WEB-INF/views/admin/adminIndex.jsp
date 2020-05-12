@@ -81,3 +81,15 @@
                 </nav>
             </div>
         </aside>
+       
+     
+        <div class="page-wrapper">
+            <!-- 본문 내용 입력 -->
+        </div>
+    </div>
+    <footer class="footer text-center">
+       © 2020&nbsp;&nbsp;HospitalForYou&nbsp;&nbsp;Admin by HU 
+    </footer>
+    
+</body>
+</html>
