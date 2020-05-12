@@ -1,5 +1,8 @@
 package com.web.spring.ask.controller;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,10 +142,29 @@ public class AskController {
 		return "client/common/msg";
 	}
 
-	
+//관리자-사용자 채팅뷰 이동	
 	@RequestMapping("/chattingView")
 	public String accessChatting() {
 		return "client/chatting/chatting";
+	}
+	
+//	@RequsetMapping("/ask/search.do")
+//	public ModelAndView searchAsk(@RequestParam(value="s"))
+	
+	//update하기	
+	@RequestMapping("/reply/updateReply.do")
+	public ModelAndView updateReply(@RequestParam(value="replyContent") String replyContent,
+			@RequestParam(value="replyRefNo") int replyRefNo,ModelAndView mv) {
+		
+		Map<String,Object> param=new HashMap<String,Object>();
+		param.put("replyContent",replyContent);
+		param.put("replyNo",replyRefNo);
+
+		int result=service.updateReply(param);
+		
+		mv.addObject("result",result);
+		mv.setViewName("jsonView");
+		return mv;
 	}
 	
 }
