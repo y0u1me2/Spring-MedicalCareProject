@@ -39,6 +39,11 @@ public class HealthInfoDaoImpl implements HealthInfoDao {
 		// TODO Auto-generated method stub
 		return session.selectList("healthInfo.frequentInfoPic",hi);
 	}
+	@Override
+	public HealthInformation subFrequentInfoPic(SqlSession session, HealthInformation hi) {
+		// TODO Auto-generated method stub
+		return session.selectOne("healthInfo.subFrequentInfoPic",hi);
+	}
 	
 	
 	

@@ -11,7 +11,7 @@
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"/>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"/>
 <style>
-	#content {
+	#content-healthInfo {
 		width:1366px;
 		margin:0 auto;
 	}
@@ -32,7 +32,7 @@
 	}
 	
 	.healthInfo-selected {
-		background-color:#DAF1DE;;
+		background-color:#DAF1DE;
 	}
 	.healthInfo-top {
 		margin: 60px 0 26px;
@@ -102,6 +102,7 @@
 	.bottom-content {
 		width: 70%;
 		margin: 5% auto 10px auto;
+		text-align: center;
 	}
 	.picContentBox {
 		/* display: inline-flex; */
@@ -110,27 +111,37 @@
 	.bottom-InfoContent {
 		padding: 0 !important;
 		margin: 10px;		
-		width: 150px;
+		width: 250px;
+		display: inline-block;
+		text-align: left;
 	}
 	.bottom-InfoContent-Info {
 		padding: 20px 10px 10px 10px;
-		overflow: hidden;
 	}
 	.bottom-InfoContent-Info-main {
 		font-weight: bolder;
+		font-size: 16px;		
 	}
 	.bottom-InfoContent-Info-sub {
 		margin-top: 10px;
-		font-size: 10px;
-		color: gray;
+		color: gray;				
+		width: 200px;
 	}
+	.bottom-InfoContent-Info-sub p {
+		font-size: 12px;
+   		color: rgb(128, 135, 143);
+   		text-overflow: ellipsis;
+    	white-space: nowrap;
+    	overflow: hidden;
+	}	
+	
 	.InfoContent-selected {
 		cursor: pointer;
   		box-shadow: 4px 4px 3px #888888;
 	}
 </style>
 
-<section id="content">
+<section id="content-healthInfo">
 	<div class="container-fluid">
 		<div class="row">
 		</div>
@@ -308,12 +319,12 @@
 	$.ajax({
 		url:"${path}/healthInfo/frequentInfo",
 		success:function(data) {
-			$('div.bottom-content').append("<span class='picContentBox'></span>");
+			$('div.bottom-content').append("<div class='picContentBox'></div>");
 			for(var i=0; i<6; i++) {
 				$('.picContentBox').append("<div class='bottom-InfoContent p-6'></div>");
 				var divTag=$('div.bottom-InfoContent.p-6');
 				$(divTag[i]).html("<img src='${pathImages}"+data.list[i].DISESASEFILE+"'>");
-				$(divTag[i]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"+data.list[i].DISESASETITLE+"</div><div class='bottom-InfoContent-Info-sub'>"+data.list[i].DISESASESUBTITLE+"</div></div></div>");
+				$(divTag[i]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"+data.list[i].DISESASETITLE+"</div><div class='bottom-InfoContent-Info-sub'><p>"+data.list[i].DISESASESUBTITLE+"</p></div></div></div>");
 				$(divTag[i]).append("<input type='hidden' class='disesaseNo' value='"+data.list[i].DISESASENO+"'/>");
 				$(divTag[i]).click(function(){
 					frequentInfoPicClick($(this).children('input.disesaseNo').val());
@@ -323,9 +334,8 @@
 		}
 	});
 			
-			//자주찾는 건강정보 사진버튼 function화
+		//자주찾는 건강정보 사진버튼 function화
 		function frequentInfoPicClick(param) {
-			console.log(param);
 			location.href="${path}/healthInfo/frequentInfoPic?disesaseNo="+param;
 		}
 	})

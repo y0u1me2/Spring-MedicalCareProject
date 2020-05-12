@@ -32,7 +32,7 @@
          <c:when test = "${empty reply}">
        <form action="${path}/reply/insertReply.do?replyRefNo=${a.askNo}" method="post">
        <input type="hidden" name="replyRefNo" value="${a.askNo }">
-         <div style="padding-top:10px;">
+         <div style="padding-top:5px;">
          	<textarea style="margin-bottom:20px;" placeholder="문의에 대한 답을 입력하세요" name="replyContent" class="form-control" rows="4" id="replyContent" ></textarea>
          	<button id="replyBtn" class="btn btn-outline-success my-2 my-sm-0" style="margin-left:783px; ">답변등록</button>
          </div> 
@@ -49,9 +49,9 @@
 			</form>
           </div>
           
-	          <div style="float:right; margin-top:50px;">
-		           <input type="button" class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" id="replyUpdateBtn" onclick="replyUpdate();" value="답변수정">
-		           <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="replyDelete();" >답변 삭제</button>
+	          <div id="upDel" style="float:right; margin-top:50px;">
+		           <input  type="button" class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" id="replyUpdateBtn" onclick="replyUpdate();" value="답변수정">
+		           <button  type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="replyDelete();" >답변 삭제</button>
 		      </div>
 	      
   	</c:when>
@@ -92,12 +92,13 @@ function replyUpdate() {
 		data:{"no":no},
 		success:function(result){
 			console.log(result.reply);
-			$('#askFrm').html('<textarea id="replyContent" style="float:left" class="form-control col-sm-10" rows="4">'+result.reply.replyContent+'</textarea><br/>'+
+			$('#askFrm').html('<textarea id="replyContent" style="float:left; margin-bottom:60px;" class="form-control col-sm-10" rows="4">'+result.reply.replyContent+'</textarea><br/>'+
 			'<button type="button" onclick="replyUpdateEnd();" class="btn btn-outline-success my-2 my-sm-0"style="margin-left:710px;float:left;" >수정완료</button>');
+			$("#upDel").hide();
+			
 		}
 	});
 }
-////////////////////////////////////////////////////////////////////////질문
 function replyUpdateEnd(){
 	
 	var result={'replyContent':$('#replyContent').val(),'replyRefNo':'${reply.replyRefNo}'};
@@ -110,8 +111,7 @@ function replyUpdateEnd(){
 		data:result,
 		success:function(result){
 			console.log(result);
-			/* console.log(result.reply.replyContent);
-			alert("성공");*/
+			
 			if(result.result==1){
 				location.reload();
 
