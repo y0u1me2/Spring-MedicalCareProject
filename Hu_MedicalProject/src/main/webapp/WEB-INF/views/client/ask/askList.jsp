@@ -63,16 +63,15 @@ input#searchBtn:hover {
 	outline: none;
 }
 /* 답변완료 */
-      .blinking{
+/*       .blinking{
     animation:blink 0.8s ease-in-out infinite alternate;
 }
 @keyframes blink{
     0% {opacity:0;}
     50% {opacity:1;}
-}
+} */
    </style>  
     <section>
-    <input type="text" value="${replyCount }">
         <div class="container-fluid">
           <div class="row">
             <div class="col-xl-1 ">
@@ -104,7 +103,7 @@ input#searchBtn:hover {
                   	<a href="${path }/ask/askView.do?no=${a.askNo }" style="text-decoration: none; margin-right:10px;">
                   		<span><c:out value="${a.askTitle }"/></span></a>
                   			<c:if test="${a.replyCnt > 0}">
-			                  	<span class="blinking" style="background-color:#f44336;color:white;width:80px;border-radius:20px; padding:3px 3px 3px 3px;">답변완료</span>
+			                  	<span class="blinking" style="background-color:#ff9f31;color:white;width:80px;border-radius:20px; padding:3px 3px 3px 3px;">답변완료</span>
 			                </c:if>
 			                <c:if test="${a.replyCnt == 0}">
 			                  	<span style="background-color:grey;width:80px;color:white;border-radius:20px; padding:3px 3px 3px 3px;">답변대기</span>

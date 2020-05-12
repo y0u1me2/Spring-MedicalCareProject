@@ -146,7 +146,7 @@
 </div>
 
  <!-- 일반 로그인 -->
-<div id="id01" class="modalLogin" style="display: none; z-index:2; overflow:hidden;" >
+<div id="id01" class="modalLogin" style="display: none; z-index:2; " >
   
   <form class="modal-content animate" id="loginForm" name="loginForm" action="${path }/member/memberLogin.do" method="post" style="width:30%;">
    
@@ -186,7 +186,7 @@
   </form>
 </div>
  <!-- 관계자 로그인 -->
-<div id="id02" class="modalLogin" style="display: none; overflow:hidden;">
+<div id="id02" class="modalLogin" style="display: none; ">
   
   <form class="modal-content animate" id="loginForm" name="loginForm" action="${path }/member/hospitalLogin.do" method="post" style="width:30%;">
    
