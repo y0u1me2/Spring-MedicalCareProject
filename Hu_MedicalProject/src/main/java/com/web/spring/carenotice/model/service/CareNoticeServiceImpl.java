@@ -90,18 +90,42 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		
 		return dao.updateView(session,no);
 	}
-
-//게시글 수정하기=================================================
 	
 	@Override
-	public int updateCare(CareNotice c) {
+	public  List<CareAttachment> updateViewFile(int no) {
 		
-		return dao.updateCare(session,c);
+		return dao.updateViewFile(session,no);
+	}
+	
+
+//게시글 수정하기=================================================
+		
+
+	@Override
+	public int updateCare(Map<String, String> param, List<CareAttachment> files,int no) {
+		
+		int result = dao.updateCare(session,param); 
+		
+		if(result==0) throw new RuntimeException();
+		  		  
+		  if(!files.isEmpty()) {//파일이 있으면 
+			  for(CareAttachment a : files) {
+				 a.setCareNo(no);
+				 result = dao.updateCareAttachment(session,a);
+		  }
+			  
+		  
+		  if(result==0) throw new RuntimeException();
+		  
+		  }	
+	
+		return result;
 	}
 	
 	
 //게시글 삭제하기=================================================
 	
+
 	@Override
 	public int deleteCare(int no) {
 		

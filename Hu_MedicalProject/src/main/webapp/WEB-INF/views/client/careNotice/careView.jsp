@@ -274,14 +274,15 @@ button.file-btn p {
 
 
 
-	<div class="content">
+<div class="content">
 		<p class="context">
 			<c:out value="${c.careContent }" />
 
+	
 			<c:if test="${loginMember.name eq '관리자'}">
 				<c:forEach items="${files}" var="f" varStatus="vs">
 					<button type="button" class="file-btn"
-						onclick="fileDownload('${f.originalFilename}','${f.renamedFilename }')">
+						onclick="fileDownload('${c.originalFilename}','${f.renamedFilename }')">
 
 						<p>
 							요양보호사 자격증
@@ -290,6 +291,7 @@ button.file-btn p {
 					</button>
 				</c:forEach>
 			</c:if>
+			
 		</p>
 	</div>
 

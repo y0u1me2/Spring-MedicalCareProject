@@ -70,8 +70,13 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 		
 		return session.selectOne("care.updateView",no);
 	}
-
 	
+	@Override
+	public List<CareAttachment> updateViewFile(SqlSession session, int no) {
+	
+		return session.selectList("care.updateViewFile",no);
+	}
+
 	//게시글 삭제하기
 	@Override
 	public int deleteCare(SqlSession session, int no) {
@@ -79,17 +84,20 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 		return session.update("care.deleteCare",no);
 	}
 	
-	//게시글 수정하기
+	//게시글 수정하기	
 	@Override
-	public int updateCare(SqlSession session, CareNotice c) {
+	public int updateCare(SqlSession session, Map<String, String> param) {
 		
-		return session.update("care.updateCare",c);
+		return session.update("care.updateCare",param);
 	}
 
+	//파일 수정하기
+	@Override
+	public int updateCareAttachment(SqlSession session, CareAttachment a) {
+		
+		return session.update("care.updateCareAttachment",a);
+	}
 
-	
-	//updateAttachment
-	
 	//댓글 달기
 	@Override
 	public int insertComment(SqlSession session, CareComment c) {
