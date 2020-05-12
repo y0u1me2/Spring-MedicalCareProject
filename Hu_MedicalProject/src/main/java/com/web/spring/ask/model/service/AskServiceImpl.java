@@ -59,10 +59,17 @@ public class AskServiceImpl implements AskService {
 		return dao.searchAsk(session,param);
 	}
 
+//검색 페이징처리카운트	
+@Override
+	public int searchAskCount() {
+		return dao.searchAskCount(session);
+	}
+	
 
 //-------------------------Reply------------------------------------------------
-	
-//insert
+
+
+	//insert
 	@Override
 	public int insertReply(AskReply reply) {
 		return dao.insertReply(session,reply);

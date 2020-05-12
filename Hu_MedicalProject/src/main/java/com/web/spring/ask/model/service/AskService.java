@@ -46,4 +46,6 @@ public interface AskService {
 //askList 조회
 	List<Map<String, String>> searchAsk(Map<String, String> param);
 
+	int searchAskCount();
+
 }

@@ -53,7 +53,10 @@ public class AskDaoImpl implements AskDao {
 		return session.selectList("ask.searchAsk",param);
 	}
 	
-	
+	@Override
+	public int searchAskCount(SqlSessionTemplate session) {
+		return session.selectOne("ask.searchAskCount");
+	}
 	
 //-------------------------Reply------------------------------------------------
 	
@@ -98,6 +101,7 @@ public class AskDaoImpl implements AskDao {
 	public int deleteReplyCnt(SqlSessionTemplate session, int no) {
 		return session.update("ask.deleteReplyCnt",no);
 	}
+
 
 	
 

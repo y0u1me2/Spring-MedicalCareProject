@@ -150,8 +150,12 @@ public class AskController {
 	
 	@RequestMapping("/ask/search.do")
 	public ModelAndView searchAsk(@RequestParam(value="searchType",required=false) String searchType,
-			@RequestParam(value="keyword",required=false) String keyword,ModelAndView mv) {
+			@RequestParam(value="keyword",required=false) String keyword,ModelAndView mv
+			) {
 		
+		//int totalCount=service.searchAskCount();
+		//logger.debug(totalCount+"카");
+
 		logger.debug("searchType"+searchType);
 		logger.debug("keyword"+keyword);
 		Map<String,String> param=new HashMap<String,String>();
@@ -166,21 +170,5 @@ public class AskController {
 
 		return mv;
 	}
-	
-//	//update하기	
-//	@RequestMapping("/reply/updateReply.do")
-//	public ModelAndView updateReply(@RequestParam(value="replyContent") String replyContent,
-//			@RequestParam(value="replyRefNo") int replyRefNo,ModelAndView mv) {
-//		
-//		Map<String,Object> param=new HashMap<String,Object>();
-//		param.put("replyContent",replyContent);
-//		param.put("replyNo",replyRefNo);
-//
-//		int result=service.updateReply(param);
-//		
-//		mv.addObject("result",result);
-//		mv.setViewName("jsonView");
-//		return mv;
-//	}
-	
+
 }

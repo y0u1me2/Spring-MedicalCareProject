@@ -39,5 +39,15 @@
 		<if test="searchType != null and searchType !='' ">
 			AND ${searchType} like '%'||#{keyword}||'%'
 		</if>
+		ORDER BY ASKDATE DESC
 	</select>
+	
+	<!-- <select id="searchAskCount" parameterType="map" resultType="ask">
+		SELECT COUNT(*) FROM ASK
+			WHERE 1=1
+		<if test="searchType != null and searchType !='' ">
+			AND ${searchType} like '%'||#{keyword}||'%'
+		</if>
+	</select>
+	 -->
 </mapper>
