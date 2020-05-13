@@ -40,7 +40,9 @@ public class AlramServer extends TextWebSocketHandler {
 	
 
 	private void requestChat(AlramMessage msg) {
+		
 		Set<Map.Entry<String,WebSocketSession>> entry = clients.entrySet();
+		
 		logger.debug(""+clients);
 		for(Map.Entry<String, WebSocketSession> client : entry) {
 			if(msg.getReceiver().equals(client.getKey())) {

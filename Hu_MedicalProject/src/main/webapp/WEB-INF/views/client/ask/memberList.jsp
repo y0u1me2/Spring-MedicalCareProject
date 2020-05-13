@@ -5,7 +5,6 @@
 	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	<c:set var="path" value="${pageContext.request.contextPath}"/>
 	
-	
 	<jsp:include page="/WEB-INF/views/client/common/header.jsp">
 		<jsp:param value="Hello Spring" name="pageTitle"/>
 	</jsp:include>
@@ -22,21 +21,13 @@
                      <button class="btn btn-outline-dark" type="button"
 						onclick="accessChatting2('${loginMember.email}','${a.name }');">${a.name }</button>
 					<input id="chatName" type=text name="chatName" value="${a.name }">
-						
-						
                 </tr>
            </c:forEach>
           </div>
             </table>
          </tbody>
+         
 	<script>
-	
-	function accessChatting2(room1,room2){//병원회원-일반회원일때 매개변수 2개 받기
-		
-		if(room!=room2){
-			
-		}
-	}
 	
 	
 	</script>

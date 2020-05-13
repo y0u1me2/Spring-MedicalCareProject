@@ -24,6 +24,7 @@
 	<websocket:handlers>
 		<websocket:mapping handler="ChattingHandler" path="/chatting"/>
 		<websocket:mapping handler="alramAhadler" path="/alram"/>
+		<websocket:mapping handler="alramAhadler" path="/userChat"/>
 		<websocket:handshake-interceptors>
 			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
 		</websocket:handshake-interceptors>

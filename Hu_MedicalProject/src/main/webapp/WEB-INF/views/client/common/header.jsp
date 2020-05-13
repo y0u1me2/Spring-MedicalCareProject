@@ -54,7 +54,6 @@
        -->
       
 
-      </li> -->
        <c:if test="${loginMember ne null }">
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
