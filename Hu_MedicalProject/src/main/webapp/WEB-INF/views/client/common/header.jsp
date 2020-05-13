@@ -47,14 +47,9 @@
       <li class="nav-item">
         <a class="nav-link" href="${path }/healthInfo/healthInfoMain">건강정보</a>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="${path }/admin/admin.do">관리자전용</a>
-      </li>
-      
-      
+      </li> -->
        <c:if test="${loginMember ne null }">
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
@@ -65,6 +60,11 @@
 	        </div>
 	      </li>
     </c:if>
+     <c:if test="${loginMember.email== 'admin' }">
+      <li class="nav-item">
+        <a class="nav-link" href="${path }/admin/admin.do">관리자전용</a>
+      </li>
+      </c:if>
     
     <c:choose>
          <c:when test = "${empty loginMember }">
