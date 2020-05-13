@@ -86,7 +86,7 @@ a:link, a:visited, a:hover {
 					  <div class="invalid-feedback"></div>
 					</div>
 					<div class="form-group">
-					  <input type="tel" class="form-control" id="phone" placeholder="휴대폰 번호 입력" name="phone" required autocomplete="off">
+					  <input type="tel" class="form-control" id="phone" placeholder="휴대폰 번호 입력" name="tel" required autocomplete="off">
 					  <div class="invalid-feedback"></div>
 					</div>
 				</div>

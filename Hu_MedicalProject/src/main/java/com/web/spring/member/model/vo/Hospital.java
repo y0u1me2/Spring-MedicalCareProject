@@ -1,4 +1,4 @@
-package com.web.spring.hospital.model.vo;
+package com.web.spring.member.model.vo;
 
 import java.util.Date;
 
@@ -17,6 +17,6 @@ public class Hospital {
 	private int hospitalNo;
 	private String managerName;
 	private String email;
-	private String phone;
+	private String tel;
 	private Date enrollDate;
 }

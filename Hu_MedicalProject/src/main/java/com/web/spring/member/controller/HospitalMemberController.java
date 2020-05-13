@@ -1,4 +1,4 @@
-package com.web.spring.hospital.controller;
+package com.web.spring.member.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,11 +12,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.spring.common.AESEncrypt;
-import com.web.spring.hospital.model.service.HospitalMemberService;
-import com.web.spring.hospital.model.vo.Hospital;
+import com.web.spring.member.model.service.HospitalMemberService;
+import com.web.spring.member.model.vo.Hospital;
 
 @Controller
-@SessionAttributes(value= {"loginMember", "loginType"})
+@SessionAttributes(value= {"loginHpMember"})
 public class HospitalMemberController {
 	@Autowired
 	private HospitalMemberService service;
@@ -31,7 +31,7 @@ public class HospitalMemberController {
 	@RequestMapping("/hospitalEnrollEnd.do")
 	private ModelAndView hospitalEnrollEnd(Hospital h, ModelAndView mv) {
 		h.setPassword(pwEncoder.encode(h.getPassword()));//비밀번호 암호화(단방향)
-		h.setPhone(encryptor.encrypt(h.getPhone()));//양방향 암호화(휴대폰)
+		h.setTel(encryptor.encrypt(h.getTel()));//양방향 암호화(휴대폰)
 		h.setEmail(encryptor.encrypt(h.getEmail()));//양방향 암호화(이메일)
 		
 		int result = service.hospitalEnroll(h);
@@ -55,10 +55,11 @@ public class HospitalMemberController {
 	}
 	
 	//로그인
-	@RequestMapping("/hospitalLogin.do")
+	@RequestMapping("/member/hospitalLogin.do")
 	private String hospitalLogin(Hospital h, Model model) {
 		
 		Hospital hospital = service.hospitalLogin(h);
+		System.out.println(hospital);
 		
 		String msg="";
 		String loc="/";
@@ -67,8 +68,7 @@ public class HospitalMemberController {
 			if(pwEncoder.matches(h.getPassword(), hospital.getPassword())) {//인코더 이용하여 비교
 				//로그인 성공
 				msg="로그인 성공";
-				model.addAttribute("loginMember", hospital);
-				model.addAttribute("loginType", "hospital");//로그인 유형
+				model.addAttribute("loginHpMember", hospital);
 			}else {
 				//비밀번호가 일치하지 않음
 				msg="로그인 실패! 패스워드가 일치하지 않습니다.";
@@ -84,7 +84,7 @@ public class HospitalMemberController {
 	}
 	
 	//로그아웃
-	@RequestMapping("/hospitalLogout.do")
+	@RequestMapping("/member/hospitalLogout.do")
 	private String hospitalLogout(SessionStatus status, HttpSession session) {
 		session.invalidate();
 		
