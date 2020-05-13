@@ -57,6 +57,7 @@
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	            <a class="dropdown-item" href="${path }/care/careNotice">돌보미 찾기</a>
 	            <a class="dropdown-item" href="${path }/ask/ask.do">문의 게시판</a>
+	            <a class="dropdown-item" href="${path }/test/test.do">test</a>
 	        </div>
 	      </li>
     </c:if>
@@ -83,8 +84,8 @@
 				<a href="#" style="align:right;"><c:out value="${loginMember.name }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
 				   <button class="btn btn-outline-dark" type="button"
-						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>  
-						
+						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>
+					
 	        </li>
          </c:when>
          <c:otherwise>
@@ -309,12 +310,12 @@ function logoutChk(){
 			//room은 로그인된 userId가 매개변수로 들어간다.
 			if(${loginMember.email ne "admin"}){
 				//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
-				
 				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
 				requestChatting();
 			}
 			open("${path}/chattingView?room="+room,"_blank","width=500,height=490");
 		}
+		
 </script>
 	<c:if test="${not empty loginMember }">
 	<!--로그인이 되었을때 문의하기!  -->

@@ -22,4 +22,8 @@
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
 	</select>
 	
+	<select id="memberList" resultType="member">
+		SELECT * FROM MEMBER
+	</select>
+	
 </mapper>

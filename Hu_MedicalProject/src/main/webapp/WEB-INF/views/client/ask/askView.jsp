@@ -8,6 +8,7 @@
 <jsp:include page="/WEB-INF/views/client/common/header.jsp">
 	<jsp:param value="Hello Spring" name="title"/>
 </jsp:include>
+
 	<input type="hidden" name="askNo" id="askNo" value="${a.askNo }">
    <div class="container-fluid" style="padding-top:60px;">
         <div class="row">
@@ -16,8 +17,10 @@
           <div class=" col-xl-8 " style="height: 500px; margin-bottom: 100px;">
            <h2>${a.askTitle }</h2>
            <div style="float: right;">
+           <c:if test="${loginMember.name eq a.askWriter }">
 	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="askUpdate();">수정</button>
 	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" onclick="askDelete();">삭제</button>
+	       </c:if>
 	           <button class="btn btn-outline-success my-2 my-sm-0" onclick="askList();" >목록</button>
            </div>
            <p style="padding-top: 0px; color:lightgray;">${a.askDate }</p>
@@ -26,10 +29,10 @@
            <div id="content" style="height: 200px; ">
             ${a.askContent }
            </div>
-           
-          <hr>
+          
          <c:choose>
-         <c:when test = "${empty reply}">
+         <c:when test = "${empty reply and loginMember.email=='admin'}">
+         <hr>
        <form action="${path}/reply/insertReply.do?replyRefNo=${a.askNo}" method="post">
        <input type="hidden" name="replyRefNo" value="${a.askNo }">
          <div style="padding-top:5px;">
@@ -39,6 +42,7 @@
        </form>
       </c:when>
       <c:when test = "${not empty reply }">
+               <hr>
           <div style="height: 130px;">
            	<img src="${path }/resources/images/logo6.png"  style="width:70px; float:left; padding-right:20px;">
            	<form id="askFrm">

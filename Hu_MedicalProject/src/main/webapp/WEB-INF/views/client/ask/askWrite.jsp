@@ -19,7 +19,7 @@
             </div>
           <div class=" col-xl-6"> 
           제목 <input name="askTitle" type="text" class="form-control" required>
-          작성자 <input name="askWriter" type="text" class="form-control" required>
+          작성자 <input name="askWriter" type="text" class="form-control" value="${loginMember.name }" required>
 
            <div class="form-group" style="margin-top: 20px;"> 문의내용
             <label for="comment"></label>

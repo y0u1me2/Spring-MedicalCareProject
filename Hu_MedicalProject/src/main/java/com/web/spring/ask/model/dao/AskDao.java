@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.web.spring.ask.model.vo.Ask;
 import com.web.spring.ask.model.vo.AskReply;
+import com.web.spring.member.model.vo.Member;
 
 public interface AskDao {
 
@@ -50,6 +51,9 @@ public interface AskDao {
 	int replyCnt(SqlSessionTemplate session, int no);
 //답변 완료 replycnt-1
 	int deleteReplyCnt(SqlSessionTemplate session, int no);
+
+//-----------------------------------------------------chat Test
+	List<Member> memberList(SqlSessionTemplate session);
 
 	
 
