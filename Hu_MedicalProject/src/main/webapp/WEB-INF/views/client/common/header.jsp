@@ -49,6 +49,11 @@
       </li>
       <!-- <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
+
+      </li>  
+       -->
+      
+
       </li> -->
        <c:if test="${loginMember ne null }">
 	      <li class="nav-item dropdown">

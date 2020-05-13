@@ -8,90 +8,59 @@
 <jsp:include page="/WEB-INF/views/client/common/header.jsp">
 	<jsp:param value="Hello Spring" name="title"/>
 </jsp:include>
-	<input type="hidden" name="askNo" id="askNo" value="${notice.noticeNo }">
+	<input type="hidden" name="noticeNo" id="noticeNo" value="${notice.noticeNo }">
    <div class="container-fluid" style="padding-top:60px;">
         <div class="row">
-          <div class="col-xl-2">
-          </div>
+          <div class="col-xl-2"></div>
           <div class=" col-xl-8 " style="height: 500px; margin-bottom: 100px;">
            <h2>${notice.noticeTitle }</h2>
            <div style="float: right;">
-	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="askUpdate();">수정</button>
-	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" onclick="askDelete();">삭제</button>
-	           <button class="btn btn-outline-success my-2 my-sm-0" onclick="askList();" >목록</button>
+            <c:if test="${loginMember.email eq 'admin' }">
+	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="noticeUpdate();">수정</button>
+	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" onclick="noticeDelete();">삭제</button>
+	         </c:if>
+	           <button class="btn btn-outline-success my-2 my-sm-0" onclick="noticeList();" >목록</button>
            </div>
            <p style="padding-top: 0px; color:lightgray;">${notice.noticeDate }</p>
            
            <hr>
+           <c:forEach items="${files }" var="f" varStatus="vs">
+            <button type="button" 
+                    class="btn btn-outline-success btn-block"
+                    onclick="fileDownLoad('${f.originalFilename}','${f.renamedFilename }');">
+            	    첨부파일${vs.count } - ${f.originalFilename }
+            </button>
+        </c:forEach>
+        <hr>
            <div id="content" style="height: 200px; ">
-            ${notice.noticeContent }
+           <c:out value=" ${notice.noticeContent }"/>
            </div>
            
-          <hr>
-
-  	<hr>
+     
+		
+  		
           </div>
           </div>
-          <div class="col-xl-2">
           </div>
           
-        </div>
 <script>
 
-function askUpdate(){
-	location.replace('${path }/ask/updateAsk.do?no=${a.askNo}');
+function noticeUpdate(){
+	location.replace('${path }/notice/noticeUpdate?no=${notice.noticeNo }');
 }
 
-function askList(){
-	location.replace('${path }/ask/ask.do');
+function noticeList(){
+	location.replace('${path }/notice/noticeList');
 }
 
-function askDelete(){
+function noticeDelete(){
 	if(confirm("삭제하시겠습니까?")){
-		location.replace('${path }/ask/deleteAsk.do?no=${a.askNo}');
+		location.replace('${path }/notice/noticeDelete?no=${notice.noticeNo }');
 	}
 }
-//답변
-function replyDelete(){
-	if(confirm("답변삭제하시겠습니까?")){
-	location.replace('${path}/reply/deleteReply.do?no=${reply.replyRefNo}');
-	}
-}
- 
-function replyUpdate() {
-	var no=$("#askNo").val();
-	$.ajax({
-		url:'${path}/reply/selectReply.do',
-		data:{"no":no},
-		success:function(result){
-			console.log(result.reply);
-			$('#askFrm').html('<textarea id="replyContent" style="float:left; margin-bottom:60px;" class="form-control col-sm-10" rows="4">'+result.reply.replyContent+'</textarea><br/>'+
-			'<button type="button" onclick="replyUpdateEnd();" class="btn btn-outline-success my-2 my-sm-0"style="margin-left:710px;float:left;" >수정완료</button>');
-			$("#upDel").hide();
-			
-		}
-	});
-}
-function replyUpdateEnd(){
-	
-	var result={'replyContent':$('#replyContent').val(),'replyRefNo':'${reply.replyRefNo}'};
-	console.log(result);
-	  
-	$.ajax({
-		url:'${path}/reply/updateReply.do',
-		type:'POST',
-		dataType:"json",
-		data:result,
-		success:function(result){
-			console.log(result);
-			
-			if(result.result==1){
-				location.reload();
-
-			
-			}
-		}
-	});
+function fileDownLoad(ori,rename){
+	ori=encodeURIComponent(ori);
+	location.href="${path}/notice/fileDownload?oName="+ori+"&rName="+rename;
 }
 </script>
     
