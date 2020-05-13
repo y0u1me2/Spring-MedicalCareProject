@@ -72,7 +72,6 @@ public class CareNoticeController {
 	@RequestMapping("/care/careEnrollEnd")
 	public ModelAndView insertCare(@RequestParam Map<String,String> param,
 									MultipartFile[] upFile, ModelAndView mv, HttpSession session) {
-	
 		
 		//파일업로드 처리하기
 		String path = session.getServletContext().getRealPath("/resources/upload/careNotice");

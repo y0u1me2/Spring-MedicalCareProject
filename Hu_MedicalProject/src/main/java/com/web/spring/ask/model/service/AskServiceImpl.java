@@ -52,9 +52,24 @@ public class AskServiceImpl implements AskService {
 	public int deleteAsk(int no) {
 		return dao.deleteAsk(session,no);
 	}
-//-------------------------Reply------------------------------------------------
+
+//askList 검색
+	@Override
+	public List<Map<String, String>> searchAsk(Map<String, String> param) {
+		return dao.searchAsk(session,param);
+	}
+
+//검색 페이징처리카운트	
+@Override
+	public int searchAskCount() {
+		return dao.searchAskCount(session);
+	}
 	
-//insert
+
+//-------------------------Reply------------------------------------------------
+
+
+	//insert
 	@Override
 	public int insertReply(AskReply reply) {
 		return dao.insertReply(session,reply);
@@ -103,6 +118,7 @@ public int replyCnt(int no) {
 public int deleteReplyCnt(int no) {
 	return dao.deleteReplyCnt(session,no);
 }
+
 
 
 

@@ -49,7 +49,10 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
-      </li>  
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="${path }/admin/admin.do">관리자전용</a>
+      </li>
       
       
        <c:if test="${loginMember ne null }">
@@ -71,6 +74,7 @@
           <li class="nav-item" style="margin-left:250px;">
             <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('loginChoice').style.display='block'">로그인</button>
             <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('joinChoice').style.display='block'" style="width:auto;">회원가입</button>
+            
           </li>
          </c:when>
          <c:when test = "${not empty loginMember }">
