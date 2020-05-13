@@ -49,9 +49,12 @@
       </li>
       <!-- <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
+
       </li>  
        -->
       
+
+      </li> -->
        <c:if test="${loginMember ne null }">
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
@@ -62,6 +65,11 @@
 	        </div>
 	      </li>
     </c:if>
+     <c:if test="${loginMember.email== 'admin' }">
+      <li class="nav-item">
+        <a class="nav-link" href="${path }/admin/admin.do">관리자전용</a>
+      </li>
+      </c:if>
     
     <c:choose>
          <c:when test = "${empty loginMember }">
@@ -71,6 +79,7 @@
           <li class="nav-item" style="margin-left:250px;">
             <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('loginChoice').style.display='block'">로그인</button>
             <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('joinChoice').style.display='block'" style="width:auto;">회원가입</button>
+            
           </li>
          </c:when>
          <c:when test = "${not empty loginMember }">
@@ -198,13 +207,13 @@
     </div>
 
     <div class="containerlogin">
-      <input type="text" placeholder="E-mail" id="hospitalEmail" name="hospitalEmail" autocomplete="off" required>
-      <input type="password" placeholder="Password" id="hospitalPsw" name="hospitalPsw" required>
+      <input type="text" placeholder="아이디" id="hospitalId" name="id" autocomplete="off" required>
+      <input type="password" placeholder="비밀번호" id="hospitalPsw" name="password" required>
       <label>
-        <input type="checkbox" id="store" name="saveId">이메일 저장
+        <input type="checkbox" id="store" name="saveId">아이디 저장
       </label>
 
-      <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE;">관계자 Login</button>   
+      <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE;">병원 회원 Login</button>   
 
      <div class="containerlogin" style="background-color:white; text-align:center;">
     	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
@@ -258,17 +267,18 @@ function hospitalEnroll(){
 }
 
 window.onload = function() { 
+	var loginChoice = $("#loginChoice");
 	var personLogin = document.getElementById('personLoginsBtn'); 
 	var hospitalLogin = document.getElementById('hospitalLoginBtn'); 
 	
-	personLogin.onclick=function() { 
+	personLogin.onclick=function() {
+		loginChoice.hide();
 		document.getElementById('id01').style.display='block';
 	}
 		
 	hospitalLogin.onclick = function() { 
 		
-		$('#loginChoice').modal("hide"); //닫기 
-
+		loginChoice.hide();
 		document.getElementById('id02').style.display='block';
 	};
 

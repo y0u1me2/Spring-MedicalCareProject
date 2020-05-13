@@ -45,18 +45,21 @@
     <select id="updateView" parameterType="_int" resultType="care">
     	SELECT * FROM CARENOTICE WHERE CARENO=#{no}
     </select> 
+    
+     <select id="updateViewFile" parameterType="_int" resultType="attachment">
+    	SELECT * FROM CAREATTACHMENT WHERE CARENO=#{no}
+    </select> 
   	
   	<!--돌보미 수정하기 -->
   	<update id="updateCare" parameterType="care">
-		UPDATE CARENOTICE SET CARETITLE=#{careTitle},CARECONTENT=#{careContent}, WHERE CARENO=#{no}
+		UPDATE CARENOTICE SET CARETITLE=#{careTitle},CARECONTENT=#{careContent} WHERE CARENO=#{no}		
 	</update>
 	
 	 <!-- 돌보미 첨부파일 등록하기 -->
-    <update id="updateAttachment" parameterType="attachment">
-       INSERT INTO CAREATTACHMENT VALUES(SEQ_ATTACHMENT.NEXTVAL, 
-                               #{careNo}, #{originalFilename},
-                                #{renamedFilename},DEFAULT,DEFAULT,
-                                DEFAULT)
+    <update id="updateCareAttachment" parameterType="attachment">
+       UPDATE CAREATTACHMENT SET ORIGINALFILENAME=#{originalFilename},
+                                RENAMEDFILENAME=#{renamedFilename},UPLOADDATE=DEFAULT WHERE CARENO=#{careNo}
+                                
     </update> 
 	
 

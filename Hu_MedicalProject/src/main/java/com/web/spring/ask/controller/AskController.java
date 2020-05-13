@@ -1,5 +1,8 @@
 package com.web.spring.ask.controller;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,10 +142,33 @@ public class AskController {
 		return "client/common/msg";
 	}
 
-	
+//관리자-사용자 채팅뷰 이동	
 	@RequestMapping("/chattingView")
 	public String accessChatting() {
 		return "client/chatting/chatting";
 	}
 	
+	@RequestMapping("/ask/search.do")
+	public ModelAndView searchAsk(@RequestParam(value="searchType",required=false) String searchType,
+			@RequestParam(value="keyword",required=false) String keyword,ModelAndView mv
+			) {
+		
+		//int totalCount=service.searchAskCount();
+		//logger.debug(totalCount+"카");
+
+		logger.debug("searchType"+searchType);
+		logger.debug("keyword"+keyword);
+		Map<String,String> param=new HashMap<String,String>();
+		param.put("searchType",searchType);
+		param.put("keyword",keyword);
+		
+		List<Map<String,String>> list=service.searchAsk(param);
+		logger.debug("검색List -> "+list);
+		
+		mv.addObject("list",list);
+		mv.setViewName("client/ask/askList");
+
+		return mv;
+	}
+
 }
