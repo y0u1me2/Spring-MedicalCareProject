@@ -82,10 +82,17 @@
 
 	<a href="${path}/index.jsp"><button type="button" id="home-btn"/>홈으로 이동</button></a>
 
-	<a href="<%=request.getContextPath()%>/index.jsp"><button type="button" id="home-btn">홈으로 이동</button></a>
 
-	</div>
-	
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
 

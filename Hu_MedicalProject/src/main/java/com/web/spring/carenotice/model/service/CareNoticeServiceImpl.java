@@ -44,6 +44,15 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		return result;
 	}
 
+//검색어로조회======================================================================
+	
+	@Override
+	public List<Map<String, String>> searchContent(Map<String, String> param) {
+		
+		
+		return dao.searchContent(session,param);
+	}
+		
 //게시글등록===========================================================================
 	@Override
 	@Transactional
@@ -150,5 +159,7 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		
 		return dao.commentList(session,no);
 	}
+
+	
 	
 }

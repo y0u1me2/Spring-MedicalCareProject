@@ -15,6 +15,9 @@ public interface CareNoticeService {
 		//게시글 전체 개수
 		int careCount();
 		
+		//검색어로 조회
+		List<Map<String,String>> searchContent(Map<String, String> param);
+		
 		//게시글 작성
 		int insertCare(Map<String,String> param, List<CareAttachment> files);
 	 

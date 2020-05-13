@@ -72,7 +72,7 @@
       </c:if>
     
     <c:choose>
-         <c:when test = "${empty loginMember }">
+         <c:when test = "${empty loginMember and empty loginHpMember}">
           <!--  <li class="nav-item" style="margin-left:250px;">
              <button  style="width:auto;">로그인</button>
           </li> -->
@@ -89,6 +89,16 @@
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
 				   <button class="btn btn-outline-dark" type="button"
 						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>  
+						
+	        </li>
+         </c:when>
+         
+         <c:when test = "${not empty loginHpMember }">
+			<li class="nav-item" style="margin-left:100px;">
+				<a href="#" style="align:right;"><c:out value="${loginHpMember.hospitalName }"></c:out> 님</a>
+				<button type="button" class="btn btn-outline-dark" onclick="location.replace('${path}/member/hospitalLogout.do')">로그아웃</button>
+				   <%-- <button class="btn btn-outline-dark" type="button"
+						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button> --%>  
 						
 	        </li>
          </c:when>
