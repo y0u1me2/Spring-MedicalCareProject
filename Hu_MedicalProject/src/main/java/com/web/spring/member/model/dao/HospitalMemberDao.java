@@ -1,8 +1,8 @@
-package com.web.spring.hospital.model.dao;
+package com.web.spring.member.model.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
-import com.web.spring.hospital.model.vo.Hospital;
+import com.web.spring.member.model.vo.Hospital;
 
 public interface HospitalMemberDao {
 

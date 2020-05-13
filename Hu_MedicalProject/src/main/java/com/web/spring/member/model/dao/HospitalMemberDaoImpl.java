@@ -1,9 +1,9 @@
-package com.web.spring.hospital.model.dao;
+package com.web.spring.member.model.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.web.spring.hospital.model.vo.Hospital;
+import com.web.spring.member.model.vo.Hospital;
 
 @Repository
 public class HospitalMemberDaoImpl implements HospitalMemberDao {
@@ -15,7 +15,7 @@ public class HospitalMemberDaoImpl implements HospitalMemberDao {
 
 	@Override
 	public Hospital hospitalLogin(SqlSessionTemplate session, Hospital h) {
-		return session.selectOne("hospital.loginMember");
+		return session.selectOne("hospital.loginMember", h);
 	}
 
 }
