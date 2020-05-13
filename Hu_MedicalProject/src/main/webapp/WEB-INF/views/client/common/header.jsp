@@ -79,7 +79,6 @@
           <li class="nav-item" style="margin-left:250px;">
             <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('loginChoice').style.display='block'">로그인</button>
             <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('joinChoice').style.display='block'" style="width:auto;">회원가입</button>
-            
           </li>
          </c:when>
          <c:when test = "${not empty loginMember }">
@@ -89,7 +88,6 @@
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
 				   <button class="btn btn-outline-dark" type="button"
 						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>
-					
 	        </li>
          </c:when>
          <c:otherwise>
