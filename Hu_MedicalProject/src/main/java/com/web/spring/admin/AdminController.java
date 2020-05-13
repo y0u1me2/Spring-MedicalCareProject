@@ -11,8 +11,4 @@ public class AdminController {
 		return "admin/adminIndex";
 	}
 
-	@RequestMapping("/admin/member.do")
-	public String member(){
-		return "admin/test";
-	}
 }

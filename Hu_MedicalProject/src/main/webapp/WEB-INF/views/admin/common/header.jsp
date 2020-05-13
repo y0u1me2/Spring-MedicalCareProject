@@ -39,7 +39,7 @@
         <header class="topbar">
             <nav class="navbar top-navbar navbar-toggleable-sm navbar-light">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="${pageContext.request.contextPath }/admin/admin.do">
                         <b>
                             <img src="${pageContext.request.contextPath }/resources/images/adminLogo.png" width="170px" alt="homepage" class="dark-logo" style="margin-top:20px;"/>
                             
@@ -68,7 +68,7 @@
                     <ul id="sidebarnav" style="margin-bottom: 50px;">
                        
                         <li>
-                            <a href="${pageContext.request.contextPath }/admin/member.do" class="waves-effect" style="margin-top:50px; text-align: center;"><h4 style="font-size:22px; font-family:'Song Myung',cursive;">일반 회원 관리</h4></a>
+                            <a href="" class="waves-effect" style="margin-top:50px; text-align: center;"><h4 style="font-size:22px; font-family:'Song Myung',cursive;">일반 회원 관리</h4></a>
                         </li>
                         <li>
                             <a href="icon-fontawesome.html" class="waves-effect" style="margin-top:20px; text-align: center;"><h4 style="font-size:22px;font-family:'Song Myung',cursive;">병원 회원 관리</h4></a>
