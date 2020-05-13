@@ -16,8 +16,9 @@
 	<typeAlias type="com.web.spring.carenotice.model.vo.CareAttachment" alias="attachment" />
 	<typeAlias type="com.web.spring.member.model.vo.Member" alias="member"/>
 	<typeAlias type="com.web.spring.notice.model.vo.Notice" alias="notice"/>
+	<typeAlias type="com.web.spring.notice.model.vo.NoticeAttachment" alias="noticeAttachment" />
 	<typeAlias type="com.web.spring.carenotice.model.vo.CareComment" alias="comment" />
-	<typeAlias type="com.web.spring.hospital.model.vo.Hospital" alias="hospital" />
+	<typeAlias type="com.web.spring.member.model.vo.Hospital" alias="hospital" />
 	
 	<typeAlias type="com.web.spring.common.StringArrayType" alias="arrayType" />
 	<typeAlias type="com.web.spring.healthInfo.vo.HealthInformation" alias="healthInfo" />
