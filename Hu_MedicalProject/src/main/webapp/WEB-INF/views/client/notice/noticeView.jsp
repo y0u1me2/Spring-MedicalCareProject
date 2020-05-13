@@ -27,7 +27,7 @@
            <c:forEach items="${files }" var="f" varStatus="vs">
             <button type="button" 
                     class="btn btn-outline-success btn-block"
-                    onclick="fileDownLoad('${f.originalFilename}','${f.renamedFilename }');">
+                    onclick="fileDownLoad('${notice.originalFilename}','${f.renamedFilename }');">
             	    첨부파일${vs.count } - ${f.originalFilename }
             </button>
         </c:forEach>
