@@ -47,10 +47,10 @@
       <li class="nav-item">
         <a class="nav-link" href="${path }/healthInfo/healthInfoMain">건강정보</a>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
       </li>  
-      
+       -->
       
        <c:if test="${loginMember ne null }">
 	      <li class="nav-item dropdown">
