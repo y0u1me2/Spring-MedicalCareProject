@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,24 @@ public class CareNoticeController {
 		mv.setViewName("client/careNotice/careNotice");
 		return mv;
 	}
+	
+//검색어로 조회========================================================================================
+	@RequestMapping("/care/search.do")
+	public ModelAndView searchContent(@RequestParam(value="searchContent",required=false) String searchContent,
+			@RequestParam(value="keyword",required=false) String keyword,ModelAndView mv) {
+		
+		Map<String,String> param = new HashMap<String,String>();
+		param.put("searchContent",searchContent);
+		param.put("keyword",keyword);
+		
+		List<Map<String,String>> list = service.searchContent(param);
+		
+		mv.addObject("list",list);
+		mv.setViewName("client/careNotice/careNotice");
+
+		return mv;
+	}
+	
 
 //돌보미 등록 페이지로 이동===============================================================================
 	@RequestMapping("/care/careEnroll")
@@ -157,57 +176,7 @@ public class CareNoticeController {
 		mv.setViewName("client/careNotice/careView");
 	
 		return mv;
-	}
-
-//파일다운로드========================================================
-	
-	   @RequestMapping("/care/fileDownload")
-	   public void fileDownLoad(String rName, String oName,
-	                     HttpServletResponse response,HttpSession session,
-	                     HttpServletRequest request) {
-	      
-		   //입출력을 하기 위해 스트림만들기->먼저선언하는이유->IOException 없어서 직접 비워주고 채워줘야하기때문
-	      BufferedInputStream bis=null;
-	      ServletOutputStream sos=null;
-	      
-	      String dir=session.getServletContext().getRealPath("/resources/upload/careNotice");
-	      File f=new File(dir+"/"+rName);//파일불러오기
-	      
-	      try {
-	         FileInputStream fis=new FileInputStream(f);
-	         bis=new BufferedInputStream(fis);
-	         sos=response.getOutputStream();
-	         
-	         //오리지날 파일명으로 전송!
-	         String oriName="";
-	         boolean  isMSIE=request.getHeader("user-agent").indexOf("MSIE")!=-1||
-	               request.getHeader("user-agent").indexOf("Trident")!=-1;//익스플로러처리
-	         if(isMSIE) {
-	            oriName=URLEncoder.encode(oName,"UTF-8");
-	            oriName=oriName.replaceAll("\\+", "%20");
-	         }else {
-	            oriName=new String(oName.getBytes("UTF-8"),"ISO-8859-1");
-	         }
-	         response.setContentType("application/otect-stream;charset=UTF-8");
-	         //불특정한 파일(확장자 모름)otect-stream
-	         response.addHeader("Content-Disposition", "attachment;filename=\""+oriName+"\"");
-	         response.setContentLength((int)f.length() );
-	         int read=0;
-	         while((read=bis.read())!=-1) {
-	            sos.write(read);
-	         }
-	      }catch(IOException e){
-	         e.printStackTrace();
-	      }finally {
-	         try {
-	            sos.close();
-	            bis.close();
-	         }catch(IOException e) {
-	            e.printStackTrace();
-	         }
-	      }
-	   }
-	
+	}	
 	
 //돌보미글 수정페이지로 이동============================================
 	@RequestMapping("/care/updateView")
@@ -226,8 +195,7 @@ public class CareNoticeController {
 	
 	
 //돌보미글 수정하기=================================================
-	
-	
+		
 	  @RequestMapping("/care/update.do") 
 	  public String updateCare(Model model,@RequestParam Map<String,String> param, 
 	  MultipartFile[] upFile, HttpSession session, HttpServletRequest request,@RequestParam(value="no") int no) {

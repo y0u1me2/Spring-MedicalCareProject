@@ -256,8 +256,15 @@ button.file-btn p {
 		<h2>${c.careTitle }</h2>
 
 		<div class="buttons">
-			<button id="update-btn1" onclick="updateCare();">수정</button>
-			<button id="delete-btn1" onclick="gotoList();">목록</button>
+	
+
+
+
+			
+	
+				<button id="update-btn1" onclick="updateCare();">수정</button>
+
+				<button id="delete-btn1" onclick="gotoList();">목록</button>
 		</div>
 
 		<hr>
@@ -278,19 +285,12 @@ button.file-btn p {
 		<p class="context">
 			<c:out value="${c.careContent }" />
 
-	
-			<c:if test="${loginMember.name eq '관리자'}">
-				<c:forEach items="${files}" var="f" varStatus="vs">
-					<button type="button" class="file-btn"
-						onclick="fileDownload('${c.originalFilename}','${f.renamedFilename }')">
 
 						<p>
 							요양보호사 자격증
 							<c:out value="${vs.count } - ${f.originalFilename }" />
 						</p>
-					</button>
-				</c:forEach>
-			</c:if>
+		
 			
 		</p>
 	</div>
@@ -436,13 +436,7 @@ button.file-btn p {
 	function gotoList(){
 		location.replace('${path}/care/careNotice');
 	}
-	
-	//파일다운로드
-	 function fileDownload(ori,rename){
-         ori=encodeURIComponent(ori);
-         location.href="${path}/care/fileDownload?oName="+ori+"&rName="+rename;
-      }
-	 
+
 			
 			
 	//댓글 리스트 불러오기

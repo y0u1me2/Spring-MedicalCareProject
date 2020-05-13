@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 
@@ -38,12 +39,20 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 		return session.selectOne("care.careCount");
 	}
 
+	//검색어로 조회
+	@Override
+	public List<Map<String, String>> searchContent(SqlSessionTemplate session, Map<String, String> param) {
+		
+		return session.selectList("care.searchContent",param);
+	}
+	
 	//돌보미 글 등록
 	@Override
 	public int insertCare(SqlSession session, Map<String, String> param) {
 		
 		return session.insert("care.insertCare",param);
 	}
+
 
 	@Override
 	public int insertCareAttachment(SqlSession session, CareAttachment a) {

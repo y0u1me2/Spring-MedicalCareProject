@@ -4,19 +4,30 @@
   
   <!-- 돌보미 찾기 게시판 페이징처리 -->
     <select id="careNotice" resultType="care">
-     	SELECT * FROM CARENOTICE WHERE CARESTATUS='Y' ORDER BY CAREDATE DESC
+     	SELECT * FROM CARENOTICE WHERE ANSWERSTATUS='Y' AND CARESTATUS='Y' ORDER BY CAREDATE DESC
     </select>
     
     <!-- 돌보미 찾기 게시판 글개수 -->
     <select id="careCount" resultType="_int">
-       SELECT COUNT(*) FROM CARENOTICE
+       SELECT COUNT(*) FROM CARENOTICE WHERE CARESTATUS='Y'
     </select>
+    
+    <!-- 검색어로 조회 -->
+    <select id="searchContent" parameterType="map" resultType="care">
+		SELECT * FROM CARENOTICE
+			WHERE 1=1
+		<if test="searchContent != null and searchContent !='' ">
+			AND ${searchContent} like '%'||#{keyword}||'%'
+		</if>
+		ORDER BY CAREDATE DESC
+	</select>
+    
     
   <!--   돌보미 글 등록하기 -->
     <insert id="insertCare" parameterType="map">
        INSERT INTO CARENOTICE VALUES(SEQ_CARENOTICE.NEXTVAL,
                             #{careTitle},#{careWriter},
-                            #{careContent},DEFAULT,DEFAULT,DEFAULT)
+                            #{careContent},DEFAULT,DEFAULT,DEFAULT,DEFAULT)
        
        <selectKey keyProperty="careNo" resultType="String" order="AFTER">
           SELECT SEQ_CARENOTICE.CURRVAL FROM DUAL
@@ -65,7 +76,7 @@
 
   	<!-- 돌보미 삭제 -->
   	<update id="deleteCare" parameterType="care">
-		UPDATE CARENOTICE SET CARESTATUS='N' WHERE CARENO=#{no}
+		UPDATE CARENOTICE SET CARESTATUS='N' WHERE CARENO=#{no}	
 	</update>
    
    
@@ -82,11 +93,38 @@
     	FROM CARECOMMENT C, MEMBER M
     	WHERE M.MEMBERNO=C.MEMBERNO 
     	ORDER BY #{commentNo}
-    
-    
-    
+       
     </select>
     
+<!--========================================= admin ===========================================  -->  
+
+<!-- 돌보미 등록 관리 페이징처리 -->
+    <select id="adminCareNotice" resultType="care">
+     	SELECT * FROM CARENOTICE WHERE CARESTATUS='Y' ORDER BY CAREDATE DESC
+    </select>
     
+<!-- 오늘 등록된 글 개수 --> 
+	<select id="todayCount" resultType="int">
+		SELECT COUNT(*) FROM CARENOTICE WHERE TO_CHAR(CAREDATE,'YY/MM/DD')=TO_CHAR(SYSDATE,'YY/MM/DD') AND CARESTATUS='Y'
+	</select>
+ 
+<!-- 돌보미 승인페이지 이동 -->    
+    <select id="careAnswerView" parameterType="_int" resultType="care">
+    	SELECT * FROM CARENOTICE WHERE CARENO=#{no}
+    </select>
     
+     <select id="selectCareFile2" parameterType="_int" resultType="attachment">
+    	SELECT * FROM CAREATTACHMENT WHERE CARENO=#{no}
+    </select> 
+  
+ <!-- 돌보미 승인하기 -->  
+    <update id="careNoticeYes" parameterType="care">
+		UPDATE CARENOTICE SET ANSWERSTATUS='Y' WHERE CARENO=#{no}
+	</update>
+	
+<!-- 돌보미 삭제 -->
+  	<update id="deleteCare2" parameterType="_int">
+		UPDATE CARENOTICE SET CARESTATUS='N' WHERE CARENO=#{no}
+	</update>
+	
 </mapper>
