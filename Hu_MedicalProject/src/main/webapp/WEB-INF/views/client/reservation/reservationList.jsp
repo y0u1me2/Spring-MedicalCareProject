@@ -266,18 +266,12 @@
               <p>혈액검사</p>
               <p>수액</p>
               
-              <div class="circle" id="check">
-              	<a>바로접수</a>
-              	
-              </div>
-<<<<<<< HEAD
-=======
               <div class="circle">
               	<a href="${path }/rv/corona">바로접수</a>
               </div><br>
              <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
               
->>>>>>> branch 'develop' of https://github.com/y0u1me2/Spring-MedicalCareProject.git
+
 
               <p><img src="${path }/resources/images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
 
@@ -296,8 +290,7 @@
 
             </div>
 
-<<<<<<< HEAD
-=======
+
             <div id="hospital_content">
               <p>예약병원</p>
               <h3>우리동네이비인후과의원</h3>
@@ -430,11 +423,7 @@
           </div>
      
     </div>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> branch 'develop' of https://github.com/y0u1me2/Spring-MedicalCareProject.git
-    
+
 
     
     <script>   
@@ -464,10 +453,8 @@
     	});
     
     </script>
-<<<<<<< HEAD
-=======
 
->>>>>>> branch 'develop' of https://github.com/y0u1me2/Spring-MedicalCareProject.git
+
     
  <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>     
    
