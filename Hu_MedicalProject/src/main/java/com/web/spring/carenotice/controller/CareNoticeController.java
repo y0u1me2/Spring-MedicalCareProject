@@ -72,7 +72,6 @@ public class CareNoticeController {
 	@RequestMapping("/care/careEnrollEnd")
 	public ModelAndView insertCare(@RequestParam Map<String,String> param,
 									MultipartFile[] upFile, ModelAndView mv, HttpSession session) {
-	
 		
 		//파일업로드 처리하기
 		String path = session.getServletContext().getRealPath("/resources/upload/careNotice");
@@ -216,58 +215,100 @@ public class CareNoticeController {
 
 		CareNotice c = service.updateView(no);
 		
+		List<CareAttachment> files = service.updateViewFile(no);
+						
 		mv.addObject("c",c);
+		mv.addObject("files",files);
+
 		mv.setViewName("client/careNotice/careUpdate");
 		return mv;
 	}
 	
+	
 //돌보미글 수정하기=================================================
 	
-	/*
-	 * @RequestMapping("/care/update.do") public String updateCare(CareNotice
-	 * c,Model model,@RequestParam Map<String,String> param, MultipartFile[] upFile,
-	 * HttpSession session) {
-	 * 
-	 * //파일업로드 처리하기 String path =
-	 * session.getServletContext().getRealPath("/resources/upload/careNotice");
-	 * 
-	 * List<CareAttachment> files = new ArrayList();
-	 * 
-	 * File f = new File(path);
-	 * 
-	 * //폴더가 없으면 생성하기 if(f.exists()) f.mkdirs();
-	 * 
-	 * //파일 저장로직 구현 - 파일 rename처리 for(MultipartFile mf : upFile) { if(!mf.isEmpty())
-	 * { //파일명생성 String oriName = mf.getOriginalFilename(); String ext =
-	 * oriName.substring(oriName.lastIndexOf("."));//확장자 자르기
-	 * 
-	 * //리네임 규칙설정 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
-	 * 
-	 * int rnd = (int)(Math.random()*1000);
-	 * 
-	 * String rename = sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
-	 * 
-	 * try { //파일저장 mf.transferTo(new File(f+"/"+rename)); }catch(Exception e) {
-	 * e.printStackTrace(); } CareAttachment a = new CareAttachment();
-	 * a.setOriginalFilename(oriName); a.setRenamedFilename(rename); files.add(a); }
-	 * } int result = 0;
-	 * 
-	 * try { result = service.updateAttachment(param,files);
-	 * 
-	 * }catch(RuntimeException e) { e.printStackTrace(); //업로드 실패시 업로드된 파일 지우기
-	 * for(CareAttachment a : files) { File delF = new
-	 * File(path+"/"+a.getRenamedFilename()); if(delF.exists()) { delF.delete(); } }
-	 * } int result=service.updateCare(c);
-	 * 
-	 * String msg=""; String loc="";
-	 * 
-	 * if(result>0) { msg="수정되었습니다."; loc="/care/careNotice"; }else {
-	 * 
-	 * msg="등록을 실패하였습니다."; loc="/care/updateView"; } model.addAttribute("msg",msg);
-	 * model.addAttribute("loc",loc); return "client/common/msg";
-	 * 
-	 * }
-	 */
+	
+	  @RequestMapping("/care/update.do") 
+	  public String updateCare(Model model,@RequestParam Map<String,String> param, 
+	  MultipartFile[] upFile, HttpSession session, HttpServletRequest request,@RequestParam(value="no") int no) {
+	  
+
+	  //파일업로드 처리하기 
+		  String path = session.getServletContext().getRealPath("/resources/upload/careNotice");
+	  
+	  List<CareAttachment> files = new ArrayList();
+	  
+	  File f = new File(path);
+	 
+	  //폴더가 없으면 생성하기 
+	  if(f.exists()) f.mkdirs();
+	  
+	 //파일 저장로직 구현 - 파일 rename처리 
+	  for(MultipartFile mf : upFile) {
+		  if(!mf.isEmpty()){ //파일명생성 
+			  String oriName = mf.getOriginalFilename(); 
+			  String ext = oriName.substring(oriName.lastIndexOf("."));//확장자 자르기
+			  
+			  	
+			  	String orifile = request.getParameter("orifile");
+			  	logger.debug(""+orifile);
+				File deleteFile = new File(path+"/"+orifile);
+				boolean flag = deleteFile.delete();
+	  
+				 //리네임 규칙설정 
+				 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+				  
+				 int rnd = (int)(Math.random()*1000);
+				  
+				 String rename = sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
+				  
+			  try { //파일저장
+				mf.transferTo(new File(f+"/"+rename)); 
+				}catch(Exception e) {
+			  e.printStackTrace();
+			  }
+				  CareAttachment a = new CareAttachment();
+				  a.setOriginalFilename(oriName); 
+				  a.setRenamedFilename(rename); 
+				  files.add(a); 
+				  }
+	  	} 
+	  
+	  int result = 0;
+	  
+	  try { 
+		  result = service.updateCare(param,files,no);
+	  
+	  }catch(RuntimeException e) { 
+		  e.printStackTrace(); 
+		  //업로드 실패시 업로드된 파일 지우기
+	  for(CareAttachment a : files) {
+		  File delF = new File(path+"/"+a.getRenamedFilename()); 
+		  if(delF.exists()) { 
+			  delF.delete(); 
+			  }
+		  }
+	   		
+	  
+	  } 
+	  
+	  String msg=""; String loc="";
+	  
+	  if(result>0) {
+		  msg="수정되었습니다."; 
+		  loc="/care/careNotice"; 
+		  }else {
+	  
+	  msg="수정이 실패하였습니다."; 
+	  loc="/care/updateView?no="+no; 
+	  } 
+	  model.addAttribute("msg",msg);
+	  model.addAttribute("loc",loc); 
+	  
+	  return "client/common/msg";
+	  
+	  }
+	 
 	 
  //돌보미글 삭제하기================================================
 	  

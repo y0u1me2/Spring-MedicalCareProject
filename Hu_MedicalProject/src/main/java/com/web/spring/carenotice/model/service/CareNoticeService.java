@@ -19,16 +19,16 @@ public interface CareNoticeService {
 		int insertCare(Map<String,String> param, List<CareAttachment> files);
 	 
 	   //게시글 상세보기
-		CareNotice careView(int cno);
-	  
+		CareNotice careView(int cno);  
 	   //게시글 첨부파일 가져오기 
 		List<CareAttachment> selectCareFile(int cno);
 		
 		//게시글 수정화면 이동 
 		CareNotice updateView(int no);
+		List<CareAttachment> updateViewFile(int no);
 	 
 		//게시글 수정하기
-		int updateCare(CareNotice c);
+		int updateCare(Map<String,String> param, List<CareAttachment> files,int no);
 		
 		//게시글 삭제하기
 		int deleteCare(int no);

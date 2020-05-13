@@ -72,7 +72,6 @@ input#searchBtn:hover {
 } */
    </style>  
     <section>
-    
         <div class="container-fluid">
           <div class="row">
             <div class="col-xl-1 ">
@@ -125,10 +124,10 @@ input#searchBtn:hover {
           <form action="${path }/ask/search.do" method="post">
             <select name="searchType" id="searchType" style="background-color:white; height:35px;">
               <option value=""  disabled selected>선택</option>
-              <option value="askTitle"  <c:if test="${param.searchType eq 'askTitle' }">selected</c:if>>글제목</option>
-              <option value="askWriter"  <c:if test="${param.searchType eq 'askWriter' }">selected</c:if>>작성자</option>
+              <option value="askTitle"  <c:if test="${param.searchType eq 'askTitle' }">selected</c:if>>제목만</option>
+              <option value="askWriter"  <c:if test="${param.searchType eq 'askWriter' }">selected</c:if>>글작성자</option>
             </select>
-            <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력해주세요" size="20" value="${param.keyword }" required autocomplete="off">
+            <input type="text" id="keyword" placeholder="검색어를 입력해주세요" size="20" value="${param.keyword }" required autocomplete="off">
             <input type="submit" id="searchBtn" class="search_btn" value="검색"/>
            </form>
           </div>

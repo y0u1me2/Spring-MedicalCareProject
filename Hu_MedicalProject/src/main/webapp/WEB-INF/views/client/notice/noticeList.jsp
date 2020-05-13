@@ -46,7 +46,7 @@ div#pageBar a {
    }
    </style>  
 <section>
-<div id="section-container">
+<div id="notice-container">
     <div class="container-fluid">
       <div class="row">
         <div class="col-xl-1 ">
@@ -57,34 +57,38 @@ div#pageBar a {
         <div class="col-xl-1 "></div>
     </div>
 </div>
-<%--     <c:if test="${loginMember equals "admin" }"> --%>
-    <button type="button" class="btn btn-secondary" id="noticeBtn" style="margin-left:1020px;"onclick="noticeInsert();"> 공지사항 작성</button>
-   <%--  </c:if> --%>
+     <c:if test="${loginMember.email eq 'admin' }">
+   		 <button type="button" class="btn btn-secondary" id="noticeBtn" style="margin-left:1020px;"onclick="noticeInsert();"> 공지사항 작성</button>
+     </c:if>
    
-
   <div class="container" style="margin-top:50px;">
    <p>공지사항 총 <c:out value="${count }"/>건</p>
     <table class="table table-hover" style="border-top-color: black;">
         <thead>
           <tr>
             <th>번호</th>
-            <th>제목</th>
+            <th style="text-align: center;">제목</th>
+            <th>첨부파일</th>
             <th>날짜</th>
-            <th>조회</th>
+            <th>조회수</th>
           </tr>
         </thead>
         <tbody>
-   			<c:forEach items="${list }" var="notice">
+   			<c:forEach items="${list }" var="n">
 				<tr>
-					<td><c:out value="${notice.noticeNo }" /></td>
-					<td><a href="${path }/notice/noticeView?no=${notice.noticeNo }"> 
-					<c:out value="${notice.noticeTitle }" />
-					</a></td>
-						
-					<td><fmt:formatDate value="${notice.noticeDate }" type="date" pattern="yyyy/MM/dd"/></td>
-
-					<td><c:out value="" /></td>
-
+					<td><c:out value="${n['noticeNo'] }" /></td>
+					<td>
+					<a href="${path }/notice/noticeView?no=${n.noticeNo }"> 
+						<c:out value="${n['noticeTitle'] }" />
+					</a>
+					</td>
+					<td align="center">
+		                <c:if test="${n.fileCount>0}">
+		                	<img src="${path }/resources/images/file.png" width="16px"/>
+						</c:if>
+                	</td>
+					<td><fmt:formatDate value="${n['noticeDate'] }" type="date" pattern="yyyy/MM/dd"/></td>
+                	<td><c:out value="${n['readCount'] }"/></td>	
 				</tr>
 			</c:forEach>
  	  </tbody>
@@ -106,8 +110,8 @@ div#pageBar a {
 
 <script>
 
-function askInsert(){
-	location.replace('${path }/ask/insertAsk.do');
+function noticeInsert(){
+	location.replace('${path }/notice/noticeInsert');
 }
     </script>
 

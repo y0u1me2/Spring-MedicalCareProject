@@ -15,5 +15,7 @@ public class Notice {
 	private String noticeTitle;
 	private String noticeContent;
 	private Date noticeDate;
+	private int readCount;
 	private String noticeStatus;
+	private int fileCount;
 }

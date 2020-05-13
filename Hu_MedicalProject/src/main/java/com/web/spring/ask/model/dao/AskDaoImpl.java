@@ -33,7 +33,9 @@ public class AskDaoImpl implements AskDao {
 	public Ask selectAskView(SqlSessionTemplate session, int no) {
 		return session.selectOne("ask.selectAsk",no);
 	}
-//update
+
+
+	//update
 	@Override
 	public int updateAsk(SqlSessionTemplate session, Ask ask) {
 		return session.update("ask.updateAsk", ask);
@@ -44,6 +46,16 @@ public class AskDaoImpl implements AskDao {
 	@Override
 	public int deleteAsk(SqlSessionTemplate session, int no) {
 		return session.delete("ask.deleteAsk",no);
+	}
+	
+	@Override
+	public List<Map<String, String>> searchAsk(SqlSessionTemplate session, Map<String, String> param) {
+		return session.selectList("ask.searchAsk",param);
+	}
+	
+	@Override
+	public int searchAskCount(SqlSessionTemplate session) {
+		return session.selectOne("ask.searchAskCount");
 	}
 	
 //-------------------------Reply------------------------------------------------
@@ -89,7 +101,8 @@ public class AskDaoImpl implements AskDao {
 	public int deleteReplyCnt(SqlSessionTemplate session, int no) {
 		return session.update("ask.deleteReplyCnt",no);
 	}
-	
+
+
 	
 
 	

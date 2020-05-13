@@ -43,4 +43,9 @@ public interface AskService {
 //답변 대기 replycnt-1
 	int deleteReplyCnt(int no);
 
+//askList 조회
+	List<Map<String, String>> searchAsk(Map<String, String> param);
+
+	int searchAskCount();
+
 }
