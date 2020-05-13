@@ -25,5 +25,15 @@
     <select id="subFrequentInfoPic" parameterType="healthInfo" resultMap="healthInformation">
     	SELECT * FROM HEALTHINFO WHERE HEALTHINFONO = #{healthInfoNo}
     </select>
+    <select id="searchInfoPicStep" parameterType="healthInfo" resultMap="healthInformation">
+    	SELECT * FROM HEALTHINFO WHERE HEALTHINFOSTEP = #{healthInfoStep}
+    </select>
     
+    <select id="selectConfirmer" parameterType="String" resultType="map">
+    	SELECT * FROM CONFIRMER WHERE CONFIRMERNO = #{confirmerNo}
+    </select>
+    
+    <select id="subFrequentInfoContent" parameterType="String" resultType="map">
+    	SELECT * FROM HEALTHINFOCONTENTPIC WHERE HEALTHINFONO=#{HEALTHINFONO}
+    </select>
 </mapper>

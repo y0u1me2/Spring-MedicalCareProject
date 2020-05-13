@@ -19,4 +19,8 @@ public interface HealthInfoDao {
 	List<HealthInformation> frequentInfoPic(SqlSession session, HealthInformation hi);
 	//서브에서 정보 클릭
 	HealthInformation subFrequentInfoPic(SqlSession session, HealthInformation hi);
+	List<Map<String,String>> subFrequentInfoContent(SqlSession session, String healthInfoNo);
+	Map<String,String> selectConfirmer(SqlSession session, String confirmerNo);
+	//step으로 조회 리스트
+	List<HealthInformation> searchInfoPicStep(SqlSession session, HealthInformation hi);
 }

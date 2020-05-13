@@ -39,10 +39,27 @@ public class HealthInfoDaoImpl implements HealthInfoDao {
 		// TODO Auto-generated method stub
 		return session.selectList("healthInfo.frequentInfoPic",hi);
 	}
+	//건강정보 상세보기
 	@Override
 	public HealthInformation subFrequentInfoPic(SqlSession session, HealthInformation hi) {
 		// TODO Auto-generated method stub
 		return session.selectOne("healthInfo.subFrequentInfoPic",hi);
+	}
+	@Override
+	public List<Map<String, String>> subFrequentInfoContent(SqlSession session, String healthInfoNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("healthInfo.subFrequentInfoContent",healthInfoNo);
+	}
+	@Override
+	public Map<String,String> selectConfirmer(SqlSession session, String confirmerNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("healthInfo.selectConfirmer",confirmerNo);
+	}
+	//스텝 분류 미니
+	@Override
+	public List<HealthInformation> searchInfoPicStep(SqlSession session, HealthInformation hi) {
+		// TODO Auto-generated method stub
+		return session.selectList("healthInfo.searchInfoPicStep",hi);
 	}
 	
 	
