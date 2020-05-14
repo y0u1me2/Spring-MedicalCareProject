@@ -178,11 +178,6 @@
 		<div class="row"></div>
 		<div class="row middle">
 			<div class="col">
-				<div class="healthInfo-top">어떤 건강정보를 찾으시나요?</div>
-				<div class="healthInfo-count">
-					아프닥에는 전문의 검수를 거친 <span style="color: red;"><c:out
-							value="${totalCount }" /></span>개의 컨텐츠가 있습니다.
-				</div>
 				<div class="healthInfo-search">
 					<div class="ui-widget">
 						<form id="searchForm" name="searchForm" action="${path}/healthInfo/searchHealthInfo" onsubmit="return searchProgress();">
@@ -194,21 +189,7 @@
 						</form>
 					</div>
 				</div>
-				<div class="tagSearch-container">
-					<div class="tagSearch">
-						<span class=tagSerach-link></span> <span class="tagSearch-btn">
-							<span id="viewBefore">&nbsp;<&nbsp;</span> <span id="viewAfter">&nbsp;>&nbsp;</span>
-						</span>
-					</div>
-				</div>
-				<div class="healthInfo-button-div"></div>
 				<div class="bottom" style="margin-bottom: 50px;">
-					<div class="bottom-quote d-flex justify-content-around">
-						<div class="small p-2">미리알고 대비하세요</div>
-					</div>
-					<div class="bottom-quote d-flex justify-content-around">
-						<div class="big p-2">요즘 많이 찾는 건강정보</div>
-					</div>
 					<div class="bottom-content"></div>
 				</div>
 			</div>
@@ -217,23 +198,7 @@
 </section>
 <script>
 	$(function() {
-		//건강정보 호버 색 변화
-		function healthInfoMouseEvent() {
-			$('.healthInfo').mouseenter(function() {
-				$(this).addClass('healthInfo-selected');
-			})
-			$('.healthInfo').mouseleave(function() {
-				$(this).removeClass('healthInfo-selected');
-			})
-		}
 
-		//#태그 화살표 호버 색 변화
-		$('.tagSearch>span>span').mouseenter(function() {
-			$(this).addClass('healthInfo-selected').css("cursor", "pointer");
-		})
-		$('.tagSearch>span>span').mouseleave(function() {
-			$(this).removeClass('healthInfo-selected');
-		})
 		//많이찾는 건강정보 스타일 변화
 		function frequentInfoMouseEvent() {
 			$('.bottom-InfoContent').mouseenter(function() {
@@ -243,94 +208,6 @@
 				$(this).removeClass('InfoContent-selected');
 			})
 		}
-		//#태그 겁색 좌우 검색어 페이징
-		$.ajax({
-			url : "${path}/healthInfo/healthTagInfo",
-			success : function(data) {
-			for (var i = 0; i < data.list.length; i++) {
-				$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"
-											+ data.list[i].DISESASETITLE
-											+ "</a>");
-			}
-			var cPage = Number(data.cPage);
-			var totalPage = Number(data.totalPage);
-
-			$('#viewBefore').click(function() {
-				cPage--;
-				if (cPage <= 0) {
-					$.ajax({
-						url : "${path}/healthInfo/healthTagInfo",
-						data : {cPage : totalPage},
-						success : function(before1) {
-							$('.tagSearch-keyword').remove();
-							for (var i = 0; i < before1.list.length; i++) {
-								$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"
-																+ before1.list[i].DISESASETITLE
-																+ "</a>");
-							}
-							cPage = totalPage;
-						}
-					})
-				} else {
-					$.ajax({
-						url : "${path}/healthInfo/healthTagInfo",
-						data : {cPage : cPage},
-						success : function(before2) {
-							$('.tagSearch-keyword').remove();
-							for (var i = 0; i < before2.list.length; i++) {
-								$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"
-																+ before2.list[i].DISESASETITLE
-																+ "</a>");
-							}
-						}
-					})
-				}
-			})
-			$('#viewAfter').click(function() {
-				cPage++;
-				if (cPage > totalPage) {
-					$.ajax({
-						url : "${path}/healthInfo/healthTagInfo",
-						success : function(after1) {
-							$('.tagSearch-keyword').remove();
-							for (var i = 0; i < after1.list.length; i++) {
-								$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"
-																+ after1.list[i].DISESASETITLE
-																+ "</a>");
-							}
-							cPage = 1;
-						}
-					})
-				} else {
-					$.ajax({
-						url : "${path}/healthInfo/healthTagInfo",
-						data : {cPage : cPage},
-						success : function(after2) {
-							$('.tagSearch-keyword').remove();
-							for (var i = 0; i < after2.list.length; i++) {
-								$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"
-																+ after2.list[i].DISESASETITLE
-																+ "</a>");
-							}
-						}
-					})
-				}
-			})
-		}
-	})//#태그 겁색 좌우 검색어 페이징 끝
-
-		//과목분류 버튼 처리
-		$.ajax({
-			url : "${path}/healthInfo/healthBtnInfo",
-			success : function(data) {
-				for (var i = 0; i < data.list.length; i++) {
-					$('div.healthInfo-button-div').append(
-							"<button class='healthInfo'>"
-									+ data.list[i].MEDICALNAME + "</button>");
-					healthInfoMouseEvent();
-				}
-			}
-		})//과목분류 버튼 처리 끝
 
 		//자주찾는 건강정보+${path}+data.list[i].DISESASEFILE
 		$.ajax({
@@ -340,13 +217,13 @@
 					for (var i = 0; i < 6; i++) {
 						$('.picContentBox').append("<div class='bottom-InfoContent p-6'></div>");
 						var divTag = $('div.bottom-InfoContent.p-6');
-						$(divTag[i]).html("<img src='${pathImages}"+data.list[i].DISESASEFILE+"'>");
+						$(divTag[i]).html("<img src='${pathImages}"+data.healthInfoList[i].DISESASEFILE+"'>");
 						$(divTag[i]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"
-													+ data.list[i].DISESASETITLE
+													+ data.healthInfoList[i].DISESASETITLE
 													+ "</div><div class='bottom-InfoContent-Info-sub'><p>"
-													+ data.list[i].DISESASESUBTITLE
+													+ data.healthInfoList[i].DISESASESUBTITLE
 													+ "</p></div></div></div>");
-							$(divTag[i]).append("<input type='hidden' class='disesaseNo' value='"+data.list[i].DISESASENO+"'/>");
+							$(divTag[i]).append("<input type='hidden' class='disesaseNo' value='"+data.healthInfoList[i].DISESASENO+"'/>");
 							$(divTag[i]).click(function() {
 								frequentInfoPicClick($(this).children('input.disesaseNo').val());
 							})

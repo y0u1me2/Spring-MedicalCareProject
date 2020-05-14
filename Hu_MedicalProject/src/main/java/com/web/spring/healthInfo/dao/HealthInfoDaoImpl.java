@@ -11,6 +11,13 @@ import com.web.spring.healthInfo.vo.HealthInformation;
 
 @Repository
 public class HealthInfoDaoImpl implements HealthInfoDao {
+	
+	//메인 토탈 카운터
+	@Override
+	public int totalCount(SqlSession session) {
+		// TODO Auto-generated method stub
+		return session.selectOne("healthInfo.totalCount");
+	}
 	//태그 검색어
 	@Override
 	public List<Map<String, String>> healthTagInfo(SqlSession session, int cPage, int numPerpage) {
@@ -60,6 +67,24 @@ public class HealthInfoDaoImpl implements HealthInfoDao {
 	public List<HealthInformation> searchInfoPicStep(SqlSession session, HealthInformation hi) {
 		// TODO Auto-generated method stub
 		return session.selectList("healthInfo.searchInfoPicStep",hi);
+	}
+	//검색어
+	@Override
+	public List<Map<String,String>> searchInformation(SqlSession session, String keyword) {
+		// TODO Auto-generated method stub
+		return session.selectList("healthInfo.searchInformation",keyword);
+	}
+	//검색어 실행
+	@Override
+	public HealthInformation searchHealthInfoKeyword(SqlSession session, String searchKeyword) {
+		// TODO Auto-generated method stub
+		return session.selectOne("healthInfo.searchHealthInfoKeyword",searchKeyword);
+	}
+		
+	@Override
+	public List<Map<String, String>> searchHealthInfoList(SqlSession session, String searchKeyword) {
+		// TODO Auto-generated method stub
+		return session.selectList("healthInfo.searchHealthInfoList",searchKeyword);
 	}
 	
 	

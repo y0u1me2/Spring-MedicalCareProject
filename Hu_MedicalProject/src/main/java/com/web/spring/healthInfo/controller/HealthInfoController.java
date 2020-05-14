@@ -1,15 +1,23 @@
 package com.web.spring.healthInfo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.web.spring.healthInfo.service.HealthInfoService;
 import com.web.spring.healthInfo.vo.HealthInformation;
 
@@ -20,8 +28,12 @@ public class HealthInfoController {
 	private HealthInfoService service;
 	
 	@RequestMapping("healthInfo/healthInfoMain")
-	public String healthInfoMain() {
-		return "client/healthInfo/healthInfoMain";
+	public ModelAndView healthInfoMain() {
+		ModelAndView mv=new ModelAndView();
+		int totalCount=service.totalCount();
+		mv.addObject("totalCount",totalCount);
+		mv.setViewName("client/healthInfo/healthInfoMain");
+		return mv;
 	}
 	
 	//태그 검색어 페이징
@@ -124,4 +136,39 @@ public class HealthInfoController {
 		
 		return mv;
 	}
+	//검색기능 자동완성
+	@RequestMapping("/healthInfo/searchInformation")
+	@ResponseBody
+	public List<String> searchInformation(@RequestParam (value="term", required=false, defaultValue="") String term) {
+		List<Map<String,String>> list=service.searchInformation(term);
+		List<String> result=new ArrayList();
+		for(int i=0;i<list.size();i++) {
+			result.add(list.get(i).get("HEALTHINFOTITLE"));
+		}
+		return result;
+	}
+	
+	//검색 기능
+	@RequestMapping("/healthInfo/searchHealthInfo")
+	public ModelAndView searchHealthInfo(String searchKeyword) {
+		ModelAndView mv=new ModelAndView();
+		System.out.println(searchKeyword);
+		
+		HealthInformation returnHi=service.searchHealthInfoKeyword(searchKeyword); //건강정보글 첨부사진들
+		if(returnHi==null) {
+			List<Map<String,String>> healthInfoList=service.searchHealthInfoList(searchKeyword);
+			mv.addObject("healthInfoList",healthInfoList);
+			mv.setViewName("client/healthInfo/healthInfoSearchList");			
+		}else {
+			List<Map<String,String>> list=service.subFrequentInfoContent(returnHi.getHealthInfoNo()); //검수자 불러오기
+			Map<String,String> confirmer=service.selectConfirmer(returnHi.getConfirmerNo());
+			
+			mv.addObject("confirmer",confirmer); mv.addObject("contentList",list);
+			mv.addObject("hi",returnHi);			
+			mv.setViewName("client/healthInfo/healthInfoSubContent");
+		}	
+		
+		return mv;
+	}
+	
 }
