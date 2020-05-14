@@ -19,6 +19,13 @@ public class HealthInfoServiceImpl implements HealthInfoService {
 	@Autowired
 	private SqlSession session;
 	
+	
+	//메인 토탈 카운터
+	@Override
+	public int totalCount() {
+		// TODO Auto-generated method stub
+		return dao.totalCount(session);
+	}
 	//태그 검색어
 	@Override
 	public List<Map<String, String>> healthTagInfo(int cPage, int numPerpage) {
@@ -69,6 +76,25 @@ public class HealthInfoServiceImpl implements HealthInfoService {
 		// TODO Auto-generated method stub
 		return dao.searchInfoPicStep(session, hi);
 	}
+	//검색어
+	@Override
+	public List<Map<String,String>> searchInformation(String term) {
+		// TODO Auto-generated method stub
+		return dao.searchInformation(session, term);
+	}
+	//검색어 실행
+	@Override
+	public HealthInformation searchHealthInfoKeyword(String searchKeyword) {
+		// TODO Auto-generated method stub
+		return dao.searchHealthInfoKeyword(session, searchKeyword);
+	}
+	@Override
+	public List<Map<String, String>> searchHealthInfoList(String searchKeyword) {
+		// TODO Auto-generated method stub
+		return dao.searchHealthInfoList(session, searchKeyword);
+	}
+	
+	
 	
 	
 	
