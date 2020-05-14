@@ -111,9 +111,8 @@
 	  <div class="col-xl-6">
 	    <label for="email"><b>이메일</b></label><br>
 	    <input type="text" placeholder="@를 포함한 이메일 입력" id="email" name="email" style="width:550px;" required>
-	   <!--  <button type="button" id="emailCheck" name="emailCheck" onclick="emailCheck()">이메일 인증</button> -->
-	 	<!-- <input type="text" placeholder="인증번호 입력" id="emailCode" name="code" style="width:550px;">
-	 	<button type="button" id="emailOK" name="emailOK" onclick="emailOK();">확인</button> -->
+		
+	 	<button type="button" id="emailOK" name="emailOK" onclick="emailOk();">중복체크</button>
 	  </div>
 	  <div class="col"></div>
 	</div>
@@ -166,28 +165,7 @@
 	</form>
 </div>
 <script>
-/* function emailCheck(){
-	var email - document.getElementById("email").value;
-	if(email == ""){
-		alert("이메일을 입력해 주세요");
-		return false;
-	}
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function(){
-		if(xhttp.readyState == 4){
-			var data = JSON.parse(xhttp.responseText);
-			if(data != null){
-				alert("이미 가입되어있는 이메일 입니다!");
-			}else{
-				sendMail(email);
-			}
-		}
-	};
-	xhttp.open("POST",'checkMail/', true);
-	xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-	xhttp.send('email='+ email);
-	return false;
-} */
+
 /* function sendMail(email){
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function(){
@@ -236,22 +214,23 @@ $(document).ready(function(){
 		});
 });
 function validate(){
-/* 	var id = $("#eamil").val();
-	var name = $("#name").val();
-	var psw = $("#password").val();
-	var pswChk = $("#psw-repeat").val();
-	var call = $("#phone").val(); */
 	
 	var pswCheck= /^(?=.*[A-Za-z])(?=.*[^a-zA-Z0-9])(?=.*[$@$!%*#?&])(?=.*[0-9]).{6,}$/; 
 	var nameCheck=/^[가-힣]|[a-zA-Z]+$/; 
 	var phoneCheck = /^\d{3}\d{3,4}\d{4}$/;
+	var emailCheck=/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
 	//빈칸 검사
-	if($("#eamil").val()==""){ 
+	if($("#email").val()==""){ 
 		// alert("이메일을 입력하세요");         
-		 $("#eamil").focus();   
+		 $("#email").focus();   
 		 return false;
-	 }
+	 }else if(!emailCheck.test($("#email").val())){
+		//유효성 검사
+		alert("이메일 형식이 맞지 않습니다.");
+		$("#email").focus();
+		 return false;
+    }
 	
 	if($("#name").val()==""){
 		// alert("이름을 입력하세요");
@@ -298,5 +277,26 @@ function validate(){
 	}
 	$("#personEnrollFrm").submit();
 }
+function emailOk(){
+	var email = $('#email').val();
+	console.log(email);
+	
+	$.ajax({
+		url:"${path }/emailOk",
+		data:{"email":email},
+		success:function(data){
+			console.log("이거디"+data.member);
+			
+			if(data.member != 1){
+				alert("존재하는 이메일 입니다. 다른 이메일을 사용하세요!");
+				email.focus();
+			}else{
+				alert("사용가능한 이메일 입니다.");
+			}
+			
+		}
+	})
+} 
+
 </script>
 <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>
