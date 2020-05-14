@@ -1,5 +1,7 @@
 package com.web.spring.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,13 +9,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.spring.common.AESEncrypt;
+import com.web.spring.map.model.vo.Hospital;
 import com.web.spring.member.model.service.HospitalMemberService;
-import com.web.spring.member.model.vo.Hospital;
+import com.web.spring.member.model.vo.HospitalMember;
 
 @Controller
 @SessionAttributes(value= {"loginHpMember"})
@@ -27,9 +31,17 @@ public class HospitalMemberController {
 	@Autowired
 	private AESEncrypt encryptor;
 	
+	@RequestMapping("/getHospList.do")
+	@ResponseBody
+	private List<Hospital> getHospList(String name){
+		List<Hospital> list = service.getHospList(name);
+		System.out.println(list);
+		return list;
+	}
+	
 	//병원 회원가입
 	@RequestMapping("/hospitalEnrollEnd.do")
-	private ModelAndView hospitalEnrollEnd(Hospital h, ModelAndView mv) {
+	private ModelAndView hospitalEnrollEnd(HospitalMember h, ModelAndView mv) {
 		h.setPassword(pwEncoder.encode(h.getPassword()));//비밀번호 암호화(단방향)
 		h.setTel(encryptor.encrypt(h.getTel()));//양방향 암호화(휴대폰)
 		h.setEmail(encryptor.encrypt(h.getEmail()));//양방향 암호화(이메일)
@@ -56,9 +68,9 @@ public class HospitalMemberController {
 	
 	//로그인
 	@RequestMapping("/member/hospitalLogin.do")
-	private String hospitalLogin(Hospital h, Model model) {
+	private String hospitalLogin(HospitalMember h, Model model) {
 		
-		Hospital hospital = service.hospitalLogin(h);
+		HospitalMember hospital = service.hospitalLogin(h);
 		System.out.println(hospital);
 		
 		String msg="";

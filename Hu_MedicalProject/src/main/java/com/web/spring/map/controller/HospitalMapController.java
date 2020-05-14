@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,9 +25,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.web.spring.map.model.service.MapService;
+import com.web.spring.map.model.vo.Hospital;
+
 @Controller
 public class HospitalMapController {
 
+	@Autowired
+	private MapService service;
+	
 	@RequestMapping("/hospitalMap.do")
 	private String hospitalMap() {
 		return "client/map/hospitalMap";
@@ -95,11 +102,16 @@ public class HospitalMapController {
 	}
 
 	private static String getTagValue(String tag, Element eElement) {
-		NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-		Node nValue = (Node) nlList.item(0);
-		if (nValue == null)
-			return null;
-		return nValue.getNodeValue();
+		
+		if(eElement.getElementsByTagName(tag).item(0)==null) {
+			return "";
+		}else {
+			NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
+			Node nValue = (Node) nlList.item(0);
+			if (nValue == null)
+				return null;
+			return nValue.getNodeValue();
+		}
 	}
 
 	@RequestMapping("/insertData.do")
@@ -114,7 +126,7 @@ public class HospitalMapController {
 //      urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("j3l4%2FlL9sulpZEYY467tIsTngXuIhRTIddhNB4wrTzRNtaGQ5w6eGH1Jah%2FmXu2JMdja84GrX0hrpsZ1dludpw%3D%3D", "UTF-8")); /*서비스키*/
 		urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=j3l4%2FlL9sulpZEYY467tIsTngXuIhRTIddhNB4wrTzRNtaGQ5w6eGH1Jah%2FmXu2JMdja84GrX0hrpsZ1dludpw%3D%3D");
 		urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8")); /* 페이지번호 */
-		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="+ URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="+ URLEncoder.encode("72935", "UTF-8")); /* 한 페이지 결과 수 */
 //      urlBuilder.append("&" + URLEncoder.encode("sidoCd","UTF-8") + "=" + URLEncoder.encode("110000", "UTF-8")); /*시도코드*/
 //      urlBuilder.append("&" + URLEncoder.encode("sgguCd","UTF-8") + "=" + URLEncoder.encode("110019", "UTF-8")); /*시군구코드*/
 //      urlBuilder.append("&" + URLEncoder.encode("emdongNm","UTF-8") + "=" + URLEncoder.encode("이매동", "UTF-8")); /*읍면동명*/
@@ -127,7 +139,9 @@ public class HospitalMapController {
 //      urlBuilder.append("&" + URLEncoder.encode("radius","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*단위 : 미터(m)*/
 //      urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 
-		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+//		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+		List<Hospital> list = new ArrayList<Hospital>();
+		
 		try {
 			String url = urlBuilder.toString();
 			System.out.println(url);
@@ -159,22 +173,32 @@ public class HospitalMapController {
 //					System.out.println("주소 : " + getTagValue("addr", eElement));
 
 					
-					Map<String, String> map = new HashMap<String, String>(); 
-					map.put("name", getTagValue("yadmNm", eElement)); 
-					map.put("addr", getTagValue("addr", eElement));
-					map.put("tel", getTagValue("telno", eElement));
-					map.put("hospNo", getTagValue("ykiho", eElement));
-					map.put("hospUrl", getTagValue("hospUrl", eElement));
-					map.put("latitude", getTagValue("YPos", eElement));
-					map.put("longitude", getTagValue("XPos", eElement));
+//					Map<String, String> map = new HashMap<String, String>(); 
+//					map.put("name", getTagValue("yadmNm", eElement)); 
+//					map.put("addr", getTagValue("addr", eElement));
+//					map.put("tel", getTagValue("telno", eElement));
+//					map.put("hospNo", getTagValue("ykiho", eElement));
+//					map.put("hospUrl", getTagValue("hospUrl", eElement));
+//					map.put("latitude", getTagValue("YPos", eElement));
+//					map.put("longitude", getTagValue("XPos", eElement));
 					
-					list.add(map);
+					Hospital h = new Hospital();
+					h.setHospNo(getTagValue("ykiho", eElement));
+					h.setHospAddr(getTagValue("addr", eElement));
+					h.setHospName(getTagValue("yadmNm", eElement));
+					h.setHospTel(getTagValue("telno", eElement));
+					h.setHospUrl(getTagValue("hospUrl", eElement));
+					h.setLatitude(getTagValue("YPos", eElement));
+					h.setLongitude(getTagValue("XPos", eElement));
+					
+					list.add(h);
 					
 
 				} // for end
 			} // if end
-
-			System.out.println(list.size());
+			
+			int result = service.insertData(list);
+			System.out.println(result);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

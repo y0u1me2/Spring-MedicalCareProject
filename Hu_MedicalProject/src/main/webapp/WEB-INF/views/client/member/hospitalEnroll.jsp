@@ -68,11 +68,13 @@ a:link, a:visited, a:hover {
 					 <div class="form-group">
 					 	<div class="input-group mb-3">
 					   		<input list ="hospitalList" type="text" class="form-control" id="hospital_name" placeholder="가입병원을 선택하세요" name="hospitalName" required autocomplete="off">
-						 	<datalist id="hospitalList">
-						 	</datalist>
 					 		<div class="input-group-append">
 								<button id="btnSearch" class="btn btn-light" type="button">검색하기</button>
 							</div>
+						 	<datalist id="hospitalList" >
+						 		<option id="123">파이썬</option>
+						 	</datalist>
+						 	
 						</div>
 					 	<div class="invalid-feedback"></div>
 					 </div>
@@ -244,6 +246,14 @@ $(function(){
 		getList();
 	});
 	
+	/* $("#hospital_name").keyup(function(){
+		getList();
+	}) */
+	
+	$("#hospital_name").on('change', function() {
+       	console.log($(this).val());
+    });
+	
 })
 
 function openModal1(){
@@ -263,17 +273,31 @@ function closeModal(){
 function getList(){
 	var inputbox = $("#hospital_name");
 	var name = $("#hospital_name").val();
-	var hospitalList = $("#hospitalList");
+	var datalist = $("#hospitalList");
 	
-	hospitalList.empty();
+	datalist.empty();
 	
 	$.ajax({
-		url: "${path}/hospitalFind.do",
+		url: "${path}/getHospList.do",
 		type: "post",
 		data: {name:name},
 		dataType: 'json',
 		success: function(data){
-			if(data.response.body.items==""){
+			if(data.length==0){
+				alert("검색 결과가 없습니다.");	
+			}else{
+				for(i in data){
+					var hospName = data[i].hospName;
+					var hospAddr = data[i].hospAddr;
+					var hospNo = data[i].hospNo;
+					
+					/* $("<option>").attr({"label": hospAddr, "value": hospNo}).html(hospName).appendTo(datalist); */
+					var option = $("<option>").attr({"label": hospAddr, "id": hospNo}).html(hospName);
+					option.appendTo(datalist);
+				}
+			}
+			
+			/* if(data.response.body.items==""){
 				alert("검색 결과가 없습니다.");
 			}else{
 				var arr = data.response.body.items.item;
@@ -291,7 +315,7 @@ function getList(){
 				}
 				hospitalList.focus();
 				
-			}
+			} */
 		}
 	});
 }
