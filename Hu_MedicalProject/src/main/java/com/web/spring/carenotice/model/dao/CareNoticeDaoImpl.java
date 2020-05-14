@@ -33,12 +33,14 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 		return session.selectList("care.careNotice",null,row);
 	}
 
+	//전체 글개수
 	@Override
 	public int careCount(SqlSession session) {
 		
-		return session.selectOne("care.careCount");
+		return session.selectOne("care.careCount2");
 	}
-
+	
+	
 	//검색어로 조회
 	@Override
 	public List<Map<String, String>> searchContent(SqlSessionTemplate session, Map<String, String> param) {
@@ -59,6 +61,15 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 	
 		return session.insert("care.insertAttachment",a);
 	}
+	
+	//조회수 올리기
+	
+	  @Override public int readCount(SqlSession session, int no) {
+	  
+	  return session.update("care.plusCount",no);
+	  }
+	 
+	
 	
 	//돌보미상세 페이지
 	@Override
@@ -120,6 +131,25 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 		
 		return session.selectList("care.commentList",no);
 	}
+
+	@Override
+	public int commentCount(SqlSession session,int no) {
+		
+		return session.selectOne("care.commentCount",no);
+	}
+	
+	//댓글 삭제
+	@Override
+	public int replydelete(SqlSession session, int no) {
+		
+		return session.delete("care.replydelete",no);
+	}
+
+
+
+
+
+	
 	
 	
 	

@@ -1,5 +1,8 @@
 package com.web.spring.member.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -83,9 +86,13 @@ public class MemberController {
 	 }
 	
 	@RequestMapping("/member/logout.do")
-	public String logout(SessionStatus status) {
+	public String logout(SessionStatus status,HttpServletResponse res) {
 		if(!status.isComplete() == true) {
 			status.setComplete(); //session을 종료
+			//쿠키삭제
+			Cookie c=new Cookie("careView", "0");
+			c.setMaxAge(0);
+			res.addCookie(c);
 		}
 		return "redirect:/";
 	}
