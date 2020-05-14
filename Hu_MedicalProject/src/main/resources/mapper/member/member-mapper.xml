@@ -9,17 +9,24 @@
 								  #{phone},
 								  SYSDATE)
 	</insert>
-	<select id="memberLogin" parameterType="member" resultType="com.web.spring.member.model.vo.Member">
+	<select id="memberLogin" parameterType="member" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
 	</select>
-	<select id="findEmail" parameterType="member" resultType="com.web.spring.member.model.vo.Member">
+	<select id="findEmail" parameterType="member" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
 	</select>
-	<update id="newPassword" parameterType="member">
+	<select id="selectMember" parameterType="member" resultType="member">
+		SELECT * FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	<select id="searchEmail" parameterType="string" resultType="member">
+		SELECT * FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	<select id="emailSendPW" parameterType="member" resultType="member">
+		SELECT PASSWORD FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	<!-- <update id="emailSendPW" parameterType="member">
+		SELECT PASSWORD FROM MEMBER WHERE EMAIL = #{email}
 		UPDATE MEMBER SET PASSWORD = #{password} WHERE EMAIL=#{email}
-	</update>
-	<select id="selectMember" parameterType="member" resultType="com.web.spring.member.model.vo.Member">
-		SELECT * FROM MEMBER WHERE EMAIL = #{email}
-	</select>
+	</update> -->
 	
 </mapper>
