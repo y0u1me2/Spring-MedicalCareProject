@@ -13,8 +13,13 @@
 <style>
 	#content-healthInfo-sub {
 		width:1366px;
-		padding:0 20%;
+		padding: 0 270px;
+		margin: 60px auto;
 	}
+	/* .container-healthInfo-sub {
+		margin: 0 auto;
+		padding: 0 170px;
+	} */
 	.bottom-content {
 		width: 70%;
 		margin: 5% auto 10px auto;
@@ -59,9 +64,14 @@
 <section id="content-healthInfo-sub">
 <div class="container-healthInfo-sub">
 			<div class="STEP_1">
-				<c:if test="${fn:length(list) != 0 }">
-					<h4>STEP_1</h4>
-				</c:if>
+				<c:set var="flag" value="true"/>
+				<c:forEach items="${list}" var="title">
+					<c:if test="${title.healthInfoStep eq 'STEP_1' and flag eq 'true'}">
+						<h4>${title.healthInfoStep}</h4>					
+						<h1>${title.healthInfoStepTitle}</h1>
+						<c:set var="flag" value="false"/>						
+					</c:if>
+				</c:forEach>
 				<div class='picContentBox'>
 					<c:forEach items="${list }" var="HI">
 						<c:if test="${HI.healthInfoStep eq 'STEP_1' }">
@@ -79,9 +89,14 @@
 				</div>						
 			</div>		
 			<div class="STEP_2">
-				<c:if test="${fn:length(list) != 0 }">
-					<h4>STEP_2</h4>
-				</c:if>
+				<c:set var="flag" value="true"/>
+				<c:forEach items="${list}" var="title">
+					<c:if test="${title.healthInfoStep eq 'STEP_2' and flag eq 'true'}">
+						<h4>${title.healthInfoStep}</h4>					
+						<h1>${title.healthInfoStepTitle}</h1>
+						<c:set var="flag" value="false"/>						
+					</c:if>
+				</c:forEach>
 				<div class='picContentBox'>
 					<c:forEach items="${list }" var="HI">
 						<c:if test="${HI.healthInfoStep eq 'STEP_2' }">
@@ -97,23 +112,28 @@
 						</c:if>					
 					</c:forEach>
 				</div>						
-			</div>		
+			</div>
 			<div class="STEP_3">
-				<c:if test="${fn:length(list) != 0 }">
-					<h4>STEP_3</h4>
+				<c:set var="flag" value="true"/>
+				<c:forEach items="${list}" var="title">
+					<c:if test="${title.healthInfoStep eq 'STEP_3' and flag eq 'true'}">
+						<h4>${title.healthInfoStep}</h4>					
+						<h1>${title.healthInfoStepTitle}</h1>
+						<c:set var="flag" value="false"/>						
 				</c:if>
-				<div class='picContentBox'>
-					<c:forEach items="${list }" var="HI">
+				</c:forEach>
+			<div class='picContentBox'>
+				<c:forEach items="${list }" var="HI">
 						<c:if test="${HI.healthInfoStep eq 'STEP_3' }">
-								<div class='bottom-InfoContent p-6'>
-									<img src="${pathImages}${HI.healthInfoMainPic }">
+							<div class='bottom-InfoContent p-6'>
+								<img src="${pathImages}${HI.healthInfoMainPic }">
 									<div class='bottom-InfoContent-Info'>
-										<div class='bottom-InfoContent-Info-main'>${HI.healthInfoTitle }</div>
-										<div class='bottom-InfoContent-Info-sub'><p>${HI.healthInfoSubTitle }</p></div>
-										<input type='hidden' class='healthInfoNo' value='${HI.healthInfoNo }'/>
-										<input type='hidden' class='disesaseNo' value='${HI.disesaseNo }'/>
-									</div>
+									<div class='bottom-InfoContent-Info-main'>${HI.healthInfoTitle }</div>
+									<div class='bottom-InfoContent-Info-sub'><p>${HI.healthInfoSubTitle }</p></div>
+									<input type='hidden' class='healthInfoNo' value='${HI.healthInfoNo }'/>
+									<input type='hidden' class='disesaseNo' value='${HI.disesaseNo }'/>
 								</div>
+							</div>
 						</c:if>					
 					</c:forEach>
 				</div>						

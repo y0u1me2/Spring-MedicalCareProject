@@ -98,16 +98,29 @@ public class HealthInfoController {
 	@RequestMapping("healthInfo/subFrequentInfoPic")
 	public ModelAndView subFrequentInfoPic(HealthInformation hi) {
 		ModelAndView mv=new ModelAndView();
-		System.out.println(hi);
-		
-		List<HealthInformation> list=service.frequentInfoPic(hi);
+		//건강정보글 객체
 		HealthInformation returnHi=service.subFrequentInfoPic(hi);
+		//건강정보글 첨부사진들
+		List<Map<String,String>> list=service.subFrequentInfoContent(hi.getHealthInfoNo());
+		//검수자 불러오기
+		Map<String,String> confirmer=service.selectConfirmer(returnHi.getConfirmerNo());
 		
-		System.out.println(returnHi.getConfirmerNo());
-		System.out.println(list);
+		mv.addObject("confirmer",confirmer);
+		mv.addObject("contentList",list);
 		mv.addObject("hi",returnHi);
-		mv.addObject("list",list);
 		mv.setViewName("client/healthInfo/healthInfoSubContent");
+		
+		return mv;
+	}
+	
+	//상세보기에서 미니모드 화면 
+	@RequestMapping("healthInfo/healthInfoMiniMode.do")
+	public ModelAndView healthInfoMiniMode(HealthInformation hi) {
+		ModelAndView mv=new ModelAndView();
+		
+		List<HealthInformation> list=service.searchInfoPicStep(hi);
+		mv.addObject("list",list);
+		mv.setViewName("jsonView");
 		
 		return mv;
 	}

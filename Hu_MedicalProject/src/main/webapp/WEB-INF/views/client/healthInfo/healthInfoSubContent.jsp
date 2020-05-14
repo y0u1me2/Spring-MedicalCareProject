@@ -10,6 +10,7 @@
 <jsp:include page="/WEB-INF/views/client/common/header.jsp" />
 <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"/>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet"/>
+
 <style>
 	#healthInfo-content {
 		width:1366px;
@@ -88,6 +89,18 @@
 	.healthInfo-content-pics {
 		border: 1px solid;
 		color: rgb(128, 135, 143, 0.5);
+		
+	}
+	.healthInfo-content-pic {
+		width: 490px;
+		background: rgb(51, 51, 51);
+		padding: 10px;
+	}
+	.healthInfo-content-pic>img {
+		width: 100%;
+    	/* display: inline-block; */
+    	border: 5px solid #FFF;
+ 		display: block;
 	}
 	/* 우측 스텝 콘텐츠 */
 	.healthInfo-content-table-right {
@@ -144,9 +157,6 @@
 	    overflow-y: auto;
 	    padding: 0px 16px;
 	}
-	.miniMode {
-	    width: 100%;
-	}
 	.healthInfo-miniMode {
 		padding: 16px 0px;
     	border-width: 0px 0px 1px;
@@ -198,6 +208,351 @@
 	    overflow: hidden;   
 	}
 	
+	.content {
+  margin: auto;
+  padding: 20px;
+  width: 600px;
+}
+
+.slider {
+  margin: 30px auto 50px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+
+/* ===================================== */
+/* Slider */
+.slick-slider
+{
+    position: relative;
+
+    display: block;
+    box-sizing: border-box;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+        touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list
+{
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    margin: 0;
+    padding: 0;
+}
+.slick-list:focus
+{
+    outline: none;
+}
+.slick-list.dragging
+{
+    cursor: pointer;
+    cursor: hand;
+}
+
+.slick-slider .slick-track,
+.slick-slider .slick-list
+{
+    -webkit-transform: translate3d(0, 0, 0);
+       -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+         -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+}
+
+.slick-track
+{
+    position: relative;
+    top: 0;
+    left: 0;
+
+    display: block;
+}
+.slick-track:before,
+.slick-track:after
+{
+    display: table;
+
+    content: '';
+}
+.slick-track:after
+{
+    clear: both;
+}
+.slick-loading .slick-track
+{
+    visibility: hidden;
+}
+
+.slick-slide
+{
+    display: none;
+    float: left;
+
+    height: 100%;
+    min-height: 1px;
+}
+[dir='rtl'] .slick-slide
+{
+    float: right;
+}
+.slick-slide img
+{
+    display: block;
+}
+.slick-slide.slick-loading img
+{
+    display: none;
+}
+.slick-slide.dragging img
+{
+    pointer-events: none;
+}
+.slick-initialized .slick-slide
+{
+    display: block;
+}
+.slick-loading .slick-slide
+{
+    visibility: hidden;
+}
+.slick-vertical .slick-slide
+{
+    display: block;
+
+    height: auto;
+
+    border: 1px solid transparent;
+}
+.slick-arrow.slick-hidden {
+    display: none;
+}
+
+/* ================================================ */
+
+/* Slider */
+/* .slick-loading .slick-list
+{
+    background: #fff url('./ajax-loader.gif') center center no-repeat;
+}
+ */
+/* Icons */
+/* @font-face
+{
+    font-family: 'slick';
+    font-weight: normal;
+    font-style: normal;
+
+    src: url('./fonts/slick.eot');
+    src: url('./fonts/slick.eot?#iefix') format('embedded-opentype'), url('./fonts/slick.woff') format('woff'), url('./fonts/slick.ttf') format('truetype'), url('./fonts/slick.svg#slick') format('svg');
+} */
+/* Arrows */
+.slick-prev,
+.slick-next
+{
+    font-size: 0;
+    line-height: 0;
+
+    position: absolute;
+    top: 50%;
+
+    display: block;
+
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+
+    cursor: pointer;
+
+    border: none;
+    outline: none;
+    background: #f0f0f0;
+}
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next:hover,
+.slick-next:focus
+{
+    color: #DAF1DE;
+    outline: none;
+    background: #DAF1DE;
+}
+.slick-prev:hover:before,
+.slick-prev:focus:before,
+.slick-next:hover:before,
+.slick-next:focus:before
+{
+    opacity: 1;
+}
+.slick-prev.slick-disabled:before,
+.slick-next.slick-disabled:before
+{
+    opacity: .25;
+}
+
+.slick-prev:before,
+.slick-next:before
+{
+    font-family: 'slick';
+    font-size: 20px;
+    line-height: 1;
+
+    opacity: .75;
+    color: black;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-prev
+{
+    left: -25px;
+}
+[dir='rtl'] .slick-prev
+{
+    right: -25px;
+    left: auto;
+}
+.slick-prev:before
+{
+    content: '<';
+}
+[dir='rtl'] .slick-prev:before
+{
+    content: '>';
+}
+
+.slick-next
+{
+    right: -25px;
+}
+[dir='rtl'] .slick-next
+{
+    right: auto;
+    left: -25px;
+}
+.slick-next:before
+{
+    content: '>';
+}
+[dir='rtl'] .slick-next:before
+{
+    content: '<';
+}
+
+/* Dots */
+.slick-dotted.slick-slider
+{
+    margin-bottom: 30px;
+}
+
+.slick-dots
+{
+    position: absolute;
+    bottom: -25px;
+
+    display: block;
+
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    list-style: none;
+
+    text-align: center;
+}
+.slick-dots li
+{
+    position: relative;
+
+    display: inline-block;
+
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    padding: 0;
+
+    cursor: pointer;
+}
+.slick-dots li button
+{
+    font-size: 0;
+    line-height: 0;
+
+    display: block;
+
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+
+    cursor: pointer;
+
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+.slick-dots li button:hover,
+.slick-dots li button:focus
+{
+    outline: none;
+}
+.slick-dots li button:hover:before,
+.slick-dots li button:focus:before
+{
+    opacity: 1;
+}
+.slick-dots li button:before
+{
+    font-family: 'slick';
+    font-size: 6px;
+    line-height: 20px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 20px;
+    height: 20px;
+
+    content: '•';
+    text-align: center;
+
+    opacity: .25;
+    color: black;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.slick-dots li.slick-active button:before
+{
+    opacity: .75;
+    color: black;
+}
 </style>
 
 <section id="healthInfo-content">
@@ -208,53 +563,49 @@
 	<div class="healthInfo-content-body">
 		<div class="healthInfo-content-table">
 			<div class="healthInfo-content-table-left">
-				<div class="healthInfo-content-comfirmer">
-					<div class="confirmer-pic">
-						<!-- 검수자 이미지 있을때 없을때 분기 -->
-						<c:if test="${fn:length(list) != 0 }"></c:if>
+					<div class="healthInfo-content-comfirmer">
+						<div class="confirmer-pic">
+							<!-- 검수자 이미지 있을때 없을때 분기 -->							
+						</div>
+						<div class="confirmer-info">
+							<h3>전문가 검수</h3>
+							<p><c:out value="${confirmer.CONFIRMERWORK } "/><c:out value="${confirmer.CONFIRMERNAME } "/><c:out value="${confirmer.CONFIRMERJOB }"/>
+								<small><c:out value="${confirmer.CONFIRMERINFO }"/></small>
+							</p>
+						</div>					
 					</div>
-					<div class="confirmer-info">
-						<h3>전문가 검수</h3>
-						<p>연세아이웰소아청소년과의원 기교륭 원장
-							<small>신촌 세브란스 병원 소아청소년과 전공의 / 대한 소와과학회 평생회원</small>
-						</p>
+				<div class="content">
+					<div class="healthInfo-content-pics">
+						<div class="slider">
+							<c:forEach var="healthInfoContentPic" items="${contentList }" >
+								<figure class="healthInfo-content-pic">
+									<img src="${pathImages}${healthInfoContentPic.HEALTHINFOCONTENTPIC }"><br/>
+								</figure>
+							</c:forEach>
+						</div>
 					</div>
-				</div>
-				<div class="healthInfo-content-pics">
 				</div>
 			</div>
 			<div class="healthInfo-content-table-right">
 				<div class="healthInfo-step-contents">
-					<h5>STEP_1
-						<strong>감기란</strong>
+					<h5>
+						<!-- <strong></strong> -->
 					</h5>
+					<input type="hidden" id="infoStep"/>
 					<div class="healthInfo-step-title-right">
 						1/3
 						<div class="healthInfo-step-button-div">
-							<button class="healthInfo-step-btn btn-left"><</button>
-							<button class="healthInfo-step-btn btn-right">></button>
+							<button class="healthInfo-step-btn" name="btn-left"><</button>
+							<button class="healthInfo-step-btn" name="btn-right">></button>
 						</div>
 					</div>
 				</div>
 				<div class="healthInfo-step-contents-bottom">
-					<c:forEach items="${list }" var="HI">
-						<div class="miniMode">
-							<a class="healthInfo-miniMode">
-								<figure class="healthInfo-miniFigure">
-									<div class="miniFigure-div">
-										<img src="${pathImages}${HI.healthInfoMainPic }" class="miniFigure-div-img">
-									</div>
-									<div class="healthInfo-miniFigureCaption">
-										<h6>${HI.healthInfoTitle }</h6>
-										<p>${HI.healthInfoSubTitle }</p>
-									</div>
-								</figure>
-							</a>
-						</div>
-					</c:forEach>
+					<div class="miniMode">
+					</div>
 				</div>
 			</div>
-		</div>
+		</div>	
 	</div>
 </section>
 
@@ -266,15 +617,141 @@ $('.healthInfo-step-btn').mouseenter(function() {
 $('.healthInfo-step-btn').mouseleave(function() {
 	$(this).removeClass('healthInfo-step-btn-selected');
 })
-//하단 콘텐츠 a링크
-$('.healthInfo-miniMode').mouseenter(function() {
-	$(this).addClass('healthInfo-miniMode-selected');
-})
-$('.healthInfo-miniMode').mouseleave(function() {
-	$(this).removeClass('healthInfo-miniMode-selected');
-})
+function alinkClick() {
+	//하단 콘텐츠 a링크
+	$('.healthInfo-miniMode').mouseenter(function() {
+		$(this).addClass('healthInfo-miniMode-selected');
+	})
+	$('.healthInfo-miniMode').mouseleave(function() {
+		$(this).removeClass('healthInfo-miniMode-selected');
+	})	
+}
+function miniInfoPicClick(healthInfoNo, disesaseNo) {
+	location.href="${path}/healthInfo/subFrequentInfoPic?healthInfoNo="+healthInfoNo+"&disesaseNo="+disesaseNo;
+}
+
+
+	$.ajax({
+		url:"${path}/healthInfo/healthInfoMiniMode.do",
+		data:{"healthInfoStep":"STEP_1"},
+		success:function(data) {
+			$('#infoStep').val("STEP_1");
+			for(var i=0;i<data.list.length;i++) {
+				$('div.healthInfo-step-contents>h5').html(data.list[i].healthInfoStep+"<strong>"+data.list[i].healthInfoStepTitle+"</strong>");
+				//$('div.healthInfo-step-contents>h5>strong').append('');
+				$('.miniMode').append("<a class='healthInfo-miniMode'>"
+											+"<figure class='healthInfo-miniFigure'>"
+											+"<div class='miniFigure-div'>"
+												+"<img src='${pathImages}"+data.list[i].healthInfoMainPic+"' class='miniFigure-div-img'>"
+											+"</div>"
+											+"<div class='healthInfo-miniFigureCaption'>"
+												+"<h6>"+data.list[i].healthInfoTitle+"</h6>"
+												+"<p>"+data.list[i].healthInfoSubTitle+"</p>"
+											+"</div>"												
+											+"<input type='hidden' class='healthInfoNo' value='"+data.list[i].healthInfoNo+"'/>"											
+											+"<input type='hidden' class='disesaseNo' value='"+data.list[i].disesaseNo+"'/>"
+										+"</figure>"
+									+"</a>");	
+			}
+			alinkClick();
+			$('.healthInfo-miniMode').click(function() {
+				miniInfoPicClick($(this).children('figure.healthInfo-miniFigure').children('input.healthInfoNo').val()
+								, $(this).children('figure.healthInfo-miniFigure').children('input.disesaseNo').val());
+			})
+			//화살표 클릭
+			var i=1;
+			$('.healthInfo-step-btn').click(function() {
+				if($(this).attr('name')=='btn-left') {
+					i-=1;
+					if(i<1) {
+						$('#infoStep').val("STEP_3");
+						i=3;
+						miniModeAjax($('#infoStep').val());
+					}else {
+						console.log("1보다 큼");
+						$('#infoStep').val("STEP_"+i);
+						miniModeAjax($('#infoStep').val());
+					}
+				}else {
+					i+=1;
+					if(i>3) {
+						$('#infoStep').val("STEP_1");
+						i=1;
+						miniModeAjax($('#infoStep').val());
+					}else {
+						$('#infoStep').val("STEP_"+i);
+						miniModeAjax($('#infoStep').val());
+					} 				
+				}
+			})
+		}
+	});
+	
+	function miniModeAjax(infoStep) {
+		$.ajax({
+			url:"${path}/healthInfo/healthInfoMiniMode.do",
+			data:{"healthInfoStep":infoStep},
+			success:function(data) {
+				$('div.healthInfo-step-contents>h5').html("");
+				$('.miniMode').html("");
+				for(var i=0;i<data.list.length;i++) {
+					$('div.healthInfo-step-contents>h5').html(data.list[i].healthInfoStep+"<strong>"+data.list[i].healthInfoStepTitle+"</strong>");
+					//$('div.healthInfo-step-contents>h5>strong').append('');
+					$('.miniMode').append("<a class='healthInfo-miniMode'>"
+												+"<figure class='healthInfo-miniFigure'>"
+												+"<div class='miniFigure-div'>"
+													+"<img src='${pathImages}"+data.list[i].healthInfoMainPic+"' class='miniFigure-div-img'>"
+												+"</div>"
+												+"<div class='healthInfo-miniFigureCaption'>"
+													+"<h6>"+data.list[i].healthInfoTitle+"</h6>"
+													+"<p>"+data.list[i].healthInfoSubTitle+"</p>"
+												+"</div>"
+												+"<input type='hidden' class='healthInfoNo' value='"+data.list[i].healthInfoNo+"'/>"											
+												+"<input type='hidden' class='disesaseNo' value='"+data.list[i].disesaseNo+"'/>"
+											+"</figure>"
+										+"</a>");	
+					$('.healthInfo-miniMode').click(function() {
+						miniInfoPicClick($(this).children('input.healthInfoNo').val(), $(this).children('input.disesaseNo').val());
+					})
+				}
+				alinkClick();
+				$('.healthInfo-miniMode').click(function() {
+					miniInfoPicClick($(this).children('figure.healthInfo-miniFigure').children('input.healthInfoNo').val()
+									, $(this).children('figure.healthInfo-miniFigure').children('input.disesaseNo').val());
+				})
+			}
+		})
+	}
+
+
+
+	$(document).ready(function() {
+		  var $slider = $('.slider');
+		  /* var $progressBar = $('.progress');
+		  var $progressBarLabel = $( '.slider__label' ); */
+		  
+		  $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {   
+		    var calc = ( (nextSlide) / (slick.slideCount-1) ) * 100;
+		    //var calc = ( (nextSlide) / (14-1) ) * 100;
+		    
+		   /*  $progressBar
+		      .css('background-size', calc + '% 100%')
+		      .attr('aria-valuenow', calc );
+		    
+		    $progressBarLabel.text( calc + '% completed' ); */
+		  });
+		  
+		  $slider.slick({
+		    slidesToShow: 1,
+		    slidesToScroll: 1,
+		    speed: 400
+		  });  
+		});
+
+	
 </script>
 
+<script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 
 
 <jsp:include page="/WEB-INF/views/client/common/footer.jsp" />

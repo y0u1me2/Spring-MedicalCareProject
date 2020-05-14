@@ -18,6 +18,6 @@ public class HealthInformation {
 	private String healthInfoTitle;
 	private String healthInfoSubTitle;
 	private String healthInfoMainPic;
-	private String[] healthInfoContentPic;
 	private String healthInfoStep;
+	private String healthInfoStepTitle;
 }
