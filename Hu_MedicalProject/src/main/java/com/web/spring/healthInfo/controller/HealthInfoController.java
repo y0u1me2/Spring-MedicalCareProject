@@ -152,11 +152,11 @@ public class HealthInfoController {
 	@RequestMapping("/healthInfo/searchHealthInfo")
 	public ModelAndView searchHealthInfo(String searchKeyword) {
 		ModelAndView mv=new ModelAndView();
-		System.out.println(searchKeyword);
 		
 		HealthInformation returnHi=service.searchHealthInfoKeyword(searchKeyword); //건강정보글 첨부사진들
 		if(returnHi==null) {
 			List<Map<String,String>> healthInfoList=service.searchHealthInfoList(searchKeyword);
+			System.out.println(healthInfoList);
 			mv.addObject("healthInfoList",healthInfoList);
 			mv.setViewName("client/healthInfo/healthInfoSearchList");			
 		}else {

@@ -78,13 +78,14 @@ public class HealthInfoDaoImpl implements HealthInfoDao {
 	@Override
 	public HealthInformation searchHealthInfoKeyword(SqlSession session, String searchKeyword) {
 		// TODO Auto-generated method stub
+		System.out.println(searchKeyword);
 		return session.selectOne("healthInfo.searchHealthInfoKeyword",searchKeyword);
 	}
 		
 	@Override
-	public List<Map<String, String>> searchHealthInfoList(SqlSession session, String searchKeyword) {
+	public List<Map<String, String>> searchHealthInfoList(SqlSession session, String searchListKeyword) {
 		// TODO Auto-generated method stub
-		return session.selectList("healthInfo.searchHealthInfoList",searchKeyword);
+		return session.selectList("healthInfo.searchHealthInfoList",searchListKeyword);
 	}
 	
 	

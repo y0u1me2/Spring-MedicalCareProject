@@ -48,7 +48,7 @@
     	SELECT * FROM HEALTHINFO WHERE HEALTHINFOTITLE = #{searchKeyword}
     </select>
     <!-- 검색 결과 -->
-     <select id="searchHealthInfoList" parameterType="String" resultMap="map">
-    	SELECT * FROM HEALTHINFO WHERE HEALTHINFOTITLE LIKE '%'||#{keyword}||'%'
+     <select id="searchHealthInfoList" parameterType="String" resultType="map">
+    	SELECT * FROM HEALTHINFO WHERE HEALTHINFOTITLE LIKE '%'||#{searchListKeyword}||'%'
     </select>
 </mapper>
