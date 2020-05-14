@@ -70,7 +70,10 @@
 
 <body>
 	
-	
+<div id="section-container">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xl-10 ">
 	
 	<div id="content">
 	<img src="${path }/resources/images/logo.png" width="400px;">
@@ -81,11 +84,19 @@
 
 
 	<a href="${path}/index.jsp"><button type="button" id="home-btn"/>홈으로 이동</button></a>
-
-	<a href="<%=request.getContextPath()%>/index.jsp"><button type="button" id="home-btn">홈으로 이동</button></a>
-
 	</div>
-	
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
 </body>
 </html>
 

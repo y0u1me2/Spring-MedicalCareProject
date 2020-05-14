@@ -169,14 +169,21 @@ img#heart {
 	border-collapse: collapse;
 }
 
-#nc_tbl tr td:first-of-type {
-	padding: 5px 5px 5px 50px;
+#nc_tbl tr{
+	border: 1px solid #e2e0e0;
 }
 
-#nc_tbl tr td:last-of-type {
-	text-align: right;
-	width: 100px;
-	padding-right: 12px;
+#nc_tbl tr td {
+	padding: 15px 5px 5px 50px;
+	height:100px;
+	float:left;
+	
+}
+
+/* 답글 버튼  */
+img#replyimg{
+	position:relative;
+	bottom:5px;
 }
 
 /* 댓글 수정삭제 버튼 */
@@ -184,7 +191,12 @@ button.btn-reply {
 	border: none;
 	background: none;
 	font-size: 12px;
+}
+
+div#btn-reply-container{
 	position: relative;
+	left:800px;
+	bottom:45px;
 }
 
 footer {
@@ -256,8 +268,16 @@ button.file-btn p {
 		<h2>${c.careTitle }</h2>
 
 		<div class="buttons">
-			<button id="update-btn1" onclick="updateCare();">수정</button>
-			<button id="delete-btn1" onclick="gotoList();">목록</button>
+	
+
+
+
+			
+				<c:if   test="${loginMember.name eq c.careWriter }">
+				<button id="update-btn1" onclick="updateCare();">수정</button>
+				</c:if>
+
+				<button id="delete-btn1" onclick="gotoList();">목록</button>
 		</div>
 
 		<hr>
@@ -278,145 +298,53 @@ button.file-btn p {
 		<p class="context">
 			<c:out value="${c.careContent }" />
 
-	
-			<c:if test="${loginMember.name eq '관리자'}">
-				<c:forEach items="${files}" var="f" varStatus="vs">
-					<button type="button" class="file-btn"
-						onclick="fileDownload('${c.originalFilename}','${f.renamedFilename }')">
-
+				<c:if   test="${loginMember.name eq c.careWriter }">
+					<c:forEach items="${files}" var="f" varStatus="vs">
 						<p>
 							요양보호사 자격증
 							<c:out value="${vs.count } - ${f.originalFilename }" />
 						</p>
-					</button>
-				</c:forEach>
-			</c:if>
-			
-		</p>
+		
+						</c:forEach>	
+				</c:if>
+			</p>
+
 	</div>
 
-	<ul class="info">
-		<li class="writer">댓글21</li>
-		<li class="readcount">조회수</li>
-		<li>좋아요&nbsp;<img src="${path }/resources/images/heart.png"
-			id="heart" />&nbsp;2
-		</li>
 
+<!--================== 댓글======================= -->
+
+ 
+	<ul class="info">
+		<li class="writer"><img src="${path }/resources/images/reply2.png" width="20px;" />&nbsp;댓글&nbsp;<c:out value="${cnt }" /></li>
+		<li class="readcount">조회수&nbsp;<c:out value="${c.careReadCount }"/></li>			
+		
 	</ul>
 
-
-
-	<div id="nc_container">
-
-		<table id="nc_tbl">
-
-
-			<tr class="level1">
-				<td><sup class="cm-writer"><img
-						src="${path }/resources/images/logo5.png" width="20px;" />
-						&nbsp;기린</sup>&nbsp;&nbsp;&nbsp; <sup>2020.04.24 18:03</sup>
-
-					&nbsp;&nbsp;&nbsp;<sup><a href=""> <img
-							src="${path }/resources/images/reply.png" width="10px;" /> 답글
-					</a></sup> </br>
-
-					<p>첫번째 댓글이야</p></td>
-				<td
-					style="display: flex; position: relative; left: 180px; top: 30px;">
-					<button class="btn-reply btnre" name="commentNo" id="update-btn">수정</button>
-					|
-					<button class="btn-reply btnre" name="commentNo" id="delete-btn">삭제</button>
-				</td>
-			</tr>
+<!--댓글 목록 출력하기  -->
+<div id="listReply"></div>
 
 
 
-
-			<tr class="level2" style="background-color: #f7f7f7">
-				<td><sup class="cm-writer"><img src="images/logo.png"
-						width="20px;" /> &nbsp;기린</sup>&nbsp;&nbsp;&nbsp; <sup>2020.04.24
-						18:03</sup> &nbsp;&nbsp;&nbsp;<sup><a href=""> <img
-							src="images/reply.png" width="10px;" /> 답글
-					</a></sup> </br>
-					<p>두번째 댓글이야</p></td>
-				<td style="display: flex; position: relative; left: 180px;">
-					<button class="btn-reply" name="commentNo" id="update-btn">수정</button>
-					|
-					<button class="btn-reply" name="commentNo" id="delete-btn">삭제</button>
-				</td>
-			</tr>
-
-		</table>
-	</div>
-
-	<div>
-		<span><strong>Comments</strong></span> <span id="cCnt"></span>
-	</div>
-
-	<div id="comment-container">
-		<form action="${path}/care/commentEnd?cno=${c.careNo}" method="post"
+<!--======================= 댓글등록하기====================================== -->
+	
+	 <div id="comment-container">
+		<form action="${path}/care/commentEnd?no=${c.careNo}" method="post"
 			id="commentFrm" onsubmit="return nosubmit();">
 
-			<input type="text" name="commentContent" class="comment-content"
-				id="comment-con" /> <input type="hidden" name="commentRef"
-				value="${c.careNo }" /> <input type="hidden" name="commentWriter"
-				value='${loginMember ne null?loginMember.name:""}'> <input
-				type="hidden" name="commentLevel" value="1" /> <input type="hidden"
-				name="commentNo" value="0" />
+			<input type="text" name="commentContent" placeholder="여러분의 소중한 댓글을 입력해주세요."
+			class="comment-content" id="comment-con" /> 			
+			
+			<input type="hidden" name="careNo" value="${c.careNo }"/>
+			<input type="hidden" name="memberNo" value='${loginMember ne null?loginMember.memberNo:""}'> 
+			<input type="hidden" name="commentLevel" value="1" /> 
+			<input type="hidden" name="commentNo" value="0" />
+			<input type="hidden" name="commentWriter" value='${loginMember ne null?loginMember.name:""}' />
 
 			<button type="submit" id="btn-insert">등록</button>
 
 		</form>
 	</div>
-
-
-	<!-- 댓글출력하기 -->
-	<table>
-		<c:forEach items="${list }" var="c">
-			<c:if test="${c.commentLevel eq 1}">
-
-				<tr class="level1">
-					<td><sub class="comment-writer"><c:out
-								value="${c.name }" /></sub> <sub class="comment-date"><c:out
-								value="${c.commentDate }" /></sub> <br /> <c:out
-							value="${c.commentContent }" /></td>
-					<td>
-						<button class="btn-reply reply1" value="${c.commentNo }">답글</button>
-					</td>
-				</tr>
-
-			</c:if>
-
-			<c:if test="${c.commentLevel eq 2}">
-
-				<tr class="level2">
-					<td><sub class="comment-writer"><c:out
-								value="${c.name }" /></sub> <sub class="comment-date"><c:out
-								value="${c.commentDate }" /></sub> <br /> <c:out
-							value="${c.commentContent }" /></td>
-					<td>
-						<button class="btn-reply reply2" value="${c.commentNo }">답글</button>
-					</td>
-				</tr>
-
-			</c:if>
-
-			<c:if test="${c.commentLevel eq 3}">
-
-				<tr class="level3">
-					<td><sub class="comment-writer"><c:out
-								value="${c.name }" /></sub> <sub class="comment-date"><c:out
-								value="${c.commentDate }" /></sub> <br /> <c:out
-							value="${c.commentContent }" /></td>
-					<td></td>
-				</tr>
-
-			</c:if>
-
-		</c:forEach>
-
-	</table>
-
 
 
 
@@ -425,202 +353,56 @@ button.file-btn p {
 
 
 
-
 <script>
-	//수정하기
-		function updateCare(){
-			location.replace('${path}/care/updateView?no=${c.careNo}');
-		}
-			
-	//목록으로이동
-	function gotoList(){
-		location.replace('${path}/care/careNotice');
+	//비로그인시 댓글등록버튼 비활성화
+	if(${loginMember eq null}){
+		$("#btn-insert").attr("disabled",true);
+	}else{
+		$("#btn-insert").attr("disabled",false);
 	}
 	
-	//파일다운로드
-	 function fileDownload(ori,rename){
-         ori=encodeURIComponent(ori);
-         location.href="${path}/care/fileDownload?oName="+ori+"&rName="+rename;
-      }
-	 
-			
-			
-	//댓글 리스트 불러오기
-	<%-- $('.reply1').click(function() {
+	//비로그인시 로그인 알림창
+	$(function(){
+		$("input[name=commentContent]").click(function(){
+			if(${loginMember eq null}){
+				alert("로그인후 이용하세요!")
+			}
+		})
+	});
 	
-                           const tr=$('<tr>');
-                           const td=$('<td>').css({
-                              "display":"none","text-align":"left"
-                           }).attr('colspan',2);
-                           
-                           const form=$("<form>").attr({
-                                    "action" : "${path}/care/commentList",
-                                    "method" : "post"
-                                 });
-                              const commentWriter=$("<input>").attr({
-                                    "type" : "hidden",
-                                    "name" : "boardRef",
-                                    "value" : "${}"
-                                 });
-                              const boardRef=$("<input>").attr({
-                                    "type" : "hidden",
-                                    "name" : "commentWriter",
-                                    "value" : "${loginmember.name}"
-                                  });
-                     
-                          const level = $("<input>").attr({
-                        "type" : "hidden",
-                        "name" : "commentLevel",
-                        "value" : "2"
-
-                     });
-                     const comment = $("<input>").attr({
-                        "type" : "text",
-                        "name" : "commentContent",
-
-                     });
-                     const commentRef = $("<input>").attr({
-                        "type" : "hidden",
-                        "name" : "commentRef",
-                        "value" : $(this).val()
-
-                     });
-                     const btn = $("<button>").attr({
-                        "type" : "submit",
-                        "class" : "btn-insert2"
-                     }).html("등록");
-                     
-                     form.append(commentRef).append(commentWriter).append(
-                           level).append(comment).append(commentRef)
-                           .append(btn);
-                     td.append(form);
-                     tr.append(td);
-                     ($(this).parent().parent()).after(tr);
-                     tr.children("td").slideDown(500);
-                     $(this).off('click');
-                  }
-               })
-               
-               
-               //===================================================================================
-               $('.reply2').click(function() {
-                           const tr=$('<tr>');
-                           const td=$('<td>').css({
-                              "display":"none","text-align":"left","padding-left":"80px"
-                           }).attr('colspan',2);
-                           
-                           const form=$("<form>").attr({
-                                    "action" : "${path}/care/commentList",
-                                    "method" : "post"
-                                 });
-                              const commentWriter=$("<input>").attr({
-                                    "type" : "hidden",
-                                    "name" : "boardRef",
-                                    "value" : "<%=b.getBoardNo()%>"
-                                 });
-                              const boardRef=$("<input>").attr({
-                                    "type" : "hidden",
-                                    "name" : "commentWriter",
-                                    "value" : "${loginMember.name}"
-                                  });
-                     const level = $("<input>").attr({
-                        "type" : "hidden",
-                        "name" : "commentLevel",
-                        "value" : "3"
-
-                     });
-                     const comment = $("<input>").attr({
-                        "type" : "text",
-                        "name" : "commentContent",
-
-                     });
-                     const commentRef = $("<input>").attr({
-                        "type" : "hidden",
-                        "name" : "commentRef",
-                        "value" : $(this).val()
-
-                     });
-                     const btn = $("<button>").attr({
-                        "type" : "submit",
-                        "class" : "btn-insert2"
-                     }).html("등록");
-                     
-                     form.append(boardRef).append(commentWriter).append(
-                           level).append(comment).append(commentRef)
-                           .append(btn);
-                     td.append(form);
-                     tr.append(td);
-                     ($(this).parent().parent()).after(tr);
-                     tr.children("td").slideDown(500);
-                     $(this).off('click');
-                  }
-  
-	
-	//대댓글 클릭시 아래뜨게하기
-	$(".btn-reply").click(function(){
-		if(<%=loginMember!=null%>){
-			const tr=$("<tr>").attr("class","reply");
-			const td=$("<td>").css({
-				"display":"none"
-			}).attr("colspan",2);
-			const form=$("<form>").attr({
-				"action":"<%=request.getContextPath()%>/notice/noticeComment",
-				"method":"post",
-				"width":"100%",
-				"onsubmit":"return nosubmit();"
-			});
-			const boardRef=$("<input>").attr({
-					"type":"hidden",
-					"name": "noticeNo",
-					"value":"<%=n.getnNo()%>"
-			});
-			const writer=$("<input>").attr({
-				"type":"hidden",
-				"name": "commentWriter",
-				"value":"<%=loginMember!=null?loginMember.getM_No():""%>"
-			});
-			const level=$("<input>").attr({
-				"type":"hidden",
-				"name": "commentLevel",
-				"value":"2"
-			});
-			const comment=$("<input>").attr({
-				"type":"text",
-				"name": "commentContent",
-				"class":"comment-content",
-			}).css({
-				"width":"950px",
-				"height":"50px"
-			})
-			const commentRef=$("<input>").attr({
-				"type":"hidden",
-				"name": "commentNo",
-				"value":$(this).val()
-			});
-			const btn=$("<button>").attr({
-				"type":"submit","class":"btn-insert2 btn-reply2"
-			}).html("등록");
+	//댓글 목록 출력
+	$(function(){
+		$.ajax({
+			type: "get", //get방식으로 댓글 전달
+			url:"${path}/care/commentList?no=${c.careNo}",
+			success:function(result){//성공하면 출력하기
+				console.log(result);
+				$("#listReply").html(result);
 			
-			form.append(boardRef).append(writer).append(level).append(comment).append(commentRef).append(btn);
-			td.append(form);
-			tr.append(td);
-			($(this).parent().parent()).after(tr);
-			tr.children("td").slideDown(500);
-			$(this).off("click");
-		}
+			}
+		})
 	})
 	
-	
-	}
-	
-	//내용이 없으면 댓글 등록 x
+
+	//서밋 x
 	function nosubmit(){
 		if($(".comment-content").val().length==0){
 			return false;
 		}else{
 			return true;
 		}
-	} --%>
+	}	
+	
+	//수정하기
+		function updateCare(){
+			location.replace('${path}/care/replydelete?no=${c.careNo}');
+		}
+			
+	//목록으로이동
+	function gotoList(){
+		location.replace('${path}/care/careNotice');
+	}
+
 	
 </script>
 

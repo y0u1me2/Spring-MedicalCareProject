@@ -53,6 +53,7 @@
       
 
        <c:if test="${loginMember != null or loginHpMember !=null  }">
+<%--        <c:if test="${loginMember ne null }"> --%>
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
 	        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
@@ -82,7 +83,7 @@
          <c:when test = "${not empty loginMember }">
                	
 			<li class="nav-item" style="margin-left:100px;">
-				<a href="#" style="align:right;"><c:out value="${loginMember.name }"></c:out> 님</a>
+				<a href="${path }/myPage/myPageMain" style="align:right;" ><c:out value="${loginMember.name }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
 				   <button class="btn btn-outline-dark" type="button"
 						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>
@@ -102,7 +103,7 @@
          </c:otherwise>
       </c:choose>
     </ul>
- 
+ </nav>
 <!-- 로그인 선택 모달 -->
 <div id="loginChoice" class="modal" style="z-index:1;">
   <form class="modal-content animate" method="post" style="width:50%;">
@@ -213,38 +214,58 @@
     </div>
 
     <div class="containerlogin">
-      <input type="text" placeholder="아이디" id="hospitalId" name="id" autocomplete="off" required>
-      <input type="password" placeholder="비밀번호" id="hospitalPsw" name="password" required>
-      <label>
-        <input type="checkbox" id="store" name="saveId">아이디 저장
-      </label>
-
-      <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE;">병원 회원 Login</button>   
-
-     <div class="containerlogin" style="background-color:white; text-align:center;">
-    	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
-        &nbsp;/&nbsp;
-         <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findPsw').style.display='block'">비밀번호 찾기</button>
-    </div>    
+	      <input type="text" placeholder="아이디" id="hospitalId" name="id" autocomplete="off" required>
+	      <input type="password" placeholder="비밀번호" id="hospitalPsw" name="password" required>
+	      <label>
+	        <input type="checkbox" id="store" name="saveId">아이디 저장
+	      </label>
+	
+	      <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE;">병원 회원 Login</button>   
+	
+	     <div class="containerlogin" style="background-color:white; text-align:center;">
+	    	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
+	        &nbsp;/&nbsp;
+	         <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findPsw').style.display='block'">비밀번호 찾기</button>
+	    </div>    
+	</div>
+	</form>
 </div>
- </nav>
-  </form>
-  </div>
+
 <!-- 비밀번호 찾기 -->
-<!-- <div id="findPsw" class="modal" >
-  <form class="modal-content animate" method="post" style="width:50%;">
-  
+<div id="findPsw" class="modal" >
+  <form class="modal-content animate" style="width:50%;">
+  <!-- action="${path}/searchPwd.do" method="post" -->
       <div class="imgcontainer" style="height:10px">
         <span onclick="document.getElementById('findPsw').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
       </div>
       <br>
    <div class="containerNewPSW" style="margin:0 auto;">
-      <input type="text" placeholder="E-mail" id="email" name="email" autocomplete="off" required><br>
-      <button onclick="findPsw();" class="findPswBtn" type="submit" style="background-color:#DAF1DE">비밀번호 찾기</button>
+   <h2 class="text-center">비밀번호 찾기</h2>
+      <input type="text" placeholder="E-mail" id="memberEmail" name="memberEmail" autocomplete="off" required>
+      <button type="button" class="emailChk" onclick="searchEmail();" style="background-color:#DAF1DE">이메일 확인</button><br>
+      <button class="findPswBtn" id="findPswBtn" type="submit" style="background-color:#DAF1DE">비밀번호 변경</button>
+   </div>
   <div><br><br></div>
      
   </form>
-</div> -->
+  
+</div>
+<!-- 인증번호 확인 창 -->
+<div id="containerPswCode" class="modal" >
+  <form class="modal-content animate" method="post" style="width:50%;">
+      <div class="imgcontainer" style="height:10px">
+        <span onclick="document.getElementById('findPsw').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
+      </div>
+      <br>
+   <div class="pswCode" style="margin:0 auto;">
+   <h2 class="text-center">인증번호 확인</h2>
+      <input type="text" placeholder="인증번호 작성" id="pswcode" name="pswcode" autocomplete="off" required><br>
+      <button onclick="pswCode();" class="findPswBtn" type="submit" style="background-color:#DAF1DE">인증번호 전송</button>
+   </div>
+  <div><br><br></div>
+     
+  </form>
+</div>
 <!-- 아이디 찾기 -->
 <!-- <div id="findEmail" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
@@ -257,6 +278,7 @@
       <input type="text" placeholder="이름 입력" name="name" id="name" required><br>
       <input type="text" placeholder="핸드폰 번호 입력 (-를 제외하고 입력)" name="phone" id="phone" required><br>
       <button onclick="findEmail();" class="findEmailBtn" type="submit" style="background-color:#DAF1DE">아이디 찾기</button>
+  </div>
   <div><br><br></div>
      
   </form>
@@ -294,9 +316,44 @@ function hospitalLogin(){
 	location.href="${path}/member/hospitalEnroll.do";
 }
 
-/* function newPSW(){
-	location.href="${path}/newPassword";
-} */
+function searchEmail(){
+	var email = $('#memberEmail').val();
+	console.log(email);
+	
+	$.ajax({
+		url:"${path }/searchEmail",
+		data:{"email":email},
+		success:function(data){
+			console.log("이거디"+data.member);
+			
+			if(data.member != 1){
+				alert("이메일이 존재합니다. 비밀번호 변경 버튼을 누르면 이메일이 전송됩니다.");
+			}else{
+				alert("이메일이 존재하지 않습니다. 회원가입 후 이용하세요!");
+				location.reload();
+			}
+			
+		}
+	})
+} 
+$('#findPswBtn').on('click', function(){
+   
+    $.ajax({
+        url: "requestObject",
+        type: "POST",
+        data: form,
+        success: function(data){
+            $('#containerPswCode').text(data);
+        },
+        error: function(){
+            alert("simpleWithObject err");
+        }
+    });
+});
+function pswCode(){
+	location.href="pass_injeung.do?email=${memberEmail}";
+}
+
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -335,6 +392,17 @@ function logoutChk(){
 			}
 			open("${path}/chattingView?room1=${loginMember.email}&room2="+room2,"_blank","width=500,height=490");
 		}
+//채팅 알람띄워주기
+function accessChatting(room){//병원회원-일반회원일때 매개변수 2개 받기
+	//room은 로그인된 userId가 매개변수로 들어간다.
+	if(${loginMember.email ne "admin"}){
+		//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
+		
+		//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
+		requestChatting();
+	}
+	open("${path}/chattingView?room="+room,"_blank","width=500,height=490");
+}
 </script>
 	<c:if test="${not empty loginMember or not empty loginHpMember }">
 	<!--로그인이 되었을때 문의하기!  -->
@@ -397,7 +465,6 @@ function logoutChk(){
 				this.sender=sender;
 				this.receiver=receiver;			
 			}
-		
 			
 		
 		</script>

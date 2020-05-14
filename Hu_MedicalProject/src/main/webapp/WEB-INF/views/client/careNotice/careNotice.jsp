@@ -142,7 +142,9 @@ footer {
 					style="padding-left: 400px; margin-top: 50px; font-size: 20px;">
 					<q>혼자서 병원에 가기 힘드시다면 돌보미 찾기 서비스를 이용해보세요</q>
 				</div>
-				<div class="col-xl-1 "></div>
+				<div class="col-xl-1 ">
+				
+				</div>
 			</div>
 		</div>
 
@@ -159,7 +161,7 @@ footer {
 						<th>제목</th>
 						<th>작성자</th>
 						<th>날짜</th>
-						<th>조회</th>
+						<th>조회수</th>
 					</tr>
 				</thead>
 
@@ -167,7 +169,7 @@ footer {
 					<c:forEach items="${list }" var="c">
 						<tr>
 							<td><c:out value="${c.careNo }" /></td>
-							<td><a href="${path }/care/careView?cno=${c.careNo}"> 
+							<td><a href="${path }/care/careView?no=${c.careNo}"> 
 							<c:out value="${c.careTitle }" />
 							</a></td>
 										
@@ -184,16 +186,16 @@ footer {
 			</table>
 		</div>
 
-		<div style="text-align: center; font-size: 20px;"
-			id="search-container">
-			<select name="searchContent" id="searchContent"
-				style="background-color: white; height: 35px;">
-				<option value="titleContent" selected disabled>제목만</option>
-				<!-- <option value="title">제목만</option> -->
-				<option value="writer">글작성자</option>
-			</select> <input type="text" id="searchText" placeholder="검색어를 입력해주세요"
-				size="20"> <input type="submit" id="searchBtn"
-				class="search_btn" value="검색" />
+		<div style="text-align: center; font-size: 20px;" id="search-container">
+		 <form action="${path }/care/search.do" method="post">
+            <select name="searchContent" id="searchContent" style="background-color:white; height:35px;">
+              <option value=""  disabled selected>선택</option>
+              <option value="careTitle"  <c:if test="${param.searchContent eq 'careTitle' }">selected</c:if>>글제목</option>
+              <option value="careWriter"  <c:if test="${param.searchContent eq 'careWriter' }">selected</c:if>>작성자</option>
+            </select>
+            <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력해주세요" size="20" value="${param.keyword }" required autocomplete="off">
+            <input type="submit" id="searchBtn" class="search_btn" value="검색"/>
+           </form>		
 		</div>
 		
 		

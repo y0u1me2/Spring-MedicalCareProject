@@ -18,5 +18,6 @@ public class CareNotice {
 	private Date careDate;
 	private int careReadCount;
 	private String careStatus;
+	private String answerStatus;
 }
 

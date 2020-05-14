@@ -17,4 +17,8 @@ public interface HealthInfoService {
 	List<HealthInformation> frequentInfoPic(HealthInformation hi);
 	//서브에서 정보 클릭시
 	HealthInformation subFrequentInfoPic(HealthInformation hi);
+	List<Map<String,String>> subFrequentInfoContent(String healthInfoNo);
+	Map<String,String> selectConfirmer(String confirmerNo);
+	//step으로 조회 리스트
+	List<HealthInformation> searchInfoPicStep(HealthInformation hi);
 }

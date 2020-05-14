@@ -105,7 +105,7 @@ div#pageBar a {
   <div id="pageBar">
   	${pageBar }
   </div>
-   
+ </div>
 </section>
 
 <script>

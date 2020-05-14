@@ -37,7 +37,8 @@ public class NoticeController {
 	
 	@Autowired
 	private Logger logger;
-	
+
+/////////공지사항 페이지 ///////////
 	@RequestMapping("/notice/noticeList")
 	public ModelAndView noticeList(@RequestParam(required=false, defaultValue="1") int cPage, 
 								   @RequestParam(required=false, defaultValue="5") int numPerpage,
@@ -52,8 +53,9 @@ public class NoticeController {
 		mv.setViewName("client/notice/noticeList");
 		return mv;
 	}
+/////////공지사항 상세 화면 ///////////
 	@RequestMapping("/notice/noticeView")
-	public ModelAndView noticeView(ModelAndView mv, int no){
+	public ModelAndView noticeView(ModelAndView mv, @RequestParam("no") int no){
 		
 		Notice notice = service.noticeView(no);
 		List<NoticeAttachment> files=service.selectNoticeFile(no);
@@ -64,15 +66,15 @@ public class NoticeController {
 		
 		return mv;
 	}
-	
+/////////공지사항 작성 페이지 이동 ///////////	
 	@RequestMapping("/notice/noticeInsert")
 	public String noticeWrite() {
 		return "client/notice/noticeWrite";
 	}
-	
+/////////공지사항 작성 ///////////
 	@RequestMapping("/notice/noticeInsertEnd") 
 	public ModelAndView noticeInsert(@RequestParam Map<String,String> param,
-								 	 MultipartFile[] upFile, ModelAndView mv, 
+								 	 MultipartFile[] noticeUpFile, ModelAndView mv, 
 									 HttpSession session) { 
 	
 		//파일업로드 처리하기
@@ -85,23 +87,19 @@ public class NoticeController {
 		//폴더가 없으면 생성하기
 		if(f.exists()) f.mkdirs();
 	
-	//파일 저장로직 구현 - 파일 rename처리
-		for(MultipartFile mf : upFile) {
+		//파일 저장로직 구현 - 파일 rename 처리
+		for(MultipartFile mf : noticeUpFile) {
 			if(!mf.isEmpty()) {
 				//파일명생성
 				String oriName = mf.getOriginalFilename();
-				String ext = oriName.substring(oriName.lastIndexOf("."));//확장자 자르기
-				
-				//리네임 규칙설정
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
-				
+				String ext = oriName.substring(oriName.lastIndexOf("."));
+				//리네임 규칙 설정
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSS");
 				int rnd = (int)(Math.random()*1000);
-				
 				String rename = sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
-				
 				try {
-					//파일저장
-					mf.transferTo(new File(f+"/"+rename));
+					//파일 저장
+					mf.transferTo(new File(f+"/"+rename));//파일을 생성해주는 아이
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
@@ -143,6 +141,7 @@ public class NoticeController {
 	
 		return mv;
 	}
+/////////공지사항 파일 다운 ///////////
 	@RequestMapping("/notice/fileDownload")
 	public void fileDownLoad(String rName, String oName,
 			HttpServletResponse response,HttpSession session,
@@ -150,7 +149,7 @@ public class NoticeController {
 		BufferedInputStream bis=null;
 		ServletOutputStream sos=null;
 		
-		String dir=session.getServletContext().getRealPath("/resources/upload/board");
+		String dir=session.getServletContext().getRealPath("/resources/upload/notice");
 		File f=new File(dir+"/"+rName);
 		
 		try {
@@ -168,7 +167,7 @@ public class NoticeController {
 				oriName=new String(oName.getBytes("UTF-8"),"ISO-8859-1");
 			}
 			response.setContentType("application/otect-stream;charset=UTF-8");
-			response.addHeader("Content-Disposition", "attachment;filename=\""+oriName+"\"");
+			response.addHeader("Content-Disposition", "noticeAttachment;filename=\""+oriName+"\"");
 			response.setContentLength((int)f.length());
 			
 			int read=0;
@@ -189,6 +188,7 @@ public class NoticeController {
 		
 		
 	}
+/////////공지사항 삭제 ///////////
 	@RequestMapping("/notice/noticeDelete")
 	 public String noticeDelete(@RequestParam(value="no") int no,Model model) {
 	  
@@ -214,5 +214,97 @@ public class NoticeController {
 	  return "client/common/msg"; 
 	  
 	  }
+/////////공지사항 수정 페이지 이동 ///////////
+	@RequestMapping("/notice/noticeUpdate")
+	public ModelAndView noticeUpdate(ModelAndView mv,@RequestParam("no") int no) {
+		Notice notice = service.noticeUpdate(no);
+		List<NoticeAttachment> files = service.noticeUpdateFile(no);
+		
+		mv.addObject("notice",notice);
+		mv.addObject("files",files);
 
+		mv.setViewName("client/notice/noticeUpdate");
+		return mv;
+	}
+/////////공지사항 수정하기 ///////////
+	@RequestMapping("/notice/noticeUpdateEnd")
+	public String noticeUpdateEnd(Model model,@RequestParam Map<String,String> param, 
+		  MultipartFile[] upFile, HttpSession session, HttpServletRequest request,@RequestParam(value="no") int no) {
+		  
+
+		  //파일업로드 처리하기 
+		  String path = session.getServletContext().getRealPath("/resources/upload/notice");
+		  
+		  List<NoticeAttachment> files = new ArrayList();
+		  
+		  File f = new File(path);
+		 
+		  //폴더가 없으면 생성하기 
+		  if(f.exists()) f.mkdirs();
+		  
+		 //파일 저장로직 구현 - 파일 rename처리 
+		  for(MultipartFile mf : upFile) {
+			  if(!mf.isEmpty()){ //파일명생성 
+				  String oriName = mf.getOriginalFilename(); 
+				  String ext = oriName.substring(oriName.lastIndexOf("."));//확장자 자르기
+				  
+				  	
+				  	String orifile = request.getParameter("orifile");
+				  	logger.debug(""+orifile);
+					File deleteFile = new File(path+"/"+orifile);
+					boolean flag = deleteFile.delete();
+		  
+					 //리네임 규칙설정 
+					 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+					  
+					 int rnd = (int)(Math.random()*1000);
+					  
+					 String rename = sdf.format(System.currentTimeMillis())+"_"+rnd+ext;
+					  
+				  try { //파일저장
+					mf.transferTo(new File(f+"/"+rename)); 
+					}catch(Exception e) {
+				  e.printStackTrace();
+				  }
+				  	  NoticeAttachment a = new NoticeAttachment();
+					  a.setOriginalFilename(oriName); 
+					  a.setRenamedFilename(rename); 
+					  files.add(a); 
+					  }
+		  	} 
+		  
+		  int result = 0;
+		  
+		  try { 
+			  result = service.noticeUpdateEnd(param,files,no);
+		  
+		  }catch(RuntimeException e) { 
+			  e.printStackTrace(); 
+			  //업로드 실패시 업로드된 파일 지우기
+		  for(NoticeAttachment a : files) {
+			  File delF = new File(path+"/"+a.getRenamedFilename()); 
+			  if(delF.exists()) { 
+				  delF.delete(); 
+				  }
+			  }
+		   		
+		  
+		  } 
+		  
+		  String msg=""; String loc="";
+		  
+		  if(result>0) {
+			  msg="수정되었습니다."; 
+			  loc="/notice/noticeList"; 
+			  }else {
+		  
+		  msg="수정이 실패하였습니다."; 
+		  loc="/notice/noticeUpdate?no="+no; 
+		  } 
+		  model.addAttribute("msg",msg);
+		  model.addAttribute("loc",loc); 
+		  
+		  return "client/common/msg";
+		  
+	}
 }

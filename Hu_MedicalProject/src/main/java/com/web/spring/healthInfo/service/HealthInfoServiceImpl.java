@@ -47,11 +47,29 @@ public class HealthInfoServiceImpl implements HealthInfoService {
 		// TODO Auto-generated method stub
 		return dao.frequentInfoPic(session, hi);
 	}
+	//서브에서 글사진눌렀을때 상세보기 전환
 	@Override
 	public HealthInformation subFrequentInfoPic(HealthInformation hi) {
 		// TODO Auto-generated method stub
 		return dao.subFrequentInfoPic(session, hi);
 	}
+	@Override
+	public List<Map<String, String>> subFrequentInfoContent(String healthInfoNo) {
+		// TODO Auto-generated method stub
+		return dao.subFrequentInfoContent(session, healthInfoNo);
+	}
+	@Override
+	public Map<String,String> selectConfirmer(String confirmerNo) {
+		// TODO Auto-generated method stub
+		return dao.selectConfirmer(session, confirmerNo);
+	}
+	//스텝별 분류 미니화면
+	@Override
+	public List<HealthInformation> searchInfoPicStep(HealthInformation hi) {
+		// TODO Auto-generated method stub
+		return dao.searchInfoPicStep(session, hi);
+	}
+	
 	
 	
 	

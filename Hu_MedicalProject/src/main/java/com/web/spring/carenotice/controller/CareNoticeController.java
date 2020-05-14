@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +21,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -53,11 +56,32 @@ public class CareNoticeController {
 		int totalCount = service.careCount();
 
 		mv.addObject("list", list);
-		mv.addObject("count", totalCount);
+	mv.addObject("count", totalCount);
 		mv.addObject("pageBar", PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/care/careNotice"));
 		mv.setViewName("client/careNotice/careNotice");
 		return mv;
 	}
+
+	
+	
+	
+//검색어로 조회========================================================================================
+	@RequestMapping("/care/search.do")
+	public ModelAndView searchContent(@RequestParam(value="searchContent",required=false) String searchContent,
+			@RequestParam(value="keyword",required=false) String keyword,ModelAndView mv) {
+		
+		Map<String,String> param = new HashMap<String,String>();
+		param.put("searchContent",searchContent);
+		param.put("keyword",keyword);
+		
+		List<Map<String,String>> list = service.searchContent(param);
+		
+		mv.addObject("list",list);
+		mv.setViewName("client/careNotice/careNotice");
+
+		return mv;
+	}
+	
 
 //돌보미 등록 페이지로 이동===============================================================================
 	@RequestMapping("/care/careEnroll")
@@ -146,68 +170,50 @@ public class CareNoticeController {
 //돌보미글 상세페이지로 이동============================================
 
 	@RequestMapping("/care/careView")
-	public ModelAndView careView(@RequestParam("cno") int cno, ModelAndView mv) {
+	public ModelAndView careView(HttpServletRequest request, HttpServletResponse response,
+			ModelMap m,@RequestParam("no") int no, ModelAndView mv) {
 	
-		CareNotice c = service.careView(cno);
 		
-		List<CareAttachment> files = service.selectCareFile(cno);
+		//쿠키로 작성자 검사
+		Cookie[] cookies=request.getCookies();
+		String val="";
+		boolean hasRead=false;
+				
+		//쿠키가 있는지 없는지 확인(읽었는지 안읽었는지)
+		if(cookies!=null) {
+			for(Cookie cook : cookies) {
+				String name = cook.getName();
+				String v=cook.getValue();
+					if("careView".equals(name)) {
+					val=v;
+					
+					if(v.contains("|"+no+"|")) {
+						hasRead=true;
+						break;
+							}
+						}
+					}
+				}
+		//안읽엇으면
+		if(!hasRead) {
+			Cookie cook = new Cookie("careView","|"+no+"|");
+			cook.setMaxAge(-1);
+			response.addCookie(cook);
+		}
 		
+		CareNotice c = service.careView(no,hasRead);
+		
+		List<CareAttachment> files = service.selectCareFile(no);
+			
+		int count = service.commentCount(no);
+		
+		mv.addObject("cnt",count);
 		mv.addObject("c", c);
 		mv.addObject("files",files);
 		mv.setViewName("client/careNotice/careView");
 	
 		return mv;
-	}
-
-//파일다운로드========================================================
-	
-	   @RequestMapping("/care/fileDownload")
-	   public void fileDownLoad(String rName, String oName,
-	                     HttpServletResponse response,HttpSession session,
-	                     HttpServletRequest request) {
-	      
-		   //입출력을 하기 위해 스트림만들기->먼저선언하는이유->IOException 없어서 직접 비워주고 채워줘야하기때문
-	      BufferedInputStream bis=null;
-	      ServletOutputStream sos=null;
-	      
-	      String dir=session.getServletContext().getRealPath("/resources/upload/careNotice");
-	      File f=new File(dir+"/"+rName);//파일불러오기
-	      
-	      try {
-	         FileInputStream fis=new FileInputStream(f);
-	         bis=new BufferedInputStream(fis);
-	         sos=response.getOutputStream();
-	         
-	         //오리지날 파일명으로 전송!
-	         String oriName="";
-	         boolean  isMSIE=request.getHeader("user-agent").indexOf("MSIE")!=-1||
-	               request.getHeader("user-agent").indexOf("Trident")!=-1;//익스플로러처리
-	         if(isMSIE) {
-	            oriName=URLEncoder.encode(oName,"UTF-8");
-	            oriName=oriName.replaceAll("\\+", "%20");
-	         }else {
-	            oriName=new String(oName.getBytes("UTF-8"),"ISO-8859-1");
-	         }
-	         response.setContentType("application/otect-stream;charset=UTF-8");
-	         //불특정한 파일(확장자 모름)otect-stream
-	         response.addHeader("Content-Disposition", "attachment;filename=\""+oriName+"\"");
-	         response.setContentLength((int)f.length() );
-	         int read=0;
-	         while((read=bis.read())!=-1) {
-	            sos.write(read);
-	         }
-	      }catch(IOException e){
-	         e.printStackTrace();
-	      }finally {
-	         try {
-	            sos.close();
-	            bis.close();
-	         }catch(IOException e) {
-	            e.printStackTrace();
-	         }
-	      }
-	   }
-	
+	}	
 	
 //돌보미글 수정페이지로 이동============================================
 	@RequestMapping("/care/updateView")
@@ -217,17 +223,18 @@ public class CareNoticeController {
 		
 		List<CareAttachment> files = service.updateViewFile(no);
 						
+	
+		
 		mv.addObject("c",c);
+		
 		mv.addObject("files",files);
-
 		mv.setViewName("client/careNotice/careUpdate");
 		return mv;
 	}
 	
 	
 //돌보미글 수정하기=================================================
-	
-	
+		
 	  @RequestMapping("/care/update.do") 
 	  public String updateCare(Model model,@RequestParam Map<String,String> param, 
 	  MultipartFile[] upFile, HttpSession session, HttpServletRequest request,@RequestParam(value="no") int no) {
@@ -251,7 +258,7 @@ public class CareNoticeController {
 			  
 			  	
 			  	String orifile = request.getParameter("orifile");
-			  	logger.debug(""+orifile);
+			
 				File deleteFile = new File(path+"/"+orifile);
 				boolean flag = deleteFile.delete();
 	  
@@ -317,8 +324,6 @@ public class CareNoticeController {
 	  
 	  int result=service.deleteCare(no); 
 	  
-	  logger.debug(""+no);
-	  
 	  String msg=""; 
 	  String loc="";
 	 
@@ -341,12 +346,12 @@ public class CareNoticeController {
 //댓글달기======================================  		  
 	 
 	@RequestMapping("/care/commentEnd")
-	public String insertComment(CareComment c, Model m, @RequestParam("cno") int cno) {
+	public String insertComment(CareComment c, Model m, @RequestParam("no") int no) {
 			
-		int result=service.insertComment(c);
+		int result = service.insertComment(c);
 		
 		String msg="";
-		String loc="/care/careView?cno="+cno;
+		String loc="/care/careView?no="+no;
 			
 		if(result>0) {
 				msg="댓글이 등록되었습니다.";	
@@ -363,14 +368,43 @@ public class CareNoticeController {
 	
 	@RequestMapping("/care/commentList")
 	public ModelAndView commentList(@RequestParam int no, ModelAndView mv) {
-		
+				
 		List<CareComment> list = service.commentList(no);
 		
 		
 		mv.addObject("list",list);
 		
-		mv.setViewName("client/careNotice/careView");
+		mv.setViewName("client/careNotice/careViewComment");
 				
 		return mv;
 	}
+	
+//댓글 삭제=====================================
+	
+	@RequestMapping("/care/replydelete")
+	 public String replydelete(@RequestParam(value="no") int no,@RequestParam(value="cno") int cno ,Model model) {
+		
+		logger.debug(""+no);
+		
+		 int result = service.replydelete(no); 
+		  
+		  
+		  String msg=""; 
+		  String loc="/care/careView?no="+cno;
+		 
+		  if(result>0) { 
+			  msg="댓글이 삭제 되었습니다."; 
+			  
+		  }else {
+			  msg="삭제를 실패하였습니다."; 
+		  } 
+		  
+		  model.addAttribute("msg",msg);
+		  model.addAttribute("loc",loc); 
+		  
+		  return "client/common/msg"; 
+		  
+		  }
+
+
 }
