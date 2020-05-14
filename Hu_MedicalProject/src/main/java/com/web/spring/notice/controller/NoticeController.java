@@ -55,7 +55,7 @@ public class NoticeController {
 	}
 /////////공지사항 상세 화면 ///////////
 	@RequestMapping("/notice/noticeView")
-	public ModelAndView noticeView(ModelAndView mv, int no){
+	public ModelAndView noticeView(ModelAndView mv, @RequestParam("no") int no){
 		
 		Notice notice = service.noticeView(no);
 		List<NoticeAttachment> files=service.selectNoticeFile(no);
@@ -74,16 +74,9 @@ public class NoticeController {
 /////////공지사항 작성 ///////////
 	@RequestMapping("/notice/noticeInsertEnd") 
 	public ModelAndView noticeInsert(@RequestParam Map<String,String> param,
-								 	 MultipartFile[] upFile, ModelAndView mv, 
+								 	 MultipartFile[] noticeUpFile, ModelAndView mv, 
 									 HttpSession session) { 
-		logger.debug(upFile[0].getName());
-		logger.debug(upFile[0].getOriginalFilename());
-		logger.debug(""+upFile[0].getSize());
-		logger.debug(upFile[1].getName());
-		logger.debug(upFile[1].getOriginalFilename());
-		logger.debug(""+upFile[1].getSize());
-		logger.debug(""+param);
-		
+	
 		//파일업로드 처리하기
 		String path = session.getServletContext().getRealPath("/resources/upload/notice");
 		
@@ -95,7 +88,7 @@ public class NoticeController {
 		if(f.exists()) f.mkdirs();
 	
 		//파일 저장로직 구현 - 파일 rename 처리
-		for(MultipartFile mf : upFile) {
+		for(MultipartFile mf : noticeUpFile) {
 			if(!mf.isEmpty()) {
 				//파일명생성
 				String oriName = mf.getOriginalFilename();

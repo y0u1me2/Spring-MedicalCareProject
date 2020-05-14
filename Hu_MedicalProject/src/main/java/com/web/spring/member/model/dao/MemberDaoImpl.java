@@ -1,5 +1,7 @@
 package com.web.spring.member.model.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -20,5 +22,17 @@ public class MemberDaoImpl implements MemberDao{
 		return session.selectOne("member.memberLogin",m);
 	}
 
+	
+
+	@Override
+	public Member searchEmail(SqlSessionTemplate session, String email) {
+		return session.selectOne("member.searchEmail",email);
+	}
+
+	@Override
+	public String getPw(SqlSessionTemplate session, Map<String, Object> paramMap) {
+		return session.selectOne("member.emailSendPW", paramMap);
+	}
+	
 	
 }
