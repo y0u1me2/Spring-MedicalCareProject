@@ -42,6 +42,7 @@ public class HospitalMemberController {
 	//병원 회원가입
 	@RequestMapping("/hospitalEnrollEnd.do")
 	private ModelAndView hospitalEnrollEnd(HospitalMember h, ModelAndView mv) {
+		System.out.println(h);
 		h.setPassword(pwEncoder.encode(h.getPassword()));//비밀번호 암호화(단방향)
 		h.setTel(encryptor.encrypt(h.getTel()));//양방향 암호화(휴대폰)
 		h.setEmail(encryptor.encrypt(h.getEmail()));//양방향 암호화(이메일)

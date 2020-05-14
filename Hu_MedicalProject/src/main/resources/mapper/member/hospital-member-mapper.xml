@@ -3,7 +3,7 @@
 <mapper namespace="hpMember">
 
 	<insert id="enrollMember" parameterType="hpMember">
-		INSERT INTO HOSPITAL_MEMBER VALUES(SEQ_HOSPITAL_NO.NEXTVAL, #{id}, #{password}, #{hospitalName}, #{hospitalNo}, #{managerName}, #{email}, #{tel}, default)
+		INSERT INTO HOSPITAL_MEMBER VALUES(SEQ_HOSPITAL_NO.NEXTVAL, #{id}, #{password}, #{hospitalName}, #{hospNo}, #{managerName}, #{email}, #{tel}, default)
 	</insert>
 	
 	<select id="loginMember" parameterType="hpMember" resultType="hpMember">

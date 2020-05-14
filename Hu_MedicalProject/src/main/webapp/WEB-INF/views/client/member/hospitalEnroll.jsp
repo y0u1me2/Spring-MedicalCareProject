@@ -67,19 +67,18 @@ a:link, a:visited, a:hover {
 					<p><b>병원 정보</b></p>
 					 <div class="form-group">
 					 	<div class="input-group mb-3">
-					   		<input list ="hospitalList" type="text" class="form-control" id="hospital_name" placeholder="가입병원을 선택하세요" name="hospitalName" required autocomplete="off">
+					   		<input list ="hospitalList" type="text" class="form-control" id="hospital_name" placeholder="가입병원을 선택하세요" name="hospitalName" required autocomplete="off" value="kh종합병원">
 					 		<div class="input-group-append">
 								<button id="btnSearch" class="btn btn-light" type="button">검색하기</button>
 							</div>
 						 	<datalist id="hospitalList" >
-						 		<option id="123">파이썬</option>
 						 	</datalist>
 						 	
 						</div>
 					 	<div class="invalid-feedback"></div>
 					 </div>
 					 <div class="form-group">
-					   <input type="text" class="form-control" id="hospital_number" placeholder="요양기관 번호 (숫자, 8자)" name="hospitalNo" required autocomplete="off">
+					   <input type="text" class="form-control" id="hospital_number" placeholder="요양기관 번호 (숫자, 8자)" name="hospNo" required autocomplete="off" value="JDQ4MTg4MSM1MSMkMSMkMCMkODkkMzgxMzUxIzExIyQyIyQ3IyQwMCQyNjEwMDIjODEjJDEjJDIjJDgz">
 					 	<div class="invalid-feedback"></div>
 					 </div>
 				</div>
@@ -217,16 +216,16 @@ $(function(){
 	});
 	
 	//입력했는지 확인
-	$("#hospital_name").blur(function(){
+	/* $("#hospital_name").blur(function(){
 		checkHospitalName();
-	});
+	}); */
 	
 	//요양기관번호 유효성 검사
-	$("#hospital_number").blur(function(){
+	/* $("#hospital_number").blur(function(){
 		checkHospitalNumber();
-	});
+	}); */
 	
-	$("#manager_name").blur(function(){
+	/* $("#manager_name").blur(function(){
 		checkManagerName();
 	});
 	
@@ -240,19 +239,19 @@ $(function(){
 	
 	$("#agree").change(function(){
 		checkAgree();
-	});
+	}); */
 	
-	$("#btnSearch").click(function(){
+	/* $("#btnSearch").click(function(){
 		getList();
-	});
+	}); */
 	
 	/* $("#hospital_name").keyup(function(){
 		getList();
 	}) */
 	
-	$("#hospital_name").on('change', function() {
+	/* $("#hospital_name").on('change', function() {
        	console.log($(this).val());
-    });
+    }); */
 	
 })
 
@@ -490,12 +489,12 @@ function validate(){
 	if(checkId()==false) result = false;
 	if(checkPw()==false) result = false;
 	if(checkPw2()==false) result = false;
-	if(checkHospitalName()==false) result = false;
+	/* if(checkHospitalName()==false) result = false;
 	if(checkHospitalNumber()==false) result = false;
 	if(checkManagerName()==false) result = false;
 	if(checkEmail()==false) result = false;
 	if(checkPhone()==false) result = false;
-	if(checkAgree()==false) result = false;
+	if(checkAgree()==false) result = false; */
 	
 	return result;
 	
