@@ -131,12 +131,6 @@ a:hover {
 	text-decoration: none;
 	color: rgb(90, 90, 90);
 }
-/* 좋아요 */
-img#heart {
-	width: 15px;
-	position: relative;
-	bottom: 2px;
-}
 
 #comment-container {
 	padding: 20px 0 0 12px;
@@ -173,12 +167,18 @@ img#heart {
 	border: 1px solid #e2e0e0;
 }
 
-#nc_tbl tr td {
+#nc_tbl tr.level1 td {
 	padding: 15px 5px 5px 50px;
 	height:100px;
-	float:left;
-	
+	float:left;	
 }
+
+.level2 td{
+	padding: 15px 5px 5px 100px;
+	height:100px;
+	float:left;	
+}
+
 
 /* 답글 버튼  */
 img#replyimg{
@@ -197,6 +197,18 @@ div#btn-reply-container{
 	position: relative;
 	left:800px;
 	bottom:45px;
+}
+
+.btn-insert2{
+	width: 80px;
+	height: 53px;
+	border: solid 1px rgb(209, 209, 228);
+	background: white;
+	border-radius: 3px;
+	font-size: 15px;
+	color: rgb(134, 134, 133);
+	margin-left: 10px;
+	margin-bottom: 10px;
 }
 
 footer {

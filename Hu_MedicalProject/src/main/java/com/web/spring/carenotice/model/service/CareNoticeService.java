@@ -41,6 +41,9 @@ public interface CareNoticeService {
 		//댓글 달기
 		int insertComment(CareComment c);
 		
+		//댓글 달기2
+		int insertComment2(CareComment c);
+		
 		//댓글 리스트
 		List<CareComment> commentList(int no);
 		int commentCount(int no);

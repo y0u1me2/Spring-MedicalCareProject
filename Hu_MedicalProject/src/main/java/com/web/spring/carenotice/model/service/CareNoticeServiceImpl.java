@@ -163,6 +163,14 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		return dao.insertComment(session,c);
 	}
 
+//댓글달기2===================================================
+	
+		@Override
+		public int insertComment2(CareComment c) {
+			
+			return dao.insertComment2(session,c);
+		}
+
 
 //댓글 리스트================================================
 	
