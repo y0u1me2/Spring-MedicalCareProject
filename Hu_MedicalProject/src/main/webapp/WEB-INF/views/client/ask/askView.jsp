@@ -45,6 +45,7 @@
                <hr>
           <div style="height: 130px;">
            	<img src="${path }/resources/images/logo6.png"  style="width:70px; float:left; padding-right:20px;">
+           	
            	<form id="askFrm">
            	<input type="hidden" id="contentRe" value="${reply.replyContent }">
 			  <div id="replyContent" style="margin-top:30px;">
@@ -107,7 +108,6 @@ function replyUpdateEnd(){
 	
 	var result={'replyContent':$('#replyContent').val(),'replyRefNo':'${reply.replyRefNo}'};
 	console.log(result);
-	  
 	$.ajax({
 		url:'${path}/reply/updateReply.do',
 		type:'POST',

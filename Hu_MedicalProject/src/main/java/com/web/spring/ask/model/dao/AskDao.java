@@ -52,8 +52,6 @@ public interface AskDao {
 //답변 완료 replycnt-1
 	int deleteReplyCnt(SqlSessionTemplate session, int no);
 
-//-----------------------------------------------------chat Test
-	List<Member> memberList(SqlSessionTemplate session);
 
 	
 

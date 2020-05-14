@@ -19,8 +19,13 @@
             </div>
           <div class=" col-xl-6"> 
           제목 <input name="askTitle" type="text" class="form-control" required>
-          작성자 <input name="askWriter" type="text" class="form-control" value="${loginMember.name }" required>
-
+         <c:if test="${not empty loginMember  }">
+          작성자	 <input name="askWriter" type="text" class="form-control" value="${loginMember.name }" required>
+		</c:if>
+		<c:if test="${not empty loginHpMember  }">
+          작성자	 <input name="askWriter" type="text" class="form-control" value="${loginHpMember.id }" required>
+		</c:if>
+		
            <div class="form-group" style="margin-top: 20px;"> 문의내용
             <label for="comment"></label>
           <textarea name="askContent" class="form-control" rows="8" id="comment" required></textarea>

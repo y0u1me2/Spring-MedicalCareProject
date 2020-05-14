@@ -106,14 +106,5 @@ public class AskDaoImpl implements AskDao {
 
 
 	
-//-------------------------------------------------------------chatTest
-	
-	@Override
-	public List<Member> memberList(SqlSessionTemplate session) {
-		return session.selectList("member.memberList");
-
-	}
-
-	
 
 }

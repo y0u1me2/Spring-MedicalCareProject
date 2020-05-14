@@ -28,8 +28,6 @@
     
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/header.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/footer.css"/>
-
-
 </head>
 <body>
   <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:150px;">
@@ -54,7 +52,7 @@
        -->
       
 
-       <c:if test="${loginMember ne null }">
+       <c:if test="${loginMember != null or loginHpMember !=null  }">
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
 	        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
@@ -317,52 +315,82 @@ function logoutChk(){
 	location.href="${path}/member/logout.do";
 }
 
-//채팅 알람띄워주기
-		function accessChatting(room){//병원회원-일반회원일때 매개변수 2개 받기
+//---------------------------------------채팅 시작!--------------------------------------------
+		//admin
+		function accessChatting(room1){//병원회원-일반회원일때 매개변수 2개 받기
 			//room은 로그인된 userId가 매개변수로 들어간다.
-			if(${loginMember.email ne "admin"}){
+			if(${loginMember.email ne "admin"  } ){
 				//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
 				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
 				requestChatting();
 			}
-			open("${path}/chattingView?room="+room,"_blank","width=500,height=490");
+			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
 		}
 		
+		//병원
+		 function hpAccessChatting(room1,room2){
+		//room1은일반회원(요청한회원) room2는 병원회원(요청받은회원) 
+			if(${not empty loginMember}){
+				hpRequestChatting(room2);
+			}
+			open("${path}/chattingView?room1=${loginMember.email}&room2="+room2,"_blank","width=500,height=490");
+		}
 </script>
-	<c:if test="${not empty loginMember }">
+	<c:if test="${not empty loginMember or not empty loginHpMember }">
 	<!--로그인이 되었을때 문의하기!  -->
 		<script>
 			//채팅알람받는 웹소켓 구성하기
 			let alram=new WebSocket("ws://localhost:9090${path}/alram");
+			
 			alram.onopen=function(msg){
+				console.log("msg :"+msg);
+				
+				if(${not empty loginMember}){
 				alram.send(JSON.stringify(new AlramMessage("client","접속","${loginMember.email}","")));//공란병원회원
-				//AlramMessage(type,msg,sender,receiver)
-			}
-			alram.onmessage=function(msg){
-				//웹소켓은 메시지를 보내면 자동으로 onmessage를 통해서 받게된다
-				const data=JSON.parse(msg.data);
-				switch(data.type){
-				//관리자에게 알림이 뜨는 메서드
-					case "newchat" : openChatting(data);break; 
+				}
+				
+				else if(${not empty loginHpMember}){
+					alram.send(JSON.stringify(new AlramMessage("client","접속","${loginHpMember.id}","")));//공란병원회원
 				}
 			}
 			
+			alram.onmessage=function(msg){
+				const data=JSON.parse(msg.data);
+				console.log(data);
+				switch(data.type){
+					//admin
+					case "newchat" : openChatting(data);break;
+					
+					//병원
+					case "hospitalChat" : hpOpenChatting(data);break;
+				}
+			}
+//--------------------------------------관리자 알림-------------------------------------------------			
+			//admin
 			function openChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
 					accessChatting(data.sender);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
 			
+			//병원
+			function hpOpenChatting(data){
+				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
+					hpAccessChatting(data.sender);//관리자도(병원도) 창을 띄워줘야하므로!
+				}
+			}
+//------------------------요청 보내기-------------------------------------------------------------------			
+			//admin
 			function requestChatting(){
 				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));//
 			//일반회원이 admin에게 채팅보냄
 			}
-/* 
-			function requestChatting(){
-				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","${loginHospital.email}")));
-			//일반회원이 admin에게 채팅보냄
-			} */
-			
+			//병원
+			 function hpRequestChatting(room2){
+				 console.log("병원 :"+room2);
+				alram.send(JSON.stringify(new AlramMessage("hospitalChat","병원문의","${loginMember.email}",room2)));
+			} 
+//------------------------객체------------------------------------------------------------------------
 			function AlramMessage(type,msg,sender,receiver){
 				this.type=type;
 				this.msg=msg;

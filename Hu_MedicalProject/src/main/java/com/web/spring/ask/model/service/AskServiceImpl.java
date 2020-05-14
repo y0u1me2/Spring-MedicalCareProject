@@ -120,11 +120,6 @@ public int deleteReplyCnt(int no) {
 	return dao.deleteReplyCnt(session,no);
 }
 
-//-----------------------------------------------chat Test
-@Override
-public List<Member> memberList() {
-	return dao.memberList(session);
-}
 
 
 

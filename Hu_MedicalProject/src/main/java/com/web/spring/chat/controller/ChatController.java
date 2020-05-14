@@ -1,24 +1,21 @@
 package com.web.spring.chat.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.web.spring.ask.model.service.AskService;
-import com.web.spring.member.model.vo.Member;
+import com.web.spring.member.model.service.HospitalMemberService;
+import com.web.spring.member.model.vo.Hospital;
 
 @Controller
 public class ChatController {
 
 	@Autowired
-	private AskService service;
+	private HospitalMemberService service;
 	
 	@Autowired
 	Logger logger;
@@ -33,8 +30,9 @@ public class ChatController {
 		@RequestMapping("/test/test.do")
 		public ModelAndView page(ModelAndView mv) {
 			
-			List<Member> list=service.memberList();
+			List<Hospital> list=service.HpMemberList();
 			
+			logger.debug("병원리스트"+list);
 			mv.addObject("list",list);
 			mv.setViewName("client/ask/memberList");
 			

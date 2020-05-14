@@ -16,6 +16,9 @@
 		SELECT * FROM HOSPITAL_MEMBER WHERE ID = #{id}
 	</select>
 	
+	<select id="HpMemberList" resultType="hospital">
+		SELECT * FROM HOSPITAL_MEMBER
+	</select>	
 	
 	
 </mapper>

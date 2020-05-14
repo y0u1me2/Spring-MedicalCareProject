@@ -26,6 +26,9 @@ public class ReplyController {
 	
 	
 	
+	
+	
+	
 //insert	
 	@RequestMapping("/reply/insertReply.do")
 	public String insertReply(AskReply reply,Model model,@RequestParam("replyRefNo") int no) {

@@ -49,8 +49,5 @@ public interface AskService {
 
 	int searchAskCount();
 
-	
-//---------------------------------------------chatTest
-	List<Member> memberList();
 
 }
