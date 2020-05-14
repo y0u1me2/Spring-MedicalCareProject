@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 public class CareComment {
 	
 	private int commentNo;
+	private int memberNo;
 	private int careNo;
 	private int commentLevel;
+	private String commentWriter;
 	private String commentContent;
 	private int commentRef;
 	private Date commentDate;
