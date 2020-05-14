@@ -1,5 +1,7 @@
 package com.web.spring.member.model.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +27,12 @@ public class HospitalMemberServiceImpl implements HospitalMemberService {
 	public Hospital hospitalLogin(Hospital h) {
 		return dao.hospitalLogin(session, h);
 	}
+
+//chat을 위한 List받아오기
+	@Override
+	public List<Hospital> HpMemberList() {
+		return dao.HpMemberList(session);
+	}
+	
 
 }

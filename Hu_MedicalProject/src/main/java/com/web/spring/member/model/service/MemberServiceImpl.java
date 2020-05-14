@@ -1,5 +1,7 @@
 package com.web.spring.member.model.service;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +29,20 @@ public class MemberServiceImpl implements MemberService{
 	public Member memberLogin(Member m) {
 		return dao.memberLogin(session,m);
 	}
+
+
+	
+
+	@Override
+	public Member searchEmail(String email) {
+		return dao.searchEmail(session,email);
+	}
+
+
+	@Override
+	public String getPw(Map<String, Object> paramMap) {
+		return dao.getPw(session,paramMap);
+	}
+	
 	
 }

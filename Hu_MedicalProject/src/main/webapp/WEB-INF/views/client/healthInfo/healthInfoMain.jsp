@@ -177,36 +177,10 @@
 						<div class="big p-2">요즘 많이 찾는 건강정보</div>							
 					</div>
 					<div class="bottom-content">
-						<!-- <div class="d-flex justify-content-between" id="frquent-info-1">
-						</div>
-							
-						<div class="d-flex justify-content-between" id="frquent-info-2">	
-						</div> -->
 					</div>
 				</div>
 			</div>
-			<!-- <div class="col-3" style="border:1px solid black;">
-				<div id="realSearchList" style="width:450px; height:310px;">
-					<h2>실검 Top10</h2>
-					<ol>
-					</ol>
-				</div>
-			</div> -->
-		</div>
-				
-		<div class="row bottom">			
-			<div class="col bg-success">1 of 2</div>
-			<div class="col bg-warning">2 of 2</div>
-		</div>
-		<div class="d-flex justify-content-around bg-secondary mb-3">
-		    <div class="p-2 bg-info">Flex item 1</div>
-		</div>
-		<div class="row">
-			<div class="col bg-success">
-			</div>
-			<div class="col bg-warning">
-			</div>
-		</div>
+		</div>	
 	</div>
 </section>
 <script>

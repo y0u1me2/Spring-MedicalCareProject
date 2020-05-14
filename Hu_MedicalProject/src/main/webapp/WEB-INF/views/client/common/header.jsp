@@ -28,8 +28,6 @@
     
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/header.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/footer.css"/>
-
-
 </head>
 <body>
   <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:150px;">
@@ -54,14 +52,15 @@
        -->
       
 
-      </li> -->
-       <c:if test="${loginMember ne null }">
+       <c:if test="${loginMember != null or loginHpMember !=null  }">
+<%--        <c:if test="${loginMember ne null }"> --%>
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
 	        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	            <a class="dropdown-item" href="${path }/care/careNotice">돌보미 찾기</a>
 	            <a class="dropdown-item" href="${path }/ask/ask.do">문의 게시판</a>
+	            <a class="dropdown-item" href="${path }/test/test.do">test</a>
 	        </div>
 	      </li>
     </c:if>
@@ -79,17 +78,15 @@
           <li class="nav-item" style="margin-left:250px;">
             <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('loginChoice').style.display='block'">로그인</button>
             <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('joinChoice').style.display='block'" style="width:auto;">회원가입</button>
-            
           </li>
          </c:when>
          <c:when test = "${not empty loginMember }">
                	
 			<li class="nav-item" style="margin-left:100px;">
-				<a href="#" style="align:right;"><c:out value="${loginMember.name }"></c:out> 님</a>
+				<a href="${path }/myPage/myPageMain" style="align:right;" ><c:out value="${loginMember.name }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
 				   <button class="btn btn-outline-dark" type="button"
-						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>  
-						
+						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>
 	        </li>
          </c:when>
          
@@ -106,7 +103,7 @@
          </c:otherwise>
       </c:choose>
     </ul>
- 
+ </nav>
 <!-- 로그인 선택 모달 -->
 <div id="loginChoice" class="modal" style="z-index:1;">
   <form class="modal-content animate" method="post" style="width:50%;">
@@ -217,38 +214,58 @@
     </div>
 
     <div class="containerlogin">
-      <input type="text" placeholder="아이디" id="hospitalId" name="id" autocomplete="off" required>
-      <input type="password" placeholder="비밀번호" id="hospitalPsw" name="password" required>
-      <label>
-        <input type="checkbox" id="store" name="saveId">아이디 저장
-      </label>
-
-      <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE;">병원 회원 Login</button>   
-
-     <div class="containerlogin" style="background-color:white; text-align:center;">
-    	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
-        &nbsp;/&nbsp;
-         <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findPsw').style.display='block'">비밀번호 찾기</button>
-    </div>    
+	      <input type="text" placeholder="아이디" id="hospitalId" name="id" autocomplete="off" required>
+	      <input type="password" placeholder="비밀번호" id="hospitalPsw" name="password" required>
+	      <label>
+	        <input type="checkbox" id="store" name="saveId">아이디 저장
+	      </label>
+	
+	      <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE;">병원 회원 Login</button>   
+	
+	     <div class="containerlogin" style="background-color:white; text-align:center;">
+	    	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
+	        &nbsp;/&nbsp;
+	         <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findPsw').style.display='block'">비밀번호 찾기</button>
+	    </div>    
+	</div>
+	</form>
 </div>
- </nav>
-  </form>
-  </div>
+
 <!-- 비밀번호 찾기 -->
-<!-- <div id="findPsw" class="modal" >
-  <form class="modal-content animate" method="post" style="width:50%;">
-  
+<div id="findPsw" class="modal" >
+  <form class="modal-content animate" style="width:50%;">
+  <!-- action="${path}/searchPwd.do" method="post" -->
       <div class="imgcontainer" style="height:10px">
         <span onclick="document.getElementById('findPsw').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
       </div>
       <br>
    <div class="containerNewPSW" style="margin:0 auto;">
-      <input type="text" placeholder="E-mail" id="email" name="email" autocomplete="off" required><br>
-      <button onclick="findPsw();" class="findPswBtn" type="submit" style="background-color:#DAF1DE">비밀번호 찾기</button>
+   <h2 class="text-center">비밀번호 찾기</h2>
+      <input type="text" placeholder="E-mail" id="memberEmail" name="memberEmail" autocomplete="off" required>
+      <button type="button" class="emailChk" onclick="searchEmail();" style="background-color:#DAF1DE">이메일 확인</button><br>
+      <button class="findPswBtn" id="findPswBtn" type="submit" style="background-color:#DAF1DE">비밀번호 변경</button>
+   </div>
   <div><br><br></div>
      
   </form>
-</div> -->
+  
+</div>
+<!-- 인증번호 확인 창 -->
+<div id="containerPswCode" class="modal" >
+  <form class="modal-content animate" method="post" style="width:50%;">
+      <div class="imgcontainer" style="height:10px">
+        <span onclick="document.getElementById('findPsw').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
+      </div>
+      <br>
+   <div class="pswCode" style="margin:0 auto;">
+   <h2 class="text-center">인증번호 확인</h2>
+      <input type="text" placeholder="인증번호 작성" id="pswcode" name="pswcode" autocomplete="off" required><br>
+      <button onclick="pswCode();" class="findPswBtn" type="submit" style="background-color:#DAF1DE">인증번호 전송</button>
+   </div>
+  <div><br><br></div>
+     
+  </form>
+</div>
 <!-- 아이디 찾기 -->
 <!-- <div id="findEmail" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
@@ -261,6 +278,7 @@
       <input type="text" placeholder="이름 입력" name="name" id="name" required><br>
       <input type="text" placeholder="핸드폰 번호 입력 (-를 제외하고 입력)" name="phone" id="phone" required><br>
       <button onclick="findEmail();" class="findEmailBtn" type="submit" style="background-color:#DAF1DE">아이디 찾기</button>
+  </div>
   <div><br><br></div>
      
   </form>
@@ -298,9 +316,44 @@ function hospitalLogin(){
 	location.href="${path}/member/hospitalEnroll.do";
 }
 
-/* function newPSW(){
-	location.href="${path}/newPassword";
-} */
+function searchEmail(){
+	var email = $('#memberEmail').val();
+	console.log(email);
+	
+	$.ajax({
+		url:"${path }/searchEmail",
+		data:{"email":email},
+		success:function(data){
+			console.log("이거디"+data.member);
+			
+			if(data.member != 1){
+				alert("이메일이 존재합니다. 비밀번호 변경 버튼을 누르면 이메일이 전송됩니다.");
+			}else{
+				alert("이메일이 존재하지 않습니다. 회원가입 후 이용하세요!");
+				location.reload();
+			}
+			
+		}
+	})
+} 
+$('#findPswBtn').on('click', function(){
+   
+    $.ajax({
+        url: "requestObject",
+        type: "POST",
+        data: form,
+        success: function(data){
+            $('#containerPswCode').text(data);
+        },
+        error: function(){
+            alert("simpleWithObject err");
+        }
+    });
+});
+function pswCode(){
+	location.href="pass_injeung.do?email=${memberEmail}";
+}
+
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -319,59 +372,99 @@ function logoutChk(){
 	location.href="${path}/member/logout.do";
 }
 
-//채팅 알람띄워주기
-		function accessChatting(room){//병원회원-일반회원일때 매개변수 2개 받기
+//---------------------------------------채팅 시작!--------------------------------------------
+		//admin
+		function accessChatting(room1){//병원회원-일반회원일때 매개변수 2개 받기
 			//room은 로그인된 userId가 매개변수로 들어간다.
-			if(${loginMember.email ne "admin"}){
+			if(${loginMember.email ne "admin"  } ){
 				//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
-				
 				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
 				requestChatting();
 			}
-			open("${path}/chattingView?room="+room,"_blank","width=500,height=490");
+			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
 		}
+		
+		//병원
+		 function hpAccessChatting(room1,room2){
+		//room1은일반회원(요청한회원) room2는 병원회원(요청받은회원) 
+			if(${not empty loginMember}){
+				hpRequestChatting(room2);
+			}
+			open("${path}/chattingView?room1=${loginMember.email}&room2="+room2,"_blank","width=500,height=490");
+		}
+//채팅 알람띄워주기
+function accessChatting(room){//병원회원-일반회원일때 매개변수 2개 받기
+	//room은 로그인된 userId가 매개변수로 들어간다.
+	if(${loginMember.email ne "admin"}){
+		//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
+		
+		//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
+		requestChatting();
+	}
+	open("${path}/chattingView?room="+room,"_blank","width=500,height=490");
+}
 </script>
-	<c:if test="${not empty loginMember }">
+	<c:if test="${not empty loginMember or not empty loginHpMember }">
 	<!--로그인이 되었을때 문의하기!  -->
 		<script>
 			//채팅알람받는 웹소켓 구성하기
 			let alram=new WebSocket("ws://localhost:9090${path}/alram");
+			
 			alram.onopen=function(msg){
+				console.log("msg :"+msg);
+				
+				if(${not empty loginMember}){
 				alram.send(JSON.stringify(new AlramMessage("client","접속","${loginMember.email}","")));//공란병원회원
-				//AlramMessage(type,msg,sender,receiver)
-			}
-			alram.onmessage=function(msg){
-				//웹소켓은 메시지를 보내면 자동으로 onmessage를 통해서 받게된다
-				const data=JSON.parse(msg.data);
-				switch(data.type){
-				//관리자에게 알림이 뜨는 메서드
-					case "newchat" : openChatting(data);break; 
+				}
+				
+				else if(${not empty loginHpMember}){
+					alram.send(JSON.stringify(new AlramMessage("client","접속","${loginHpMember.id}","")));//공란병원회원
 				}
 			}
 			
+			alram.onmessage=function(msg){
+				const data=JSON.parse(msg.data);
+				console.log(data);
+				switch(data.type){
+					//admin
+					case "newchat" : openChatting(data);break;
+					
+					//병원
+					case "hospitalChat" : hpOpenChatting(data);break;
+				}
+			}
+//--------------------------------------관리자 알림-------------------------------------------------			
+			//admin
 			function openChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
 					accessChatting(data.sender);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
 			
+			//병원
+			function hpOpenChatting(data){
+				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
+					hpAccessChatting(data.sender);//관리자도(병원도) 창을 띄워줘야하므로!
+				}
+			}
+//------------------------요청 보내기-------------------------------------------------------------------			
+			//admin
 			function requestChatting(){
 				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));//
 			//일반회원이 admin에게 채팅보냄
 			}
-/* 
-			function requestChatting(){
-				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","${loginHospital.email}")));
-			//일반회원이 admin에게 채팅보냄
-			} */
-			
+			//병원
+			 function hpRequestChatting(room2){
+				 console.log("병원 :"+room2);
+				alram.send(JSON.stringify(new AlramMessage("hospitalChat","병원문의","${loginMember.email}",room2)));
+			} 
+//------------------------객체------------------------------------------------------------------------
 			function AlramMessage(type,msg,sender,receiver){
 				this.type=type;
 				this.msg=msg;
 				this.sender=sender;
 				this.receiver=receiver;			
 			}
-		
 			
 		
 		</script>

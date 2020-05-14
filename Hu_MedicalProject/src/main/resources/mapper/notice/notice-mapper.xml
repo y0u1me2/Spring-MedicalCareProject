@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="notice">
+<!-- /////////공지사항 페이지 /////////// -->
   <select id="noticeList" resultType="notice">
      	SELECT A.*,(SELECT COUNT(*) 
      				FROM NOTICEATTACHMENT
@@ -8,14 +9,22 @@
         FROM NOTICE A 
         WHERE NOTICESTATUS='Y' ORDER BY NOTICEDATE DESC
    </select>
-
+   
+<!-- /////////공지사항  개수 카운트 /////////// -->
    <select id="noticeCount" resultType="_int">
-      SELECT COUNT(*) FROM NOTICE
+      SELECT COUNT(*) FROM NOTICE WHERE NOTICESTATUS='Y'
    </select>
+   
+<!-- /////////공지사항  상세 화면 /////////// -->  
    <select id="noticeView" parameterType="_int" resultType="notice">
 		SELECT * FROM NOTICE WHERE NOTICENO=#{no} ORDER BY NOTICEDATE DESC
 	</select>
 
+ <select id="selectNoticeFile" parameterType="_int" resultType="noticeAttachment">
+  		SELECT * FROM NOTICEATTACHMENT WHERE NOTICENO=#{no}
+  </select>
+  
+<!-- /////////공지사항 작성 /////////// -->  
  	<insert id="noticeInsert" parameterType="map">
  		INSERT INTO NOTICE VALUES(SEQ_NOTICE_NO.NEXTVAL,
 					  #{noticeWriter},#{noticeTitle},
@@ -25,15 +34,34 @@
 	 	</selectKey>
 	 </insert>
   
-	<insert id="noticeAttachment" parameterType="noticeAttachment">
+	<insert id="insertNoticeAttachment" parameterType="noticeAttachment">
   	INSERT INTO NOTICEATTACHMENT VALUES(SEQ_NOTICEATTACHMENTNO.NEXTVAL,
   								  #{noticeNo},#{originalFilename},
   								  #{renamedFilename},DEFAULT,DEFAULT,DEFAULT )
   </insert>
-   <select id="selectNoticeFile" parameterType="_int" resultType="noticeAttachment">
-  		SELECT * FROM NOTICEATTACHMENT WHERE NOTICENO=#{no}
-  </select>
+  
+<!-- /////////공지사항 삭제 /////////// -->  
   <update id="noticeDelete" parameterType="notice">
  	 UPDATE NOTICE SET NOTICESTATUS='N' WHERE NOTICENO=#{no}
 	</update>
+	
+<!-- /////////공지사항 수정 페이지 이동 /////////// -->  	
+	<select id="noticeUpdate" parameterType="_int" resultType="notice">
+    	SELECT * FROM NOTICE WHERE NOTICENO=#{no}
+    </select> 
+    
+     <select id="noticeUpdateFile" parameterType="_int" resultType="noticeAttachment">
+    	SELECT * FROM NOTICEATTACHMENT WHERE NOTICENO=#{no}
+    </select> 
+    
+<!-- /////////공지사항 수정하기 /////////// -->      
+  	<update id="noticeUpdateEnd" parameterType="notice">
+		UPDATE NOTICE SET NOTICETITLE=#{noticeTitle},NOTICECONTENT=#{noticeContent} WHERE NOTICENO=#{no}		
+	</update>
+	
+    <update id="updateNoticeAttachment" parameterType="noticeAttachment">
+       UPDATE NOTICEATTACHMENT SET ORIGINALFILENAME=#{originalFilename},
+                                RENAMEDFILENAME=#{renamedFilename},UPLOADDATE=DEFAULT WHERE NOTICENO=#{noticeNo}
+                                
+    </update> 
 </mapper>
