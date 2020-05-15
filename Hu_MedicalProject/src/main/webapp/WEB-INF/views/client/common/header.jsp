@@ -234,7 +234,7 @@
 
 <!-- 비밀번호 찾기 -->
 <div id="findPsw" class="modal" >
-  <form class="modal-content animate" style="width:50%;">
+  <form class="modal-content animate" name="findPswForm" style="width:50%;">
   <!-- action="${path}/searchPwd.do" method="post" -->
       <div class="imgcontainer" style="height:10px">
         <span onclick="document.getElementById('findPsw').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
@@ -243,30 +243,18 @@
    <div class="containerNewPSW" style="margin:0 auto;">
    <h2 class="text-center">비밀번호 찾기</h2>
       <input type="text" placeholder="E-mail" id="memberEmail" name="memberEmail" autocomplete="off" required>
+      <input type="hidden" class="idChecked" name="idChk" value="0">
       <button type="button" class="emailChk" onclick="searchEmail();" style="background-color:#DAF1DE">이메일 확인</button><br>
-      <button class="findPswBtn" id="findPswBtn" type="submit" style="background-color:#DAF1DE">비밀번호 변경</button>
+      <div style="text-align:center;">
+      <button class="findPswBtn" id="findPswBtn" type="button" onclick="sendEmail();" style="background-color:#DAF1DE">인증번호 전송</button>
+  	</div>
    </div>
   <div><br><br></div>
      
   </form>
   
 </div>
-<!-- 인증번호 확인 창 -->
-<div id="containerPswCode" class="modal" >
-  <form class="modal-content animate" method="post" style="width:50%;">
-      <div class="imgcontainer" style="height:10px">
-        <span onclick="document.getElementById('findPsw').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
-      </div>
-      <br>
-   <div class="pswCode" style="margin:0 auto;">
-   <h2 class="text-center">인증번호 확인</h2>
-      <input type="text" placeholder="인증번호 작성" id="pswcode" name="pswcode" autocomplete="off" required><br>
-      <button onclick="pswCode();" class="findPswBtn" type="submit" style="background-color:#DAF1DE">인증번호 전송</button>
-   </div>
-  <div><br><br></div>
-     
-  </form>
-</div>
+
 <!-- 아이디 찾기 -->
 <!-- <div id="findEmail" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
@@ -329,14 +317,27 @@ function searchEmail(){
 			
 			if(data.member != 1){
 				alert("이메일이 존재합니다. 비밀번호 변경 버튼을 누르면 이메일이 전송됩니다.");
+				document.findPswForm.idChk.value=1;
 			}else{
 				alert("이메일이 존재하지 않습니다. 회원가입 후 이용하세요!");
-				location.reload();
+				//location.reload();
 			}
 			
 		}
 	})
 } 
+function sendEmail(){
+	 if (document.findPswForm.idChk.value==0)
+	 {
+		alert("이메일을 확인 하세요");
+		console.log("dididi");
+	     /* $("#memberEmail").focus();    */
+	    return false;
+	 }else{
+		 var email = $('#memberEmail').val();
+		location.href="${path }/findPass.do?memberEmail="+email;
+	 }
+}
 $('#findPswBtn').on('click', function(){
    
     $.ajax({
@@ -352,7 +353,7 @@ $('#findPswBtn').on('click', function(){
     });
 });
 function pswCode(){
-	location.href="pass_injeung.do?email=${memberEmail}";
+	location.href="${path}/pass_injeung.do";
 }
 
 function onSignIn(googleUser) {

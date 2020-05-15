@@ -28,5 +28,7 @@
 		SELECT PASSWORD FROM MEMBER WHERE EMAIL = #{email}
 		UPDATE MEMBER SET PASSWORD = #{password} WHERE EMAIL=#{email}
 	</update> -->
-	
+	<update id="changeMemberPsw" parameterType="member">
+		UPDATE MEMBER SET PASSWORD = #{memberPsw} WHERE EMAIL=#{memberId}		
+	</update>
 </mapper>

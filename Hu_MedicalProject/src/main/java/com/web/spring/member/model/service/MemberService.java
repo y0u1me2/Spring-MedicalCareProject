@@ -13,6 +13,8 @@ public interface MemberService {
 	
 	String getPw(Map<String, Object> paramMap);
 	
+	int changeMemberPsw(Map<String, Object> map);
+	
 	
 
 }

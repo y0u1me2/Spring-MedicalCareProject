@@ -166,39 +166,6 @@
 </div>
 <script>
 
-/* function sendMail(email){
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function(){
-		if(xhttp.readyState == 4){
-			if(xhttp.status == 200){
-				alert("메일을 정상적으로 보냈습니다.");
-			}else{
-				alert("올바르지 않은 메일 형식입니다.");
-			}
-		}	
-	};
-	xhttp.open("POST",'sendMail/', true);
-	xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=UTF-8");
-	xhttp.send('email='+ email);
-	return false;
-		
-} */
-/* function emailOK(){
-	var emailCode = $("")
-	if($("#emailCode").val()==""){
-		//alert("인증번호를 입력하세요!");
-		$("#emailCode").focus();  
-		 return false;
-	}
-	if($("#joinCode").val() != $("#emailCode").val()){
-		alert("이메일 인증 실패하였습니다!");
-		$("#emailCode").focus(); 
-		return false;
-		
-	}else{
-		alert("이메일 인증 확인되었습니다!");
-	}
-} */
 $(document).ready(function(){
 	$("#password").keyup(function(){
 		$("#pwCheckFF").text("");

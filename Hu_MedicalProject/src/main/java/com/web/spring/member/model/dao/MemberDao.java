@@ -18,6 +18,8 @@ public interface MemberDao {
 	
 	String getPw(SqlSessionTemplate session, Map<String, Object> paramMap);
 
+	int changeMemberPsw(SqlSessionTemplate session, Map<String, Object> map);
+
 	
 	
 
