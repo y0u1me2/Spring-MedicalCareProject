@@ -250,7 +250,11 @@
 			for (var i = 0; i < data.list.length; i++) {
 				$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"
 											+ data.list[i].DISESASETITLE
+											+"<input type='hidden' class='disesaseNo' value='"+data.list[i].DISESASENO+"'/>"
 											+ "</a>");
+				$('a.tagSearch-keyword').click(function() {
+					frequentInfoPicClick($(this).children('input.disesaseNo').val());
+				})
 			}
 			var cPage = Number(data.cPage);
 			var totalPage = Number(data.totalPage);
@@ -266,7 +270,11 @@
 							for (var i = 0; i < before1.list.length; i++) {
 								$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"
 																+ before1.list[i].DISESASETITLE
+																+"<input type='hidden' class='disesaseNo' value='"+after1.list[i].DISESASENO+"'/>"
 																+ "</a>");
+								$('a.tagSearch-keyword').click(function() {
+									frequentInfoPicClick($(this).children('input.disesaseNo').val());
+								})
 							}
 							cPage = totalPage;
 						}
@@ -280,7 +288,11 @@
 							for (var i = 0; i < before2.list.length; i++) {
 								$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"
 																+ before2.list[i].DISESASETITLE
+																+"<input type='hidden' class='disesaseNo' value='"+before2.list[i].DISESASENO+"'/>"
 																+ "</a>");
+								$('a.tagSearch-keyword').click(function() {
+									frequentInfoPicClick($(this).children('input.disesaseNo').val());
+								})
 							}
 						}
 					})
@@ -296,7 +308,11 @@
 							for (var i = 0; i < after1.list.length; i++) {
 								$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"
 																+ after1.list[i].DISESASETITLE
+																+"<input type='hidden' class='disesaseNo' value='"+after1.list[i].DISESASENO+"'/>"
 																+ "</a>");
+								$('a.tagSearch-keyword').click(function() {
+									frequentInfoPicClick($(this).children('input.disesaseNo').val());
+								})
 							}
 							cPage = 1;
 						}
@@ -310,7 +326,12 @@
 							for (var i = 0; i < after2.list.length; i++) {
 								$('span.tagSerach-link').append("<a class='tagSearch-keyword' href='#'> #"
 																+ after2.list[i].DISESASETITLE
+																+"<input type='hidden' class='disesaseNo' value='"+after2.list[i].DISESASENO+"'/>"
 																+ "</a>");
+								
+								$('a.tagSearch-keyword').click(function() {
+									frequentInfoPicClick($(this).children('input.disesaseNo').val());
+								})
 							}
 						}
 					})
@@ -320,7 +341,7 @@
 	})//#태그 겁색 좌우 검색어 페이징 끝
 
 		//과목분류 버튼 처리
-		$.ajax({
+		/* $.ajax({
 			url : "${path}/healthInfo/healthBtnInfo",
 			success : function(data) {
 				for (var i = 0; i < data.list.length; i++) {
@@ -330,29 +351,30 @@
 					healthInfoMouseEvent();
 				}
 			}
-		})//과목분류 버튼 처리 끝
+		})//과목분류 버튼 처리 끝 */
 
 		//자주찾는 건강정보+${path}+data.list[i].DISESASEFILE
 		$.ajax({
 			url : "${path}/healthInfo/frequentInfo",
-				success : function(data) {
-					$('div.bottom-content').append("<div class='picContentBox'></div>");
-					for (var i = 0; i < 6; i++) {
-						$('.picContentBox').append("<div class='bottom-InfoContent p-6'></div>");
-						var divTag = $('div.bottom-InfoContent.p-6');
-						$(divTag[i]).html("<img src='${pathImages}"+data.list[i].DISESASEFILE+"'>");
-						$(divTag[i]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"
-													+ data.list[i].DISESASETITLE
-													+ "</div><div class='bottom-InfoContent-Info-sub'><p>"
-													+ data.list[i].DISESASESUBTITLE
-													+ "</p></div></div></div>");
-							$(divTag[i]).append("<input type='hidden' class='disesaseNo' value='"+data.list[i].DISESASENO+"'/>");
-							$(divTag[i]).click(function() {
-								frequentInfoPicClick($(this).children('input.disesaseNo').val());
-							})
-					}
-					frequentInfoMouseEvent();
+			success : function(data) {
+				$('div.bottom-content').append("<div class='picContentBox'></div>");
+				//========================================================여기 나중에 다시 수정할것
+				for (var i = 0; i < data.list.length; i++) {
+					$('.picContentBox').append("<div class='bottom-InfoContent p-6'></div>");
+					var divTag = $('div.bottom-InfoContent.p-6');
+					$(divTag[i]).html("<img src='${pathImages}"+data.list[i].DISESASEFILE+"'>");
+					$(divTag[i]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"
+												+ data.list[i].DISESASETITLE
+												+ "</div><div class='bottom-InfoContent-Info-sub'><p>"
+												+ data.list[i].DISESASESUBTITLE
+												+ "</p></div></div></div>");
+					$(divTag[i]).append("<input type='hidden' class='disesaseNo' value='"+data.list[i].DISESASENO+"'/>");
+					$(divTag[i]).click(function() {
+						frequentInfoPicClick($(this).children('input.disesaseNo').val());
+					})
 				}
+				frequentInfoMouseEvent();
+			}
 		});
 
 		//자주찾는 건강정보 사진버튼 function화

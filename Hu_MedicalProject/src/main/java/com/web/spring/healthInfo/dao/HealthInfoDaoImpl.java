@@ -78,7 +78,6 @@ public class HealthInfoDaoImpl implements HealthInfoDao {
 	@Override
 	public HealthInformation searchHealthInfoKeyword(SqlSession session, String searchKeyword) {
 		// TODO Auto-generated method stub
-		System.out.println(searchKeyword);
 		return session.selectOne("healthInfo.searchHealthInfoKeyword",searchKeyword);
 	}
 		

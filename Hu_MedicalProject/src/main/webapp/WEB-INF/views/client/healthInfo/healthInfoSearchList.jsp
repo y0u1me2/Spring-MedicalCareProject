@@ -207,6 +207,8 @@
 										<div class='bottom-InfoContent-Info-sub'>
 											<p>${healthInfoList.HEALTHINFOSUBTITLE }</p>
 										</div>
+										<input type='hidden' class='healthInfoNo' value='${healthInfoList.HEALTHINFONO }'/>
+										<input type='hidden' class='disesaseNo' value='${healthInfoList.DISESASENO }'/>
 									</div>
 								</div>
 							</c:forEach>
@@ -221,37 +223,44 @@
 	$(function() {
 
 		//많이찾는 건강정보 스타일 변화
-		function frequentInfoMouseEvent() {
-			$('.bottom-InfoContent').mouseenter(function() {
-				$(this).addClass('InfoContent-selected');
+		$('.bottom-InfoContent').mouseenter(function() {
+			$(this).addClass('InfoContent-selected');
+			$(this).click(function() {
+				frequentInfoPicClick($(this).children('div.bottom-InfoContent-Info').children('input.healthInfoNo').val(),
+										$(this).children('div.bottom-InfoContent-Info').children('input.disesaseNo').val());
 			})
-			$('.bottom-InfoContent').mouseleave(function() {
-				$(this).removeClass('InfoContent-selected');
-			})
-		}
+		})
+		$('.bottom-InfoContent').mouseleave(function() {
+			$(this).removeClass('InfoContent-selected');
+		})
 
-		
 		//자주찾는 건강정보 사진버튼 function화
+		function frequentInfoPicClick(healthInfoNo, disesaseNo) {
+			location.href="${path}/healthInfo/subFrequentInfoPic?healthInfoNo="+healthInfoNo+"&disesaseNo="+disesaseNo;
+		}
+		
+		/* //자주찾는 건강정보 사진버튼 function화
 		function frequentInfoPicClick(param) {
 			location.href = "${path}/healthInfo/frequentInfoPic?disesaseNo="
 					+ param;
+		} */
+		
+		$('#searchInput-healthInfo').autocomplete({
+			source : "${path}/healthInfo/searchInformation",
+			minLength : 1
+		});
+	
+		//검색 이벤트	
+		function searchProgress() {
+			if ($('#searchInput-healthInfo').val() == "") {
+				return false;
+			} else {
+				return true;
+			}
 		}
+		
 	})
 
-	$('#searchInput-healthInfo').autocomplete({
-		source : "${path}/healthInfo/searchInformation",
-		minLength : 1
-	});
-
-	//검색 이벤트
-
-	function searchProgress() {
-		if ($('#searchInput-healthInfo').val() == "") {
-			return false;
-		} else {
-			return true;
-		}
-	}
 </script>
 
 

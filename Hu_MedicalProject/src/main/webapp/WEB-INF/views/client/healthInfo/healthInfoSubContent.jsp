@@ -559,6 +559,7 @@
 	<div class="healthInfo-content-header">
 		<div class='bottom-InfoContent-Info-main'>${hi.healthInfoTitle }</div>
 		<div class='bottom-InfoContent-Info-sub'><p>${hi.healthInfoSubTitle }</p></div>
+		<input type='hidden' id='disesaseNo' value='${hi.disesaseNo }'/>
 	</div>
 	<div class="healthInfo-content-body">
 		<div class="healthInfo-content-table">
@@ -637,21 +638,23 @@ function miniInfoPicClick(healthInfoNo, disesaseNo) {
 		success:function(data) {
 			$('#infoStep').val("STEP_1");
 			for(var i=0;i<data.list.length;i++) {
-				$('div.healthInfo-step-contents>h5').html(data.list[i].healthInfoStep+"<strong>"+data.list[i].healthInfoStepTitle+"</strong>");
-				//$('div.healthInfo-step-contents>h5>strong').append('');
-				$('.miniMode').append("<a class='healthInfo-miniMode'>"
-											+"<figure class='healthInfo-miniFigure'>"
-											+"<div class='miniFigure-div'>"
-												+"<img src='${pathImages}"+data.list[i].healthInfoMainPic+"' class='miniFigure-div-img'>"
-											+"</div>"
-											+"<div class='healthInfo-miniFigureCaption'>"
-												+"<h6>"+data.list[i].healthInfoTitle+"</h6>"
-												+"<p>"+data.list[i].healthInfoSubTitle+"</p>"
-											+"</div>"												
-											+"<input type='hidden' class='healthInfoNo' value='"+data.list[i].healthInfoNo+"'/>"											
-											+"<input type='hidden' class='disesaseNo' value='"+data.list[i].disesaseNo+"'/>"
-										+"</figure>"
-									+"</a>");	
+				if($('#disesaseNo').val()==data.list[i].disesaseNo) {
+					$('div.healthInfo-step-contents>h5').html(data.list[i].healthInfoStep+"<strong>"+data.list[i].healthInfoStepTitle+"</strong>");
+					//$('div.healthInfo-step-contents>h5>strong').append('');
+					$('.miniMode').append("<a class='healthInfo-miniMode'>"
+												+"<figure class='healthInfo-miniFigure'>"
+												+"<div class='miniFigure-div'>"
+													+"<img src='${pathImages}"+data.list[i].healthInfoMainPic+"' class='miniFigure-div-img'>"
+												+"</div>"
+												+"<div class='healthInfo-miniFigureCaption'>"
+													+"<h6>"+data.list[i].healthInfoTitle+"</h6>"
+													+"<p>"+data.list[i].healthInfoSubTitle+"</p>"
+												+"</div>"												
+												+"<input type='hidden' class='healthInfoNo' value='"+data.list[i].healthInfoNo+"'/>"											
+												+"<input type='hidden' class='disesaseNo' value='"+data.list[i].disesaseNo+"'/>"
+											+"</figure>"
+										+"</a>");						
+				}
 			}
 			alinkClick();
 			$('.healthInfo-miniMode').click(function() {
@@ -695,24 +698,26 @@ function miniInfoPicClick(healthInfoNo, disesaseNo) {
 				$('div.healthInfo-step-contents>h5').html("");
 				$('.miniMode').html("");
 				for(var i=0;i<data.list.length;i++) {
-					$('div.healthInfo-step-contents>h5').html(data.list[i].healthInfoStep+"<strong>"+data.list[i].healthInfoStepTitle+"</strong>");
-					//$('div.healthInfo-step-contents>h5>strong').append('');
-					$('.miniMode').append("<a class='healthInfo-miniMode'>"
-												+"<figure class='healthInfo-miniFigure'>"
-												+"<div class='miniFigure-div'>"
-													+"<img src='${pathImages}"+data.list[i].healthInfoMainPic+"' class='miniFigure-div-img'>"
-												+"</div>"
-												+"<div class='healthInfo-miniFigureCaption'>"
-													+"<h6>"+data.list[i].healthInfoTitle+"</h6>"
-													+"<p>"+data.list[i].healthInfoSubTitle+"</p>"
-												+"</div>"
-												+"<input type='hidden' class='healthInfoNo' value='"+data.list[i].healthInfoNo+"'/>"											
-												+"<input type='hidden' class='disesaseNo' value='"+data.list[i].disesaseNo+"'/>"
-											+"</figure>"
-										+"</a>");	
-					$('.healthInfo-miniMode').click(function() {
-						miniInfoPicClick($(this).children('input.healthInfoNo').val(), $(this).children('input.disesaseNo').val());
-					})
+					if($('#disesaseNo').val()==data.list[i].disesaseNo) {
+						$('div.healthInfo-step-contents>h5').html(data.list[i].healthInfoStep+"<strong>"+data.list[i].healthInfoStepTitle+"</strong>");
+						//$('div.healthInfo-step-contents>h5>strong').append('');
+						$('.miniMode').append("<a class='healthInfo-miniMode'>"
+													+"<figure class='healthInfo-miniFigure'>"
+													+"<div class='miniFigure-div'>"
+														+"<img src='${pathImages}"+data.list[i].healthInfoMainPic+"' class='miniFigure-div-img'>"
+													+"</div>"
+													+"<div class='healthInfo-miniFigureCaption'>"
+														+"<h6>"+data.list[i].healthInfoTitle+"</h6>"
+														+"<p>"+data.list[i].healthInfoSubTitle+"</p>"
+													+"</div>"
+													+"<input type='hidden' class='healthInfoNo' value='"+data.list[i].healthInfoNo+"'/>"											
+													+"<input type='hidden' class='disesaseNo' value='"+data.list[i].disesaseNo+"'/>"
+												+"</figure>"
+											+"</a>");	
+						$('.healthInfo-miniMode').click(function() {
+							miniInfoPicClick($(this).children('input.healthInfoNo').val(), $(this).children('input.disesaseNo').val());
+						})						
+					}
 				}
 				alinkClick();
 				$('.healthInfo-miniMode').click(function() {
