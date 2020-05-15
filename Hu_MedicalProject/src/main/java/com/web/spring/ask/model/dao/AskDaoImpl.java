@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.web.spring.ask.model.vo.Ask;
 import com.web.spring.ask.model.vo.AskReply;
+import com.web.spring.member.model.vo.Member;
 
 @Repository
 public class AskDaoImpl implements AskDao {
@@ -103,9 +104,6 @@ public class AskDaoImpl implements AskDao {
 	}
 
 
-	
-
-	
 
 	
 

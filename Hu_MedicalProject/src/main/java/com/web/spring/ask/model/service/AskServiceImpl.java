@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.web.spring.ask.model.dao.AskDao;
 import com.web.spring.ask.model.vo.Ask;
 import com.web.spring.ask.model.vo.AskReply;
+import com.web.spring.member.model.vo.Member;
 
 @Service
 public class AskServiceImpl implements AskService {
@@ -118,6 +119,7 @@ public int replyCnt(int no) {
 public int deleteReplyCnt(int no) {
 	return dao.deleteReplyCnt(session,no);
 }
+
 
 
 

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.web.spring.carenotice.model.dao.CareNoticeDao;
@@ -43,7 +44,7 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		
 		return result;
 	}
-
+	
 //검색어로조회======================================================================
 	
 	@Override
@@ -80,9 +81,20 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 //게시글상세보기================================================
 	
 	@Override
-	public CareNotice careView(int cno) {
+	public CareNotice careView(int cno,boolean hasRead) {
 		
-		return dao.careView(session,cno);
+		 CareNotice c = dao.careView(session,cno);
+		 
+		 if(c!=null && !hasRead) {
+			 int result = dao.readCount(session,cno);
+			 
+			 if(result>0) {
+				 c.setCareReadCount(c.getCareReadCount());
+			 }
+			 
+		 }
+		 		
+		return c;
 	}
 	
 	@Override
@@ -151,6 +163,14 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		return dao.insertComment(session,c);
 	}
 
+//댓글달기2===================================================
+	
+		@Override
+		public int insertComment2(CareComment c) {
+			
+			return dao.insertComment2(session,c);
+		}
+
 
 //댓글 리스트================================================
 	
@@ -159,6 +179,21 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		
 		return dao.commentList(session,no);
 	}
+
+	@Override
+	public int commentCount(int no) {
+		
+		int result = dao.commentCount(session,no);
+		return result;
+	}
+	
+//댓글삭제=================================================
+	@Override
+	public int replydelete(int no) {
+		
+		return dao.replydelete(session,no);
+	}
+
 
 	
 	

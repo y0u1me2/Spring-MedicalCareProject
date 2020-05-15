@@ -13,7 +13,7 @@ public interface CareNoticeService {
 		List<CareNotice> careNotice(int cPage,int numPerPage);
 		
 		//게시글 전체 개수
-		int careCount();
+		int careCount();		
 		
 		//검색어로 조회
 		List<Map<String,String>> searchContent(Map<String, String> param);
@@ -21,9 +21,11 @@ public interface CareNoticeService {
 		//게시글 작성
 		int insertCare(Map<String,String> param, List<CareAttachment> files);
 	 
+		//조회수 올리기
 	   //게시글 상세보기
-		CareNotice careView(int cno);  
-	   //게시글 첨부파일 가져오기 
+		CareNotice careView(int cno,boolean hasRead);  
+	   
+		//게시글 첨부파일 가져오기 
 		List<CareAttachment> selectCareFile(int cno);
 		
 		//게시글 수정화면 이동 
@@ -39,6 +41,13 @@ public interface CareNoticeService {
 		//댓글 달기
 		int insertComment(CareComment c);
 		
+		//댓글 달기2
+		int insertComment2(CareComment c);
+		
 		//댓글 리스트
 		List<CareComment> commentList(int no);
+		int commentCount(int no);
+		
+		//댓글 삭제
+		int replydelete(int no);
 }

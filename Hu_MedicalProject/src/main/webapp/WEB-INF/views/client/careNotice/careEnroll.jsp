@@ -193,7 +193,6 @@
 
         new WOW().init();
         
-        <script>
     	function validate(){
     		const content = $("[name=content]").val();
     		if(content.trim().length==0){

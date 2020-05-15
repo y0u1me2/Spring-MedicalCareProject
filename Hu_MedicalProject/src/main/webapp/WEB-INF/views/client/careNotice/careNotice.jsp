@@ -161,7 +161,7 @@ footer {
 						<th>제목</th>
 						<th>작성자</th>
 						<th>날짜</th>
-						<th>조회</th>
+						<th>조회수</th>
 					</tr>
 				</thead>
 
@@ -169,7 +169,7 @@ footer {
 					<c:forEach items="${list }" var="c">
 						<tr>
 							<td><c:out value="${c.careNo }" /></td>
-							<td><a href="${path }/care/careView?cno=${c.careNo}"> 
+							<td><a href="${path }/care/careView?no=${c.careNo}"> 
 							<c:out value="${c.careTitle }" />
 							</a></td>
 										

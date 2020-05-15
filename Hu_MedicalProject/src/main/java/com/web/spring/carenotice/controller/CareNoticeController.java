@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -54,11 +56,14 @@ public class CareNoticeController {
 		int totalCount = service.careCount();
 
 		mv.addObject("list", list);
-		mv.addObject("count", totalCount);
+	mv.addObject("count", totalCount);
 		mv.addObject("pageBar", PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/care/careNotice"));
 		mv.setViewName("client/careNotice/careNotice");
 		return mv;
 	}
+
+	
+	
 	
 //검색어로 조회========================================================================================
 	@RequestMapping("/care/search.do")
@@ -165,12 +170,44 @@ public class CareNoticeController {
 //돌보미글 상세페이지로 이동============================================
 
 	@RequestMapping("/care/careView")
-	public ModelAndView careView(@RequestParam("cno") int cno, ModelAndView mv) {
+	public ModelAndView careView(HttpServletRequest request, HttpServletResponse response,
+			ModelMap m,@RequestParam("no") int no, ModelAndView mv) {
 	
-		CareNotice c = service.careView(cno);
 		
-		List<CareAttachment> files = service.selectCareFile(cno);
+		//쿠키로 작성자 검사
+		Cookie[] cookies=request.getCookies();
+		String val="";
+		boolean hasRead=false;
+				
+		//쿠키가 있는지 없는지 확인(읽었는지 안읽었는지)
+		if(cookies!=null) {
+			for(Cookie cook : cookies) {
+				String name = cook.getName();
+				String v=cook.getValue();
+					if("careView".equals(name)) {
+					val=v;
+					
+					if(v.contains("|"+no+"|")) {
+						hasRead=true;
+						break;
+							}
+						}
+					}
+				}
+		//안읽엇으면
+		if(!hasRead) {
+			Cookie cook = new Cookie("careView","|"+no+"|");
+			cook.setMaxAge(-1);
+			response.addCookie(cook);
+		}
 		
+		CareNotice c = service.careView(no,hasRead);
+		
+		List<CareAttachment> files = service.selectCareFile(no);
+			
+		int count = service.commentCount(no);
+		
+		mv.addObject("cnt",count);
 		mv.addObject("c", c);
 		mv.addObject("files",files);
 		mv.setViewName("client/careNotice/careView");
@@ -186,9 +223,11 @@ public class CareNoticeController {
 		
 		List<CareAttachment> files = service.updateViewFile(no);
 						
+	
+		
 		mv.addObject("c",c);
+		
 		mv.addObject("files",files);
-
 		mv.setViewName("client/careNotice/careUpdate");
 		return mv;
 	}
@@ -219,7 +258,7 @@ public class CareNoticeController {
 			  
 			  	
 			  	String orifile = request.getParameter("orifile");
-			  	logger.debug(""+orifile);
+			
 				File deleteFile = new File(path+"/"+orifile);
 				boolean flag = deleteFile.delete();
 	  
@@ -285,8 +324,6 @@ public class CareNoticeController {
 	  
 	  int result=service.deleteCare(no); 
 	  
-	  logger.debug(""+no);
-	  
 	  String msg=""; 
 	  String loc="";
 	 
@@ -309,12 +346,34 @@ public class CareNoticeController {
 //댓글달기======================================  		  
 	 
 	@RequestMapping("/care/commentEnd")
-	public String insertComment(CareComment c, Model m, @RequestParam("cno") int cno) {
-			
-		int result=service.insertComment(c);
+	public String insertComment(CareComment c, Model m, @RequestParam("no") int no) {
+					
+		int result = service.insertComment(c);
 		
 		String msg="";
-		String loc="/care/careView?cno="+cno;
+		String loc="/care/careView?no="+no;
+			
+		if(result>0) {
+				msg="댓글이 등록되었습니다.";	
+			}else {
+				msg="등록을 실패하였습니다.";
+			}
+		
+			m.addAttribute("msg",msg);
+			m.addAttribute("loc",loc);
+			return "client/common/msg";
+		}
+
+//대댓글 달기====================================
+	@RequestMapping("/care/commentEndEnd")
+	public String insertComment2(CareComment c, Model m, @RequestParam("no") int no) {
+		
+		logger.debug("오니?==================="+no);
+		
+		int result = service.insertComment2(c);
+		
+		String msg="";
+		String loc="/care/careView?no="+no;
 			
 		if(result>0) {
 				msg="댓글이 등록되었습니다.";	
@@ -331,14 +390,43 @@ public class CareNoticeController {
 	
 	@RequestMapping("/care/commentList")
 	public ModelAndView commentList(@RequestParam int no, ModelAndView mv) {
-		
+				
 		List<CareComment> list = service.commentList(no);
 		
 		
 		mv.addObject("list",list);
 		
-		mv.setViewName("client/careNotice/careView");
+		mv.setViewName("client/careNotice/careViewComment");
 				
 		return mv;
 	}
+	
+//댓글 삭제=====================================
+	
+	@RequestMapping("/care/replydelete")
+	 public String replydelete(@RequestParam(value="no") int no,@RequestParam(value="cno") int cno ,Model model) {
+		
+		logger.debug(""+no);
+		
+		 int result = service.replydelete(no); 
+		  
+		  
+		  String msg=""; 
+		  String loc="/care/careView?no="+cno;
+		 
+		  if(result>0) { 
+			  msg="댓글이 삭제 되었습니다."; 
+			  
+		  }else {
+			  msg="삭제를 실패하였습니다."; 
+		  } 
+		  
+		  model.addAttribute("msg",msg);
+		  model.addAttribute("loc",loc); 
+		  
+		  return "client/common/msg"; 
+		  
+		  }
+
+
 }

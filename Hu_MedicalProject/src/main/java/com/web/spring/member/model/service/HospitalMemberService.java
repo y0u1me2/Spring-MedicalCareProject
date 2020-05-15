@@ -1,9 +1,17 @@
 package com.web.spring.member.model.service;
 
-import com.web.spring.member.model.vo.Hospital;
+import java.util.List;
+
+import com.web.spring.map.model.vo.Hospital;
+import com.web.spring.member.model.vo.HospitalMember;
 
 public interface HospitalMemberService {
-	int hospitalEnroll(Hospital h);
+	int hospitalEnroll(HospitalMember h);
 
-	Hospital hospitalLogin(Hospital h);
+	HospitalMember hospitalLogin(HospitalMember h);
+
+	//chat을 위한  List받아오기
+	List<HospitalMember> HpMemberList();
+
+	List<Hospital> getHospList(String name);
 }

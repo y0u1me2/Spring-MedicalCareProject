@@ -15,7 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.spring.common.websocket.AlramMessage;
 
 public class AlramServer extends TextWebSocketHandler {
-
 	
 	@Autowired
 	Logger logger;
@@ -25,23 +24,22 @@ public class AlramServer extends TextWebSocketHandler {
 	
 	Map<String, WebSocketSession> clients=new HashMap();
 	//세션에 저장된 유저들
-	
 
 	@Override//onMessage
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		//보낸사람 session, message /send뒤에 있던(chatting.jsp 스크립트) 값이 여기에 꽂힌다.
 		AlramMessage msg=getMessage(message.getPayload());
 		//
+		logger.debug("msg"+msg);
 		switch(msg.getType()) {
 			case "client" : clients.put(msg.getSender(),session);break;
 			case "newchat" : requestChat(msg);break;
+			case "hospitalChat" :requestChat(msg);break;
 		}
 	}
-	
 
 	private void requestChat(AlramMessage msg) {
 		Set<Map.Entry<String,WebSocketSession>> entry = clients.entrySet();
-		logger.debug(""+clients);
 		for(Map.Entry<String, WebSocketSession> client : entry) {
 			if(msg.getReceiver().equals(client.getKey())) {
 				try {
@@ -62,11 +60,4 @@ public class AlramServer extends TextWebSocketHandler {
 		}
 		return converData;
 	}
-	
-	
-	
-	
-	
-	
-	
 }

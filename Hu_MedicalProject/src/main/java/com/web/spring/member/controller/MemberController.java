@@ -3,6 +3,7 @@ package com.web.spring.member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+
 import java.util.Map;
 import java.util.Random;
 
@@ -11,6 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ import com.web.spring.common.MailSender;
 import com.web.spring.member.model.service.MemberService;
 import com.web.spring.member.model.vo.Mail;
 import com.web.spring.member.model.vo.Member;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @SessionAttributes(value= {"loginMember"})
@@ -110,9 +114,13 @@ public class MemberController {
 	 }
 	
 	@RequestMapping("/member/logout.do")
-	public String logout(SessionStatus status) {
+	public String logout(SessionStatus status,HttpServletResponse res) {
 		if(!status.isComplete() == true) {
 			status.setComplete(); //session을 종료
+			//쿠키삭제
+			Cookie c=new Cookie("careView", "0");
+			c.setMaxAge(0);
+			res.addCookie(c);
 		}
 		return "redirect:/";
 	}

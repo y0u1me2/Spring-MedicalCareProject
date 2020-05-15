@@ -8,6 +8,9 @@ import org.apache.ibatis.session.SqlSession;
 import com.web.spring.healthInfo.vo.HealthInformation;
 
 public interface HealthInfoDao {
+	
+	//메인 토탈카운터
+	int totalCount(SqlSession session);
 	//태그 검색어 관련
 	List<Map<String, String>> healthTagInfo(SqlSession session, int cPage, int numPerpage);
 	int healthTagCount(SqlSession session);
@@ -23,4 +26,9 @@ public interface HealthInfoDao {
 	Map<String,String> selectConfirmer(SqlSession session, String confirmerNo);
 	//step으로 조회 리스트
 	List<HealthInformation> searchInfoPicStep(SqlSession session, HealthInformation hi);
+	//검색어
+	List<Map<String,String>> searchInformation(SqlSession session, String term);
+	//검색어 실행
+	HealthInformation searchHealthInfoKeyword(SqlSession session, String searchKeyword);
+	List<Map<String,String>> searchHealthInfoList(SqlSession session, String searchKeyword);
 }

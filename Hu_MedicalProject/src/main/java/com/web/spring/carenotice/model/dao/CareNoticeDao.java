@@ -20,8 +20,11 @@ public interface CareNoticeDao {
 
 	int insertCare(SqlSession session, Map<String,String> param);
 	int insertCareAttachment(SqlSession session, CareAttachment a);
-
+	int readCount(SqlSession session,int no);
+	
 	CareNotice careView(SqlSession session,int cno);
+	
+	
 	List<CareAttachment> selectCareFile(SqlSession session, int cno); 
 	
 	CareNotice updateView(SqlSession session,int no);
@@ -34,6 +37,12 @@ public interface CareNoticeDao {
 	
 		
 	int insertComment(SqlSession session, CareComment c);
+	int insertComment2(SqlSession session, CareComment c);
 	
 	List<CareComment> commentList(SqlSession session, int no);
+	int  commentCount(SqlSession session,int no);
+	
+	int replydelete(SqlSession session,int no);
+
+
 }
