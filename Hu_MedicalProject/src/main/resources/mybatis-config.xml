@@ -18,11 +18,11 @@
 	<typeAlias type="com.web.spring.notice.model.vo.Notice" alias="notice"/>
 	<typeAlias type="com.web.spring.notice.model.vo.NoticeAttachment" alias="noticeAttachment" />
 	<typeAlias type="com.web.spring.carenotice.model.vo.CareComment" alias="comment" />
-	<typeAlias type="com.web.spring.member.model.vo.Hospital" alias="hospital" />
+	<typeAlias type="com.web.spring.member.model.vo.HospitalMember" alias="hpMember" />
 	
 	<typeAlias type="com.web.spring.common.StringArrayType" alias="arrayType" />
 	<typeAlias type="com.web.spring.healthInfo.vo.HealthInformation" alias="healthInfo" />
-	
+	<typeAlias type="com.web.spring.map.model.vo.Hospital" alias="hospital" />
 	<!-- 	
 		<typeAlias type="com.kh.spring.memo.model.vo.Memo" alias="memo" />
 		<typeAlias type="com.kh.spring.board.model.vo.Board" alias="board" /> --> 

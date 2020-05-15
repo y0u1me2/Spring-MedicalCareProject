@@ -1,9 +1,6 @@
 package com.web.spring.member.controller;
 
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
 import java.util.Map;
 
 import javax.mail.MessagingException;

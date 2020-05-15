@@ -37,6 +37,7 @@ public interface CareNoticeDao {
 	
 		
 	int insertComment(SqlSession session, CareComment c);
+	int insertComment2(SqlSession session, CareComment c);
 	
 	List<CareComment> commentList(SqlSession session, int no);
 	int  commentCount(SqlSession session,int no);

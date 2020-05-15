@@ -38,34 +38,34 @@
 				</tr>
 			</c:if>
 
-
-		
-
 			<c:if test="${c.commentLevel eq 2}">
 
 				<tr class="level2">
 					<td>
 						<sup class="cm-writer"><img src="${path }/resources/images/logo5.png" width="20px;" />
 						<c:out value="${c.commentWriter }" /></sup>&nbsp;&nbsp;&nbsp;
+						<br/>
+						<c:out value="${c.commentContent }" />						
+						<br/>
 						<sup class="comment-date"><fmt:formatDate value="${c.commentDate }" type="date" pattern="yyyy/MM/dd"/></sup>
-						<c:out value="${c.commentContent }" />
-					</td>
 					
-					<td>
+
 						<button class="btn-reply btnre" name="commentNo" id="rep-btn" value="${c.commentNo }">
 						 <img src="${path }/resources/images/reply.png" width="10px;" />답글</button>
-						 <br/>
+					
 						 
-					<c:if test="${loginMember ne null and loginMember.memberNo eq c.commentNo  }">		 
-					<td style="display: flex; position: relative; left: 180px; top: 30px;">
+					<c:if test="${loginMember ne null and loginMember.memberNo eq c.memberNo  }">	 					
+					<div id="btn-reply-container">
 						<button class="btn-reply btnre" name="commentNo" id="update-btn">수정</button>
 						|
 						<button class="btn-reply btnre" name="commentNo" id="delete-btn">삭제</button>
-						
 						<input type="hidden" name="cno"  value="${c.commentNo }"/>
 						<input type="hidden" name="careNo"  value="${c.careNo }"/>
-					</td>
+						<input type="hidden" name="memberNo" value="${loginMember.memberNo}" />
+						<input type="hidden" name="commentWriter" value="${loginMember.name }" />
+					</div>	
 					</c:if>
+					</td>
 				</tr>
 			</c:if>
 
@@ -107,10 +107,12 @@
 
 <script>
 
-//댓글삭제
 	var cno = $("input[name=cno]").val();
 	var care = $("input[name=careNo]").val();
-	
+	var mNo = $("input[name=memberNo]").val();
+	var name = $("input[name=commentWriter]").val();
+		
+//댓글삭제
 $("#delete-btn").click(function(){
 	
 	if(confirm("댓글을 삭제하시겠습니까?")){
@@ -121,7 +123,7 @@ $("#delete-btn").click(function(){
 //댓글수정
 $("#update-btn").click(function(){
 	if(${loginMember.name eq c.careWriter}){
-	$(".level1").hide();
+		$(".level1").hide();
 	}
 })	
 	
@@ -138,17 +140,19 @@ $("#update-btn").click(function(){
 		})
 	})
 
+
+
 //대댓글 클릭시 입력칸 뜨기
-	$(".btn-reply reple").click(function(){
+	$(".btn-reply.btnre").click(function(){
 	
 			const tr=$("<tr>").attr("class","reply");
 			
 			const td=$("<td>").css({
 				"display":"none"
 			});
-			
+		
 			const form=$("<form>").attr({
-				"action":"${path}/care/commentEnd?no="+care,
+				"action":'${path}/care/commentEndEnd?no='+care,
 				"method":"post",
 				"width":"100%",
 				"onsubmit":"return nosubmit();"
@@ -157,12 +161,19 @@ $("#update-btn").click(function(){
 			const boardRef=$("<input>").attr({
 					"type":"hidden",
 					"name": "careNo",
-					"value":"care"
+					"value":care
 			});
+		
+			const memberNo=$("<input>").attr({
+					"type":"hidden",
+					"name":"memberNo",
+					"value":mNo
+			});
+			
 			const writer=$("<input>").attr({
 				"type":"hidden",
 				"name": "commentWriter",
-				"value":"${loginMember.memberNo}"
+				"value":name
 			});
 			
 			const level=$("<input>").attr({
@@ -181,7 +192,7 @@ $("#update-btn").click(function(){
 			
 			const commentRef=$("<input>").attr({
 				"type":"hidden",
-				"name": "commentNo",
+				"name": "commentRef",
 				"value":$(this).val()
 			});
 			
@@ -189,13 +200,15 @@ $("#update-btn").click(function(){
 				"type":"submit","class":"btn-insert2 btn-reply2"
 			}).html("등록");
 			
-			form.append(boardRef).append(writer).append(level).append(comment).append(commentRef).append(btn);
+			form.append(boardRef).append(memberNo).append(writer).append(level).append(comment).append(commentRef).append(btn);
 			td.append(form);
 			tr.append(td);
 			
 			($(this).parent().parent()).after(tr);
 			tr.children("td").slideDown(500);
 			$(this).off("click");
+			
+			
 		
 	});
 

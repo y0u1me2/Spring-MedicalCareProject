@@ -347,8 +347,30 @@ public class CareNoticeController {
 	 
 	@RequestMapping("/care/commentEnd")
 	public String insertComment(CareComment c, Model m, @RequestParam("no") int no) {
-			
+					
 		int result = service.insertComment(c);
+		
+		String msg="";
+		String loc="/care/careView?no="+no;
+			
+		if(result>0) {
+				msg="댓글이 등록되었습니다.";	
+			}else {
+				msg="등록을 실패하였습니다.";
+			}
+		
+			m.addAttribute("msg",msg);
+			m.addAttribute("loc",loc);
+			return "client/common/msg";
+		}
+
+//대댓글 달기====================================
+	@RequestMapping("/care/commentEndEnd")
+	public String insertComment2(CareComment c, Model m, @RequestParam("no") int no) {
+		
+		logger.debug("오니?==================="+no);
+		
+		int result = service.insertComment2(c);
 		
 		String msg="";
 		String loc="/care/careView?no="+no;

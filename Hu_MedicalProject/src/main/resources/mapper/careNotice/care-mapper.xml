@@ -94,6 +94,13 @@
                                 #{careNo},null,DEFAULT)
     </insert>
     
+   <!-- 대댓글등록 -->
+    <insert id="insertComment2" parameterType="comment">
+       INSERT INTO CARECOMMENT VALUES(SEQ_COMMENTNO.NEXTVAL,#{memberNo},
+                               #{commentLevel},#{commentWriter},#{commentContent},
+                                #{careNo},#{commentRef},DEFAULT)
+    </insert> 
+    
     <!-- 댓들 목록 -->
     <select id="commentList" resultType="comment">
     	SELECT * FROM CARECOMMENT C, MEMBER M 

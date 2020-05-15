@@ -124,6 +124,13 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 		
 		return session.insert("care.insertComment",c);
 	}
+	
+	//댓글 달기2
+		@Override
+		public int insertComment2(SqlSession session, CareComment c) {
+			
+			return session.insert("care.insertComment2",c);
+		}
 
 	//댓글 리스트
 	@Override

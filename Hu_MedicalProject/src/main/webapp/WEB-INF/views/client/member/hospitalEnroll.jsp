@@ -66,11 +66,19 @@ a:link, a:visited, a:hover {
 				<div class="mb-5">
 					<p><b>병원 정보</b></p>
 					 <div class="form-group">
-					   <input type="text" class="form-control" id="hospital_name" placeholder="병원명을 입력하세요" name="hospitalName" required autocomplete="off">
+					 	<div class="input-group mb-3">
+					   		<input list ="hospitalList" type="text" class="form-control" id="hospital_name" placeholder="가입병원을 선택하세요" name="hospitalName" required autocomplete="off" value="kh종합병원">
+					 		<div class="input-group-append">
+								<button id="btnSearch" class="btn btn-light" type="button">검색하기</button>
+							</div>
+						 	<datalist id="hospitalList" >
+						 	</datalist>
+						 	
+						</div>
 					 	<div class="invalid-feedback"></div>
 					 </div>
 					 <div class="form-group">
-					   <input type="text" class="form-control" id="hospital_number" placeholder="요양기관 번호 (숫자, 8자)" name="hospitalNo" required autocomplete="off">
+					   <input type="text" class="form-control" id="hospital_number" placeholder="요양기관 번호 (숫자, 8자)" name="hospNo" required autocomplete="off" value="JDQ4MTg4MSM1MSMkMSMkMCMkODkkMzgxMzUxIzExIyQyIyQ3IyQwMCQyNjEwMDIjODEjJDEjJDIjJDgz">
 					 	<div class="invalid-feedback"></div>
 					 </div>
 				</div>
@@ -143,6 +151,8 @@ a:link, a:visited, a:hover {
 </div>
 
 
+
+
 <!-- <script>
 (function() {
   'use strict';
@@ -206,16 +216,16 @@ $(function(){
 	});
 	
 	//입력했는지 확인
-	$("#hospital_name").blur(function(){
+	/* $("#hospital_name").blur(function(){
 		checkHospitalName();
-	});
+	}); */
 	
 	//요양기관번호 유효성 검사
-	$("#hospital_number").blur(function(){
+	/* $("#hospital_number").blur(function(){
 		checkHospitalNumber();
-	});
+	}); */
 	
-	$("#manager_name").blur(function(){
+	/* $("#manager_name").blur(function(){
 		checkManagerName();
 	});
 	
@@ -229,7 +239,20 @@ $(function(){
 	
 	$("#agree").change(function(){
 		checkAgree();
-	});
+	}); */
+	
+	/* $("#btnSearch").click(function(){
+		getList();
+	}); */
+	
+	/* $("#hospital_name").keyup(function(){
+		getList();
+	}) */
+	
+	/* $("#hospital_name").on('change', function() {
+       	console.log($(this).val());
+    }); */
+	
 })
 
 function openModal1(){
@@ -246,23 +269,78 @@ function closeModal(){
 	$('html, body').css({'overflow': 'auto'});
 }
 
+function getList(){
+	var inputbox = $("#hospital_name");
+	var name = $("#hospital_name").val();
+	var datalist = $("#hospitalList");
+	
+	datalist.empty();
+	
+	$.ajax({
+		url: "${path}/getHospList.do",
+		type: "post",
+		data: {name:name},
+		dataType: 'json',
+		success: function(data){
+			if(data.length==0){
+				alert("검색 결과가 없습니다.");	
+			}else{
+				for(i in data){
+					var hospName = data[i].hospName;
+					var hospAddr = data[i].hospAddr;
+					var hospNo = data[i].hospNo;
+					
+					/* $("<option>").attr({"label": hospAddr, "value": hospNo}).html(hospName).appendTo(datalist); */
+					var option = $("<option>").attr({"label": hospAddr, "id": hospNo}).html(hospName);
+					option.appendTo(datalist);
+				}
+			}
+			
+			/* if(data.response.body.items==""){
+				alert("검색 결과가 없습니다.");
+			}else{
+				var arr = data.response.body.items.item;
+				
+				for(i in arr){
+					var lat = arr[i].YPos;
+					var lng = arr[i].XPos;
+					var hName = arr[i].yadmNm;
+					var addr = arr[i].addr;
+					var homepage = arr[i].hospUrl;
+					var tel = arr[i].telno;
+					var code = arr[i].ykiho;
+					
+					$("<option>").attr("label", addr).html(hName).appendTo(hospitalList);
+				}
+				hospitalList.focus();
+				
+			} */
+		}
+	});
+}
+
+
+
+
+
+
 //아이디 유효성 검사
 function checkId(){
 	var id = $("#id");
 	var id_reg =/^(?=\S*[a-zA-Z])(?=\S*[0-9]).{4,20}$/;
-	id.next().hide();
-	id.next().next().hide();
+	id.siblings(".invalid-feedback").hide();
+	id.siblings(".valid-feedback").hide();
 	
 	if(id.val()==''){
-		id.next().next().html('<p>필수 입력 항목입니다.</p>').show();
+		id.siblings(".invalid-feedback").html('<p>필수 입력 항목입니다.</p>').show();
 		return false;
 	}
 	if(id.val().search(/\s/) != -1){//아이디에 공백이 포함되어 있는 경우
-		id.next().next().html('<p>아이디에 공백이 포함될 수 없습니다.</p>').show();
+		id.siblings(".invalid-feedback").html('<p>아이디에 공백이 포함될 수 없습니다.</p>').show();
 		return false;
 	}
 	if(!id_reg.test(id.val())){//아이디 생성 조건 만족하지 않는 경우
-		id.next().next().html('<p>아이디 생성 조건을 만족하지 않습니다.</p>').show();
+		id.siblings(".invalid-feedback").html('<p>아이디 생성 조건을 만족하지 않습니다.</p>').show();
 		return false;
 	}else{//사용가능한 아이디(유효성 검사는 통과)
 		//디비에 중복 아이디 있는지 확인
@@ -287,22 +365,22 @@ function checkId(){
 function checkPw(){
 	var pw = $("#pw");
 	var pw_reg =/^(?=\S*[a-zA-Z])(?=\S*[0-9])(?=\S*[`~!@#$%^&*|]).{6,18}$/;
-	pw.next().hide();
-	pw.next().next().hide();
+	pw.siblings(".invalid-feedback").hide();
+	pw.siblings(".valid-feedback").hide();
 	
 	if(pw.val()==''){
-		pw.next().next().html('<p>필수 입력 항목입니다.</p>').show();
+		pw.siblings(".invalid-feedback").html('<p>필수 입력 항목입니다.</p>').show();
 		return false;
 	}
 	if(pw.val().search(/\s/) != -1){//비밀번호에 공백이 포함되어 있는 경우
-		pw.next().next().html('<p>비밀번호에 공란이 포함될 수 없습니다.</p>').show();
+		pw.siblings(".invalid-feedback").html('<p>비밀번호에 공란이 포함될 수 없습니다.</p>').show();
 		return false;
 	}
 	if(!pw_reg.test(pw.val())){//비밀번호 생성 조건 만족하지 않는 경우
-		pw.next().next().html('<p>비밀번호 생성조건을 만족하지 않습니다.</p>').show();
+		pw.siblings(".invalid-feedback").html('<p>비밀번호 생성조건을 만족하지 않습니다.</p>').show();
 		return false;
 	}else{//사용할 수 있는 비밀번호인 경우
-		pw.next().html('<p>사용할 수 있는 비밀번호입니다.</p>').show();
+		pw.siblings(".valid-feedback").html('<p>사용할 수 있는 비밀번호입니다.</p>').show();
 	}
 }
 
@@ -310,14 +388,14 @@ function checkPw(){
 function checkPw2(){
 	var pw = $("#pw");
 	var pw2 = $("#pw_repeat");
-	pw2.next().hide();
-	pw2.next().next().hide();
+	pw2.siblings(".invalid-feedback").hide();
+	pw2.siblings(".valid-feedback").hide();
 	
 	if(checkPw()!=false){
 		if(pw.val()==pw2.val()){
-			pw2.next().html('<p>비밀번호가 일치합니다.</p>').show();
+			pw2.siblings(".valid-feedback").html('<p>비밀번호가 일치합니다.</p>').show();
 		}else{
-			pw2.next().next().html('<p>비밀번호가 일치하지 않습니다.</p>').show();
+			pw2.siblings(".invalid-feedback").html('<p>비밀번호가 일치하지 않습니다.</p>').show();
 			return false;
 		}
 	}else{
@@ -329,10 +407,10 @@ function checkPw2(){
 
 function checkHospitalName(){
 	var hospitalName = $("#hospital_name");
-	hospitalName.next().hide();
+	hospitalName.siblings(".invalid-feedback").hide();
 	
 	if(hospitalName.val().trim()==''){
-		hospitalName.next().html('<p>필수 입력 항목입니다.</p>').show();
+		hospitalName.siblings(".invalid-feedback").html('<p>필수 입력 항목입니다.</p>').show();
 		return false;
 	}
 }
@@ -340,24 +418,24 @@ function checkHospitalName(){
 function checkHospitalNumber(){
 	var hospitalNumber = $("#hospital_number");
 	var hp_num_reg =/^[0-9]{8}$/;
-	hospitalNumber.next().hide();
+	hospitalNumber.siblings(".invalid-feedback").hide();
 	
 	if(hospitalNumber.val().trim()==''){
-		hospitalNumber.next().html('<p>필수 입력 항목입니다.</p>').show();
+		hospitalNumber.siblings(".invalid-feedback").html('<p>필수 입력 항목입니다.</p>').show();
 		return false;
 	}
 	if(!hp_num_reg.test(hospitalNumber.val())){
-		hospitalNumber.next().html('<p>요양기관 번호를 잘못 입력하였습니다.</p>').show();
+		hospitalNumber.siblings(".invalid-feedback").html('<p>요양기관 번호를 잘못 입력하였습니다.</p>').show();
 		return false;
 	}
 }
 
 function checkManagerName(){
 	var managerName = $("#manager_name");
-	managerName.next().hide();
+	managerName.siblings(".invalid-feedback").hide();
 	
 	if(managerName.val().trim()==''){
-		managerName.next().html('<p>필수 입력 항목입니다.</p>').show();
+		managerName.siblings(".invalid-feedback").html('<p>필수 입력 항목입니다.</p>').show();
 		return false;
 	}
 }
@@ -365,14 +443,14 @@ function checkManagerName(){
 function checkEmail(){
 	var email = $("#email");
 	var email_reg = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-	email.next().hide();
+	email.siblings(".invalid-feedback").hide();
 	
 	if(email.val().trim()==''){
-		email.next().html('<p>필수 입력 항목입니다.</p>').show();
+		email.siblings(".invalid-feedback").html('<p>필수 입력 항목입니다.</p>').show();
 		return false;
 	}
 	if(!email_reg.test(email.val())){
-		email.next().html('<p>이메일 주소를 잘못 입력하였습니다.</p>').show();
+		email.siblings(".invalid-feedback").html('<p>이메일 주소를 잘못 입력하였습니다.</p>').show();
 		return false;
 	}
 }
@@ -381,14 +459,14 @@ function checkPhone(){
 	var phone = $("#phone");
 	var phone_reg1 = /^01[0179][0-9]{7,8}$/;
 	var phone_reg2 = /^01[0179]-[0-9]{3,4}-[0-9]{4}$/;
-	phone.next().hide();
+	phone.siblings(".invalid-feedback").hide();
 	
 	if(phone.val().trim()==''){
-		phone.next().html('<p>필수 입력 항목입니다.</p>').show();
+		phone.siblings(".invalid-feedback").html('<p>필수 입력 항목입니다.</p>').show();
 		return false;
 	}
 	if(!phone_reg1.test(phone.val())&&!phone_reg2.test(phone.val())){
-		phone.next().html('<p>휴대폰 번호를 잘못 입력하였습니다.</p>').show();
+		phone.siblings(".invalid-feedback").html('<p>휴대폰 번호를 잘못 입력하였습니다.</p>').show();
 		return false;
 	}
 }
@@ -411,12 +489,12 @@ function validate(){
 	if(checkId()==false) result = false;
 	if(checkPw()==false) result = false;
 	if(checkPw2()==false) result = false;
-	if(checkHospitalName()==false) result = false;
+	/* if(checkHospitalName()==false) result = false;
 	if(checkHospitalNumber()==false) result = false;
 	if(checkManagerName()==false) result = false;
 	if(checkEmail()==false) result = false;
 	if(checkPhone()==false) result = false;
-	if(checkAgree()==false) result = false;
+	if(checkAgree()==false) result = false; */
 	
 	return result;
 	

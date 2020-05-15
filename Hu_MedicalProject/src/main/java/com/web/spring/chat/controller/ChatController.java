@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.spring.member.model.service.HospitalMemberService;
-import com.web.spring.member.model.vo.Hospital;
+import com.web.spring.member.model.vo.HospitalMember;
 
 @Controller
 public class ChatController {
@@ -30,7 +30,7 @@ public class ChatController {
 		@RequestMapping("/test/test.do")
 		public ModelAndView page(ModelAndView mv) {
 			
-			List<Hospital> list=service.HpMemberList();
+			List<HospitalMember> list=service.HpMemberList();
 			
 			logger.debug("병원리스트"+list);
 			mv.addObject("list",list);

@@ -6,6 +6,8 @@ import java.util.Map;
 import com.web.spring.healthInfo.vo.HealthInformation;
 
 public interface HealthInfoService {
+	//메인페이지 카운터
+	int totalCount();
 	//태그 검색어 관련
 	List<Map<String,String>> healthTagInfo(int cPage, int numPerpage);
 	int healthTagCount();
@@ -21,4 +23,9 @@ public interface HealthInfoService {
 	Map<String,String> selectConfirmer(String confirmerNo);
 	//step으로 조회 리스트
 	List<HealthInformation> searchInfoPicStep(HealthInformation hi);
+	//검색
+	List<Map<String,String>> searchInformation(String term);
+	//검색어 실행
+	HealthInformation searchHealthInfoKeyword(String searchKeyword);
+	List<Map<String,String>> searchHealthInfoList(String searchKeyword);
 }
