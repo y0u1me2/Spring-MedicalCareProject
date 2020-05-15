@@ -152,8 +152,12 @@ public class CareNoticeDaoImpl implements CareNoticeDao {
 		return session.delete("care.replydelete",no);
 	}
 
-
-
+	//댓글 수정
+	@Override
+	public int replyupdate(SqlSession session, CareComment c) {
+	
+		return session.update("care.replyupdate",c);
+	}
 
 
 	

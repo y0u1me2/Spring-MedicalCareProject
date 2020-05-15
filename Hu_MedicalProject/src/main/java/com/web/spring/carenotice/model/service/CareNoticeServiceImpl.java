@@ -194,6 +194,15 @@ public class CareNoticeServiceImpl implements CareNoticeService {
 		return dao.replydelete(session,no);
 	}
 
+//댓글수정===================================================	
+	@Override
+	public int replyupdate(CareComment c) {
+		
+		int result = dao.replyupdate(session,c);
+		
+		return result;
+	}
+
 
 	
 	
