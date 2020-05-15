@@ -32,12 +32,20 @@ public class AlramServer extends TextWebSocketHandler {
 		//
 		logger.debug("msg"+msg);
 		switch(msg.getType()) {
-			case "client" : clients.put(msg.getSender(),session);break;
+			case "client" : newClient(msg,session);break;
 			case "newchat" : requestChat(msg);break;
 			case "hospitalChat" :requestChat(msg);break;
 		}
 	}
-
+	private void newClient(AlramMessage msg, WebSocketSession session) {
+		clients.put(msg.getSender(),session);
+		msg.setMsg(session.getId());
+		try {
+			session.sendMessage(new TextMessage(mapper.writeValueAsString(msg)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	private void requestChat(AlramMessage msg) {
 		Set<Map.Entry<String,WebSocketSession>> entry = clients.entrySet();
 		for(Map.Entry<String, WebSocketSession> client : entry) {

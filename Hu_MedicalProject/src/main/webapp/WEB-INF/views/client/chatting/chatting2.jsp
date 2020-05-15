@@ -85,22 +85,21 @@ border-radius:10px;
   </style>
     <script>
 	let websocket=new WebSocket("ws://localhost:9090${pageContext.request.contextPath}/chatting");
-	let room='${param.room}';
-	
+	let sender='${param.room}';
+	let roomId='${param.roomId}';
+	console.log(roomId);
 	websocket.onopen=function(data){
 		console.log(data);
-		console.log('${param.room}');//userId
+		console.log('${param.receiver}');//userId
 		//접속정보를 server에 알려주기
 		
-	 	websocket.send(JSON.stringify(new SocketMessage("open","${loginMember.email}","","",room)));
-		//chattingServer에 보내는거임 type과 맞춰줌 
-		/* if(${not empty loginMember}){
-			alram.send(JSON.stringify(new AlramMessage("hpOpen","접속","${loginMember.email}","")));//공란병원회원
-			}
-			
+			if(${not empty loginMember}){
+			 websocket.send(JSON.stringify(new SocketMessage("hpOpen","${loginMember.email}",sender,"",roomId)));
+			 	//websocket.send(JSON.stringify(new SocketMessage("open","접속","${loginMember.email}","","",room)));
+		 }
 			else if(${not empty loginHpMember}){
-				alram.send(JSON.stringify(new AlramMessage("hpOpen","접속","${loginHpMember.id}","")));//공란병원회원
-			} */
+				 websocket.send(JSON.stringify(new SocketMessage("hpOpen","${loginHpMember.id}",sender,"",roomId)));
+			} 
 	}
 	
 	websocket.onmessage=function(data){
@@ -111,40 +110,49 @@ border-radius:10px;
 		console.log(msg);
 		//switch(msg[0]){
 		switch(msg['type']){
-			case "a" : adminMessage(msg);break;
-			case "msg" : recieveMessage(msg);break; 
+			case "a" : adminMessage(msg);break;//환영합니다 메시지 띄워주는 메서드
+			case "hpmsg" : recieveMessage(msg);break; 
 		}
 	}
 
 	function adminMessage(msg){
-		$(".media-body").append("<p style='text-align:center'>&nbsp;환영합니다."+"<br>"+"※실시간 문의는  평일 9시부터 6시까지 진행됩니다.<br>"+"그 외 시간은 문의게시판을 이용해주시기 바랍니다.※</p>");//환영합니다.
+		$(".media-body").append("<p style='text-align:center'>&nbsp;환영합니다."+"<br>"+"※실시간 병원 문의는  병원 사정에 따라 달라질수 있습니다.※</p>");//환영합니다.
 	}
+	
 	function recieveMessage(msg){
-/*div scroll적용  */       
+		/*div scroll적용  */
+		
            $(".media-body") .append("<p style='font-size:17px;'>"+msg['sender']+" : "+msg['msg']+"</p><hr>");
            $('.portlet-body') .stop();
             $('.portlet-body') .animate({ scrollTop: $('.portlet-body')[0].scrollHeight }, 800);
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////병원분기처리?	
+	
 	$(function(){
 		$("#sendBtn").click(function(){
 			const msg=$("#msg").val();
 			if(msg.trim().length==0){
 				alert("메세지를 입력하세요!");
 				$("#msg").focus();
-			}else{
-				websocket.send(JSON.stringify(new SocketMessage("msg","${loginMember.email}","",msg,room,"")));
+				
+			}else if(${not empty loginMember}){
+				websocket.send(JSON.stringify(new SocketMessage("hpmsg","${loginMember.email}",sender,msg,roomId)));
+				$("#msg").val("");
+				
+			}else if(${not empty loginHpMember}){
+				websocket.send(JSON.stringify(new SocketMessage("hpmsg","${loginHpMember.id}",sender,msg,roomId)));
 				$("#msg").val("");
 			}
 		});
 	})
-	function SocketMessage(type,sender,reciever,msg,room,room2){
+	
+	function SocketMessage(type,sender,reciever,msg,room){
 		this.type=type;
 		this.sender=sender;
 		this.reciever=reciever;
 		this.msg=msg;
 		this.room=room;
 	}
+    
     </script>
 </body>
 </html>
