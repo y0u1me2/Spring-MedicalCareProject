@@ -91,6 +91,7 @@ border-radius:10px;
 		console.log(data);
 		console.log('${param.room}');//userId
 		//접속정보를 server에 알려주기
+		
 		websocket.send(JSON.stringify(new SocketMessage("open","${loginMember.email}","","",room)));
 		//chattingServer에 보내는거임 type과 맞춰줌
 	}
