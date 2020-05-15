@@ -45,6 +45,20 @@
       <li class="nav-item">
         <a class="nav-link" href="${path }/healthInfo/healthInfoMain">건강정보</a>
       </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="${path }/hospitalMap.do">병원찾기</a>
+      </li>
+      
+      <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+		  회사소개
+		</a>
+		<div class="dropdown-menu">
+		  <a class="dropdown-item" href="${path }/about">About HU</a>
+		  <a class="dropdown-item" href="${path }/service">서비스 소개</a>
+		</div>
+	</li>
       <!-- <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
 

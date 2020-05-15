@@ -25,7 +25,7 @@ body{
 	font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;
 }
 
-a:link, a:visited, a:hover { 
+form a:link, form a:visited, form a:hover { 
 	color: black; 
 	text-decoration: underline;
 }
@@ -71,9 +71,8 @@ a:link, a:visited, a:hover {
 					 		<div class="input-group-append">
 								<button id="btnSearch" class="btn btn-light" type="button">검색하기</button>
 							</div>
-						 	<datalist id="hospitalList" >
+						 	<datalist id="hospitalList">
 						 	</datalist>
-						 	
 						</div>
 					 	<div class="invalid-feedback"></div>
 					 </div>
@@ -241,17 +240,14 @@ $(function(){
 		checkAgree();
 	}); */
 	
-	/* $("#btnSearch").click(function(){
+	$("#btnSearch").click(function(){
 		getList();
-	}); */
+	});
 	
-	/* $("#hospital_name").keyup(function(){
-		getList();
-	}) */
 	
-	/* $("#hospital_name").on('change', function() {
+	$("#hospital_name").on('change', function(e) {
        	console.log($(this).val());
-    }); */
+    });
 	
 })
 
@@ -290,7 +286,7 @@ function getList(){
 					var hospAddr = data[i].hospAddr;
 					var hospNo = data[i].hospNo;
 					
-					/* $("<option>").attr({"label": hospAddr, "value": hospNo}).html(hospName).appendTo(datalist); */
+					/* $("<option>").attr({"label": hospAddr, "id": hospNo}).html(hospName).appendTo(datalist).on("change", $("#hospital_number").val(hospName)); */
 					var option = $("<option>").attr({"label": hospAddr, "id": hospNo}).html(hospName);
 					option.appendTo(datalist);
 				}

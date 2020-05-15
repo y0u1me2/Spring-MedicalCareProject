@@ -23,7 +23,7 @@ pageEncoding="UTF-8"%>
 
 
 <div id="map" class="mx-auto my-5" style="width:80%;height:500px;" ondrop="getInfo();"></div>
-<button onclick="getInfo();">중심좌표</button>
+<!-- <button onclick="getInfo();">중심좌표</button> -->
 
 <div id = "Progress_Loading"><!-- 로딩바 -->
 	<img src="${path }/resources/images/loading.gif"/>
@@ -76,12 +76,7 @@ $(function() {
 
 function getInfo(){
 	/* alert(map.getCenter().getLat()); */
-	$.ajax({
-		url: "${path}/insertData.do",
-		success:function(){
-			alert("성공");
-		}
-	})
+	
 }
 
 

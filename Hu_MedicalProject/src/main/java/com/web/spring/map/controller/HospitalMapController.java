@@ -39,6 +39,17 @@ public class HospitalMapController {
 		return "client/map/hospitalMap";
 	}
 
+	@RequestMapping("/about")
+	private String introduction() {
+		return "client/introduction/introduction";
+	}
+	
+	@RequestMapping("/service")
+	private String service() {
+		return "client/introduction/service";
+	}
+	
+	
 	@ResponseBody
 	@RequestMapping(value = "/hospitalFind.do", produces = "application/text; charset=utf-8")
 	private String hospitalFind(@RequestParam(required = false, defaultValue = "") String latitude,
