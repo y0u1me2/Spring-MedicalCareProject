@@ -22,11 +22,11 @@
                 <div id="present">
                     <div class="presentInform ">
                         <div id="possible">접수/예약 가능한 병원<br>
-                        <h2 style="margin-left: 30p3x;">11,057</h2></div>
+                        <h2 style="margin-left: 30px;">80,000</h2></div>
                     </div>
                     <div class="presentInform">
-                    <div id="possible">접수/예약 가능한 병원
-                    <h2 style="margin-left: 15px;">8,799,641</h2></div>  
+                    <div id="possible">누적 접수/예약 건수
+                    <h2 style="margin-left: 30px;">200</h2></div>  
                     </div> 
                 </div>
             </div>
@@ -79,8 +79,8 @@
             </div>
             <div data-wow-delay="1.5s" id="middleinform" class="wow fadeInUp" >
                 <img id="listing" src="${pageContext.request.contextPath }/resources/images/aspirin.png" width="50px;" >
-                <p id="finder">증상별 의약품 검색하기</p>
-                <p id="finder2">나의 증상을 파악하여 의약품을 검색해 보세요.</p>
+                <p id="finder">실시간 증상 진료</p>
+                <p id="finder2">실시간으로 나의 증상을 빠르게 확인해보세요.</p>
             </div>
         </div>
         <div class="img2">

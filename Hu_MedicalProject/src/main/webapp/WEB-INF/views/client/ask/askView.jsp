@@ -17,10 +17,18 @@
           <div class=" col-xl-8 " style="height: 500px; margin-bottom: 100px;">
            <h2>${a.askTitle }</h2>
            <div style="float: right;">
-           <c:if test="${loginMember.name eq a.askWriter }">
+           <c:if test="${not empty loginMember and loginMember.name eq a.askWriter or loginMember.email eq 'admin'}">
 	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="askUpdate();">수정</button>
 	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" onclick="askDelete();">삭제</button>
 	       </c:if>
+	       <c:if test="${not empty loginHpMember and loginHpMember.managerName eq a.askWriter }">
+	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="askUpdate();">수정</button>
+	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" onclick="askDelete();">삭제</button>
+	       </c:if>
+	        <%-- <c:if test="${loginMember.email = 'admin'}">
+	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="askUpdate();">수정</button>
+	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" onclick="askDelete();">삭제</button>
+	       </c:if> --%>
 	           <button class="btn btn-outline-success my-2 my-sm-0" onclick="askList();" >목록</button>
            </div>
            <p style="padding-top: 0px; color:lightgray;">${a.askDate }</p>
@@ -53,12 +61,12 @@
 				</div>
 			</form>
           </div>
-          
+          <c:if test="${loginMember.email=='admin' }">
 	          <div id="upDel" style="float:right; margin-top:50px;">
 		           <input  type="button" class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" id="replyUpdateBtn" onclick="replyUpdate();" value="답변수정">
 		           <button  type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="replyDelete();" >답변 삭제</button>
 		      </div>
-	      
+	      </c:if>
   	</c:when>
   	</c:choose>
   	<hr>

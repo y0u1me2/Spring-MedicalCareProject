@@ -94,22 +94,9 @@ public class ChattingServer extends TextWebSocketHandler{
 			}//데이터 전송!
 			
 		}
-	
-	/*
-	 * private void sendHpMessage(SocketMessage msg) { for(WebSocketSession client :
-	 * client2) { SocketMessage
-	 * clientData=(SocketMessage)client.getAttributes().get("data");
-	 * logger.debug(msg.getRoom());
-	 * if((clientData.getSender().equals(msg.getReciever())
-	 * ||clientData.getSender().equals(msg.getSender())&&clientData.getRoom().equals
-	 * (msg.getRoom()))) { logger.debug(clientData.getRoom()); try {
-	 * client.sendMessage(new TextMessage(mapper.writeValueAsString(msg)));
-	 * 
-	 * } catch (IOException e) { e.printStackTrace(); } }
-	 * 
-	 * } }
-	 */
-		   private void sendHpMessage(SocketMessage msg) {
+//---------------------------메세지보내기------------------------------------------------------
+		//병원
+	   private void sendHpMessage(SocketMessage msg) {
 			      for(WebSocketSession client : client2) {
 			         SocketMessage clientData=(SocketMessage)client.getAttributes().get("data");
 			         logger.debug(msg.getRoom()+" ====== "+clientData.getRoom());
@@ -126,6 +113,8 @@ public class ChattingServer extends TextWebSocketHandler{
 			         
 			      }
 			   }
+	
+	//관리자전용
 	private void sendMessage(SocketMessage msg) {
 		logger.debug("msgmsg :"+msg);
 		Set<Map.Entry<String, WebSocketSession>> keys=clients.entrySet();
@@ -147,7 +136,7 @@ public class ChattingServer extends TextWebSocketHandler{
 			}
 	}
 	
-//--------------------------메세지파싱처리하기-----------------------------------------------
+//--------------------------메세지파싱처리하기---------------------------------------------------
 	private SocketMessage getMessage(String msg) {
 		SocketMessage sm=null;
 		try {
@@ -157,18 +146,8 @@ public class ChattingServer extends TextWebSocketHandler{
 		}
 		return sm;
 	}
-	/*
-	 * //--------------------------접속종료---------------------------------------------
-	 * ---------
-	 * 
-	 * @Override public void afterConnectionClosed(WebSocketSession session,
-	 * CloseStatus status) throws Exception { logger.info("접속이 종료되었습니다.");
-	 * Set<Map.Entry<String, WebSocketSession>> entrykey=clients.entrySet();
-	 * Iterator<Map.Entry<String, WebSocketSession>> it=entrykey.iterator();
-	 * while(it.hasNext()) { Map.Entry<String, WebSocketSession> client=it.next();
-	 * if(!client.getValue().isOpen()) { it.remove(); } } }
-	 */
-	//--------------------------접속종료------------------------------------------------------
+
+//--------------------------접속종료-----------------------------------------------------------
 	   
 	   @Override
 	   public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
@@ -178,7 +157,7 @@ public class ChattingServer extends TextWebSocketHandler{
 	      while(it.hasNext()) {
 	         Map.Entry<String, WebSocketSession> client=it.next();
 	         if(!client.getValue().isOpen()) {
-	            it.remove();
+	            it.remove();//세션삭제하기
 	         }
 	      }
 	      Iterator<WebSocketSession> c2=client2.iterator();
