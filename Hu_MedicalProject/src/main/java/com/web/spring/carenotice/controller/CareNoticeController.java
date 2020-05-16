@@ -56,7 +56,7 @@ public class CareNoticeController {
 		int totalCount = service.careCount();
 
 		mv.addObject("list", list);
-	mv.addObject("count", totalCount);
+		mv.addObject("count", totalCount);
 		mv.addObject("pageBar", PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/care/careNotice"));
 		mv.setViewName("client/careNotice/careNotice");
 		return mv;
