@@ -19,15 +19,9 @@ import com.web.spring.ask.model.vo.AskReply;
 public class ReplyController {
 	@Autowired
 	Logger logger;
+	
 	@Autowired
 	private AskService service;
-	
-	
-	
-	
-	
-	
-	
 	
 //insert	
 	@RequestMapping("/reply/insertReply.do")

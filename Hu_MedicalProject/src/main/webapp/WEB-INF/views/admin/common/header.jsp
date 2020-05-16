@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath }/resources/images/admin.png">
-<title>Insert title here</title>
+<title>ADMIN HospitalForU</title>
 <link href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap" rel="stylesheet">
  <!-- Bootstrap Core CSS -->
     <link href="${pageContext.request.contextPath }/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -55,8 +55,8 @@
                     </ul>
                     <ul class="navbar-nav my-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="${pageContext.request.contextPath }/resources/images/admin.png" width="20px;" alt="user" class="profile-pic m-r-5" />Admin</a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="${pageContext.request.contextPath }" >
+                                <img src="${pageContext.request.contextPath }/resources/images/logo5.png" width="20px;" alt="user" class="profile-pic m-r-5" />메인으로</a>
                         </li>
                     </ul>
                 </div>

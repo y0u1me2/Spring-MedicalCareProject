@@ -4,7 +4,6 @@
 	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	<c:set var="path" value="${pageContext.request.contextPath}"/>
-	
 	<jsp:include page="/WEB-INF/views/client/common/header.jsp">
 		<jsp:param value="Hello Spring" name="pageTitle"/>
 	</jsp:include>
@@ -35,7 +34,6 @@
  		}
            */
          </script> 
-         
    <%--       
 	<script>
 		function accessChatting2(room1,room2){

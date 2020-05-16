@@ -141,5 +141,17 @@ public class AskController {
 		model.addAttribute("loc",loc);
 		return "client/common/msg";
 	}
-
+//검색
+	@RequestMapping("/ask/search.do")
+	public ModelAndView searchType(@RequestParam String searchType,
+									@RequestParam String keyword,
+									ModelAndView mv) {
+		Map<String,String> param=new HashMap<String,String>();
+		param.put("searchType",searchType);
+		param.put("keyword",keyword);
+		List<Ask> list=service.searchList(param);
+		mv.addObject("list",list);
+		mv.setViewName("client/ask/askList");
+		return mv;
+	}
 }

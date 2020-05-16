@@ -26,6 +26,10 @@ public interface AskDao {
 	List<Map<String, String>> searchAsk(SqlSessionTemplate session, Map<String, String> param);
 
 	int searchAskCount(SqlSessionTemplate session);
+	
+	//검색
+	List<Ask> searchList(SqlSessionTemplate session, Map<String, String> param);
+
 
 
 //-------------------------Reply------------------------------------------------

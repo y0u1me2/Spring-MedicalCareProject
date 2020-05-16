@@ -78,7 +78,7 @@ input#searchBtn:hover {
             <div class="col-xl-1 ">
             </div>
             <div class="col-xl-10 " style="padding-left:450px;margin-top:50px;font-size: 30px;">
-              1:1 문의게시판
+              	문의게시판
             </div>
               <div class="col-xl-1 ">
             </div>
@@ -89,17 +89,17 @@ input#searchBtn:hover {
               <thead>
                 <tr>
                   <th>번호</th>
-                  <th style="text-align: center; width:770px; margin-right:100px;">제목</th>
+                  <th style="padding-left:19px;">문의종류</th>
+                  <th style="text-align: center; width:600px; margin-right:100px;">제목</th>
                   <th style="width:150px; ">문의자</th>
                   <th>&nbsp;&nbsp;&nbsp;&nbsp;등록일</th>
-                  <!-- <th>답변상태</th> -->
-                  
                 </tr>
               </thead>
               <tbody>
            <c:forEach items="${list }" var="a" varStatus="board">
                 <tr>
                   <td><c:out value="${a.askNo }"/></td>
+                  <td><c:out value="[${a.askClassification }]"/></td>
                   <td style="text-align: center;">
                   	<a href="${path }/ask/askView.do?no=${a.askNo }" style="text-decoration: none; margin-right:10px;">
                   		<span><c:out value="${a.askTitle }"/></span></a>
@@ -124,11 +124,13 @@ input#searchBtn:hover {
           <div style="text-align:center; font-size:20px;">
           <form action="${path }/ask/search.do" method="post">
             <select name="searchType" id="searchType" style="background-color:white; height:35px;">
-              <option value=""  disabled selected>선택</option>
-              <option value="askTitle"  <c:if test="${param.searchType eq 'askTitle' }">selected</c:if>>글제목</option>
-              <option value="askWriter"  <c:if test="${param.searchType eq 'askWriter' }">selected</c:if>>작성자</option>
+              <option value="" selected>선택</option>
+              <option value="일반회원"  <c:if test="${param.searchType eq '일반회원' }">selected</c:if>>일반회원</option>
+              <option value="병원회원"  <c:if test="${param.searchType eq '병원회원' }">selected</c:if>>병원회원</option>
+              <option value="회원정보"  <c:if test="${param.searchType eq '회원정보' }">selected</c:if>>회원정보</option>
+              <option value="기타문의"  <c:if test="${param.searchType eq '기타문의' }">selected</c:if>>기타문의</option>
             </select>
-            <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력해주세요" size="20" value="${param.keyword }" required autocomplete="off">
+            <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력해주세요" size="20" value="${param.keyword }"  autocomplete="off">
             <input type="submit" id="searchBtn" class="search_btn" value="검색"/>
            </form>
           </div>
@@ -136,9 +138,6 @@ input#searchBtn:hover {
         <div id="pageBar">
         	${pageBar }
         </div>
-        
-        
-         
       </section>
      
       <script>
