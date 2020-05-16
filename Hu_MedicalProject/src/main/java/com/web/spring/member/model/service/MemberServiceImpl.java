@@ -43,6 +43,13 @@ public class MemberServiceImpl implements MemberService{
 	public String getPw(Map<String, Object> paramMap) {
 		return dao.getPw(session,paramMap);
 	}
+
+
+	@Override
+	public int changeMemberPsw(Map<String, Object> map) {
+		return dao.changeMemberPsw(session,map);
+	}
+	
 	
 	
 }

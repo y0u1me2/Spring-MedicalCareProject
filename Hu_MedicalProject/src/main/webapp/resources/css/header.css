@@ -48,7 +48,7 @@ color:grey;
 /* 입력 창 스타일 */
 input[type=text]#uemail,input[type=password]#psw,
 input[type=text]#hospitalEmail,input[type=password]#hospitalPsw{
-	width: 100%;
+  width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -166,3 +166,29 @@ button:hover {
 }
         
 /* 로그인 끝 */
+/* 비밀번호 찾기*/
+input[type=text]#memberEmail{
+	height: 40px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+.emailChk{
+  /* background-color: red; */
+  color: black;
+  padding: 10px 10px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+}
+.findPswBtn{
+	color: black;
+  padding: 10px 10px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width:200px;
+  height:40px;
+}

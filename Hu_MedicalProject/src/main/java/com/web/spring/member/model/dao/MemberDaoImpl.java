@@ -33,6 +33,11 @@ public class MemberDaoImpl implements MemberDao{
 	public String getPw(SqlSessionTemplate session, Map<String, Object> paramMap) {
 		return session.selectOne("member.emailSendPW", paramMap);
 	}
+
+	@Override
+	public int changeMemberPsw(SqlSessionTemplate session, Map<String, Object> map) {
+		return session.update("member.changeMemberPsw", map);
+	}
 	
 	
 }
