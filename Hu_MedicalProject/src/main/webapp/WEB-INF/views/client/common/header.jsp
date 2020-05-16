@@ -45,6 +45,20 @@
       <li class="nav-item">
         <a class="nav-link" href="${path }/healthInfo/healthInfoMain">건강정보</a>
       </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="${path }/hospitalMap.do">병원찾기</a>
+      </li>
+      
+      <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+		  회사소개
+		</a>
+		<div class="dropdown-menu">
+		  <a class="dropdown-item" href="${path }/about">About HU</a>
+		  <a class="dropdown-item" href="${path }/service">서비스 소개</a>
+		</div>
+	</li>
       <!-- <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
 
@@ -81,7 +95,6 @@
           </li>
          </c:when>
          <c:when test = "${not empty loginMember }">
-               	
 			<li class="nav-item" style="margin-left:100px;">
 				<a href="${path }/myPage/myPageMain" style="align:right;" ><c:out value="${loginMember.name }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
@@ -89,7 +102,7 @@
 						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>
 	        </li>
          </c:when>
-         
+
          <c:when test = "${not empty loginHpMember }">
 			<li class="nav-item" style="margin-left:100px;">
 				<a href="#" style="align:right;"><c:out value="${loginHpMember.hospitalName }"></c:out> 님</a>
@@ -386,28 +399,21 @@ function logoutChk(){
 		}
 		
 		//병원
-		 function hpAccessChatting(room1,room2){
+		 function hpAccessChatting(room,room2){
 		//room1은일반회원(요청한회원) room2는 병원회원(요청받은회원) 
 			if(${not empty loginMember}){
-				hpRequestChatting(room2);
+				hpRequestChatting(room2,roomId);
+				open("${path}/hpChattingView?room="+room2+"&roomId="+roomId,"_blank","width=500,height=490");
+			}else{
+				open("${path}/hpChattingView?room="+room+"&roomId="+room2,"_blank","width=500,height=490");
 			}
-			open("${path}/chattingView?room1=${loginMember.email}&room2="+room2,"_blank","width=500,height=490");
 		}
-//채팅 알람띄워주기
-function accessChatting(room){//병원회원-일반회원일때 매개변수 2개 받기
-	//room은 로그인된 userId가 매개변수로 들어간다.
-	if(${loginMember.email ne "admin"}){
-		//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
-		
-		//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
-		requestChatting();
-	}
-	open("${path}/chattingView?room="+room,"_blank","width=500,height=490");
-}
+
 </script>
 	<c:if test="${not empty loginMember or not empty loginHpMember }">
 	<!--로그인이 되었을때 문의하기!  -->
 		<script>
+			let roomId;
 			//채팅알람받는 웹소켓 구성하기
 			let alram=new WebSocket("ws://localhost:9090${path}/alram");
 			
@@ -415,11 +421,11 @@ function accessChatting(room){//병원회원-일반회원일때 매개변수 2�
 				console.log("msg :"+msg);
 				
 				if(${not empty loginMember}){
-				alram.send(JSON.stringify(new AlramMessage("client","접속","${loginMember.email}","")));//공란병원회원
+					alram.send(JSON.stringify(new AlramMessage("client","접속","${loginMember.email}","")));
 				}
 				
 				else if(${not empty loginHpMember}){
-					alram.send(JSON.stringify(new AlramMessage("client","접속","${loginHpMember.id}","")));//공란병원회원
+					alram.send(JSON.stringify(new AlramMessage("client","접속","${loginHpMember.id}","")));
 				}
 			}
 			
@@ -427,6 +433,7 @@ function accessChatting(room){//병원회원-일반회원일때 매개변수 2�
 				const data=JSON.parse(msg.data);
 				console.log(data);
 				switch(data.type){
+					case "client" : roomId=data.msg;break;
 					//admin
 					case "newchat" : openChatting(data);break;
 					
@@ -434,7 +441,7 @@ function accessChatting(room){//병원회원-일반회원일때 매개변수 2�
 					case "hospitalChat" : hpOpenChatting(data);break;
 				}
 			}
-//--------------------------------------관리자 알림-------------------------------------------------			
+//--------------------------------------관리자 알림---------------------------------------------------			
 			//admin
 			function openChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
@@ -445,7 +452,8 @@ function accessChatting(room){//병원회원-일반회원일때 매개변수 2�
 			//병원
 			function hpOpenChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
-					hpAccessChatting(data.sender);//관리자도(병원도) 창을 띄워줘야하므로!
+					console.log(data);
+					hpAccessChatting(data.sender,data.msg);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
 //------------------------요청 보내기-------------------------------------------------------------------			
@@ -455,9 +463,9 @@ function accessChatting(room){//병원회원-일반회원일때 매개변수 2�
 			//일반회원이 admin에게 채팅보냄
 			}
 			//병원
-			 function hpRequestChatting(room2){
-				 console.log("병원 :"+room2);
-				alram.send(JSON.stringify(new AlramMessage("hospitalChat","병원문의","${loginMember.email}",room2)));
+			 function hpRequestChatting(room2,roomId){
+				 console.log("병원 :"+room2,roomId);
+				alram.send(JSON.stringify(new AlramMessage("hospitalChat",roomId,"${loginMember.email}",room2)));
 			} 
 //------------------------객체------------------------------------------------------------------------
 			function AlramMessage(type,msg,sender,receiver){

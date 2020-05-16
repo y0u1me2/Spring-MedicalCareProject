@@ -24,7 +24,8 @@ public class AskDaoImpl implements AskDao {
 	public List<Ask> selectAskList(SqlSessionTemplate session, int cPage, int numPerpage) {
 		return session.selectList("ask.selectAskList",null,new RowBounds((cPage-1)*numPerpage,numPerpage));
 	}
-//insert
+
+	//insert
 	@Override
 	public int insertAsk(SqlSessionTemplate session, Ask ask) {
 		return session.insert("ask.insertAsk",ask);
@@ -57,6 +58,11 @@ public class AskDaoImpl implements AskDao {
 	@Override
 	public int searchAskCount(SqlSessionTemplate session) {
 		return session.selectOne("ask.searchAskCount");
+	}
+	
+	@Override
+	public List<Ask> searchList(SqlSessionTemplate session, Map<String, String> param) {
+		return session.selectList("ask.searchList",param);
 	}
 	
 //-------------------------Reply------------------------------------------------

@@ -10,7 +10,7 @@
 	</select>
 	
 	<insert id="insertAsk" parameterType="ask">
-		INSERT INTO ASK VALUES(SEQ_ASKNO.NEXTVAL,#{askWriter},#{askTitle},#{askContent},SYSDATE,DEFAULT)
+		INSERT INTO ASK VALUES(SEQ_ASKNO.NEXTVAL,#{askWriter},#{askTitle},#{askContent},SYSDATE,DEFAULT,#{askClassification})
 	</insert>
 	
 	<select id="selectAsk" parameterType="_int" resultType="ask">
@@ -18,7 +18,7 @@
 	</select>
 	
 	<update id="updateAsk" parameterType="ask">
-		UPDATE ASK SET ASKTITLE=#{askTitle}, ASKCONTENT=#{askContent} where ASKNO=#{askNo}
+		UPDATE ASK SET ASKTITLE=#{askTitle}, ASKCONTENT=#{askContent},ASKCLASSIFICATION=#{askClassification} where ASKNO=#{askNo}
 	</update>
 	
 	<delete id="deleteAsk" parameterType="_int">
@@ -33,11 +33,15 @@
 		UPDATE ASK SET REPLYCNT=REPLYCNT-1 WHERE ASKNO=#{no}
 	</update>
 	
-	<select id="searchAsk" parameterType="map" resultType="ask">
+	<select id="searchList" parameterType="map" resultType="ask">
 		SELECT * FROM ASK
+		
 			WHERE 1=1
 		<if test="searchType != null and searchType !='' ">
-			AND ${searchType} like '%'||#{keyword}||'%'
+			 AND ASKCLASSIFICATION = #{searchType}
+		</if>
+		<if test="keyword != null and keyword !='' ">
+			AND ASKTITLE LIKE '%'||#{keyword}||'%'
 		</if>
 		ORDER BY ASKDATE DESC
 	</select>

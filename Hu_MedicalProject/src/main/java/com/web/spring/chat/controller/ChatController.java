@@ -20,16 +20,21 @@ public class ChatController {
 	@Autowired
 	Logger logger;
 
-	//관리자-사용자 채팅뷰 이동	
+		//관리자-사용자 채팅뷰 이동	
 		@RequestMapping("/chattingView")
 		public String accessChatting() {
 			return "client/chatting/chatting";
 		}
 		
 		
+		//병원
+		@RequestMapping("/hpChattingView")
+		public String hpAcessChatting() {
+			return "client/chatting/chatting2";
+		}
+		
 		@RequestMapping("/test/test.do")
 		public ModelAndView page(ModelAndView mv) {
-			
 			List<HospitalMember> list=service.HpMemberList();
 			
 			logger.debug("병원리스트"+list);

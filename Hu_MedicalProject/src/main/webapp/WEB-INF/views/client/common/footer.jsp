@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <footer>
-    <div data-wow-delay="0.9s" class="wow fadeIn" id="container-fluid" style="background-color:#2C3744;height:300px;">
+    <div data-wow-delay="0.5s" class="wow fadeIn" id="container-fluid" style="background-color:#2C3744;height:300px;">
       <div id="footerLogo">    
       <img src="${pageContext.request.contextPath }/resources/images/logo7.png" width="40px">&nbsp;
-          똑닥 
+          HospitalForU 
       </div>
       <div id="useTerm">
           <a href="#">이용약관</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">개인정보 취급방침</a>

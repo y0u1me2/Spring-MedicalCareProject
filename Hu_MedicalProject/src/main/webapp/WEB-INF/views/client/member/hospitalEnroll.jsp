@@ -25,7 +25,7 @@ body{
 	font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;
 }
 
-a:link, a:visited, a:hover { 
+form a:link, form a:visited, form a:hover { 
 	color: black; 
 	text-decoration: underline;
 }
@@ -65,20 +65,23 @@ a:link, a:visited, a:hover {
 			
 				<div class="mb-5">
 					<p><b>병원 정보</b></p>
-					 <div class="form-group">
+					 <!-- <div class="form-group">
 					 	<div class="input-group mb-3">
-					   		<input list ="hospitalList" type="text" class="form-control" id="hospital_name" placeholder="가입병원을 선택하세요" name="hospitalName" required autocomplete="off" value="kh종합병원">
+					   		<input list ="hospitalList" type="text" class="form-control" id="hospital_name" placeholder="가입병원을 선택하세요" name="hospitalName" required autocomplete="off">
 					 		<div class="input-group-append">
 								<button id="btnSearch" class="btn btn-light" type="button">검색하기</button>
 							</div>
-						 	<datalist id="hospitalList" >
+						 	<datalist id="hospitalList">
+						 		<option id="1" value="병원1"></option>
+						 		<option id="2" value="병원2"></option>
 						 	</datalist>
-						 	
 						</div>
 					 	<div class="invalid-feedback"></div>
-					 </div>
+					 </div> -->
+					 
+					 
 					 <div class="form-group">
-					   <input type="text" class="form-control" id="hospital_number" placeholder="요양기관 번호 (숫자, 8자)" name="hospNo" required autocomplete="off" value="JDQ4MTg4MSM1MSMkMSMkMCMkODkkMzgxMzUxIzExIyQyIyQ3IyQwMCQyNjEwMDIjODEjJDEjJDIjJDgz">
+					   <input type="text" class="form-control" id="hospital_number" placeholder="요양기관 번호 (8자)" name="hospNo" required autocomplete="off">
 					 	<div class="invalid-feedback"></div>
 					 </div>
 				</div>
@@ -90,11 +93,11 @@ a:link, a:visited, a:hover {
 						<div class="invalid-feedback"></div>
 					</div>
 					<div class="form-group">
-					  <input type="email" class="form-control" id="email" placeholder="수신 가능한 이메일" name="email" required autocomplete="off">
+					  <input type="email" class="form-control" id="email" placeholder="수신 가능한 이메일" name="managerEmail" required autocomplete="off">
 					  <div class="invalid-feedback"></div>
 					</div>
 					<div class="form-group">
-					  <input type="tel" class="form-control" id="phone" placeholder="휴대폰 번호 입력" name="tel" required autocomplete="off">
+					  <input type="tel" class="form-control" id="phone" placeholder="휴대폰 번호 입력" name="managerPhone" required autocomplete="off">
 					  <div class="invalid-feedback"></div>
 					</div>
 				</div>
@@ -241,17 +244,20 @@ $(function(){
 		checkAgree();
 	}); */
 	
-	/* $("#btnSearch").click(function(){
+	$("#btnSearch").click(function(){
 		getList();
-	}); */
+	});
 	
-	/* $("#hospital_name").keyup(function(){
-		getList();
-	}) */
 	
-	/* $("#hospital_name").on('change', function() {
-       	console.log($(this).val());
-    }); */
+	$("#hospital_name").on('change', function(e) {
+		
+		
+		
+		var g=$(this).val();  
+		
+		  var id = $('#hospitalList').find('option').filter(function() { return $.trim( $(this).text() ) === g; }).attr('id');
+		    alert(id);
+    });
 	
 })
 
@@ -290,7 +296,7 @@ function getList(){
 					var hospAddr = data[i].hospAddr;
 					var hospNo = data[i].hospNo;
 					
-					/* $("<option>").attr({"label": hospAddr, "value": hospNo}).html(hospName).appendTo(datalist); */
+					/* $("<option>").attr({"label": hospAddr, "id": hospNo}).html(hospName).appendTo(datalist).on("change", $("#hospital_number").val(hospName)); */
 					var option = $("<option>").attr({"label": hospAddr, "id": hospNo}).html(hospName);
 					option.appendTo(datalist);
 				}

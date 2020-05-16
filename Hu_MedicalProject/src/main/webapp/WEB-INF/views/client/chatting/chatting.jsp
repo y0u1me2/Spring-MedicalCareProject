@@ -91,8 +91,16 @@ border-radius:10px;
 		console.log(data);
 		console.log('${param.room}');//userId
 		//접속정보를 server에 알려주기
-		websocket.send(JSON.stringify(new SocketMessage("open","${loginMember.email}","","",room)));
-		//chattingServer에 보내는거임 type과 맞춰줌
+		
+	 	websocket.send(JSON.stringify(new SocketMessage("open","${loginMember.email}","","",room)));
+		//chattingServer에 보내는거임 type과 맞춰줌 
+		/* if(${not empty loginMember}){
+			alram.send(JSON.stringify(new AlramMessage("hpOpen","접속","${loginMember.email}","")));//공란병원회원
+			}
+			
+			else if(${not empty loginHpMember}){
+				alram.send(JSON.stringify(new AlramMessage("hpOpen","접속","${loginHpMember.id}","")));//공란병원회원
+			} */
 	}
 	
 	websocket.onmessage=function(data){
@@ -125,19 +133,18 @@ border-radius:10px;
 				alert("메세지를 입력하세요!");
 				$("#msg").focus();
 			}else{
-				websocket.send(JSON.stringify(new SocketMessage("msg","${loginMember.email}","",msg,room)));
+				websocket.send(JSON.stringify(new SocketMessage("msg","${loginMember.email}","",msg,room,"")));
 				$("#msg").val("");
 			}
 		});
 	})
-	function SocketMessage(type,sender,reciever,msg,room){
+	function SocketMessage(type,sender,reciever,msg,room,room2){
 		this.type=type;
 		this.sender=sender;
 		this.reciever=reciever;
 		this.msg=msg;
 		this.room=room;
 	}
-    
     </script>
 </body>
 </html>
