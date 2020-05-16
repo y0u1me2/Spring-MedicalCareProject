@@ -21,7 +21,7 @@
 	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="askUpdate();">수정</button>
 	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" onclick="askDelete();">삭제</button>
 	       </c:if>
-	       <c:if test="${not empty loginHpMember and loginHpMember.managerName eq a.askWriter }">
+	       <c:if test="${not empty loginHpMember and loginHpMember.id eq a.askWriter }">
 	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="askUpdate();">수정</button>
 	           <button class="btn btn-outline-success my-2 my-sm-0"  style="margin-right: 2px;" onclick="askDelete();">삭제</button>
 	       </c:if>

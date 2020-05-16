@@ -18,15 +18,15 @@
             <div class=" col-xl-3">
             </div>
           <div class=" col-xl-6"> 
-          제목 <input name="askTitle" type="text" class="form-control" required>
+          제목 <input style="margin-bottom:8px;" name="askTitle" type="text" class="form-control" required>
          <c:if test="${not empty loginMember  }">
-          작성자	 <input name="askWriter" type="text" class="form-control" value="${loginMember.name }" required readonly>
+          작성자	 <input style="margin-bottom:8px;"name="askWriter" type="text" class="form-control" value="${loginMember.name }" required readonly>
 		</c:if>
 		<c:if test="${not empty loginHpMember  }">
-          작성자	 <input name="askWriter" type="text" class="form-control" value="${loginHpMember.id }" required readonly>
+          작성자	 <input style="margin-bottom:8px;" name="askWriter" type="text" class="form-control" value="${loginHpMember.id }" required readonly>
 		</c:if>
-	<select id="askClassification" name="askClassification"> 
-     		 <option value="문의종류" selected disabled>문의종류</option>
+	문의종류<br><select id="askClassification" name="askClassification"> 
+     		 <option value="문의종류" selected disabled>선택</option>
          	 <option value="일반회원">일반회원</option>
          	 <option value="병원회원">병원회원</option>
          	 <option value="회원정보">회원정보</option>
@@ -47,6 +47,18 @@
         <button type="submit" class="btn btn-outline-success my-2 my-sm-0" style="margin-left:960px;"> 등록</button>
       </form>
       </section>
-     
+     <style>
+		 select {
+			width: 100px;
+			padding: .3em .4em;
+			border: 1px solid #999;
+			font-family: inherit;
+			 background: url(${pageContext.request.contextPath }/resources/images/arrow.jpg) no-repeat 95% 50%;
+			border-radius: 0px;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			}
+     </style>
 
 	<jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>

@@ -78,7 +78,7 @@ input#searchBtn:hover {
             <div class="col-xl-1 ">
             </div>
             <div class="col-xl-10 " style="padding-left:450px;margin-top:50px;font-size: 30px;">
-              1:1 문의게시판
+              	문의게시판
             </div>
               <div class="col-xl-1 ">
             </div>

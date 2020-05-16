@@ -94,7 +94,7 @@
     <div id="container-fluid" style="height:270px;">
       
       <img id="lastlogo" src="${pageContext.request.contextPath }/resources/images/logo5.png" width="43px;" class="wow fadeInUpBig">
-        <p id="last" class="wow fadeInUpBig"><strong>건강이</strong> 편해지는 <br><strong>똑닥을</strong> 지금 바로 <strong>만나보세요!</strong></p>
+        <p id="last" class="wow fadeInUpBig"><strong>당신의</strong> 건강을 <br><strong>HospitalForU</strong> 와 <strong>함께하세요!</strong></p>
      <!-- <div id="line2" class="wow zoomInRight"></div> -->
       </div>
 </section>

@@ -19,9 +19,11 @@
             </div>
           <div class=" col-xl-6"> 
           제목 <input name="askTitle" type="text" class="form-control" value="${a.askTitle }" required>
-          작성자 <input name="askWriter" type="text" class="form-control" value="${a.askWriter }" readonly>
+          작성자 <input style="margin-bottom:8px;" name="askWriter" type="text" class="form-control" value="${a.askWriter }" readonly>
 		<input name="askNo" type="hidden" value="${a.askNo }">
 		<input name="askDate" type="hidden" value="${a.askDate }">
+		
+		문의종류<br>
 		<select name="askClassification" > 
      		 <option value="문의종류">문의종류</option>
          	 <option value="일반회원" <c:if test="${a.askClassification eq '일반회원' }">selected</c:if>>일반회원</option>
@@ -44,6 +46,18 @@
         <button type="submit" class="btn btn-outline-success my-2 my-sm-0" style="margin-left:960px;"> 등록</button>
       </form>
       </section>
-     
+      <style>
+		 select {
+			width: 100px;
+			padding: .3em .4em;
+			border: 1px solid #999;
+			font-family: inherit;
+			 background: url(${pageContext.request.contextPath }/resources/images/arrow.jpg) no-repeat 95% 50%;
+			border-radius: 0px;
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			}
+     </style>
 
 	<jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>
