@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.web.spring.member.model.service.MemberService;
 import com.web.spring.member.model.vo.Member;
+import com.web.spring.mypage.service.MyPageService;
 
 @Controller
 public class MyPageController {
@@ -18,7 +18,7 @@ public class MyPageController {
 	private BCryptPasswordEncoder pwEncoder; //단방향 암호화 객체
 	
 	@Autowired
-	private MemberService memberService;//멤버서비스용 객체
+	private MyPageService service;//멤버서비스용 객체
 	
 	//마이페이지 메인 들어가기
 	@RequestMapping("myPage/myPageMain")
@@ -36,11 +36,14 @@ public class MyPageController {
 		String email=request.getParameter("email");
 		String password=request.getParameter("password");
 		m.setEmail(email);//받아온 이메일 멤버에 셋팅
+		Member checkedMember=service.passwordCheck(m);
+		//새비번과 기존비번 중복확인
+		boolean duplication;
+		duplication=pwEncoder.matches(password, checkedMember.getPassword());
 		
-
-		
-		
-		
+		mv.addObject("duplication", duplication);
+		mv.setViewName("jsonView");
+				
 		return mv;		
 	}
 }

@@ -149,6 +149,18 @@ hr {
 		width: 100%;
 	}
 }
+
+span.error {
+	display:none;
+	color:red;
+	float:right;
+}
+
+span.ok {
+	display:none;
+	color:green;
+	float:right;
+}
 </style>
 
 <section id="content-myPage">
@@ -201,10 +213,9 @@ hr {
 					<div class="row">
 						<div class="col"></div>
 						<div class="col-xl-6">
-							<label for="psw"><b>비밀번호</b></label> 
+							<label for="psw"><b>비밀번호</b></label>
 							<input type="password"	placeholder="Enter Password" id="password" name="password">
-							<input type="text"	value="${loginMember.password }" id="oldPassword" name="oldPassword">
-							<p id="pwCheckFF" style="color: #FF6600; margin: 0;">
+							<!-- <p id="pwCheckFF" style="color: #FF6600; margin: 0;"> -->
 						</div>
 						<div class="col"></div>
 					</div>
@@ -212,7 +223,7 @@ hr {
 					<div class="row">
 						<div class="col"></div>
 						<div class="col-xl-6">
-							<label for="psw-repeat"><b>비밀번호 확인</b>	</label> 
+							<label for="psw-repeat"><b>비밀번호 확인</b>	</label>
 							<input type="password" placeholder="Repeat Password" id="psw-repeat" name="psw-repeat">
 						</div>
 						<div class="col"></div>
@@ -255,13 +266,46 @@ hr {
 			type:"post",
 			data:{'password':password,'email':email},
 			success:function(data) {
-				console.log("성공?");
-				console.log(data);
+				if(data.duplication) {
+					if(!$('#password').parent().children().is('span')) {
+						$('#password').before('<span class="error">');
+						$('span.error').css('display','block').text("기존의 비밀번호로 변경할 수 없습니다.");
+					}else {
+						$('span').removeClass('ok');
+						$('span').addClass('error').css('display','block').text("기존의 비밀번호로 변경할 수 없습니다.");
+					}					
+				}else {
+					if(!$('#password').parent().children().is('span')) {
+						$('#password').before('<span class="ok">');
+						$('span.error').css('display','block').text("변경가능한 비밀번호 입니다.");
+					}else {
+						$('span').removeClass('error');
+						$('span').addClass('ok').css('display','block').text("변경가능한 비밀번호 입니다.");
+					}				
+				}
 			}
 		});
 	});
 	
 	function memberUpdateVali() {
+		const addSpan="";
+		if($('#password').val()=="" && $('#psw-repeat').val()=="") {
+			return true;
+		}else if($('#password').val()=="" && $('#psw-repeat').val()!="") {
+			if(!$('#password').parent().children().is('span')) {
+				$('#password').before('<span class="error">');
+				$('span.error').css('display','block').text("변경할 비밀번호를 입력하세요.");
+			}
+			$('#password').focus();
+			return false;
+		}else if($('#password').val()!="" && $('#psw-repeat').val()!="") {
+			if($('#password').val()!=$('#psw-repeat').val()) {
+				if(!$('#psw-repeat').parent().children().is('span')) {
+					$('#password').before('<span class="error">');
+					$('span.error').css('display','block').text("비밀번호가 일치하지 않습니다.");
+				}
+			}
+		}
 		return false;
 	}
 </script>
