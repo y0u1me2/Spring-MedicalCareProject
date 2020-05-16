@@ -7,9 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
@@ -27,6 +25,7 @@ import org.w3c.dom.NodeList;
 
 import com.web.spring.map.model.service.MapService;
 import com.web.spring.map.model.vo.Hospital;
+import com.web.spring.map.model.vo.Hospital2;
 
 @Controller
 public class HospitalMapController {
@@ -115,7 +114,7 @@ public class HospitalMapController {
 	private static String getTagValue(String tag, Element eElement) {
 		
 		if(eElement.getElementsByTagName(tag).item(0)==null) {
-			return "";
+			return null;
 		}else {
 			NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
 			Node nValue = (Node) nlList.item(0);
@@ -125,6 +124,12 @@ public class HospitalMapController {
 		}
 	}
 
+	
+	
+	
+	
+	
+	
 	@RequestMapping("/insertData.do")
 	private void hospitalFind2(@RequestParam(required = false, defaultValue = "") String latitude,
 			@RequestParam(required = false, defaultValue = "") String longitude,
@@ -216,5 +221,129 @@ public class HospitalMapController {
 		}
 
 	}
+	
+	
+	
+	@RequestMapping("/insertData2.do")
+	private void insertData(@RequestParam(required = false, defaultValue = "") String latitude,
+			@RequestParam(required = false, defaultValue = "") String longitude,
+			@RequestParam(required = false, defaultValue = "") String pageNo,
+			@RequestParam(required = false, defaultValue = "") String numOfRows,
+			@RequestParam(required = false, defaultValue = "") String name, HttpServletResponse response)
+			throws IOException {
+
+		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire"); /* URL */
+		urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=j3l4%2FlL9sulpZEYY467tIsTngXuIhRTIddhNB4wrTzRNtaGQ5w6eGH1Jah%2FmXu2JMdja84GrX0hrpsZ1dludpw%3D%3D");
+		urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("8", "UTF-8")); /* 페이지번호 */
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="+ URLEncoder.encode("10000", "UTF-8")); /* 한 페이지 결과 수 */
+
+
+		List<Hospital2> list = new ArrayList<Hospital2>();
+		
+		try {
+			String url = urlBuilder.toString();
+			DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
+			Document doc = dBuilder.parse(url);
+
+			// root tag
+			doc.getDocumentElement().normalize();
+			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+			// 파싱할 tag
+			NodeList nList = doc.getElementsByTagName("item");
+			// System.out.println("파싱할 리스트 수 : "+ nList.getLength());
+
+			for (int temp = 0; temp < nList.getLength(); temp++) {
+				Node nNode = nList.item(temp);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+					Element eElement = (Element) nNode;
+					
+					Hospital2 h = new Hospital2();
+					h.setHospId(getTagValue("hpid", eElement));
+					h.setHospName(getTagValue("dutyName", eElement));
+					h.setHospAddr(getTagValue("dutyAddr", eElement));
+					h.setHospTel(getTagValue("dutyTel1", eElement));
+					h.setHospDirections(getTagValue("dutyMapimg", eElement));
+					h.setHospLat(getTagValue("wgs84Lat", eElement));
+					h.setHospLon(getTagValue("wgs84Lon", eElement));
+					h.setMedicalDepartment(getTagValue("dgidIdName", eElement));
+					
+					if(getTagValue("dutyTime1s", eElement)==null) {
+						h.setOfficeHour1(null);
+					}else {
+						h.setOfficeHour1(getTagValue("dutyTime1s", eElement).substring(0, 2)+":"+getTagValue("dutyTime1s", eElement).substring(2)+"-"+getTagValue("dutyTime1c", eElement).substring(0, 2)+":"+getTagValue("dutyTime1c", eElement).substring(2));
+					}
+					if(getTagValue("dutyTime2s", eElement)==null) {
+						h.setOfficeHour2(null);
+					}else {
+						h.setOfficeHour2(getTagValue("dutyTime2s", eElement).substring(0, 2)+":"+getTagValue("dutyTime2s", eElement).substring(2)+"-"+getTagValue("dutyTime2c", eElement).substring(0, 2)+":"+getTagValue("dutyTime2c", eElement).substring(2));
+					}
+					if(getTagValue("dutyTime3s", eElement)==null) {
+						h.setOfficeHour3(null);
+					}else {
+						h.setOfficeHour3(getTagValue("dutyTime3s", eElement).substring(0, 2)+":"+getTagValue("dutyTime3s", eElement).substring(2)+"-"+getTagValue("dutyTime3c", eElement).substring(0, 2)+":"+getTagValue("dutyTime3c", eElement).substring(2));
+					}
+					if(getTagValue("dutyTime4s", eElement)==null) {
+						h.setOfficeHour4(null);
+					}else {
+						h.setOfficeHour4(getTagValue("dutyTime4s", eElement).substring(0, 2)+":"+getTagValue("dutyTime4s", eElement).substring(2)+"-"+getTagValue("dutyTime4c", eElement).substring(0, 2)+":"+getTagValue("dutyTime4c", eElement).substring(2));
+					}
+					if(getTagValue("dutyTime5s", eElement)==null) {
+						h.setOfficeHour5(null);
+					}else {
+						h.setOfficeHour5(getTagValue("dutyTime5s", eElement).substring(0, 2)+":"+getTagValue("dutyTime5s", eElement).substring(2)+"-"+getTagValue("dutyTime5c", eElement).substring(0, 2)+":"+getTagValue("dutyTime5c", eElement).substring(2));
+					}
+					if(getTagValue("dutyTime6s", eElement)==null) {
+						h.setOfficeHour6(null);
+					}else {
+						h.setOfficeHour6(getTagValue("dutyTime6s", eElement).substring(0, 2)+":"+getTagValue("dutyTime6s", eElement).substring(2)+"-"+getTagValue("dutyTime6c", eElement).substring(0, 2)+":"+getTagValue("dutyTime6c", eElement).substring(2));
+					}
+					if(getTagValue("dutyTime7s", eElement)==null) {
+						h.setOfficeHour7(null);
+					}else {
+						h.setOfficeHour7(getTagValue("dutyTime7s", eElement).substring(0, 2)+":"+getTagValue("dutyTime7s", eElement).substring(2)+"-"+getTagValue("dutyTime7c", eElement).substring(0, 2)+":"+getTagValue("dutyTime7c", eElement).substring(2));
+					}
+					if(getTagValue("dutyTime8s", eElement)==null) {
+						h.setOfficeHour8(null);
+					}else {
+						h.setOfficeHour8(getTagValue("dutyTime8s", eElement).substring(0, 2)+":"+getTagValue("dutyTime8s", eElement).substring(2)+"-"+getTagValue("dutyTime8c", eElement).substring(0, 2)+":"+getTagValue("dutyTime8c", eElement).substring(2));
+					}
+					
+					
+					
+					
+					
+//					h.setOfficeHour1(getTagValue("dutyTime1s", eElement).+"-"+getTagValue("dutyTime1c", eElement));
+//					h.setOfficeHour2(getTagValue("dutyTime2s", eElement)+"-"+getTagValue("dutyTime2c", eElement));
+//					h.setOfficeHour3(getTagValue("dutyTime3s", eElement)+"-"+getTagValue("dutyTime3c", eElement));
+//					h.setOfficeHour4(getTagValue("dutyTime4s", eElement)+"-"+getTagValue("dutyTime4c", eElement));
+//					h.setOfficeHour5(getTagValue("dutyTime5s", eElement)+"-"+getTagValue("dutyTime5c", eElement));
+//					h.setOfficeHour6(getTagValue("dutyTime6s", eElement)+"-"+getTagValue("dutyTime6c", eElement));
+//					h.setOfficeHour7(getTagValue("dutyTime7s", eElement)+"-"+getTagValue("dutyTime7c", eElement));
+//					h.setOfficeHour8(getTagValue("dutyTime8s", eElement)+"-"+getTagValue("dutyTime8c", eElement));
+					list.add(h);
+					
+
+				} // for end
+			} // if end
+			
+			int result = service.insertData2(list);
+			System.out.println(result);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

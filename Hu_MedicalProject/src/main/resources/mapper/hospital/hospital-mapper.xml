@@ -9,5 +9,7 @@
 		SELECT * FROM HOSPITAL WHERE HOSPNAME LIKE '%'||#{name}||'%'
 	</select>
 	
-	
+	<insert id="insertData2" parameterType="hospital2">
+		INSERT INTO HOSPITAL2 VALUES(#{hospId}, #{hospName}, #{hospAddr}, #{hospTel}, #{hospDirections}, #{hospLat}, #{hospLon}, #{medicalDepartment}, #{officeHour1}, #{officeHour2}, #{officeHour3}, #{officeHour4}, #{officeHour5}, #{officeHour6}, #{officeHour7}, #{officeHour8})
+	</insert>
 </mapper>

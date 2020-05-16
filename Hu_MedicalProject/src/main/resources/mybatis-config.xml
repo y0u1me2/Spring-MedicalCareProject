@@ -23,6 +23,7 @@
 	<typeAlias type="com.web.spring.common.StringArrayType" alias="arrayType" />
 	<typeAlias type="com.web.spring.healthInfo.vo.HealthInformation" alias="healthInfo" />
 	<typeAlias type="com.web.spring.map.model.vo.Hospital" alias="hospital" />
+	<typeAlias type="com.web.spring.map.model.vo.Hospital2" alias="hospital2" />
 	<!-- 	
 		<typeAlias type="com.kh.spring.memo.model.vo.Memo" alias="memo" />
 		<typeAlias type="com.kh.spring.board.model.vo.Board" alias="board" /> --> 

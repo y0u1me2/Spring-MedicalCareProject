@@ -43,9 +43,9 @@ public class HospitalMemberController {
 	@RequestMapping("/hospitalEnrollEnd.do")
 	private ModelAndView hospitalEnrollEnd(HospitalMember h, ModelAndView mv) {
 		System.out.println(h);
-		h.setPassword(pwEncoder.encode(h.getPassword()));//비밀번호 암호화(단방향)
-		h.setTel(encryptor.encrypt(h.getTel()));//양방향 암호화(휴대폰)
-		h.setEmail(encryptor.encrypt(h.getEmail()));//양방향 암호화(이메일)
+		h.setPassword(pwEncoder.encode(h.getPassword()));//단방향 암호화(비밀번호)
+		h.setManagerPhone(encryptor.encrypt(h.getManagerPhone()));//양방향 암호화(휴대폰)
+		h.setManagerEmail(encryptor.encrypt(h.getManagerEmail()));//양방향 암호화(이메일)
 		
 		int result = service.hospitalEnroll(h);
 		
