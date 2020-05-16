@@ -33,11 +33,15 @@
 		UPDATE ASK SET REPLYCNT=REPLYCNT-1 WHERE ASKNO=#{no}
 	</update>
 	
-	<select id="searchAsk" parameterType="map" resultType="ask">
+	<select id="searchList" parameterType="map" resultType="ask">
 		SELECT * FROM ASK
+		
 			WHERE 1=1
 		<if test="searchType != null and searchType !='' ">
-			AND ${searchType} like '%'||#{keyword}||'%'
+			 AND ASKCLASSIFICATION = #{searchType}
+		</if>
+		<if test="keyword != null and keyword !='' ">
+			AND ASKTITLE LIKE '%'||#{keyword}||'%'
 		</if>
 		ORDER BY ASKDATE DESC
 	</select>
