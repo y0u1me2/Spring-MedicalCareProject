@@ -89,17 +89,17 @@ input#searchBtn:hover {
               <thead>
                 <tr>
                   <th>번호</th>
-                  <th style="text-align: center; width:770px; margin-right:100px;">제목</th>
+                  <th style="padding-left:19px;">문의종류</th>
+                  <th style="text-align: center; width:600px; margin-right:100px;">제목</th>
                   <th style="width:150px; ">문의자</th>
                   <th>&nbsp;&nbsp;&nbsp;&nbsp;등록일</th>
-                  <!-- <th>답변상태</th> -->
-                  
                 </tr>
               </thead>
               <tbody>
            <c:forEach items="${list }" var="a" varStatus="board">
                 <tr>
                   <td><c:out value="${a.askNo }"/></td>
+                  <td><c:out value="[${a.askClassification }]"/></td>
                   <td style="text-align: center;">
                   	<a href="${path }/ask/askView.do?no=${a.askNo }" style="text-decoration: none; margin-right:10px;">
                   		<span><c:out value="${a.askTitle }"/></span></a>

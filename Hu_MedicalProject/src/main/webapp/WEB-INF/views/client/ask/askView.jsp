@@ -15,7 +15,7 @@
           <div class="col-xl-2">
           </div>
           <div class=" col-xl-8 " style="height: 500px; margin-bottom: 100px;">
-           <h2>${a.askTitle }</h2>
+           <h2>[${a.askClassification}]&nbsp;&nbsp;${a.askTitle }</h2>
            <div style="float: right;">
            <c:if test="${not empty loginMember and loginMember.name eq a.askWriter or loginMember.email eq 'admin'}">
 	           <button class="btn btn-outline-success my-2 my-sm-0" style="margin-right: 2px;" onclick="askUpdate();">수정</button>

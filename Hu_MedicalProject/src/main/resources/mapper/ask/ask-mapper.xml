@@ -10,7 +10,7 @@
 	</select>
 	
 	<insert id="insertAsk" parameterType="ask">
-		INSERT INTO ASK VALUES(SEQ_ASKNO.NEXTVAL,#{askWriter},#{askTitle},#{askContent},SYSDATE,DEFAULT)
+		INSERT INTO ASK VALUES(SEQ_ASKNO.NEXTVAL,#{askWriter},#{askTitle},#{askContent},SYSDATE,DEFAULT,#{askClassification})
 	</insert>
 	
 	<select id="selectAsk" parameterType="_int" resultType="ask">
@@ -18,7 +18,7 @@
 	</select>
 	
 	<update id="updateAsk" parameterType="ask">
-		UPDATE ASK SET ASKTITLE=#{askTitle}, ASKCONTENT=#{askContent} where ASKNO=#{askNo}
+		UPDATE ASK SET ASKTITLE=#{askTitle}, ASKCONTENT=#{askContent},ASKCLASSIFICATION=#{askClassification} where ASKNO=#{askNo}
 	</update>
 	
 	<delete id="deleteAsk" parameterType="_int">

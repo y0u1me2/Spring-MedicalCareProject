@@ -25,6 +25,13 @@
 		<c:if test="${not empty loginHpMember  }">
           작성자	 <input name="askWriter" type="text" class="form-control" value="${loginHpMember.id }" required readonly>
 		</c:if>
+	<select id="askClassification" name="askClassification"> 
+     		 <option value="문의종류" selected disabled>문의종류</option>
+         	 <option value="일반회원">일반회원</option>
+         	 <option value="병원회원">병원회원</option>
+         	 <option value="회원정보">회원정보</option>
+         	 <option value="기타문의">기타문의</option>
+    </select>
 		
            <div class="form-group" style="margin-top: 20px;"> 문의내용
            <label for="comment"></label>

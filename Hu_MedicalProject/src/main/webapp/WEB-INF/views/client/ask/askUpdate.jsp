@@ -22,6 +22,13 @@
           작성자 <input name="askWriter" type="text" class="form-control" value="${a.askWriter }" readonly>
 		<input name="askNo" type="hidden" value="${a.askNo }">
 		<input name="askDate" type="hidden" value="${a.askDate }">
+		<select name="askClassification" > 
+     		 <option value="문의종류">문의종류</option>
+         	 <option value="일반회원" <c:if test="${a.askClassification eq '일반회원' }">selected</c:if>>일반회원</option>
+         	 <option value="병원회원" <c:if test="${a.askClassification eq '병원회원' }">selected</c:if>>병원회원</option>
+         	 <option value="회원정보" <c:if test="${a.askClassification eq '회원정보' }">selected</c:if>>회원정보</option>
+         	 <option value="기타문의" <c:if test="${a.askClassification eq '기타문의' }">selected</c:if>>기타문의</option>
+    	</select>
 		
            <div class="form-group" style="margin-top: 20px;"> 문의내용
             <label for="comment"></label>
