@@ -6,6 +6,7 @@
 	<c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page="/WEB-INF/views/client/common/header.jsp" />
+<script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 
   <style>
     * {
@@ -94,28 +95,12 @@
       background-color: white;
     }
 
-    /* 병원정보들 */
-    div#hospital_content {
-      position: relative;
-      top: 80px;
-      width: 450px;
-      border-radius: 15px;
-      border: solid 1px rgb(82, 81, 81);
-      margin-right: 20px;
-
-
-    }
-
     /* 공지사항 div */
     div#notice {
       background: rgb(247, 245, 245);
     }
 
-    div#content {
-      display: flex;
-
-    }
-
+    
     /* 전체병원보기 버튼 */
     button#lookup {
      background-color:#DAF1DE;
@@ -217,6 +202,355 @@
 	position: relative;
 	top: 300px;
 }
+
+/* ============================리스트 넘기기 ============================= */
+
+
+
+/* 병원정보들 */
+    div#hospital_content {
+      position: relative;
+      top: 50px;
+      width: 100%;
+   
+  }
+
+.content {
+  margin: auto;
+  padding: 20px;
+  width: 100%;
+  height:100%;
+
+}
+
+.slider {
+  margin: 30px auto 50px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+
+/* ===================================== */
+/* Slider */
+.slick-slider{
+    position: relative;
+
+    display: block;
+    box-sizing: border-box;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    -ms-touch-action: pan-y;
+        touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list{
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    margin: 0;
+    padding: 0;
+}
+.slick-list:focus{
+    outline: none;
+}
+.slick-list.dragging{
+    cursor: pointer;
+    cursor: hand;
+}
+
+/* 3개 컨텐츠 위치 */
+ .slick-slider .slick-track,
+.slick-slider .slick-list{
+    -webkit-transform: translate3d(12px, 0, 0);
+       -moz-transform: translate3d(12px, 0, 0);
+        -ms-transform: translate3d(12px, 0, 0);
+         -o-transform: translate3d(12px, 0, 0);
+            transform: translate3d(12px, 0, 0);
+} 
+
+.slick-track{
+    position: relative;
+    top: 0;
+    left: 0;
+
+    display: block;
+}
+
+.slick-track:before,
+.slick-track:after{
+    display: table;
+
+    content: '';
+}
+.slick-track:after{
+    clear: both;
+}
+.slick-loading .slick-track{
+    visibility: hidden;
+}
+
+.slick-slide{
+    display: none;
+    float: left;
+
+    height: 100%;
+    min-height: 1px;
+}
+[dir='rtl'] .slick-slide{
+    float: right;
+}
+.slick-slide img{
+    display: block;
+}
+.slick-slide.slick-loading img
+{
+    display: none;
+}
+.slick-slide.dragging img
+{
+    pointer-events: none;
+}
+.slick-initialized .slick-slide
+{
+    display: block;
+}
+.slick-loading .slick-slide
+{
+    visibility: hidden;
+}
+.slick-vertical .slick-slide
+{
+    display: block;
+
+    height: auto;
+
+    border: 1px solid transparent;
+}
+.slick-arrow.slick-hidden {
+    display: none;
+}
+
+
+/*====================== 좌우 < > 버튼 ===========================*/
+.slick-prev,
+.slick-next{
+    font-size: 0;
+    line-height: 0;
+
+    position: absolute;
+    top: 50%;
+
+    display: block;
+
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%); 
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%); 
+
+    cursor: pointer;
+
+    border: none;
+    outline: none;
+    background: #f0f0f0;
+}
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next:hover,
+.slick-next:focus
+{
+    color: #DAF1DE;
+    outline: none;
+    background: #DAF1DE;
+}
+.slick-prev:hover:before,
+.slick-prev:focus:before,
+.slick-next:hover:before,
+.slick-next:focus:before
+{
+    opacity: 1;
+}
+.slick-prev.slick-disabled:before,
+.slick-next.slick-disabled:before
+{
+    opacity: .25;
+}
+
+.slick-prev:before,
+.slick-next:before
+{
+    font-family: 'slick';
+    font-size: 20px;
+    line-height: 1;
+
+    opacity: .75;
+    color: black;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.slick-prev
+{
+    left: -25px;
+}
+[dir='rtl'] .slick-prev
+{
+    right: -25px;
+    left: auto;
+}
+.slick-prev:before
+{
+    content: '<';
+}
+[dir='rtl'] .slick-prev:before
+{
+    content: '>';
+}
+
+.slick-next
+{
+    right: -25px;
+}
+[dir='rtl'] .slick-next
+{
+    right: auto;
+    left: -25px;
+}
+.slick-next:before
+{
+    content: '>';
+}
+[dir='rtl'] .slick-next:before
+{
+    content: '<';
+}
+
+/* Dots */
+.slick-dotted.slick-slider
+{
+    margin-bottom: 30px;
+}
+
+.slick-dots
+{
+    position: absolute;
+    bottom: -25px;
+
+    display: block;
+
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    list-style: none;
+
+    text-align: center;
+}
+.slick-dots li
+{
+    position: relative;
+
+    display: inline-block;
+
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    padding: 0;
+
+    cursor: pointer;
+}
+.slick-dots li button
+{
+    font-size: 0;
+    line-height: 0;
+
+    display: block;
+
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+
+    cursor: pointer;
+
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+.slick-dots li button:hover,
+.slick-dots li button:focus
+{
+    outline: none;
+}
+.slick-dots li button:hover:before,
+.slick-dots li button:focus:before
+{
+    opacity: 1;
+}
+.slick-dots li button:before
+{
+    font-family: 'slick';
+    font-size: 6px;
+    line-height: 20px;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 20px;
+    height: 20px;
+
+    content: '•';
+    text-align: center;
+
+    opacity: .25;
+    color: black;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.slick-dots li.slick-active button:before
+{
+    opacity: .75;
+    color: black;
+}
+
+.figure{
+	width:370px !important;
+	 border-radius: 15px;
+     border: solid 1px rgb(82, 81, 81);
+     padding: 20px;
+     margin: 1em 25px;
+     min-height:600px;
+	
+}
+
+div.content1{
+	min-height:200px;
+}
+
+
+
   </style>
 
 
@@ -246,126 +580,60 @@
           </div>
 
 
-          <!-- ================================================================ -->
-          <!-- 병원정보들 -->
-          <div id="content">
+  <!-- ============================= 병원정보들 ===================================================== -->
+  
+
+   <div class="content">   
             <div id="hospital_content">
-    
-              <h3>우리동네이비인후과의원</h3>
-              <p><img src="${path }/resources/images/location.png" width="15px;" />5km</p>
-              <p id="bar">|</p>
-              <p>서울특별시 강남구 강남대로 21길</p>
+             <div class="slider">
+             
+		   	 	<c:forEach items="${list }" var="r">
+		   	 	<figure class="figure">
+		   	 	
+		   	 	<div class="content1">
+		              <h3><c:out value="${r['HOSPNAME'] }"/></h3>
+		             <br/>
+		              <p><c:out value="${r['HOSPADDR'] }"/></p>
+		              
+		              <p><c:out value="${r['HOSPDIRECTIONS'] }"/></p>
+		
+		              <p>오늘의 진료시간 <c:out value="${r['OFFICEHOUR1'] }"/></p>
+				</div>
+		              <hr/>
+		              <p><c:out value="${r['MEDICALDEPARTMENT'] }"/></p>
+		
+		              <p><c:out value="${r['HOSPTEL'] }"/></p>
+		         
+		           		<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
+		           
+		              <div class="circle">
+		              	<a href="#" class="goCorona">바로접수</a>
+		              </div><br>
+		             <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
+		              
 
-              <p>오늘의 진료시간 09:00~18:00</p>
-              </hr>
-
-              <p>진료항목</p>
-
-              <p>일반진료</p>피부질환<p>영유아검진</p>
-              <p>예방접종</p>
-              <p>혈액검사</p>
-              <p>수액</p>
-              
-              <div class="circle">
-              	<a href="${path }/rv/corona">바로접수</a>
-              </div><br>
-             <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
-              
-
-
-              <p><img src="${path }/resources/images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
-
-              <div id="notice">
-                <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
-                  다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
-
-                  월,화,목,금 9:00~18:00
-                  수 9:00~13:00
-                  토 9:00~14:00
-
-                  점심시간 13:00~14:00
-                  일,공휴일 휴무
-                </p>
-              </div>
-
+		             <!--  <div id="notice">
+		                <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
+				                  다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
+				
+				                  월,화,목,금 9:00~18:00
+				                  수 9:00~13:00
+				                  토 9:00~14:00
+				
+				                  점심시간 13:00~14:00
+				                  일,공휴일 휴무
+		                </p>
+		                
+            		  </div> -->
+            		  </figure>
+		          </c:forEach>      
             </div>
+	</div>
 
-
-            <div id="hospital_content">
-              <p>예약병원</p>
-              <h3>우리동네이비인후과의원</h3>
-              <p><img src="images/location.png" width="15px;" />5km</p>
-              <p id="bar">|</p>
-              <p>서울특별시 강남구 강남대로 21길</p>
-
-              <p>오늘의 진료시간 09:00~18:00</p>
-              </hr>
-
-              <p>진료항목</p>
-
-              <p>일반진료</p>피부질환<p>영유아검진</p>
-              <p>예방접종</p>
-              <p>혈액검사</p>
-              <p>수액</p>
-
-              <p><img src="images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
-
-              <div id="notice">
-                <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
-                  다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
-
-                  월,화,목,금 9:00~18:00
-                  수 9:00~13:00
-                  토 9:00~14:00
-
-                  점심시간 13:00~14:00
-                  일,공휴일 휴무
-                </p>
-              </div>
-
-            </div>
-
-            <div id="hospital_content">
-              <p>예약병원</p>
-              <h3>우리동네이비인후과의원</h3>
-              <p><img src="images/location.png" width="15px;" />5km</p>
-              <p id="bar">|</p>
-              <p>서울특별시 강남구 강남대로 21길</p>
-
-              <p>오늘의 진료시간 09:00~18:00</p>
-              
-              </hr>
-
-              <p>진료항목</p>
-
-              <p>일반진료</p>피부질환<p>영유아검진</p>
-              <p>예방접종</p>
-              <p>혈액검사</p>
-              <p>수액</p>
-
-              <p><img src="images/bell.png" width="15px;" />☆★ 진료시간 변경 안내 ★☆(공지사항-드롭다운으로만들것)</p>
-
-              <div id="notice">
-                <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
-                  다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
-
-                  월,화,목,금 9:00~18:00
-                  수 9:00~13:00
-                  토 9:00~14:00
-
-                  점심시간 13:00~14:00
-                  일,공휴일 휴무
-                </p>
-              </div>
-
-            </div>
-
-
-          </div>
 
           <!-- ================================================================ -->
           <!-- 병원위치 찾기 -->
-          <p>원하시는 병원이 없으면</br>
+         <%--  <p>원하시는 병원이 없으면</br>
             지도에서 병원을 찾아보세요.
           </p>
 
@@ -397,7 +665,7 @@
                 <button id="pharm-btn">전화</button>
                 <button id="pharm-btn">찾아가기</button>
               </div>
-            </div>
+            </div> --%>
 
            
 </div>
@@ -431,26 +699,55 @@
     //바로접수 호버시 마우스 커서 변화
    	$('.circle').mouseenter(function() {
     	    $(this).addClass('rv-selected').css("cursor","pointer");
-   	})
+   	});
     $('.circle').mouseleave(function() {
     	    $(this).removeClass('rv-selected');
     });
     	
     //바로접수 클릭했을 때 비로그인시 로그인하라고 알림창 띄우기
     $(function(){ 		
+    	var loc = document.getElementById("check");
+    	
     		$(".circle").click(function(){
     			if(${loginMember.name eq null}){
-    				alert("로그인후 이용하세요!"); 				
-    			}else{
-    			loc = document.getElementById("check");
-    	
-		    	loc.addEventListener("click", function() {
-		    		location.replace('${path}/rv/corona');
-    				});
-    			
+    				alert("로그인후 이용하세요!"); 
+    				loc.addEventListener("click", function() {
+    		    		location.replace('${path}/rv/reservationList');
+        				});	  				
     			}
-    		})
-    	});
+    		});	
+    		
+    		
+    			$(".circle").click(function(){
+	    			if(${loginMember.name ne null}){
+	    				
+    					var hospNo = $('input[name=hospNo]').val();
+	    				$(this).children(".goCorona").attr('href',"${path}/rv/corona?no="+hospNo);
+	    				
+	    			}
+    			});
+    			
+
+    		});
+    
+  /* 리스트 넘기기 */  
+   $(document).ready(function() {
+        var $slider = $('.slider');
+ 
+        
+        $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {   
+          var calc = ( (nextSlide) / (slick.slideCount-1) ) * 100;
+      
+         
+        });
+        
+        $slider.slick({
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          speed:500
+        });  
+      }); 
+    
     
     </script>
 

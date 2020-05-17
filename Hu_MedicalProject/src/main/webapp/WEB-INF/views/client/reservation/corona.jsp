@@ -213,6 +213,13 @@ footer {
                         onclick="location.replace('${path}/rv/reservationList');">접수취소</button>
                         <button id="complete-btn" type="button">문진완료</button>
                     </div>
+	
+			<c:forEach items="${list }" var="r">
+			
+			<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
+			
+			</c:forEach>
+
 
              </div>
             </div>
@@ -282,7 +289,9 @@ footer {
 			    	btn = document.getElementById("complete-btn");
 			    	
 			    	btn.addEventListener("click", function() {
-			    		location.replace('${path}/rv/reservationView');
+			    		
+			    		var hospNo = $('input[name=hospNo]').val();
+			    		location.replace('${path}/rv/reservationView?no='+hospNo);
 			    	});
 	    			
 	    		}   			

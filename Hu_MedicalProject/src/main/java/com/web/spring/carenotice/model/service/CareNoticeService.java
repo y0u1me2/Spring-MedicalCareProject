@@ -50,4 +50,7 @@ public interface CareNoticeService {
 		
 		//댓글 삭제
 		int replydelete(int no);
+		
+		//댓글 수정
+		int replyupdate(CareComment c);
 }

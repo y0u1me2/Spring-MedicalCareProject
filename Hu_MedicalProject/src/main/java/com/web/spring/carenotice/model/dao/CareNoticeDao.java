@@ -44,5 +44,6 @@ public interface CareNoticeDao {
 	
 	int replydelete(SqlSession session,int no);
 
+	int replyupdate(SqlSession session,CareComment c);
 
 }

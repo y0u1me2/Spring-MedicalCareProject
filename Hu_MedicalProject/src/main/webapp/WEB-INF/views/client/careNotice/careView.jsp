@@ -45,13 +45,7 @@ p#time {
 	bottom: 20px;
 }
 
-/* 댓글 조회수 인쇄 */
-ul.info {
-	padding-left: 30px;
-	padding-top: 10px;
-	font-size: 13px;
-}
-
+/* 댓글 조회수 */
 ul.info li:first-child {
 	margin-left: 0;
 	padding-left: 0;
@@ -65,11 +59,6 @@ ul.info li {
 	color: #444;
 }
 
-/* 인쇄버튼 */
-ul.info li.copy {
-	position: relative;
-	left: 900px;
-}
 
 ul.info:after {
 	content: "";
@@ -77,6 +66,8 @@ ul.info:after {
 	visibility: hidden;
 	clear: both;
 }
+
+
 /* 목록버튼 */
 button.btn_Wihte {
 	font-size: 12px;
@@ -88,24 +79,28 @@ button.btn_Wihte {
 }
 
 /* 내용박스 */
-.content {
+ .content {
 	position: relative;
 	padding: 20px 20px 30px 20px;
 	text-align: left;
 	height: auto;
 	width: 1000px;
 	height: 400px;
-}
+} 
 
 /* 내용박스 내용 */
-.context {
+/* .context {
 	width: 80%;
 	height: auto;
 	line-height: 180%;
 	padding: 10px 0 0 30px;
 	word-break: break-all;
 }
-
+ */
+ 
+ 
+ 
+ 
 /* 댓글 및 대댓글 */
 
 /* 댓글등록 버튼 */
@@ -132,6 +127,7 @@ a:hover {
 	color: rgb(90, 90, 90);
 }
 
+/* 댓글 존 */
 #comment-container {
 	padding: 20px 0 0 12px;
 	width: 100%;
@@ -164,7 +160,7 @@ a:hover {
 }
 
 #nc_tbl tr{
-	border: 1px solid #e2e0e0;
+	/* border: 1px solid #e2e0e0; */
 }
 
 #nc_tbl tr.level1 td {
@@ -175,6 +171,19 @@ a:hover {
 
 .level2 td{
 	padding: 15px 5px 5px 100px;
+	height:100px;
+	float:left;	
+}
+
+.level3 td{
+	padding: 15px 5px 5px 150px;
+	height:100px;
+	float:left;	
+}
+
+/* 답글 tr */
+tr.reply td{
+	padding: 25px 5px 5px 50px;
 	height:100px;
 	float:left;	
 }
@@ -197,6 +206,13 @@ div#btn-reply-container{
 	position: relative;
 	left:800px;
 	bottom:45px;
+}
+
+div#btn-reply-container3{
+	position: relative;
+	left:450px;
+	top:25px;
+
 }
 
 .btn-insert2{
@@ -239,7 +255,7 @@ button#update-btn1:hover {
 	outline: none;
 }
 
-button#delete-btn1 {
+button#delete {
 	height: 40px;
 	width: 50px;
 	border: solid 1px rgb(147, 147, 194);
@@ -289,7 +305,7 @@ button.file-btn p {
 				<button id="update-btn1" onclick="updateCare();">수정</button>
 				</c:if>
 
-				<button id="delete-btn1" onclick="gotoList();">목록</button>
+				<button id="update-btn1" onclick="gotoList();">목록</button>
 		</div>
 
 		<hr>
@@ -383,17 +399,20 @@ button.file-btn p {
 	});
 	
 	//댓글 목록 출력
-	$(function(){
+	
+	var care = $("input[name=careNo]").val();
+	
+	 $(function(){
 		$.ajax({
 			type: "get", //get방식으로 댓글 전달
-			url:"${path}/care/commentList?no=${c.careNo}",
+			url:"${path}/care/commentList",
+			data:{"no":care},
 			success:function(result){//성공하면 출력하기
-				console.log(result);
 				$("#listReply").html(result);
 			
 			}
 		})
-	})
+	}) 
 	
 
 	//서밋 x
@@ -405,15 +424,16 @@ button.file-btn p {
 		}
 	}	
 	
-	//수정하기
+	//글 수정하기
 		function updateCare(){
-			location.replace('${path}/care/replydelete?no=${c.careNo}');
+			location.replace('${path}/care/updateView?no=${c.careNo}');
 		}
 			
 	//목록으로이동
 	function gotoList(){
 		location.replace('${path}/care/careNotice');
 	}
+	
 
 	
 </script>

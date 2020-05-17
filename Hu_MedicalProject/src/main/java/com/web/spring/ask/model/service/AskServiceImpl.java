@@ -16,6 +16,7 @@ import com.web.spring.member.model.vo.Member;
 @Service
 public class AskServiceImpl implements AskService {
 
+	
 	@Autowired
 	private SqlSessionTemplate session;
 
@@ -65,6 +66,13 @@ public class AskServiceImpl implements AskService {
 	public int searchAskCount() {
 		return dao.searchAskCount(session);
 	}
+
+//검색
+@Override
+public List<Ask> searchList(Map<String, String> param) {
+	return dao.searchList(session,param);
+}
+
 	
 
 //-------------------------Reply------------------------------------------------

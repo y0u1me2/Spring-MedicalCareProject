@@ -101,7 +101,7 @@
                                 #{careNo},#{commentRef},DEFAULT)
     </insert> 
     
-    <!-- 댓들 목록 -->
+    <!-- 댓글 목록 -->
     <select id="commentList" resultType="comment">
     	SELECT * FROM CARECOMMENT C, MEMBER M 
     	WHERE C.MEMBERNO = M.MEMBERNO 
@@ -119,6 +119,11 @@
     <select id="commentCount" resultType="_int">
        SELECT COUNT(*) FROM CARECOMMENT WHERE CARENO=#{no}
     </select>
+    
+    <!-- 댓글 수정  -->
+    <update id="replyupdate" parameterType="comment">
+    	 UPDATE CARECOMMENT SET COMMENTCONTENT=#{commentContent} WHERE COMMENTNO=#{commentNo}	 
+    </update>
     
     
 <!--========================================= admin ===========================================  -->  

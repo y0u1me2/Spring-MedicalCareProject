@@ -13,10 +13,10 @@ public class HospitalMember {
 	private int no;
 	private String id;
 	private String password;
-	private String hospitalName;
+	private String hospName;
 	private String hospNo;
 	private String managerName;
-	private String email;
-	private String tel;
+	private String managerEmail;
+	private String managerPhone;
 	private Date enrollDate;
 }
