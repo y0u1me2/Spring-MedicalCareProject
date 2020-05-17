@@ -9,160 +9,109 @@
 <jsp:param value="" name="title"/>
 </jsp:include>
 <style>
- .container-fluid-enroll {
-     box-sizing: border-box;
-     margin: 0 auto;
-    
- }
- 
- /* Full-width input fields */
- input[type=text], input[type=password] {
-   width: 100%;
-   height: 40px;
-   padding: 10px;
-   margin: 5px 0 22px 0;
-   display: inline-block;
-   background: #f1f1f1;
-   border: 1px solid #ccc;
-   border-radius: 4px;
-   resize: vertical;
- }
- 
- /* Add a background color when the inputs get focus */
- input[type=text]:focus, input[type=password]:focus {
-   background-color: #ddd;
-   outline: none;
- }
- 
- button:hover {
-   opacity:1;
-   background-color: rgba(92, 216, 175, 0.466);
- }
- 
- /* Extra styles for the cancel button */
- .cancelbtn {
-   padding: 14px 20px;
-   background-color: #DAF1DE;
- }
- .cancelbtn, .signupbtn {
-   float: left;
-   width: 50%;
-   background-color: #DAF1DE;
-   color: black;
-   padding: 14px 20px;
-   margin: 8px 0;
-   border: none;
-   cursor: pointer;
-   opacity: 0.9;
-   border-radius: 4px;
- }
- /* Float cancel and signup buttons and add an equal width */
- .cancelbtn, .signupbtn {
-   float: left;
-   width: 50%;
- }
- 
- /* Add padding to container elements */
- .container {
-   padding: 16px;
- }
- 
- 
- /* Style the horizontal ruler */
- hr {
-   border: 1px solid #f1f1f1;
-   margin-bottom: 25px;
- }
+input[type] {
+	border:none;
+	border-radius: 0;
+	border-bottom: 1px solid #dfe0e2;
+	width:100%;
+	padding: 10px;
+}
 
- /* Clear floats */
- .clearfix::after {
-   content: "";
-   clear: both;
-   display: table;
- }
- 
- /* Change styles for cancel button and signup button on extra small screens */
- @media screen and (max-width: 300px) {
-   .cancelbtn, .signupbtn {
-      width: 100%;
-   }
- }
- </style>
-<div class="container-fluid-enroll">
-	<form name="personEnrollFrm" id="personEnrollFrm" action="${path}/member/personEnrollEnd.do" method="post" onsubmit="return validate()" >
-	<div class="row"> 
-	  <div class="col"></div>
-	  <div class="col-xl-6"> <h1 align="center">일반 회원가입</h1></div>
-	  <div class="col"></div>
-	</div>
+input[type]:focus, input[type=password]:focus {
+	outline: none;
+	box-shadow:none;
+}
+
+body{
+	font-family: 맑은고딕, Malgun Gothic, dotum, gulim, sans-serif;
+}
+
+form a:link, form a:visited, form a:hover { 
+	color: black; 
+	text-decoration: underline;
+}
+
+</style>
+<div class="container-fluid bg-light border">
+	<div class="container bg-white my-5 pb-5" style="width: 40%;">
 	
-	<div class="row">
-	  <div class="col-xl-4"></div>
-	  <div class="col-xl-4">
-	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    <a href="${path}/member/personEnroll.do">일반 회원</a> 
-	    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    <a href="${path}/member/hospitalEnroll.do">병원 관계자 회원</a>
-	  </div>
-	  <div class="col-xl-4"></div></div>
-	<br><br>
-	<div class="row"> 
-	  <div class="col"></div>
-	  <div class="col-xl-6">
-	    <label for="email"><b>이메일</b></label><br>
-	    <input type="text" placeholder="@를 포함한 이메일 입력" id="email" name="email" style="width:550px;" required>
-		
-	 	<button type="button" id="emailOK" name="emailOK" onclick="emailOk();">중복체크</button>
-	  </div>
-	  <div class="col"></div>
+		<div class="container" style="width:90%;">
+			<div class="d-flex justify-content-center" style="border-bottom: 1px solid #dfe0e2;">
+				<img class="my-5" src="${path }/resources/images/logo.png" height="50"/>
+			</div>
+			
+			<h4 class="py-4">일반 회원의 회원가입 페이지 입니다.</h4>
+			
+			
+			<form name="personEnrollFrm" id="personEnrollFrm" action="${path}/member/personEnrollEnd.do" method="post" onsubmit="return validate()" >
+				<div class="mb-5">
+					<p><b>일반 회원 기본 정보</b></p>
+					 <div class="form-group">
+					  <input type="text" placeholder="이메일 ( @를 포함한 이메일 입력 )" id="email" name="email" style="width:330px;" required>
+					<button type="button" id="emailOK" name="emailOK" onclick="emailOk();">중복체크</button>
+					 </div>
+					<div class="form-group">
+					   <input type="text" placeholder="이름 ( 실명 ) 입력" name="joinName" id="joinName" required>
+					 </div>
+					 <div class="form-group">
+					   <input type="password" placeholder="비밀번호 ( 6자 이상 영문자, 숫자, 특수문자를 포함 )" id="password" name="password" required>
+	   				   <p id="pwCheckFF" style="color: #FF6600; margin: 0;">
+					 </div>
+					 <div class="form-group">
+					   <input type="password" placeholder="비밀번호 확인"  id="psw-repeat" name="psw-repeat" required>
+					 </div>
+					<div class="form-group">
+					  <input type="text" placeholder="전화 번호 ( -를 제외하고 입력 )" name="joinPhone" id="joinPhone" required>
+					 </div>
+				</div>	
+				
+			  <div class="form-group form-check">
+			    <label class="form-check-label">
+			      <input class="form-check-input" type="checkbox" name="remember" id="agree" required/><a href="javascript:void(0);" onclick="openModal1();">서비스 이용약관</a> 및 <a href="javascript:void(0);" onclick="openModal2();">개인정보 취급방침</a>에 동의합니다.
+			      <div class="invalid-feedback">Check this checkbox to continue.</div>
+			    </label>
+			  </div>
+			  <button type="submit" id="btn1" class="btn btn-success btn-block">회원가입</button>
+			</form>
+		</div>
 	</div>
-	
-	<div class="row"> 
-	  <div class="col"></div>
-	  <div class="col-xl-6">
-	    <label for="name"><b>이름</b></label>
-	    <input type="text" placeholder="Name" name="name" id="name" required>
-	  </div>
-	  <div class="col"></div>            
-	</div>
-	
-	<div class="row"> 
-	  <div class="col"></div>
-	  <div class="col-xl-6">
-	    <label for="psw"><b>비밀번호</b></label>
-	     <input type="password" placeholder="Enter Password" id="password" name="password" required>
-	      <p id="pwCheckFF" style="color: #FF6600; margin: 0;">
-	 </div>
-	  <div class="col"></div> 
-	</div>
-	
-	<div class="row"> 
-	  <div class="col"></div>
-	  <div class="col-xl-6">
-	    <label for="psw-repeat"><b>비밀번호 확인</b></p></label>
-	    <input type="password" placeholder="Repeat Password"  id="psw-repeat" name="psw-repeat" required>
-	  </div>
-	  <div class="col"></div> 
-	</div>
-	
-	<div class="row"> 
-	  <div class="col"></div>
-	  <div class="col-xl-6">
-	    <label for="phone"><b>핸드폰 번호</b></label>
-	    <input type="text" placeholder="-를 제외하고 입력" name="phone" id="phone" required>
-	 </div>
-	  <div class="col"></div>
-	</div>
-	
-	<div class="row"> 
-	  <div class="col"></div>
-	  <div class="col-xl-6">
-	    <button type="button" class="cancelbtn">취소</button>
-	    <button type="submit" class="signupbtn">회원가입</button>
-	   </div>
-	  <div class="col"></div>
-	</div>
-	</form>
+</div>
+
+<div class="modal fade" id="modal1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content w-100">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">서비스 이용약관</h4>
+          <button type="button" class="close" data-dismiss="modal" onclick="closeModal();">×</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+        	<jsp:include page="/WEB-INF/views/client/member/이용약관.jsp"/>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal2">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content w-100">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">개인정보 취급방침</h4>
+          <button type="button" class="close" data-dismiss="modal" onclick="closeModal();">×</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+        	<jsp:include page="/WEB-INF/views/client/member/개인정보.jsp"/>
+        </div>
+      </div>
+    </div>
 </div>
 <script>
 
@@ -199,14 +148,14 @@ function validate(){
 		 return false;
     }
 	
-	if($("#name").val()==""){
+	if($("#joinName").val()==""){
 		// alert("이름을 입력하세요");
-		 $("#name").focus();
+		 $("#joinName").focus();
 		 return false;	 
-	 }else if(!nameCheck.test($("#name").val())){
+	 }else if(!nameCheck.test($("#joinName").val())){
 		//유효성 검사
 		alert("이름을 알맞게 작성해주세요.");
-		$("#name").focus();
+		$("#joinName").focus();
 		 return false;
 	}
 	
@@ -226,13 +175,13 @@ function validate(){
 		 return false;
 	 }
 	
-	if($("#phone").val()==""){
+	if($("#joinPhone").val()==""){
 		// alert("전화번호를 입력하세요");
-		 $("#phone").focus();
+		 $("#joinPhone").focus();
 		 return false; 
 	}else if(phoneCheck.test($("#phone").val())==false){
 		alert("핸드폰 번호를 알맞게 작성해주세요");
-		$("#phone").focus();
+		$("#joinPhone").focus();
 		 return false;
 	}
 	
@@ -264,6 +213,27 @@ function emailOk(){
 		}
 	})
 } 
+function openModal1(){
+	$("#modal1").modal();
+	$('html').css({'overflow': 'hidden'});
+}
 
+function openModal2(){
+	$("#modal2").modal();
+	$('html, body').css({'overflow': 'hidden'});
+}
+
+function closeModal(){
+	$('html, body').css({'overflow': 'auto'});
+}
+function checkAgree(){
+	var agree = $("#agree");
+	agree.siblings(".invalid-feedback").hide();
+	
+	if(agree.is(":checked")==false){
+		agree.siblings(".invalid-feedback").show();
+		return false;
+	}
+}
 </script>
 <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>
