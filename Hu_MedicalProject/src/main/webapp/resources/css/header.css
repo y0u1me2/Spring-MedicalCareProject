@@ -166,14 +166,16 @@ button:hover {
 }
         
 /* 로그인 끝 */
-/* 비밀번호 찾기*/
-input[type=text]#memberEmail{
+/* 비밀번호,아이디 찾기*/
+input[type=text]#memberEmail,input[type=text]#name,
+input[type=text]#phone{
 	height: 40px;
 	padding: 12px 20px;
 	margin: 8px 0;
 	display: inline-block;
 	border: 1px solid #ccc;
 	box-sizing: border-box;
+	
 }
 .emailChk{
   /* background-color: red; */
@@ -183,7 +185,7 @@ input[type=text]#memberEmail{
   border: none;
   cursor: pointer;
 }
-.findPswBtn{
+.findPswBtn,.findEmailBtn{
 	color: black;
   padding: 10px 10px;
   margin: 8px 0;

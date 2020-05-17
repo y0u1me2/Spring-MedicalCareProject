@@ -255,22 +255,25 @@
 </div>
 
 <!-- 아이디 찾기 -->
-<!-- <div id="findEmail" class="modal" >
+<div id="findEmail" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
-  
       <div class="imgcontainer" style="height:10px">
-        <span onclick="document.getElementById('findEmail').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
+        <span onclick="emptyFindEmail()" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
       </div>
       <br>
-   <div class="containerNewPSW" style="margin:0 auto;">
+   <div class="containerFindEmail" style="margin:0 auto;">
+   <h2 class="text-center">이메일 찾기</h2>
       <input type="text" placeholder="이름 입력" name="name" id="name" required><br>
-      <input type="text" placeholder="핸드폰 번호 입력 (-를 제외하고 입력)" name="phone" id="phone" required><br>
-      <button onclick="findEmail();" class="findEmailBtn" type="submit" style="background-color:#DAF1DE">아이디 찾기</button>
+      <input type="text" placeholder="핸드폰 번호 입력 (-는 제외)" name="phone" id="phone" required><br>
+      <div style="text-align:center;">
+      <button onclick="findEmail();" class="findEmailBtn" id="findEmailBtn" type="button" style="background-color:#DAF1DE">아이디 찾기</button>
+  	</div>
+  	<span id="emailList" style="text-align:center;"></span>
+  	
   </div>
   <div><br><br></div>
-     
   </form>
-</div> -->
+</div>
 
  <script>
   new WOW().init();
@@ -337,24 +340,67 @@ function sendEmail(){
 		location.href="${path }/findPass.do?memberEmail="+email;
 	 }
 }
-$('#findPswBtn').on('click', function(){
-   
-    $.ajax({
-        url: "requestObject",
-        type: "POST",
-        data: form,
-        success: function(data){
-            $('#containerPswCode').text(data);
-        },
-        error: function(){
-            alert("simpleWithObject err");
-        }
-    });
-});
+
 function pswCode(){
 	location.href="${path}/pass_injeung.do";
 }
-
+//아이디 찾기
+function findEmail(){
+	var userName = $('#name').val();
+	var call = $('#phone').val();
+	var phoneCheck = /^\d{3}\d{3,4}\d{4}$/;
+	var nameCheck=/^[가-힣]|[a-zA-Z]+$/; 
+	
+	if($("#name").val()==""){
+		// alert("이름을 입력하세요");
+		 $("#name").focus();
+		 return false;	 
+	 }else if(!nameCheck.test($("#name").val())){
+		//유효성 검사
+		alert("이름을 알맞게 작성해주세요.");
+		$("#name").focus();
+		 return false;
+	}
+	
+	if($("#phone").val()==""){
+		// alert("전화번호를 입력하세요");
+		 $("#phone").focus();
+		 return false; 
+	}else if(phoneCheck.test($("#phone").val())==false){
+		alert("핸드폰 번호를 알맞게 작성해주세요");
+		$("#phone").focus();
+		 return false;
+	}
+	/* console.log(userName);	
+	console.log(call); */
+	
+	$.ajax({
+		type: 'POST',  
+		url:'${path }/findUserEmail.do',
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",  
+		data:{"userName":userName,"call":call},
+		success:function(data){
+			console.log("왔어?" + data.userMail);
+			if(data.userMail != 1){
+				$("#emailList").append("<h4>"+"등록된 이메일"+"<br>"+data.userMail+"</h4>");
+				document.getElementById("findEmailBtn").disabled = true;
+			}else{
+				alert("회원 등록이 되어있지않습니다. 회원가입 후 이용하세요!");
+				document.getElementById("findEmailBtn").disabled = false;
+			}
+			
+			
+		}
+		
+	})
+}
+function emptyFindEmail(){
+	$('#name').val('');
+	$('#phone').val('');
+	$('#emailList').text('');
+	document.getElementById('findEmail').style.display='none';
+	
+}
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
