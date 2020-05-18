@@ -5,7 +5,7 @@
   <!-- 리스트페이지  -->
   	<select id="reservationList" resultType="map">
   		SELECT * FROM HOSPITAL_MEMBER M, HOSPITAL2 H
-		WHERE M.HOSPNO = H.HOSPNO 	
+		WHERE M.HOSPNO = H.HOSPNO
   	</select>
   
   

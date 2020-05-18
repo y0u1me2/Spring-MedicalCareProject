@@ -30,7 +30,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/footer.css"/>
 </head>
 <body>
-  <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:80px;">
+  <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:10px;">
     <!-- Brand/logo -->
     <img src="${pageContext.request.contextPath }/resources/images/logo5.png" style="width:50px; padding-right:8px;">
     <a class="navbar-brand" href="${pageContext.request.contextPath }" style="color:black;">HU</a>
@@ -45,7 +45,6 @@
       <li class="nav-item">
         <a class="nav-link" href="${path }/healthInfo/healthInfoMain">건강정보</a>
       </li>
-      
       <li class="nav-item">
         <a class="nav-link" href="${path }/hospitalMap.do">병원찾기</a>
       </li>

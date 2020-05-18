@@ -549,7 +549,12 @@ div.content1{
 	min-height:200px;
 }
 
-
+#hpChat{
+width:300px;
+height:40px;
+margin-top:100px;
+margin-left:10px;
+}
 
   </style>
 
@@ -605,25 +610,22 @@ div.content1{
 		              <p><c:out value="${r['HOSPTEL'] }"/></p>
 		         
 		           		<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
-		           
+		           		
 		              <div class="circle">
 		              	<a href="#" class="goCorona">바로접수</a>
 		              </div><br>
-		             <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">실시간 상담하기</button>
-		              
-
-		             <!--  <div id="notice">
+		              <button id="hpChat" class="btn btn-outline-dark" type="button" 
+		              onclick="hpAccessChatting('${loginMember.email}','${r['ID']}');">실시간 문의</button>
+		            <!--  <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">실시간 상담하기</button> -->
+		             <!-- <div id="notice">
 		                <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
 				                  다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
-				
 				                  월,화,목,금 9:00~18:00
 				                  수 9:00~13:00
 				                  토 9:00~14:00
-				
 				                  점심시간 13:00~14:00
 				                  일,공휴일 휴무
 		                </p>
-		                
             		  </div> -->
             		  </figure>
 		          </c:forEach>      
