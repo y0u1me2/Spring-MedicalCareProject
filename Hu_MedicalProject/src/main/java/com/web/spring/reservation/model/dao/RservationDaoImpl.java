@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.web.spring.reservation.model.vo.Reservation;
@@ -38,6 +39,11 @@ public class RservationDaoImpl implements ReservationDao {
 	public List<Map<String, String>> reservationView(SqlSession session, String no) {
 		
 		return session.selectList("rv.reservationView",no);
+	}
+
+	@Override
+	public int reservationCount(SqlSessionTemplate session) {
+		return session.selectOne("rv.reservationCount");
 	}
 	
 	

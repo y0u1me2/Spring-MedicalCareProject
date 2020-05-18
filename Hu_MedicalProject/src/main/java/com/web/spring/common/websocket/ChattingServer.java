@@ -110,7 +110,6 @@ public class ChattingServer extends TextWebSocketHandler{
 			               e.printStackTrace();
 			            }
 			         }
-			         
 			      }
 			   }
 	

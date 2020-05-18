@@ -28,7 +28,8 @@ public class AskController {
 
 //selectList 및 페이징처리
 	@RequestMapping("/ask/ask.do")
-	public ModelAndView ask(ModelAndView mv,@RequestParam(required=false, defaultValue="1") int cPage,
+	public ModelAndView ask(ModelAndView mv,
+			@RequestParam(required=false, defaultValue="1") int cPage,
 			@RequestParam(required=false, defaultValue="5") int numPerpage) {
 			
 		//param은 게시물정보 fileNames 파일
@@ -37,17 +38,11 @@ public class AskController {
 				//페이징 처리까지하기
 				//별도의 페이징 처리 객체를 생성해서 PAGE처리를 해보자!
 				List<Ask> list=service.selectAskList(cPage,numPerpage);
-				
 				//Reply리스트불러오기
 				int replyCount=service.selectReplyCount();
-				//logger.info(replyCount+"->ReplyCount");
-				//List<AskReply> replyList=service.selectReplyList(cPage,numPerpage);
-				//logger.info(replyList+"->replyList");
 				logger.debug("replyCount :"+replyCount);
 				
 				mv.addObject("list",list);
-				//mv.addObject("replyList",replyList);
-
 				mv.setViewName("client/ask/askList");
 				mv.addObject("count",totalCount);
 				mv.addObject("replyCount",replyCount);

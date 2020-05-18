@@ -5,15 +5,15 @@
   <!-- 리스트페이지  -->
   	<select id="reservationList" resultType="map">
   		SELECT * FROM HOSPITAL_MEMBER M, HOSPITAL2 H
-		WHERE M.HOSPNO = H.HOSPNO 	
+		WHERE M.HOSPNO = H.HOSPNO
   	</select>
   
   
    <!-- 접수하기 -->
     <insert id="insertReservation" parameterType="reservation">
-       INSERT INTO CARECOMMENT VALUES(SEQ_RESERVNO.NEXTVAL, 
-                               #{memberNo}, #{hospitalNo},#{message},
-                                #{office},#{items})
+       INSERT INTO RESERVATION VALUES(SEQ_RESERVNO.NEXTVAL, 
+                               #{memberNo},#{hospNo},#{hospDepartment},
+                                #{message},DEFAULT,DEFALUT)
     </insert>
     
   <!-- 코로나페이지 -->
@@ -29,6 +29,9 @@
     	SELECT * FROM HOSPITAL_MEMBER M, HOSPITAL2 H
 		WHERE M.HOSPNO=H.HOSPNO 
 		AND M.HOSPNO=#{no}
-    
     </select> 
+    
+    <select id="reservationCount" resultType="_int">
+    	SELECT COUNT(*) FROM RESERVATION
+     </select>
 </mapper>

@@ -35,6 +35,7 @@ public class AlramServer extends TextWebSocketHandler {
 			case "client" : newClient(msg,session);break;
 			case "newchat" : requestChat(msg);break;
 			case "hospitalChat" :requestChat(msg);break;
+			case "hpAdminChat":requestChat(msg);break;
 		}
 	}
 	private void newClient(AlramMessage msg, WebSocketSession session) {

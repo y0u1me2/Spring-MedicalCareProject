@@ -1,5 +1,8 @@
 package com.web.spring.mypage.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,5 +25,27 @@ public class MyPageServiceImpl implements MyPageService {
 		// TODO Auto-generated method stub
 		return dao.passwordCheck(session, m);
 	}
+	
+	//개인정보수정
+	@Override
+	public int memberUpdate(Member m) {
+		// TODO Auto-generated method stub
+		return dao.memberUpdate(session, m);
+	}
+
+	@Override
+	public int deleteMember(Member m) {
+		// TODO Auto-generated method stub
+		return dao.deleteMember(session, m);
+	}
+	
+
+	@Override
+	public List<Map<String, String>> reservationStatus(int no) {
+		// TODO Auto-generated method stub
+		return dao.reservationStatus(session, no);
+	}
+	
+	
 
 }

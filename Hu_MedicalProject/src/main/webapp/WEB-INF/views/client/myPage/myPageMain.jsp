@@ -161,6 +161,88 @@ span.ok {
 	color:green;
 	float:right;
 }
+input.error {
+	 outline: 1px solid red;
+}
+
+.personalInfo-update {
+	display:block;
+}
+.myPage-reservation {
+	display:none;
+}
+
+
+
+/* 모달 */
+
+.modal-back {
+        display: none;
+        z-index: 4;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        position: fixed;
+        /* border: 1px solid black; */
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* 팝업 크기 */
+    .modal-dupliMember,
+    .modal-deleteMember {
+        /* border: 1px solid black; */
+        width: 400px;
+        max-height: 650px;
+        padding: 40px;
+        background-color: #fefefe;
+        margin: 10% auto 15% auto;
+        /* margin: center; */
+        position: relative;
+    }
+    /* 닫기버튼(X) */
+    .close-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .close-btn>.close {
+        position: relative;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color: red;
+    }
+
+
+  /* Add Zoom Animation 
+    팝업시 줌 애니메이션*/
+.animate {
+	animation: animatezoom 0.6s;
+}
+
+@keyframes animatezoom {
+	from {
+		transform: scale(0)
+	}
+	to {
+		transform: scale(1)
+	}
+}
+
+.main-deleteMember,
+.bottom-deleteMember {
+	text-align: center;
+}
+
+
 </style>
 
 <section id="content-myPage">
@@ -168,145 +250,339 @@ span.ok {
 		<div class="left col-2">
 			<h2>마이페이지</h2>
 			<ul id="myMenu">
-				<li><a href="#">개인정보수정</a></li>
-				<li><a href="#">접수 현황</a></li>
+				<li><a id="personalInfo-updateA" name="personalInfo-update" class="aSelected" href="#">개인정보수정</a></li>
+				<li><a id="myPage-reservationA" name="myPage-reservation" href="#">접수 현황</a></li>
+				<li><a id="modal-backA" name="modal-back" href="#">회원 탈퇴</a></li>
 			</ul>
 		</div>
-
-		<div class="right col-8">
+	<!-- ==================================개인정보 수정========================================================= -->
+		<div class="right col-8 personalInfo-update">
 			<div class="container-fluid-enroll">
-				<form name="personEnrollFrm" id="personEnrollFrm"
+				<form name="personInfoFrm" id="personInfoFrm"
 					action="${path}/myPage/memberUpdate.do" method="post"
 					onsubmit="return memberUpdateVali();">
 					<div class="row">
-						<div class="col"></div>
-						<div class="col-xl-6">
+						<div class="col-xl-8">
 							<h1 align="center">개인정보수정</h1>
 						</div>
-						<div class="col"></div>
 					</div>
 
 					<div class="row">
 						
-						<div class="col-xl-4"></div>
+						<div class="col-xl-4">
+							<input type="hidden" value="${loginMember.memberNo }" id="memberNo" name="memberNo"/>
+						</div>
 					</div>
 					<br>
 					<br>
 					<div class="row">
-						<div class="col"></div>
-						<div class="col-xl-6">
+						<div class="col-xl-8">
 							<label for="email"><b>이메일</b></label><br> <input type="text"
 								value="${loginMember.email }" id="email" name="email" readonly>
 						</div>
-						<div class="col"></div>
 					</div>
 
 					<div class="row">
-						<div class="col"></div>
-						<div class="col-xl-6">
+						<div class="col-xl-8">
 							<label for="name"><b>이름</b></label> <input type="text"
 								placeholder="${loginMember.name }" name="name" id="name">
 						</div>
-						<div class="col"></div>
 					</div>
 
 					<div class="row">
-						<div class="col"></div>
-						<div class="col-xl-6">
+						<div class="col-xl-8">
 							<label for="psw"><b>비밀번호</b></label>
 							<input type="password"	placeholder="Enter Password" id="password" name="password">
 							<!-- <p id="pwCheckFF" style="color: #FF6600; margin: 0;"> -->
 						</div>
-						<div class="col"></div>
 					</div>
 
 					<div class="row">
-						<div class="col"></div>
-						<div class="col-xl-6">
+						<div class="col-xl-8">
 							<label for="psw-repeat"><b>비밀번호 확인</b>	</label>
 							<input type="password" placeholder="Repeat Password" id="psw-repeat" name="psw-repeat">
 						</div>
-						<div class="col"></div>
 					</div>
 
 					<div class="row">
-						<div class="col"></div>
-						<div class="col-xl-6">
+						<div class="col-xl-8">
 							<label for="phone"><b>핸드폰 번호</b></label> <input type="text"
 								placeholder="${loginMember.phone }" name="phone" id="phone">
 						</div>
-						<div class="col"></div>
 					</div>
 
 					<div class="row">
-						<div class="col"></div>
-						<div class="col-xl-6">
+						<div class="col-xl-8">
 							<button type="submit" class="signupbtn">수정</button>
 							<button type="button" class="cancelbtn">취소</button>
 						</div>
-						<div class="col"></div>
 					</div>
 				</form>
 			</div>
 		</div>
+		<!-- ===============개인정보수정 끝==================== -->
+		<!-- ===============예약현황==================== -->
+		<div class="right col-8 myPage-reservation">
+			<div class="row">
+				<div class="col-xl-8">
+					<h1 align="center">접수 현황</h1>
+				</div>
+				<c:forEach items="${list }" var="r">
+						<div class="content1">
+							<h3>
+								<c:out value="${r['HOSPNAME'] }" />
+							</h3>
+							<br />
+							<p>
+								<c:out value="${r['HOSPADDR'] }" />
+							</p>
+
+							<p>
+								<c:out value="${r['HOSPDIRECTIONS'] }" />
+							</p>
+
+							<p>
+								오늘의 진료시간
+								<c:out value="${r['OFFICEHOUR1'] }" />
+							</p>
+						</div>
+						<hr />
+						<div class="content2">
+							<p>
+								<c:out value="${r['MEDICALDEPARTMENT'] }" />
+							</p>
+
+							<p>
+								<c:out value="${r['HOSPTEL'] }" />
+							</p>
+
+							<div class="circle">
+								<p>바로접수</p>
+
+							</div>
+
+							<input type="hidden" name="hospNo" value="${r['HOSPNO']}" /> <br />
+							<button type="button" id="chat"
+								class="btn btn-outline-success my-2 my-sm-0"
+								onclick="chatting();">병원chat</button>
+						</div>
+						<br>
+						<button type="button" class="btn btn-outline-success my-2 my-sm-0"
+							onclick="chatting();">실시간 상담하기</button>
+				</c:forEach>
+			</div>
+
+		</div>
+		<!-- ===============예약현황 끝==================== -->
+		<!-- ===============회원탈퇴==================== -->
+		<!-- ===============회원탈퇴 경고 모달창==================== -->
+		<div class="modal-back" id="deleteMember">
+			<!-- 이용약관 팝업-->
+			<form id="deleteForm">
+			<div class="modal-deleteMember animate">
+				<div class="main-deleteMember">
+					<div class="row">
+						<div class="col">
+							<h3 align="center">정말로 탈퇴하시겠습니까?</h3>
+							</br>
+						</div>
+					</div>					
+					<div class="row">						
+						<div class="col">
+							<p>탈퇴 시 회원님의 모든 정보가 
+							</br>삭제되고 이후 복수할 수 없습니다.
+								</br></br>그래도 탈퇴하시겠습니까?
+							</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<label style="float:left" for="email"><b>비밀번호</b></label>
+							<input type="password" id="confirmPassword" name="confirmPassword">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							
+						</div>
+					</div>
+					<div class="bottom-deleteMember row">
+						<div class="col">
+							<button type="button" class="signupbtn" id="confirm">확인</button>
+							<button type="button" class="closeModal signupbtn">취소</button>
+						</div>
+					</div>
+				</div>
+				<div class="close-btn">
+					<span class="close closeModal" title="Close Modal">&times;</span>
+				</div>
+			</div>
+			</form>
+		</div>	
 	</div>
 </section>
 <script>
+var updateMyInfo = $('div.col-xl-8>input');
+var email=$('#email').val();
+var password=$('#password').val();
+
 	$('#myMenu>li>a').click(function() {
 		$(this).addClass('aSelected');
 		$(this).parent().siblings().children().removeClass('aSelected');
+		if($(this).attr('name')=='personalInfo-update') {
+			$('.myPage-deleteMember').css('display', 'none');
+			$('.myPage-reservation').css('display', 'none');
+			$('.personalInfo-update').css('display', 'block');
+		}
+		if($(this).attr('name')=='myPage-reservation') {
+			$('#personInfoFrm')[0].reset();
+			$('.myPage-deleteMember').css('display', 'none');
+			$('.personalInfo-update').css('display', 'none');
+			$('.myPage-reservation').css('display', 'block');
+			$.ajax({
+				url:"${path}/myPage/reservationStatus",
+				data:{'no':$('#memberNo').val()},
+				success:function(data) {
+					console.log(data.list);
+				}				
+			})
+			$('#memberNo').val();
+		}
+		if($(this).attr('name')=='modal-back') {
+			$('#personInfoFrm')[0].reset();
+			$('#deleteMember').css('display', 'block');
+			$('#confirm').click(function() {
+				if($('#confirmPassword').val()=='') {
+					$('#confirmPassword').removeClass('error');
+					$('#confirmPassword').siblings('span').remove();
+					$('#confirmPassword').addClass('error');//error 클래스 추가하고
+					$('#confirmPassword').before($('<span>').html('비밀번호를 입력하세요.').addClass('error').css('display','block'));
+				}else {
+					$.ajax({
+						url:"${path}/myPage/passwordCheck",
+						type:"post",
+						data:{'password':$('#confirmPassword').val(),'email':email},
+						success:function(data) {
+							if(data.duplication) {
+								location.replace("${path}/member/logout.do");
+							}else {
+								$('#confirmPassword').removeClass('error');
+								$('#confirmPassword').siblings('span').remove();
+								$('#confirmPassword').addClass('error');//error 클래스 추가하고
+								$('#confirmPassword').before($('<span>').html('비밀번호가 일치하지 않습니다.').addClass('error').css('display','block'));
+							}
+						}
+					})
+				}
+			})
+			$('.closeModal').click(function() {
+				closeModal();				
+				$('#myMenu>li>a').removeClass('aSelected');
+				if($('.myPage-reservation').css('display')=='block') {
+					$('#myPage-reservationA').addClass('aSelected');
+				}
+				if($('.personalInfo-update').css('display')=='block') {
+					$('#personalInfo-updateA').addClass('aSelected');
+				}
+			})
+		}
 	})
 	
+	function closeModal() {
+		$('#confirmPassword').removeClass('error');
+		$('#confirmPassword').siblings('span').remove();
+		$('.modal-back').css("display","none");
+		$('#deleteForm')[0].reset();
+	}
 	
-	$('#password').blur(function() {
-		const email=$('#email').val();
-		const password=$('#password').val();
-		$.ajax({
-			url:"${path}/myPage/passwordCheck",
-			type:"post",
-			data:{'password':password,'email':email},
-			success:function(data) {
-				if(data.duplication) {
-					if(!$('#password').parent().children().is('span')) {
-						$('#password').before('<span class="error">');
-						$('span.error').css('display','block').text("기존의 비밀번호로 변경할 수 없습니다.");
-					}else {
-						$('span').removeClass('ok');
-						$('span').addClass('error').css('display','block').text("기존의 비밀번호로 변경할 수 없습니다.");
-					}					
-				}else {
-					if(!$('#password').parent().children().is('span')) {
-						$('#password').before('<span class="ok">');
-						$('span.error').css('display','block').text("변경가능한 비밀번호 입니다.");
-					}else {
-						$('span').removeClass('error');
-						$('span').addClass('ok').css('display','block').text("변경가능한 비밀번호 입니다.");
-					}				
+	
+	
+	//유효성 및 회원정보 수정
+	
+	
+	for(let i=0; i<updateMyInfo.length; i++) {
+		$(updateMyInfo[i]).blur(function() {
+			if($(this).attr('name')=='password') {
+				if($(this).val()!="") {
+					var pwRule1 = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;//비밀번호 유효성 1
+				    var pwRule2 = /(\w)\1\1\1/;//비밀번호 유효성2
+				    var pwck1 = pwRule1.test($(this).val());//비밀번호 유효성 검사1
+                    var pwck2 = pwRule2.test($(this).val());//비밀번호 유효성 검사2
+                    var pwck3_1 = ($(this).val()).search(/[0-9]/g) < 0;//비밀번호 유효성 검사3_1
+                    var pwck3_2 = ($(this).val()).search(/[a-z]/g) < 0;//비밀번호 유효성 검사3_2
+                    var pwck3 = pwck3_1 || pwck3_2;//비밀번호 유효성 검사3
+                    if (pwck2) {
+                        $(this).removeClass('error');
+                        $(this).siblings('span').remove();
+                        $(this).addClass('error');//error 클래스 추가하고
+                        $(this).before($('<span>').html('같은 문자를 4번 이상 사용하실 수 없습니다.').addClass('error').css('display','block'));//span태그 추가해서 유효하지 않다고 표시
+                    }
+                    if (pwck3) {
+                        $(this).removeClass('error');
+                        $(this).siblings('span').remove();
+                        $(this).addClass('error');//error 클래스 추가하고
+                        $(this).before($('<span>').html('숫자와 영문자를 혼용하여야 합니다.').addClass('error').css('display','block'));//span태그 추가해서 유효하지 않다고 표시
+                    }
+                    if (!pwck1) {//비밀번호 유효성 검사결과 이상상하면
+                        $(this).removeClass('error');
+                        $(this).siblings('span').remove();
+                        $(this).addClass('error');//error 클래스 추가하고
+                        $(this).before($('<span>').html('숫자+영문자+특수문자 조합으로 8자리 이상 사용해야 합니다.').addClass('error').css('display','block'));//span태그 추가해서 유효하지 않다고 표시
+                    }
+                    if (pwck1 && (!pwck2) && (!pwck3)) {
+						//중복검사
+						$.ajax({
+							url:"${path}/myPage/passwordCheck",
+							type:"post",
+							data:{'password':$('#password').val(),'email':email},
+							success:function(data) {
+									console.log(data.duplication);
+									$('#password').removeClass('error');
+									$('#password').removeClass('ok');
+									$('#password').siblings('span').remove();
+								if(data.duplication) {
+					                    $('#password').addClass('error');//error 클래스 추가하고
+										$('#password').before('<span class="error">');
+										$('#password').siblings('span.error').css('display','block').text("기존의 비밀번호로 변경할 수 없습니다.");		
+								}else {
+										$('#password').before('<span class="ok">');
+										$('#password').siblings('span').css('display','block').text("변경가능한 비밀번호 입니다.");								}
+								}
+						});                    	
+                    }										
 				}
 			}
-		});
-	});
+			if($(event.target).attr('name')=='psw-repeat') {
+				if($('#password').val()!="" && $('#psw-repeat').val()!="") {
+					$(this).siblings('span').remove();
+					if($('#password').val()!=$('#psw-repeat').val()) {
+							$('#psw-repeat').before('<span class="error">');
+							$('#password').addClass('error');
+							$('#psw-repeat').addClass('error');
+							$(this).siblings('span').css('display','block').text("비밀번호가 일치하지 않습니다.");
+					}else {
+							$('#psw-repeat').before('<span class="ok">');
+							$('#password').removeClass('error');
+							$('#psw-repeat').removeClass('error');
+							$(this).siblings('span').css('display','block').text("비밀번호가 일치합니다.");
+					}
+				}
+			}
+		})
+	}
+	
+	
 	
 	function memberUpdateVali() {
-		const addSpan="";
-		if($('#password').val()=="" && $('#psw-repeat').val()=="") {
-			return true;
-		}else if($('#password').val()=="" && $('#psw-repeat').val()!="") {
-			if(!$('#password').parent().children().is('span')) {
-				$('#password').before('<span class="error">');
-				$('span.error').css('display','block').text("변경할 비밀번호를 입력하세요.");
-			}
-			$('#password').focus();
+		if($('#password').attr('class')=='error' || $('#psw-repeat').attr('class')=='error') {
 			return false;
-		}else if($('#password').val()!="" && $('#psw-repeat').val()!="") {
-			if($('#password').val()!=$('#psw-repeat').val()) {
-				if(!$('#psw-repeat').parent().children().is('span')) {
-					$('#password').before('<span class="error">');
-					$('span.error').css('display','block').text("비밀번호가 일치하지 않습니다.");
-				}
+		}else {
+			if($('#password').val()==$('#psw-repeat').val()) {
+				return true;				
+			}else {
+				return false;
 			}
-		}
-		return false;
+		}		
 	}
 </script>
 

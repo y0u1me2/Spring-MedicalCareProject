@@ -97,11 +97,15 @@ public class ReservationController {
 	@RequestMapping("/rv/reservationEnd")
 	public String insertReservation(Reservation r, Model m) {
 	
+		
+		logger.debug("======================="+r);
+		
+		
 		int result = service.insertReservation(r);		
 		
 			
 			String msg="";
-			String loc="/rv/reservationView";
+			String loc="/rv/reservationList";
 				
 			if(result>0) {
 					msg="접수가 완료되었습니다.";	
@@ -117,7 +121,16 @@ public class ReservationController {
 				return "client/common/msg";
 			}	
 		
+//메인 예약 현황수 받아오기==================================
+	@RequestMapping("/reservation/reservationCount.do")
+	public ModelAndView reservationCount(ModelAndView mv) {
+		int reservationCount=service.reservationCount();
+		logger.debug("reservationCount :"+reservationCount);
+		mv.addObject("reservationCount",reservationCount);
+		mv.setViewName("jsonView");
+		return mv;
 	}
+}
 	
 	
 
