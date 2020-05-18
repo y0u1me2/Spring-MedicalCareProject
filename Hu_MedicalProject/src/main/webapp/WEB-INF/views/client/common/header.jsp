@@ -30,12 +30,26 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/footer.css"/>
 </head>
 <body>
-  <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:80px;">
+<c:if test="${loginMember eq null and loginHpMember eq null  }">
+ 	 <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:100px;">
+</c:if>
+ <c:if test="${loginMember != null or loginHpMember !=null  }">
+ 	 <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:10px;">
+</c:if>
     <!-- Brand/logo -->
     <img src="${pageContext.request.contextPath }/resources/images/logo5.png" style="width:50px; padding-right:8px;">
     <a class="navbar-brand" href="${pageContext.request.contextPath }" style="color:black;">HU</a>
     <!-- Links -->
     <ul class="navbar-nav">
+     <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+		  회사소개
+		</a>
+		<div class="dropdown-menu">
+		  <a class="dropdown-item" href="${path }/about">About HU</a>
+		  <a class="dropdown-item" href="${path }/service">서비스 소개</a>
+		</div>
+	</li>
         <li class="nav-item">
             <a class="nav-link" href="${path }/notice/noticeList">공지사항</a>
           </li>
@@ -45,20 +59,11 @@
       <li class="nav-item">
         <a class="nav-link" href="${path }/healthInfo/healthInfoMain">건강정보</a>
       </li>
-      
       <li class="nav-item">
         <a class="nav-link" href="${path }/hospitalMap.do">병원찾기</a>
       </li>
       
-      <li class="nav-item dropdown">
-		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-		  회사소개
-		</a>
-		<div class="dropdown-menu">
-		  <a class="dropdown-item" href="${path }/about">About HU</a>
-		  <a class="dropdown-item" href="${path }/service">서비스 소개</a>
-		</div>
-	</li>
+     
       <!-- <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
 
@@ -74,7 +79,6 @@
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 	            <a class="dropdown-item" href="${path }/care/careNotice">돌보미 찾기</a>
 	            <a class="dropdown-item" href="${path }/ask/ask.do">문의 게시판</a>
-	            <a class="dropdown-item" href="${path }/test/test.do">test</a>
 	        </div>
 	      </li>
     </c:if>

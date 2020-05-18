@@ -70,6 +70,11 @@ public class NoticeDaoImpl implements NoticeDao{
 	public int updateNoticeAttachment(SqlSessionTemplate session, NoticeAttachment a) {
 		return session.update("notice.updateNoticeAttachment",a);
 	}
+/////////공지사항 제목으로 검색 ///////////
+	@Override
+	public List<Map<String, String>> searchNotice(SqlSessionTemplate session, Map<String, String> param) {
+		return session.selectList("notice.searchNotice",param);
+	}
 	
 	
 }

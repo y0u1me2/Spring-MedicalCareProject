@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,9 @@ public class HospitalMemberController {
 	
 	@Autowired
 	private AESEncrypt encryptor;
+	
+	@Autowired
+	Logger logger;
 	
 	@RequestMapping("/getHospList.do")
 	@ResponseBody
@@ -105,6 +109,19 @@ public class HospitalMemberController {
 			status.setComplete();
 		}
 		return "redirect:/";
+	}
+	
+	
+	//메인 - 병원카운트
+	@RequestMapping("/member/hospitalCount.do")
+	private ModelAndView hospitalCount(ModelAndView mv) {
+		
+		int hospitalCount=service.hospitalCount();
+		logger.debug("hospitalCount :"+hospitalCount);
+		
+		mv.addObject("hospitalCount",hospitalCount);
+		mv.setViewName("jsonView");
+		return mv;
 	}
 	
 }

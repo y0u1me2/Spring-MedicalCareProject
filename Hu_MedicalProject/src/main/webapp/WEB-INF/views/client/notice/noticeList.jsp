@@ -24,7 +24,7 @@ div#pageBar a {
 /* 페이지바 */
     #pageBar{
       width:80%;
-      margin-left:390px;
+      margin-left:550px;
       margin-top:30px;
       margin-bottom:20px;
       /* text-align:center; */
@@ -82,7 +82,7 @@ div#pageBar a {
 						<c:out value="${n['noticeTitle'] }" />
 					</a>
 					</td>
-					<td align="center">
+					<td>
 		                <c:if test="${n.fileCount>0}">
 		                	<img src="${path }/resources/images/file.png" width="16px"/>
 						</c:if>
@@ -94,18 +94,21 @@ div#pageBar a {
  	  </tbody>
 	 </table>
  </div>
-    <div style="text-align:center; font-size:20px;">
-      <select name="searchContent" id="searchContent" style="background-color:white; height:35px;">
-        <option value="titleContent" selected disabled>선택</option>
-        <option value="title">제목</option>
-      </select>
-      <input type="text" id="searchText" placeholder="검색어를 입력해주세요" size="20">
-      <input type="submit" id="searchBtn" class="search_btn" value="검색"/>
-    </div>
+    <div style="text-align: center; font-size: 20px;" id="search-container">
+		 <form action="${path }/notice/search.do" method="post">
+            <select name="searchContent" id="searchContent" style="background-color:white; height:35px;">
+              <option value=""  disabled selected>선택</option>
+              <option value="noticeTitle"  <c:if test="">selected</c:if>>제목</option>
+            </select>
+            <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력해주세요" size="20" value="${param.keyword }" required autocomplete="off">
+            <input type="submit" id="searchBtn" class="search_btn" value="검색"/>
+           </form>		
+		</div>
+		</div>
   <div id="pageBar">
   	${pageBar }
   </div>
- </div>
+ 
 </section>
 
 <script>

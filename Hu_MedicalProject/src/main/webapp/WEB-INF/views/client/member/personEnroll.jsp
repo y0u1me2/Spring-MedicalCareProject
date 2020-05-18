@@ -9,7 +9,7 @@
 <jsp:param value="" name="title"/>
 </jsp:include>
 <style>
-input[type] {
+input[type=text],input[type=password] {
 	border:none;
 	border-radius: 0;
 	border-bottom: 1px solid #dfe0e2;
@@ -17,7 +17,7 @@ input[type] {
 	padding: 10px;
 }
 
-input[type]:focus, input[type=password]:focus {
+input[type=text]:focus, input[type=password]:focus {
 	outline: none;
 	box-shadow:none;
 }

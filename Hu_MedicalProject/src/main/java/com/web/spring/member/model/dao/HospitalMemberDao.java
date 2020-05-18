@@ -17,4 +17,7 @@ public interface HospitalMemberDao {
 	List<HospitalMember> HpMemberList(SqlSessionTemplate session);
 
 	List<Hospital> getHospList(SqlSessionTemplate session, String name);
+
+	//메인-병원카운트
+	int hospitalCount(SqlSessionTemplate session);
 }

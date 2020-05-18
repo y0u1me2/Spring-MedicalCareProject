@@ -9,11 +9,15 @@
 <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 
   <style>
-  
-   body{
-  	width:1366px;
-  } 
-   
+    * {
+      margin: 0;
+    }
+
+    body {
+      width: 1366px;
+      height: auto;
+    }
+
     /* 버튼클릭시 파란테두리 없애기 */
     button:focus {outline:none;}
 

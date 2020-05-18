@@ -14,4 +14,7 @@ public interface HospitalMemberService {
 	List<HospitalMember> HpMemberList();
 
 	List<Hospital> getHospList(String name);
+	
+	//메인-병원카운트
+	int hospitalCount();
 }

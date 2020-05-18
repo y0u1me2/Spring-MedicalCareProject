@@ -32,6 +32,12 @@ public class HospitalMemberDaoImpl implements HospitalMemberDao {
 		// TODO Auto-generated method stub
 		return session.selectList("hospital.selectList", name);
 	}
+
+	//메인-병원카운트
+	@Override
+	public int hospitalCount(SqlSessionTemplate session) {
+		return session.selectOne("hospital.hospitalCount");
+	}
 	
 	
 
