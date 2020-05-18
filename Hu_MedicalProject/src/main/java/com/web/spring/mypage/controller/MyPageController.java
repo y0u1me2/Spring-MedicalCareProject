@@ -1,13 +1,18 @@
 package com.web.spring.mypage.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.web.spring.member.controller.MemberController;
 import com.web.spring.member.model.vo.Member;
 import com.web.spring.mypage.service.MyPageService;
 
@@ -19,6 +24,9 @@ public class MyPageController {
 	
 	@Autowired
 	private MyPageService service;//멤버서비스용 객체
+	
+	@Autowired
+	private MemberController mController;
 	
 	//마이페이지 메인 들어가기
 	@RequestMapping("myPage/myPageMain")
@@ -38,12 +46,39 @@ public class MyPageController {
 		m.setEmail(email);//받아온 이메일 멤버에 셋팅
 		Member checkedMember=service.passwordCheck(m);
 		//새비번과 기존비번 중복확인
-		boolean duplication;
+		boolean duplication=false;
 		duplication=pwEncoder.matches(password, checkedMember.getPassword());
-		
-		mv.addObject("duplication", duplication);
+		if(duplication) {//일치시 탈퇴
+			int result=service.deleteMember(m);
+			if(result>0) {
+				mv.addObject("duplication", duplication);			
+			}
+		}else {
+			mv.addObject("duplication", duplication);			
+		}		
 		mv.setViewName("jsonView");
 				
 		return mv;		
+	}
+	
+	@RequestMapping("myPage/memberUpdate.do")
+	public String memberUpdate(Member m, Model model) {
+		m.setPassword(pwEncoder.encode(m.getPassword()));
+		int result=service.memberUpdate(m);
+		
+		String msg = "";
+		String loc = "";
+		
+		if(result>0) {
+			System.out.println("성공");
+			msg = "수정 성공";
+		}else {
+			System.out.println("실패");
+			msg="수정 실패! 홈으로 돌아갑니다.";
+		}
+		 model.addAttribute("msg", msg);
+		 model.addAttribute("loc", loc);
+	     
+		 return "client/common/msg";
 	}
 }
