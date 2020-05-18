@@ -327,8 +327,51 @@ input.error {
 				<div class="col-xl-8">
 					<h1 align="center">접수 현황</h1>
 				</div>
+				<c:forEach items="${list }" var="r">
+						<div class="content1">
+							<h3>
+								<c:out value="${r['HOSPNAME'] }" />
+							</h3>
+							<br />
+							<p>
+								<c:out value="${r['HOSPADDR'] }" />
+							</p>
+
+							<p>
+								<c:out value="${r['HOSPDIRECTIONS'] }" />
+							</p>
+
+							<p>
+								오늘의 진료시간
+								<c:out value="${r['OFFICEHOUR1'] }" />
+							</p>
+						</div>
+						<hr />
+						<div class="content2">
+							<p>
+								<c:out value="${r['MEDICALDEPARTMENT'] }" />
+							</p>
+
+							<p>
+								<c:out value="${r['HOSPTEL'] }" />
+							</p>
+
+							<div class="circle">
+								<p>바로접수</p>
+
+							</div>
+
+							<input type="hidden" name="hospNo" value="${r['HOSPNO']}" /> <br />
+							<button type="button" id="chat"
+								class="btn btn-outline-success my-2 my-sm-0"
+								onclick="chatting();">병원chat</button>
+						</div>
+						<br>
+						<button type="button" class="btn btn-outline-success my-2 my-sm-0"
+							onclick="chatting();">실시간 상담하기</button>
+				</c:forEach>
 			</div>
-		
+
 		</div>
 		<!-- ===============예약현황 끝==================== -->
 		<!-- ===============회원탈퇴==================== -->
@@ -397,7 +440,11 @@ var password=$('#password').val();
 			$('.personalInfo-update').css('display', 'none');
 			$('.myPage-reservation').css('display', 'block');
 			$.ajax({
-				
+				url:"${path}/myPage/reservationStatus",
+				data:{'no':$('#memberNo').val()},
+				success:function(data) {
+					console.log(data.list);
+				}				
 			})
 			$('#memberNo').val();
 		}

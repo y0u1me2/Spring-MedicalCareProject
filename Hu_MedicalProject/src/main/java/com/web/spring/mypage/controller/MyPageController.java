@@ -1,5 +1,8 @@
 package com.web.spring.mypage.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +48,20 @@ public class MyPageController {
 		mv.setViewName("jsonView");
 				
 		return mv;		
+	}
+	
+	@RequestMapping("myPage/reservationStatus")
+	public ModelAndView reservationStatus(HttpServletRequest request) {
+		ModelAndView mv=new ModelAndView();
+		System.out.println(request.getParameter("no"));
+		int no=Integer.parseInt(request.getParameter("no"));
+		System.out.println(no);
+		List<Map<String,String>> list=service.reservationStatus(no);
+		
+		System.out.println(list);
+		mv.addObject("list",list);
+		mv.setViewName("jsonview");
+		
+		return mv;
 	}
 }

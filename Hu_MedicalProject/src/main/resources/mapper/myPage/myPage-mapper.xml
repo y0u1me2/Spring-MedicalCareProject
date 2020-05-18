@@ -6,4 +6,10 @@
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
 	</select>
 	
+	<select id="reservationStatus" parameterType="_int" resultType="map">
+		SELECT * FROM RESERVATION R
+				JOIN HOSPITAL_MEMBER HM USING(HOSPNO)
+				JOIN HOSPITAL2 H USING(HOSPNO)
+				WHERE MEMBERNO = #{no}
+	</select>
 </mapper>
