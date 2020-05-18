@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -306,5 +307,22 @@ public class NoticeController {
 		  
 		  return "client/common/msg";
 		  
+	}
+//게시글 제목으로 검색하기
+	@RequestMapping("/notice/search.do")
+	public ModelAndView searchNotice(@RequestParam(value="searchContent",required=false) String searchContent,
+									  @RequestParam(value="keyword",required=false) String keyword,
+									  ModelAndView mv) {
+		
+		Map<String,String> param = new HashMap<String,String>();
+		param.put("searchContent",searchContent);
+		param.put("keyword",keyword);
+		
+		List<Map<String,String>> list = service.searchNotice(param);
+		
+		mv.addObject("list",list);
+		mv.setViewName("client/notice/noticeList");
+
+		return mv;
 	}
 }

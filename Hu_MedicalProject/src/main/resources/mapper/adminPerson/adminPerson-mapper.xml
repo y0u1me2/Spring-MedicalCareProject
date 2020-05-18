@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="person">
+ <!-- /////////일반회원 관리 페이지 /////////// -->
+  <select id="adminPerson" resultType="member">
+     	SELECT * FROM MEMBER WHERE MEMBERSTATUS='Y' ORDER BY ENROLLDATE DESC
+   </select>
+   
+<!-- /////////일반회원 명수 카운트 /////////// -->
+   <select id="personCount" resultType="_int">
+      SELECT COUNT(*) FROM MEMBER WHERE MEMBERSTATUS='Y'
+   </select>
+ <!-- /////////일반회원 명수 카운트 /////////// -->  
+   <update id="personDelete" parameterType="_int">
+		UPDATE MEMBER SET MEMBERSTATUS='N' WHERE MEMBERNO=#{no}
+	</update>
+</mapper>
