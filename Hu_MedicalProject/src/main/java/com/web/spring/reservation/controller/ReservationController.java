@@ -97,11 +97,15 @@ public class ReservationController {
 	@RequestMapping("/rv/reservationEnd")
 	public String insertReservation(Reservation r, Model m) {
 	
+		
+		logger.debug("======================="+r);
+		
+		
 		int result = service.insertReservation(r);		
 		
 			
 			String msg="";
-			String loc="/rv/reservationView";
+			String loc="/rv/reservationList";
 				
 			if(result>0) {
 					msg="접수가 완료되었습니다.";	

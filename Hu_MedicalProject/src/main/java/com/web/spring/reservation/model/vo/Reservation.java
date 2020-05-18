@@ -14,10 +14,8 @@ public class Reservation {
 	
 	private int reservNo;
 	private int memberNo;
-	private int hospitalNo;
-	private String reservTime;
+	private String hospNo;
+	private String hospDepartment;
 	private String message;
-	private String office;
-	private String items;
 	
 }

@@ -191,11 +191,23 @@
     	font-size:12px;
     	text-align:center;/* 가로정렬 */
     	line-height:80px;/* 세로정렬 */
+   		position:relative;
+   		left:200px;
+   		top:50px;
+
+   
     }
     
      div.circle a{
      	text-decoration:none;
      }
+     
+     button#chat{
+		position:relative;
+   		left:50px;
+   		bottom:30px;
+}
+     
     
  
     footer {
@@ -541,7 +553,7 @@
      border: solid 1px rgb(82, 81, 81);
      padding: 20px;
      margin: 1em 25px;
-     min-height:600px;
+     min-height:550px;
 	
 }
 
@@ -556,53 +568,39 @@ margin-top:100px;
 margin-left:10px;
 }
 
+div.content2{
+	min-height:200px;
+}
+
+
   </style>
 
 
 
-  <div class="container-fluid">
+<div class="container-fluid">
+<input type="hidden" id="loginMemberName" value="loginMember.name">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- ================================================================ -->
+				<div id="menu">
+					<div id="btns">
+						<button id="subject">
+							전체 진료과목<img src="${path }/resources/images/triangle.png"
+								width="10px;" />
+						</button>
+						<p id="bar">|</p>
+						<button id="location">
+							Google location api?<img
+								src="${path }/resources/images/triangle.png" width="10px;" />
+						</button>
+					</div>
 
-
-    <div class="container-fluid">
-
-      <div class="row">
-        <div class="col-sm-12">
-
-
-          <!-- ================================================================ -->
-          <div id="menu">
-            <div id="btns">
-              <button id="subject">전체 진료과목<img src="${path }/resources/images/triangle.png" width="10px;" /></button>
-              <p id="bar">|</p>
-              <button id="location">Google location api?<img src="${path }/resources/images/triangle.png" width="10px;" /></button>
-            </div>
-
-            <div id="tag">
-              <button>#가까운_접수병원</button>
-              <button>#바로접수가능</button>
-              <button>#신규접수병원</button>
-            </div>
-          </div>
-
-
-  <!-- ============================= 병원정보들 ===================================================== -->
-  
-
-   <div class="content">   
-            <div id="hospital_content">
-             <div class="slider">
-             
-		   	 	<c:forEach items="${list }" var="r">
-		   	 	<figure class="figure">
-		   	 	
-		   	 	<div class="content1">
-		              <h3><c:out value="${r['HOSPNAME'] }"/></h3>
-		             <br/>
-		              <p><c:out value="${r['HOSPADDR'] }"/></p>
-		              
-		              <p><c:out value="${r['HOSPDIRECTIONS'] }"/></p>
-		
-		              <p>오늘의 진료시간 <c:out value="${r['OFFICEHOUR1'] }"/></p>
+					<div id="tag">
+						<button>#가까운_접수병원</button>
+						<button>#바로접수가능</button>
+						<button>#신규접수병원</button>
+					</div>
 				</div>
 		              <hr/>
 		              <p><c:out value="${r['MEDICALDEPARTMENT'] }"/></p>
@@ -611,13 +609,69 @@ margin-left:10px;
 		         
 		           		<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
 		           		
-		              <div class="circle">
+		             <!--  <div class="circle">
 		              	<a href="#" class="goCorona">바로접수</a>
-		              </div><br>
-		              <button id="hpChat" class="btn btn-outline-dark" type="button" 
-		              onclick="hpAccessChatting('${loginMember.email}','${r['ID']}');">실시간 문의</button>
+		              </div><br> -->
+		             
 		            <!--  <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">실시간 상담하기</button> -->
 		             <!-- <div id="notice">
+=======
+
+
+				<!-- ============================= 병원정보들 ===================================================== -->
+
+
+				<div class="content">
+					<div id="hospital_content">
+						<div class="slider">
+
+							<c:forEach items="${list }" var="r">
+								<figure class="figure">
+
+									<div class="content1">
+										<h3>
+											<c:out value="${r['HOSPNAME'] }" />
+										</h3>
+										<br />
+										<p>
+											<c:out value="${r['HOSPADDR'] }" />
+										</p>
+
+										<p>
+											<c:out value="${r['HOSPDIRECTIONS'] }" />
+										</p>
+
+										<p>
+											오늘의 진료시간
+											<c:out value="${r['OFFICEHOUR1'] }" />
+										</p>
+									</div>
+									<hr />
+									<div class="content2">
+										<p>
+											<c:out value="${r['MEDICALDEPARTMENT'] }" />
+										</p>
+
+										<p>
+											<c:out value="${r['HOSPTEL'] }" />
+										</p>
+
+										<div class="circle">
+											<a href="#" class="goCorona">바로접수</a>
+
+										</div>
+
+										<input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
+										<br />
+										 <button id="hpChat" class="btn btn-outline-dark" type="button" 
+		              onclick="hpAccessChatting('${loginMember.email}','${r['ID']}');">실시간 문의</button>
+									</div>
+									<br>
+									
+
+
+									<!--  <div id="notice">
+>>>>>>> branch 'develop' of https://github.com/y0u1me2/Spring-MedicalCareProject.git
 		                <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
 				                  다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
 				                  월,화,목,금 9:00~18:00
@@ -627,15 +681,17 @@ margin-left:10px;
 				                  일,공휴일 휴무
 		                </p>
             		  </div> -->
-            		  </figure>
-		          </c:forEach>      
-            </div>
-	</div>
+								</figure>
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+			</div>
 
 
-          <!-- ================================================================ -->
-          <!-- 병원위치 찾기 -->
-         <%--  <p>원하시는 병원이 없으면</br>
+			<!-- ================================================================ -->
+			<!-- 병원위치 찾기 -->
+			<%--  <p>원하시는 병원이 없으면</br>
             지도에서 병원을 찾아보세요.
           </p>
 
@@ -669,34 +725,33 @@ margin-left:10px;
               </div>
             </div> --%>
 
-           
+
+		</div>
+		<!-- ================================================================ -->
+		<!-- 날씨정보 -->
+		<div id="weather-content">
+			<p>날씨 api 불러올것!</p>
+
+			<div id="weather-text">
+				<p>
+					미세먼지 정보 제공 안내</br> </br> 미세먼지 정보는 한국환경공단에서 제공하는 국가대기오염정보 Open API를 활용하여, 측정
+					시점 기준으로 업데이트되며, 일부 측정 데이터는 오류가 발생할 수 있습니다.
+				</p>
+
+			</div>
+
+		</div>
+
+
+
+
+	</div>
+
 </div>
-            <!-- ================================================================ -->
-            <!-- 날씨정보 -->
-            <div id="weather-content">
-              <p>날씨 api 불러올것!</p>
-
-              <div id="weather-text">
-                <p>미세먼지 정보 제공 안내</br></br>
-
-                  미세먼지 정보는 한국환경공단에서 제공하는 국가대기오염정보 Open API를 활용하여, 측정
-                  시점 기준으로 업데이트되며, 일부 측정 데이터는 오류가 발생할 수 있습니다.
-                </p>
-
-              </div>
-
-            </div>
 
 
 
-
-          </div>
-     
-    </div>
-
-
-    
-    <script>   
+<script>   
     
     //바로접수 호버시 마우스 커서 변화
    	$('.circle').mouseenter(function() {
@@ -714,8 +769,8 @@ margin-left:10px;
     			if(${loginMember.name eq null}){
     				alert("로그인후 이용하세요!"); 
     				loc.addEventListener("click", function() {
-    		    		location.replace('${path}/rv/reservationList');
-        				});	  				
+    		    	location.replace('${path}/rv/reservationList');
+        			});	  				
     			}
     		});	
     		
@@ -723,13 +778,10 @@ margin-left:10px;
     			$(".circle").click(function(){
 	    			if(${loginMember.name ne null}){
 	    				
-    					var hospNo = $('input[name=hospNo]').val();
-	    				$(this).children(".goCorona").attr('href',"${path}/rv/corona?no="+hospNo);
-	    				
+    					var hospNo = $(this).siblings('input').val();
+	    				$(this).children(".goCorona").attr('href',"${path}/rv/corona?no="+hospNo);	
 	    			}
     			});
-    			
-
     		});
     
   /* 리스트 넘기기 */  
