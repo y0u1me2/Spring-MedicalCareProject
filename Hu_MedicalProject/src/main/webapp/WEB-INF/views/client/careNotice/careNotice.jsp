@@ -132,7 +132,7 @@ footer {
 
 <section>
 	<div id="section-container">
-		<div class="container-fluid">
+		<div class="container-fluid py-5">
 			<div class="row">
 				<div class="col-xl-1 "></div>
 				<div class="col-xl-10 "

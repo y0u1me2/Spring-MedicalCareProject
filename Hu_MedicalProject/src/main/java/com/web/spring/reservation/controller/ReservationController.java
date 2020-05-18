@@ -97,7 +97,9 @@ public class ReservationController {
 	@RequestMapping("/rv/reservationEnd")
 	public String insertReservation(Reservation r, Model m) {
 	
+		
 		logger.debug("======================="+r);
+		
 		
 		int result = service.insertReservation(r);		
 		

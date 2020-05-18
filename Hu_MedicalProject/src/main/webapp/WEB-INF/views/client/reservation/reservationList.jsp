@@ -192,7 +192,7 @@
     	text-align:center;/* 가로정렬 */
     	line-height:80px;/* 세로정렬 */
    		position:relative;
-   		left:50px;
+   		left:200px;
    		top:50px;
 
    
@@ -204,7 +204,7 @@
      
      button#chat{
 		position:relative;
-   		left:170px;
+   		left:50px;
    		bottom:30px;
 }
      
@@ -624,8 +624,9 @@ div.content2{
 		              <div class="circle">
 		              	<a href="#" class="goCorona">바로접수</a>
 		              </div>
-		           		<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
-		          
+		              
+		           		 <input type="hidden" name="hospNo" value="${r['HOSPNO']}"/> 
+
 		           
 		              <br/>
 		             <button type="button" id="chat" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
@@ -741,8 +742,10 @@ div.content2{
     			$(".circle").click(function(){
 	    			if(${loginMember.name ne null}){
 	    				
-    					var hospNo = $('input[name=hospNo]').val();
+    					var hospNo = $(this).siblings('input').val();
 	    				$(this).children(".goCorona").attr('href',"${path}/rv/corona?no="+hospNo);
+	    				
+	    			
 	    				
 	    			}
     			});

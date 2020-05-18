@@ -14,7 +14,7 @@ public class Reservation {
 	
 	private int reservNo;
 	private int memberNo;
-	private int hospNo;
+	private String hospNo;
 	private String hospDepartment;
 	private String message;
 	

@@ -405,9 +405,6 @@ public class CareNoticeController {
 	@RequestMapping("/care/replydelete")
 	 public String replydelete(@RequestParam(value="no") int no,@RequestParam(value="cno") int cno ,Model model) {
 		
-		logger.debug("댓글번호 : "+no);
-		logger.debug("글번호 : "+cno);
-		
 		
 		 int result = service.replydelete(no); 
 		  
@@ -432,8 +429,7 @@ public class CareNoticeController {
 //댓글수정=============================================
 	@RequestMapping("/care/replyupdate")
 	public String replyupdate(CareComment c,Model m,@RequestParam(value="no") int no,@RequestParam(value="cno") int cno) {
-				
-		logger.debug("dddd"+c);
+			
 		
 		int result = service.replyupdate(c);
 		

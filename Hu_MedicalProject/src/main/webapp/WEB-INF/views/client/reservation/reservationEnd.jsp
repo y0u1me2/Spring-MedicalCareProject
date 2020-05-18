@@ -325,7 +325,6 @@ footer {
 
 
 
-<form action="${path}/rv/reservationEnd" id="rvFrm" method="post">
 
 	<div id="reception-container">
 		<button id="paperweight-btn"
@@ -335,13 +334,15 @@ footer {
 			<p>확인/수정하기</p>
 			<p>></p>
 		</button>
+		
+<form action="${path}/rv/reservationEnd" id="rvFrm" method="post">
 		<div id="choice">
 
 			<p>
-				진료대상<strong>[필수]</strong>
+				진료대상
 			</p>
 
-			<p>※ 실제 진료 받을 분으로 선택해주세요.</p>
+			
 
 			<div id="patient">
 				<div class="card">
@@ -349,24 +350,18 @@ footer {
 						width="100px;">
 					<div class="container">
 						<p>
-							&nbsp;&nbsp;
+							&nbsp;
 							<c:out value="${loginMember.name }" />
 						</p>
 					</div>
 				</div>
-				<div class="family" onclick="popupFamilyAdd();">
-					<img src="${path }/resources/images/family.png" id="plus" alt="플러스"
-						width="60px;">
-					<div class="container">
-						<p>가족추가</p>
-					</div>
-				</div>
+				
 			</div>
 
 			<input type="hidden" name="memberNo" value="${loginMember.memberNo }" />
 
 
-			<div class="select">
+			 <div class="select">
 				<c:forEach items="${list }" var="r">
 					<input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
 
@@ -375,22 +370,24 @@ footer {
 					</p>
 
 
-					<select name="hospDepartment">
+					  <select name="hospDepartment">
 						<option>진료항목 선택</option>
 						<c:forTokens items="${r['MEDICALDEPARTMENT']}" var="e" delims=",">
 							<option value="${e}"><c:out value="${e}" /></option>
 						</c:forTokens>
-					</select>
+					</select>   
 
+				</c:forEach>
+			</div> 
+			
+			
 					<div id="words">
 						<p>원장님께 하고 싶은 말[선택]</p>
-						<input type="text" name="message"
-							placeholder="&nbsp;&nbsp; ex) 어제부터 열이나요.">
+						<input type="text" name="message" placeholder="&nbsp;&nbsp; ex) 어제부터 열이나요.">
 					</div>
-				</c:forEach>
-			</div>
 
 		</div>
+</form>
 
 
 
@@ -401,17 +398,12 @@ footer {
 			</p>
 		</div>
 
-		<button id="reception-btn" onclick="popupOn();">접수하기</button>
+		<button type="button" id="reception-btn" onclick="popupOn();">접수하기</button>
 	</div>
 
 
-
-
-	<!--  </div>
-        </div> -->
-
 	<!------------- 접수전 모달창 ------------->
-	<div class="modal-back" id="login">
+	 <div class="modal-back" id="login">
 		<div class="modal-login animate">
 			<img src="${path }/resources/images/warning.png" width="30px;"
 				id="warning" />
@@ -429,7 +421,7 @@ footer {
 				</div>
 			</div>
 
-			<button type="submit" class="big-gray-btn">확인</button>
+			<button type="button" class="big-gray-btn">확인</button>
 
 
 
@@ -438,8 +430,7 @@ footer {
 			</div>
 
 		</div>
-	</div>
-</form>
+	</div> 
 
 
 
@@ -449,33 +440,38 @@ footer {
 
 
 <script>
+
+	//접수전 주의사항 팝업
 	function popupOn() {
-		$(".modal-back").show();
+		
+	//var department =  $('.select').siblings('select').val();
 
+		//if(department>0){
+				
+			$(".modal-back").show();
+			
+			//접수완료하기
+			$(".big-gray-btn").click(function(){
+					console.log($('select[name=hospDepartment]').val());
+				$("#rvFrm").submit();
+			});
+			
+		//}else{
+		//	alert('진료항목을 선택해주세요!');
+		//}
+				
+			
 	}
-
+		
+	//접수전 주의사항 팝업 닫기
 	function popupOff() {
 		$(".modal-back").hide();
 	}
+  
+	
 
-	function popupFamilyAdd() {
-		$(".modal-family").show();
 
-	}
 
-	function popupOff2() {
-		$(".modal-family").hide();
-	}
-
-	//가족추가 호버시 
-	$('.family').mouseenter(function() {
-		$(this).css("cursor", "pointer");
-	})
-
-	//접수완료하기
-	/*  $(".big-gray-btn").click(function(){
-	$("#rvFrm").submit();
-	}); */
 </script>  
         
         
