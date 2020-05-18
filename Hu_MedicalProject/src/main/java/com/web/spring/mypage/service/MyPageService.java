@@ -9,6 +9,12 @@ public interface MyPageService {
 	//비밀번호 체크
 	Member passwordCheck(Member m);
 	
+	//개인정보수정
+	int memberUpdate(Member m);
+		
+	//회원탈퇴
+	int deleteMember(Member m);
+	
 	List<Map<String,String>> reservationStatus(int no);
 	
 }
