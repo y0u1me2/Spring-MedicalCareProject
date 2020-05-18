@@ -133,7 +133,6 @@
         			var num=result.hospitalCount;
         			var regExp=/\B(?=(\d{3})+(?!\d))/g;
         			var num2=num.toString().replace(regExp,',');
-        			console.log(num2);
         			$('#totalHospital').html(num2);
         		}
         	})

@@ -30,7 +30,12 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/footer.css"/>
 </head>
 <body>
-  <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:10px;">
+<c:if test="${loginMember eq null and loginHpMember eq null  }">
+ 	 <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:100px;">
+</c:if>
+ <c:if test="${loginMember != null or loginHpMember !=null  }">
+ 	 <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:10px;">
+</c:if>
     <!-- Brand/logo -->
     <img src="${pageContext.request.contextPath }/resources/images/logo5.png" style="width:50px; padding-right:8px;">
     <a class="navbar-brand" href="${pageContext.request.contextPath }" style="color:black;">HU</a>
