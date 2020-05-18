@@ -26,7 +26,8 @@ public class ReservationServiceImpl implements ReservationService {
 		return dao.reservationList(session);
 	
 	}
-//접수하기
+
+	//접수하기
 	@Override
 	public int insertReservation(Reservation r) {
 		
@@ -47,7 +48,11 @@ public class ReservationServiceImpl implements ReservationService {
 		return dao.reservationView(session,no);
 	}
 	
-	
+//메인 예약 카운트
+	@Override
+	public int reservationCount() {
+		return dao.reservationCount(session);
+	}
 	
 	
 }
