@@ -124,26 +124,41 @@
                 }); 
         });
         
+    //병원 카운트    
         $(function(){
         	$.ajax({
         		url:'${pageContext.request.contextPath }/member/hospitalCount.do',
         		type:'POST',
         		success:function(result){
-        			$('#totalHospital').html(result.hospitalCount);
+        			var num=result.hospitalCount;
+        			var regExp=/\B(?=(\d{3})+(?!\d))/g;
+        			var num2=num.toString().replace(regExp,',');
+        			console.log(num2);
+        			$('#totalHospital').html(num2);
         		}
         	})
-        })
-
+        });
+    
+	//예약 카운트
         $(function(){
         	$.ajax({
         		url:'${pageContext.request.contextPath }/reservation/reservationCount.do',
         		type:'POST',
         		success:function(result){
-        			console.log(result.reservationCount)
+        			var num=result.reservationCount;
+        			var regExp=/\B(?=(\d{3})+(?!\d))/g;
+        			var num2=num.toString().replace(regExp,',');
         			$('#totalReservation').html(result.reservationCount);
         		}
         	})
-        })
+        });
+        
+     /*    $(document).ready(function(){
+    		 var num=$("#totalHospital").val();
+    		 console.log(num);
+    		 return num.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
+       	}); */
+        
        
 </script>
 
