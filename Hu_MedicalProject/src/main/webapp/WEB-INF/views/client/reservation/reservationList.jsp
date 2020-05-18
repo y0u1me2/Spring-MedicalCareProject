@@ -572,6 +572,7 @@ div.content2{
 
 
 <div class="container-fluid">
+<input type="hidden" id="loginMemberName" value="loginMember.name">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-12">
@@ -761,7 +762,7 @@ div.content2{
     		
     		
     			$(".circle").click(function(){
-	    			if(${loginMember.name ne null }){
+	    			if(${loginMember.name ne null}){
 	    				
     					var hospNo = $(this).siblings('input').val();
 	    				$(this).children(".goCorona").attr('href',"${path}/rv/corona?no="+hospNo);	
