@@ -30,7 +30,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/footer.css"/>
 </head>
 <body>
-  <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:150px;">
+  <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:80px;">
     <!-- Brand/logo -->
     <img src="${pageContext.request.contextPath }/resources/images/logo5.png" style="width:50px; padding-right:8px;">
     <a class="navbar-brand" href="${pageContext.request.contextPath }" style="color:black;">HU</a>
@@ -102,14 +102,12 @@
 						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>
 	        </li>
          </c:when>
-
          <c:when test = "${not empty loginHpMember }">
 			<li class="nav-item" style="margin-left:100px;">
-				<a href="#" style="align:right;"><c:out value="${loginHpMember.hospitalName }"></c:out> 님</a>
+				<a href="#" style="align:right;"><c:out value="${loginHpMember.id }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="location.replace('${path}/member/hospitalLogout.do')">로그아웃</button>
-				   <%-- <button class="btn btn-outline-dark" type="button"
-						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button> --%>  
-						
+				 <button class="btn btn-outline-dark" type="button"
+						onclick="hpAdminAccessChatting('${loginHpMember.id}');">관리자  실시간 문의</button>  
 	        </li>
          </c:when>
          <c:otherwise>
@@ -268,22 +266,25 @@
 </div>
 
 <!-- 아이디 찾기 -->
-<!-- <div id="findEmail" class="modal" >
+<div id="findEmail" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
-  
       <div class="imgcontainer" style="height:10px">
-        <span onclick="document.getElementById('findEmail').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
+        <span onclick="emptyFindEmail()" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
       </div>
       <br>
-   <div class="containerNewPSW" style="margin:0 auto;">
+   <div class="containerFindEmail" style="margin:0 auto;">
+   <h2 class="text-center">이메일 찾기</h2>
       <input type="text" placeholder="이름 입력" name="name" id="name" required><br>
-      <input type="text" placeholder="핸드폰 번호 입력 (-를 제외하고 입력)" name="phone" id="phone" required><br>
-      <button onclick="findEmail();" class="findEmailBtn" type="submit" style="background-color:#DAF1DE">아이디 찾기</button>
+      <input type="text" placeholder="핸드폰 번호 입력 (-는 제외)" name="phone" id="phone" required><br>
+      <div style="text-align:center;">
+      <button onclick="findEmail();" class="findEmailBtn" id="findEmailBtn" type="button" style="background-color:#DAF1DE">아이디 찾기</button>
+  	</div>
+  	<span id="emailList" style="text-align:center;"></span>
+  	
   </div>
   <div><br><br></div>
-     
   </form>
-</div> -->
+</div>
 
  <script>
   new WOW().init();
@@ -350,24 +351,121 @@ function sendEmail(){
 		location.href="${path }/findPass.do?memberEmail="+email;
 	 }
 }
-$('#findPswBtn').on('click', function(){
-   
-    $.ajax({
-        url: "requestObject",
-        type: "POST",
-        data: form,
-        success: function(data){
-            $('#containerPswCode').text(data);
-        },
-        error: function(){
-            alert("simpleWithObject err");
-        }
-    });
-});
+
 function pswCode(){
 	location.href="${path}/pass_injeung.do";
 }
-
+//아이디 저장
+$(document).ready(function(){
+ 
+    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
+    var key = getCookie("key");
+    $("#uemail").val(key); 
+     
+    if($("#uemail").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+        $("#store").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+    }
+     
+    $("#store").change(function(){ // 체크박스에 변화가 있다면,
+        if($("#store").is(":checked")){ // ID 저장하기 체크했을 때,
+            setCookie("key", $("#uemail").val(), 7); // 7일 동안 쿠키 보관
+        }else{ // ID 저장하기 체크 해제 시,
+            deleteCookie("key");
+        }
+    });
+     
+    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+    $("#uemail").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+        if($("#store").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+            setCookie("key", $("#uemail").val(), 7); // 7일 동안 쿠키 보관
+        }
+    });
+});
+ 
+function setCookie(cookieName, value, exdays){
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+    document.cookie = cookieName + "=" + cookieValue;
+}
+ 
+function deleteCookie(cookieName){
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() - 1);
+    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+}
+ 
+function getCookie(cookieName) {
+    cookieName = cookieName + '=';
+    var cookieData = document.cookie;
+    var start = cookieData.indexOf(cookieName);
+    var cookieValue = '';
+    if(start != -1){
+        start += cookieName.length;
+        var end = cookieData.indexOf(';', start);
+        if(end == -1)end = cookieData.length;
+        cookieValue = cookieData.substring(start, end);
+    }
+    return unescape(cookieValue);
+}
+//아이디 찾기
+function findEmail(){
+	var userName = $('#name').val();
+	var call = $('#phone').val();
+	var phoneCheck = /^\d{3}\d{3,4}\d{4}$/;
+	var nameCheck=/^[가-힣]|[a-zA-Z]+$/; 
+	
+	if($("#name").val()==""){
+		// alert("이름을 입력하세요");
+		 $("#name").focus();
+		 return false;	 
+	 }else if(!nameCheck.test($("#name").val())){
+		//유효성 검사
+		alert("이름을 알맞게 작성해주세요.");
+		$("#name").focus();
+		 return false;
+	}
+	
+	if($("#phone").val()==""){
+		// alert("전화번호를 입력하세요");
+		 $("#phone").focus();
+		 return false; 
+	}else if(phoneCheck.test($("#phone").val())==false){
+		alert("핸드폰 번호를 알맞게 작성해주세요");
+		$("#phone").focus();
+		 return false;
+	}
+	/* console.log(userName);	
+	console.log(call); */
+	
+	$.ajax({
+		type: 'POST',  
+		url:'${path }/findUserEmail.do',
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",  
+		data:{"userName":userName,"call":call},
+		success:function(data){
+			console.log("왔어?" + data.userMail);
+			if(data.userMail != 1){
+				$("#emailList").append("<h4>"+"등록된 이메일"+"<br>"+data.userMail+"</h4>");
+				document.getElementById("findEmailBtn").disabled = true;
+			}else{
+				alert("회원 등록이 되어있지않습니다. 회원가입 후 이용하세요!");
+				document.getElementById("findEmailBtn").disabled = false;
+			}
+			
+			
+		}
+		
+	})
+}
+function emptyFindEmail(){
+	$('#name').val('');
+	$('#phone').val('');
+	$('#emailList').text('');
+	document.getElementById('findEmail').style.display='none';
+	
+}
+//google 로그인
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -391,9 +489,17 @@ function logoutChk(){
 		function accessChatting(room1){//병원회원-일반회원일때 매개변수 2개 받기
 			//room은 로그인된 userId가 매개변수로 들어간다.
 			if(${loginMember.email ne "admin"  } ){
-				//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
+			//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
 				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
 				requestChatting();
+			}
+			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
+		}
+		
+		//관리자문의(병원)
+	 	function hpAdminAccessChatting(room1){//room1=병원회원
+			if(room1){
+				hpAdminrequestChatting();
 			}
 			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
 		}
@@ -408,6 +514,8 @@ function logoutChk(){
 				open("${path}/hpChattingView?room="+room+"&roomId="+room2,"_blank","width=500,height=490");
 			}
 		}
+		
+		
 
 </script>
 	<c:if test="${not empty loginMember or not empty loginHpMember }">
@@ -427,40 +535,52 @@ function logoutChk(){
 				else if(${not empty loginHpMember}){
 					alram.send(JSON.stringify(new AlramMessage("client","접속","${loginHpMember.id}","")));
 				}
+				
 			}
 			
 			alram.onmessage=function(msg){
 				const data=JSON.parse(msg.data);
-				console.log(data);
+				//console.log("??"+data.msg);
 				switch(data.type){
 					case "client" : roomId=data.msg;break;
-					//admin
+					//관리자문의(일반)
 					case "newchat" : openChatting(data);break;
-					
+					//관리자문의(병원)
+					case "hpAdminChat" : hpAdminOpenChatting(data);break;
 					//병원
 					case "hospitalChat" : hpOpenChatting(data);break;
 				}
 			}
 //--------------------------------------관리자 알림---------------------------------------------------			
-			//admin
+			//관리자문의(일반)
 			function openChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
 					accessChatting(data.sender);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
-			
+			//관리자문의(병원)
+			function hpAdminOpenChatting(data){
+				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
+					console.log("snrn?"+data);
+					hpAdminAccessChatting(data.sender,data.msg);//관리자도(병원도) 창을 띄워줘야하므로!
+				}
+			}
 			//병원
 			function hpOpenChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
-					console.log(data);
 					hpAccessChatting(data.sender,data.msg);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
 //------------------------요청 보내기-------------------------------------------------------------------			
-			//admin
+			//관리자문의(일반)
 			function requestChatting(){
 				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));//
 			//일반회원이 admin에게 채팅보냄
+			}
+			
+			//관리자문의(병원)
+			function hpAdminrequestChatting(){
+				alram.send(JSON.stringify(new AlramMessage("hpAdminChat","문의","${loginHpMember.id}","admin")));//
 			}
 			//병원
 			 function hpRequestChatting(room2,roomId){
@@ -474,7 +594,5 @@ function logoutChk(){
 				this.sender=sender;
 				this.receiver=receiver;			
 			}
-			
-		
 		</script>
 	</c:if>

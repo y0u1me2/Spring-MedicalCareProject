@@ -56,7 +56,7 @@ public class CareNoticeController {
 		int totalCount = service.careCount();
 
 		mv.addObject("list", list);
-	mv.addObject("count", totalCount);
+		mv.addObject("count", totalCount);
 		mv.addObject("pageBar", PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/care/careNotice"));
 		mv.setViewName("client/careNotice/careNotice");
 		return mv;
@@ -368,7 +368,6 @@ public class CareNoticeController {
 	@RequestMapping("/care/commentEndEnd")
 	public String insertComment2(CareComment c, Model m, @RequestParam("no") int no) {
 		
-		logger.debug("오니?==================="+no);
 		
 		int result = service.insertComment2(c);
 		
@@ -406,7 +405,9 @@ public class CareNoticeController {
 	@RequestMapping("/care/replydelete")
 	 public String replydelete(@RequestParam(value="no") int no,@RequestParam(value="cno") int cno ,Model model) {
 		
-		logger.debug(""+no);
+		logger.debug("댓글번호 : "+no);
+		logger.debug("글번호 : "+cno);
+		
 		
 		 int result = service.replydelete(no); 
 		  
@@ -428,5 +429,30 @@ public class CareNoticeController {
 		  
 		  }
 
+//댓글수정=============================================
+	@RequestMapping("/care/replyupdate")
+	public String replyupdate(CareComment c,Model m,@RequestParam(value="no") int no,@RequestParam(value="cno") int cno) {
+				
+		logger.debug("dddd"+c);
+		
+		int result = service.replyupdate(c);
+		
+		  
+		  String msg=""; 
+		  String loc="/care/careView?no="+cno;
+		 
+		  if(result>0) { 
+			  msg="댓글이 수정 되었습니다."; 
+			  
+		  }else {
+			  msg="수정 실패 하였습니다."; 
+		  } 
+		  
+		  m.addAttribute("msg",msg);
+		  m.addAttribute("loc",loc); 
+		  
+		  return "client/common/msg"; 
+		  
+		  }
+	}
 
-}

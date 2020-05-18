@@ -92,12 +92,33 @@ border-radius:10px;
 		console.log('${param.room}');//userId
 		//접속정보를 server에 알려주기
 		
+		if(${not empty loginMember}){
 	 	websocket.send(JSON.stringify(new SocketMessage("open","${loginMember.email}","","",room)));
-		//chattingServer에 보내는거임 type과 맞춰줌 
+		
+		}else if(${not empty loginHpMember}){
+		 	websocket.send(JSON.stringify(new SocketMessage("open","${loginHpMember.id}","","",room)));
+		}
+		
+	 	
+	 	//chattingServer에 보내는거임 type과 맞춰줌 
 		/* if(${not empty loginMember}){
 			alram.send(JSON.stringify(new AlramMessage("hpOpen","접속","${loginMember.email}","")));//공란병원회원
 			}
-			
+		
+		if(${not empty loginMember}){
+		hpRequestChatting(room2,roomId);
+		open("${path}/hpChattingView?room="+room2+"&roomId="+roomId,"_blank","width=500,height=490");
+	}else{
+		open("${path}/hpChattingView?room="+room+"&roomId="+room2,"_blank","width=500,height=490");
+	}
+		
+		
+		
+		
+		
+		
+		
+		
 			else if(${not empty loginHpMember}){
 				alram.send(JSON.stringify(new AlramMessage("hpOpen","접속","${loginHpMember.id}","")));//공란병원회원
 			} */
@@ -132,8 +153,11 @@ border-radius:10px;
 			if(msg.trim().length==0){
 				alert("메세지를 입력하세요!");
 				$("#msg").focus();
-			}else{
+			}else if(${not empty loginMember}){
 				websocket.send(JSON.stringify(new SocketMessage("msg","${loginMember.email}","",msg,room,"")));
+				$("#msg").val("");
+			}else if(${not empty loginHpMember}){
+				websocket.send(JSON.stringify(new SocketMessage("msg","${loginHpMember.id}","",msg,room,"")));
 				$("#msg").val("");
 			}
 		});

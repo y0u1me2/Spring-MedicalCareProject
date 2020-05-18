@@ -1,9 +1,11 @@
 package com.web.spring.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.spring.member.model.vo.Member;
 
@@ -30,14 +32,13 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public String getPw(SqlSessionTemplate session, Map<String, Object> paramMap) {
-		return session.selectOne("member.emailSendPW", paramMap);
-	}
-
-	@Override
 	public int changeMemberPsw(SqlSessionTemplate session, Map<String, Object> map) {
 		return session.update("member.changeMemberPsw", map);
 	}
-	
-	
+
+	@Override
+	public String findEmail(SqlSessionTemplate session, Map<String, String> param) {
+		return session.selectOne("member.findEmail",param);
+	}
+
 }

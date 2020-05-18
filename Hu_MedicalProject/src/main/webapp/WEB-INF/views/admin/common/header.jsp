@@ -66,7 +66,6 @@
             <div class="scroll-sidebar">
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" style="margin-bottom: 50px;">
-                       
                         <li>
                             <a href="" class="waves-effect" style="margin-top:50px; text-align: center;"><h4 style="font-size:22px; font-family:'Song Myung',cursive;">일반 회원 관리</h4></a>
                         </li>

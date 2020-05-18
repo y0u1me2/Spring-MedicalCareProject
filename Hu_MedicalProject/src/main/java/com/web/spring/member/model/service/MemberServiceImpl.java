@@ -1,5 +1,6 @@
 package com.web.spring.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -38,17 +39,18 @@ public class MemberServiceImpl implements MemberService{
 		return dao.searchEmail(session,email);
 	}
 
-
-	@Override
-	public String getPw(Map<String, Object> paramMap) {
-		return dao.getPw(session,paramMap);
-	}
-
-
 	@Override
 	public int changeMemberPsw(Map<String, Object> map) {
 		return dao.changeMemberPsw(session,map);
 	}
+
+
+	@Override
+	public String findEmail(Map<String, String> param) {
+		return dao.findEmail(session,param);
+	}
+
+	
 	
 	
 	

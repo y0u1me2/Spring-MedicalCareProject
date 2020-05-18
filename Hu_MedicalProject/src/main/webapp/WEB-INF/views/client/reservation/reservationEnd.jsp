@@ -333,6 +333,8 @@ footer {
                         <p>></p>
                     </button>
 
+
+		<form action="${path}/rv/reservationList">
                 <div id="choice">
 
                     <p>진료대상<strong>[필수]</strong></p>
@@ -364,28 +366,27 @@ footer {
 	                            
 	                        
 
-                <div class="select">
-                    <p>진료실<strong>[필수]</strong></p>
-                    <select>
-                        <option>진료실 선택</option>
-                        <option>진료실 예</option>
-                    </select>
-
+              <div class="select">
+                <c:forEach items="${list }" var="r">
+                  
                     <p>진료항목<strong>[필수]</strong></p>
+                    
+                    
                     <select>
                         <option>진료항목 선택</option>
-                        <option>진료항목예</option>
+                         <c:forTokens items="${r['MEDICALDEPARTMENT']}" var="e" delims=",">
+                        	<option><c:out  value="${e}"/></option>
+                        </c:forTokens>
                     </select>
 
                     <div id="words">
                     <p>원장님께 하고 싶은 말[선택]</p>
                     <input type="text" name="message" placeholder="&nbsp;&nbsp; ex) 어제부터 열이나요." >
                     </div>
-
+				</c:forEach>
                 </div>
 
                 </div>
-
                     <div id="notice">
                         <p>
                             ※ 병원에 도착하시면 데스크에 도착 여부를 알려주세요.</br>
@@ -416,8 +417,11 @@ footer {
 						</div>
 					</div>		
 					
-				<button type="button" class="big-gray-btn" 
-				onclick="location.replace('${path}/rv/reservationTime')">확인</button>
+				<button type="submit" class="big-gray-btn" >확인</button>
+		</form>
+				
+				
+				
 				
 				<div class="close-btn">
 					<span onclick="popupOff();" class="close" title="Close Modal">&times;</span>

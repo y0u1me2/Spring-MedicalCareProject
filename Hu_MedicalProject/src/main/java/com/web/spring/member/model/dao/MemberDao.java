@@ -1,5 +1,6 @@
 package com.web.spring.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,10 +16,9 @@ public interface MemberDao {
 	
 	Member searchEmail(SqlSessionTemplate session, String email);
 
-	
-	String getPw(SqlSessionTemplate session, Map<String, Object> paramMap);
-
 	int changeMemberPsw(SqlSessionTemplate session, Map<String, Object> map);
+
+	String findEmail(SqlSessionTemplate session, Map<String, String> param);
 
 	
 	

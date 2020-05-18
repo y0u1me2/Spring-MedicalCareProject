@@ -3,7 +3,7 @@ package com.web.spring.member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -219,10 +219,12 @@ public class MemberController {
     								 @RequestParam("pswcode") String pswcode, 
             HttpServletResponse response_equals, ModelAndView mv) throws IOException{
     
-	    System.out.println("마지막 : injeungNum : "+injeungNum);
-	    
-	    System.out.println("마지막 : pswcode : "+pswcode);
-	    System.out.println("마지막 : memberEmail : "+memberEmail);
+		/*
+		 * System.out.println("마지막 : injeungNum : "+injeungNum);
+		 * 
+		 * System.out.println("마지막 : pswcode : "+pswcode);
+		 * System.out.println("마지막 : memberEmail : "+memberEmail);
+		 */
 	    
 	    mv.setViewName("client/member/changePSW");
 	    
@@ -319,4 +321,32 @@ public class MemberController {
                 
     }
 
+    @RequestMapping("/findUserEmail.do")
+    public ModelAndView findEmail(@RequestParam("userName") String name,
+    							  @RequestParam("call") String phone,
+    							  ModelAndView mv,Member m) {
+		System.out.println(name);
+		System.out.println(phone);
+	
+		Map<String,String> param = new HashMap<String,String>();
+		param.put("name",name);
+		param.put("phone",phone);
+		
+		String userMail = service.findEmail(param);
+		
+		System.out.println(userMail);
+		if(userMail != null) {
+			mv.addObject("userMail",userMail);
+			mv.setViewName("jsonView");
+		}else {
+			mv.addObject("userMail",1);
+			mv.setViewName("jsonView");
+		}
+		/*
+		 * mv.addObject("userMail",userMail); mv.setViewName("jsonView");
+		 */
+		
+		
+		return mv;
+    }
 }
