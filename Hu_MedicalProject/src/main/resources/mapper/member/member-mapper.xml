@@ -12,18 +12,18 @@
 	<select id="memberLogin" parameterType="member" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
 	</select>
-	<select id="findEmail" parameterType="member" resultType="member">
+	<!-- <select id="findEmail" parameterType="member" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
-	</select>
-	<select id="selectMember" parameterType="member" resultType="member">
+	</select> -->
+	<!-- <select id="selectMember" parameterType="member" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
-	</select>
+	</select> -->
 	<select id="searchEmail" parameterType="string" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
 	</select>
-	<select id="emailSendPW" parameterType="member" resultType="member">
+	<!-- <select id="emailSendPW" parameterType="member" resultType="member">
 		SELECT PASSWORD FROM MEMBER WHERE EMAIL = #{email}
-	</select>
+	</select> -->
 	<!-- <update id="emailSendPW" parameterType="member">
 		SELECT PASSWORD FROM MEMBER WHERE EMAIL = #{email}
 		UPDATE MEMBER SET PASSWORD = #{password} WHERE EMAIL=#{email}
@@ -31,4 +31,9 @@
 	<update id="changeMemberPsw" parameterType="member">
 		UPDATE MEMBER SET PASSWORD = #{memberPsw} WHERE EMAIL=#{memberId}		
 	</update>
+	
+	<select id="findEmail" parameterType="map" resultType="string">
+		SELECT EMAIL FROM MEMBER WHERE NAME = #{name} AND PHONE =${phone}
+	</select>
+	
 </mapper>
