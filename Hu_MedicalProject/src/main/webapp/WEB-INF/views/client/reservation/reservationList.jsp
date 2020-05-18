@@ -738,8 +738,8 @@ div.content2{
     			if(${loginMember.name eq null}){
     				alert("로그인후 이용하세요!"); 
     				loc.addEventListener("click", function() {
-    		    		location.replace('${path}/rv/reservationList');
-        				});	  				
+    		    	location.replace('${path}/rv/reservationList');
+        			});	  				
     			}
     		});	
     		
@@ -748,14 +748,9 @@ div.content2{
 	    			if(${loginMember.name ne null}){
 	    				
     					var hospNo = $(this).siblings('input').val();
-	    				$(this).children(".goCorona").attr('href',"${path}/rv/corona?no="+hospNo);
-	    				
-	    			
-	    				
+	    				$(this).children(".goCorona").attr('href',"${path}/rv/corona?no="+hospNo);	
 	    			}
     			});
-    			
-
     		});
     
   /* 리스트 넘기기 */  
