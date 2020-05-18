@@ -609,7 +609,7 @@ div.content1{
 		              <div class="circle">
 		              	<a href="#" class="goCorona">바로접수</a>
 		              </div><br>
-		             <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
+		             <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">실시간 상담하기</button>
 		              
 
 		             <!--  <div id="notice">

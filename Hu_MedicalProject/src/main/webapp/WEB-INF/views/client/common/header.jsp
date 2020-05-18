@@ -30,7 +30,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/footer.css"/>
 </head>
 <body>
-  <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:150px;">
+  <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:80px;">
     <!-- Brand/logo -->
     <img src="${pageContext.request.contextPath }/resources/images/logo5.png" style="width:50px; padding-right:8px;">
     <a class="navbar-brand" href="${pageContext.request.contextPath }" style="color:black;">HU</a>
@@ -102,14 +102,12 @@
 						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>
 	        </li>
          </c:when>
-
          <c:when test = "${not empty loginHpMember }">
 			<li class="nav-item" style="margin-left:100px;">
-				<a href="#" style="align:right;"><c:out value="${loginHpMember.hospitalName }"></c:out> 님</a>
+				<a href="#" style="align:right;"><c:out value="${loginHpMember.id }"></c:out> 님</a>
 				<button type="button" class="btn btn-outline-dark" onclick="location.replace('${path}/member/hospitalLogout.do')">로그아웃</button>
-				   <%-- <button class="btn btn-outline-dark" type="button"
-						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button> --%>  
-						
+				 <button class="btn btn-outline-dark" type="button"
+						onclick="hpAdminAccessChatting('${loginHpMember.id}');">관리자  실시간 문의</button>  
 	        </li>
          </c:when>
          <c:otherwise>
@@ -386,14 +384,22 @@ function logoutChk(){
 	location.href="${path}/member/logout.do";
 }
 
-//---------------------------------------채팅 시작!--------------------------------------------
-		//admin
+//---------------------------------------채팅 시작!----------------------------------------------------
+		//관리자문의(일반)
 		function accessChatting(room1){//병원회원-일반회원일때 매개변수 2개 받기
 			//room은 로그인된 userId가 매개변수로 들어간다.
 			if(${loginMember.email ne "admin"  } ){
-				//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
+			//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
 				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
 				requestChatting();
+			}
+			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
+		}
+		
+		//관리자문의(병원)
+	 	function hpAdminAccessChatting(room1){//room1=병원회원
+			if(room1){
+				hpAdminrequestChatting();
 			}
 			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
 		}
@@ -408,6 +414,8 @@ function logoutChk(){
 				open("${path}/hpChattingView?room="+room+"&roomId="+room2,"_blank","width=500,height=490");
 			}
 		}
+		
+		
 
 </script>
 	<c:if test="${not empty loginMember or not empty loginHpMember }">
@@ -427,40 +435,52 @@ function logoutChk(){
 				else if(${not empty loginHpMember}){
 					alram.send(JSON.stringify(new AlramMessage("client","접속","${loginHpMember.id}","")));
 				}
+				
 			}
 			
 			alram.onmessage=function(msg){
 				const data=JSON.parse(msg.data);
-				console.log(data);
+				//console.log("??"+data.msg);
 				switch(data.type){
 					case "client" : roomId=data.msg;break;
-					//admin
+					//관리자문의(일반)
 					case "newchat" : openChatting(data);break;
-					
+					//관리자문의(병원)
+					case "hpAdminChat" : hpAdminOpenChatting(data);break;
 					//병원
 					case "hospitalChat" : hpOpenChatting(data);break;
 				}
 			}
 //--------------------------------------관리자 알림---------------------------------------------------			
-			//admin
+			//관리자문의(일반)
 			function openChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
 					accessChatting(data.sender);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
-			
+			//관리자문의(병원)
+			function hpAdminOpenChatting(data){
+				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
+					console.log("snrn?"+data);
+					hpAdminAccessChatting(data.sender,data.msg);//관리자도(병원도) 창을 띄워줘야하므로!
+				}
+			}
 			//병원
 			function hpOpenChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
-					console.log(data);
 					hpAccessChatting(data.sender,data.msg);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
 //------------------------요청 보내기-------------------------------------------------------------------			
-			//admin
+			//관리자문의(일반)
 			function requestChatting(){
 				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));//
 			//일반회원이 admin에게 채팅보냄
+			}
+			
+			//관리자문의(병원)
+			function hpAdminrequestChatting(){
+				alram.send(JSON.stringify(new AlramMessage("hpAdminChat","문의","${loginHpMember.id}","admin")));//
 			}
 			//병원
 			 function hpRequestChatting(room2,roomId){
@@ -474,7 +494,5 @@ function logoutChk(){
 				this.sender=sender;
 				this.receiver=receiver;			
 			}
-			
-		
 		</script>
 	</c:if>
