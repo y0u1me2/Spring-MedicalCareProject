@@ -1,6 +1,9 @@
 package com.web.spring.member.model.service;
 
+import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.spring.member.model.vo.Member;
 
@@ -11,9 +14,10 @@ public interface MemberService {
 	
 	Member searchEmail(String email);
 	
-	String getPw(Map<String, Object> paramMap);
 	
 	int changeMemberPsw(Map<String, Object> map);
+	
+	String findEmail(Map<String, String> param);
 	
 	
 
