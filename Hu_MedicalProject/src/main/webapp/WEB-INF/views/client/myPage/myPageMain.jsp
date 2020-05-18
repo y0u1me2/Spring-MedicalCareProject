@@ -270,7 +270,7 @@ input.error {
 					<div class="row">
 						
 						<div class="col-xl-4">
-							<input type="hidden" value="${loginMember.memberNo }" name="memberNo"/>
+							<input type="hidden" value="${loginMember.memberNo }" id="memberNo" name="memberNo"/>
 						</div>
 					</div>
 					<br>
@@ -375,19 +375,7 @@ input.error {
 				</div>
 			</div>
 			</form>
-		</div>
-		
-		<!-- 회원 탈퇴화면 -->
-		
-		<div class="right col-8 myPage-deleteMember" style="display:none">
-			<div class="row">
-				<div class="col-xl-8">
-					<h1 align="center">회원 탈퇴</h1>
-				</div>
-			</div>
-		</div>
-		
-		
+		</div>	
 	</div>
 </section>
 <script>
@@ -408,6 +396,10 @@ var password=$('#password').val();
 			$('.myPage-deleteMember').css('display', 'none');
 			$('.personalInfo-update').css('display', 'none');
 			$('.myPage-reservation').css('display', 'block');
+			$.ajax({
+				
+			})
+			$('#memberNo').val();
 		}
 		if($(this).attr('name')=='modal-back') {
 			$('#personInfoFrm')[0].reset();

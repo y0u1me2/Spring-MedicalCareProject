@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-   <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-   <c:set var="path" value="${pageContext.request.contextPath}"/>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+	<c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page="/WEB-INF/views/client/common/header.jsp" />
 <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
