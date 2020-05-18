@@ -59,13 +59,7 @@
         text-decoration: none;
     }
 
-    /* 등록,목록 버튼 */
-    div.btns {
-        position: relative;
-        top: 30px;
-        left: 440px;
-    }
-
+   
     /* 등록버튼 */
     button#btnSave {
         height: 40px;
@@ -103,7 +97,7 @@
     }
     footer {
 	position: relative;
-	top: 300px;
+	top: 200px;
 }
 </style>
 
@@ -111,82 +105,81 @@
 
     <section>
         <div id="section-container">
-        <div class="container-fluid"  >
-            <div class="row">
-                <div class="col-xl-1 ">
-                </div>
-                <div class="col-xl-10 " style="padding-left:450px;margin-top:50px;font-size: 30px;">
-                    돌보미 등록하기
-                </div>
-                <div class="col-xl-1 ">
+	   		<div class="container-fluid">
+				 <div class="row">					
+						
+					    <div class="col-sm-5 col-sm-12" style="text-align:center; margin-top:50px; font-size: 30px;"> 
+                    		돌보미 등록하기
+                		</div>
                 </div>
             </div>
         </div>
 
 
-        <div class="container" role="main">
+      <div class="container" role="main" style="margin-top:150px;">
 
-
+		 <form name="boardFrm" action="${pageContext.request.contextPath}/care/careEnrollEnd"
+	         method="post" onsubmit="return validate();"  enctype="multipart/form-data" >
+	         
+	                <div class="mb-3">
 	
-	 <form name="boardFrm" action="${pageContext.request.contextPath}/care/careEnrollEnd"
-         method="post" onsubmit="return validate();"  enctype="multipart/form-data" >
-         
-                <div class="mb-3">
-
-                    <label for="title">제목</label>
-
-                    <input type="text" class="form-control" name="careTitle" id="title" placeholder="제목을 입력해 주세요" required>
-
-                </div>
-
-
-
-                <div class="mb-3">
-
-                    <label for="reg_id">작성자</label>
-
-                    <input type="text" class="form-control" name="careWriter" id="reg_id" value="${loginMember.name}"
-                    readonly required>
-
-                </div>
-
-
-
-                <div class="mb-3">
-
-                    <label for="content">내용</label>
-
-                    <textarea class="form-control" rows="5" name="careContent" id="content"
-                        placeholder="내용을 입력해 주세요"></textarea>
-
-                </div>
-
-
-
-                <div class="mb-3">
-
-                    <label for="tag">자격증 등록</label>
-                    <span> *요양보호사 자격증을 업로드 해주세요.</span>
-
-                    <input type="file" class="form-control" name="upFile" id="upFile" required> 
-
-                </div>
-
-
-
-
-            <div class="btns">
-
-                <button type="submit" id="btnSave" >등록</button>
-
-                <button type="button" id="btnList"
-                 onclick="location.replace('${path}/care/careNotice');">목록</button>
-
-            </div>
-            </form>
+	                    <label for="title">제목</label>
+	
+	                    <input type="text" class="form-control" name="careTitle" id="title" placeholder="제목을 입력해 주세요" required>
+	
+	                </div>
+	
+	
+	
+	                <div class="mb-3">
+	
+	                    <label for="reg_id">작성자</label>
+	
+	                    <input type="text" class="form-control" name="careWriter" id="reg_id" value="${loginMember.name}"
+	                    readonly required>
+	
+	                </div>
+	
+	
+	
+	                <div class="mb-3">
+	
+	                    <label for="content">내용</label>
+	
+	                    <textarea class="form-control" rows="5" name="careContent" id="content"
+	                        placeholder="내용을 입력해 주세요"></textarea>
+	
+	                </div>
+	
+	
+	
+	                <div class="mb-3">
+	
+	                    <label for="tag">자격증 등록</label>
+	                    <span> *요양보호사 자격증을 업로드 해주세요.</span>
+	
+	                    <input type="file" class="form-control" name="upFile" id="upFile" required> 
+	
+	                </div>
+	
+	
+	
+				<div class="container-fluid">
+					 <div class="row">	
+						 <div class="col-sm-12" style="text-align:center; margin-top:50px; ">
+			
+				                <button type="submit" id="btnSave" >등록</button>
+				
+				                <button type="button" id="btnList"
+				                 onclick="location.replace('${path}/care/careNotice');">목록</button>
+								         
+			        	</div>
+			    	 </div>  
+			    </div> 
+	         </form>
 
         </div>
-    </div>
+
 
 
     <script>

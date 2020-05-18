@@ -9,33 +9,21 @@
 <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
 
   <style>
-    * {
-      margin: 0;
-    }
-
-    body {
-      width: 1366px;
-      height: auto;
-    }
-
+  
+   body{
+  	width:1366px;
+  } 
+   
     /* 버튼클릭시 파란테두리 없애기 */
     button:focus {outline:none;}
-
-    div#menu {
-      position: relative;
-      left: 450px;
-
-
-    }
 
     /* 버튼들 */
     div#btns {
       background: rgb(247, 245, 245);
-      width: 500px;
+      width: 450px;
       border-radius: 30px;
       display: flex;
-      position: relative;
-      top: 30px;
+
 
     }
 
@@ -86,8 +74,7 @@
 
     /* #tag들 */
     div#tag {
-      position: relative;
-      top: 50px;
+      text-align:center;
     }
 
     div#tag>button {
@@ -212,7 +199,7 @@
  
     footer {
    position: relative;
-   top: 300px;
+   top:200px;
 }
 
 /* ============================리스트 넘기기 ============================= */
@@ -226,18 +213,18 @@
       width: 100%;
    
   }
-
+ 
 .content {
-  margin: auto;
-  padding: 20px;
+   margin: auto; 
+   padding: 20px; 
   width: 100%;
   height:100%;
 
-}
+} 
 
-.slider {
+ .slider {
   margin: 30px auto 50px;
-}
+} 
 
 .sr-only {
   position: absolute;
@@ -291,11 +278,11 @@
 /* 3개 컨텐츠 위치 */
  .slick-slider .slick-track,
 .slick-slider .slick-list{
-    -webkit-transform: translate3d(12px, 0, 0);
-       -moz-transform: translate3d(12px, 0, 0);
-        -ms-transform: translate3d(12px, 0, 0);
-         -o-transform: translate3d(12px, 0, 0);
-            transform: translate3d(12px, 0, 0);
+    -webkit-transform: translate3d(25px, 0, 0);
+       -moz-transform: translate3d(25px, 0, 0);
+        -ms-transform: translate3d(25px, 0, 0);
+         -o-transform: translate3d(25px, 0, 0);
+            transform: translate3d(25px, 0, 0);
 } 
 
 .slick-track{
@@ -369,6 +356,8 @@
 
     position: absolute;
     top: 50%;
+    margin-left:30px;
+
 
     display: block;
 
@@ -552,7 +541,7 @@
     border-radius: 15px;
      border: solid 1px rgb(82, 81, 81);
      padding: 20px;
-     margin: 1em 25px;
+      margin: 1em 30px;
      min-height:550px;
    
 }
@@ -571,109 +560,127 @@ div.content2{
 
 
 
-<div class="container-fluid">
-<input type="hidden" id="loginMemberName" value="loginMember.name">
+
+<input type="hidden" id="loginMemberName" value="${loginMember.name}">
+   
    <div class="container-fluid">
-      <div class="row">
-         <div class="col-sm-12">
-            <!-- ================================================================ -->
-            <div id="menu">
-               <div id="btns">
-                  <button id="subject">
-                     전체 진료과목<img src="${path }/resources/images/triangle.png"
-                        width="10px;" />
-                  </button>
-                  <p id="bar">|</p>
-                  <button id="location">
-                     Google location api?<img
-                        src="${path }/resources/images/triangle.png" width="10px;" />
-                  </button>
-               </div>
+		<div class="row">		
+			<div class="col-sm-4"></div>						
+			<div class="col-sm-5" style="margin-top:100px; ">      
+	            	<div id="btns">
 
-               <div id="tag">
-                  <button>#가까운_접수병원</button>
-                  <button>#바로접수가능</button>
-                  <button>#신규접수병원</button>
-               </div>
-            </div>
-
-
-            <!-- ============================= 병원정보들 ===================================================== -->
-
-
-            <div class="content">
-               <div id="hospital_content">
-                  <div class="slider">
-
-                     <c:forEach items="${list }" var="r">
-                        <figure class="figure">
-
-                           <div class="content1">
-                              <h3>
-                                 <c:out value="${r['HOSPNAME'] }" />
-                              </h3>
-                              <br />
-                              <p>
-                                 <c:out value="${r['HOSPADDR'] }" />
-                              </p>
-
-                              <p>
-                                 <c:out value="${r['HOSPDIRECTIONS'] }" />
-                              </p>
-
-                              <p>
-                                 오늘의 진료시간
-                                 <c:out value="${r['OFFICEHOUR1'] }" />
-                              </p>
-                           </div>
-                           <hr />
-                           <div class="content2">
-                              <p>
-                                 <c:out value="${r['MEDICALDEPARTMENT'] }" />
-                              </p>
-
-                              <p>
-                                 <c:out value="${r['HOSPTEL'] }" />
-                              </p>
-
-                              <div class="circle">
-                                 <a href="#" class="goCorona">바로접수</a>
-
-                              </div>
-
-                              <input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
-                              <br />
-                              <button type="button" id="chat"
-                                 class="btn btn-outline-success my-2 my-sm-0"
-                                 onclick="chatting();">병원chat</button>
-                           </div>
-                           <br>
-                           <button type="button"
-                              class="btn btn-outline-success my-2 my-sm-0"
-                              onclick="chatting();">실시간 상담하기</button>
+	                  <button id="subject">
+	                     	전체 진료과목<img src="${path }/resources/images/triangle.png" width="10px;" />
+	                  </button>
+	                  
+	                  	<p id="bar">|</p>
+	                  	
+	                  <button id="location">
+	                     Google location api?<img
+	                        src="${path }/resources/images/triangle.png" width="10px;" />
+	                  </button>
+	               </div>
+	        </div>      
+	        <div class="col-sm-4"></div>   
+		</div>         
+	</div>              
+	
+	
+	 <div class="container-fluid">
+		<div class="row">		
+			<div class="col-sm-3"></div>						
+				<div class="col-sm-3 col-sm-6" style="margin-top:50px;" id="tag">    	   
+				          
+				   <button>#바로접수가능</button>
+				   <button>#신규접수병원</button>
+				</div> 
+	        <div class="col-sm-3"></div>		
+		</div>
+	</div>
 
 
+          
 
-                           <!--  <div id="notice">
-                      <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
-                              다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
-            
-                              월,화,목,금 9:00~18:00
-                              수 9:00~13:00
-                              토 9:00~14:00
-            
-                              점심시간 13:00~14:00
-                              일,공휴일 휴무
-                      </p>
-                      
-                    </div> -->
-                        </figure>
-                     </c:forEach>
-                  </div>
-               </div>
-            </div>
-         </div>
+ <div class="container-fluid">
+		<div class="row">						
+				<div class="col-sm-12" style="margin-top:20px;">   
+				
+		            <div class="content">
+		               <div id="hospital_content">
+		                  <div class="slider">
+	 
+		                     <c:forEach items="${list }" var="r">
+		                        <figure class="figure">
+		
+		                           <div class="content1">
+		                              <h3>
+		                                 <c:out value="${r['HOSPNAME'] }" />
+		                              </h3>
+		                              <br />
+		                              <p>
+		                                 <c:out value="${r['HOSPADDR'] }" />
+		                              </p>
+		
+		                              <p>
+		                                 <c:out value="${r['HOSPDIRECTIONS'] }" />
+		                              </p>
+		
+		                              <p>
+		                                 오늘의 진료시간
+		                                 <c:out value="${r['OFFICEHOUR1'] }" />
+		                              </p>
+		                           </div>
+		                           <hr />
+		                           <div class="content2">
+		                              <p>
+		                                 <c:out value="${r['MEDICALDEPARTMENT'] }" />
+		                              </p>
+		
+		                              <p>
+		                                 <c:out value="${r['HOSPTEL'] }" />
+		                              </p>
+		
+		                              <div class="circle">
+		                                 <a href="#" class="goCorona">바로접수</a>
+		
+		                              </div>
+		
+		                              <input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
+		                              <br />
+		                              <button type="button" id="chat"
+		                                 class="btn btn-outline-success my-2 my-sm-0"
+		                                 onclick="chatting();">병원chat</button>
+		                           </div>
+		                           <br>
+		                           <button type="button"
+		                              class="btn btn-outline-success my-2 my-sm-0"
+		                              onclick="chatting();">실시간 상담하기</button>
+		
+		
+		
+		                           <!--  <div id="notice">
+		                      <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
+		                              다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
+		            
+		                              월,화,목,금 9:00~18:00
+		                              수 9:00~13:00
+		                              토 9:00~14:00
+		            
+		                              점심시간 13:00~14:00
+		                              일,공휴일 휴무
+		                      </p>
+		                      
+		                    </div> -->
+		                        </figure>
+		                     </c:forEach>
 
+		                     
+		                  </div>
+		               </div>
+		            </div>
+          </div>	
+      </div>
+ </div>
 
          <!-- ================================================================ -->
          <!-- 병원위치 찾기 -->
@@ -712,28 +719,7 @@ div.content2{
             </div> --%>
 
 
-      </div>
-      <!-- ================================================================ -->
-      <!-- 날씨정보 -->
-      <div id="weather-content">
-         <p>날씨 api 불러올것!</p>
 
-         <div id="weather-text">
-            <p>
-               미세먼지 정보 제공 안내</br> </br> 미세먼지 정보는 한국환경공단에서 제공하는 국가대기오염정보 Open API를 활용하여, 측정
-               시점 기준으로 업데이트되며, 일부 측정 데이터는 오류가 발생할 수 있습니다.
-            </p>
-
-         </div>
-
-      </div>
-
-
-
-
-   </div>
-
-</div>
 
 
 
