@@ -8,4 +8,8 @@ public interface MyPageDao {
 
 	Member passwordCheck(SqlSession session, Member m);
 	
+	int memberUpdate(SqlSession session, Member m);
+	
+	int deleteMember(SqlSession session, Member m);
+	
 }

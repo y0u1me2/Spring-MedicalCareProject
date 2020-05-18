@@ -13,6 +13,20 @@ public class MyPageDaoImpl implements MyPageDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("myPage.passwordCheck",m);
 	}
+
+	@Override
+	public int memberUpdate(SqlSession session, Member m) {
+		// TODO Auto-generated method stub
+		return session.update("myPage.memberUpdate",m);
+	}
+
+	@Override
+	public int deleteMember(SqlSession session, Member m) {
+		// TODO Auto-generated method stub
+		return session.update("myPage.memberDelete",m);
+	}
+	
+	
 	
 	
 

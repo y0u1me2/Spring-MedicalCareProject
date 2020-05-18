@@ -6,4 +6,23 @@
 		SELECT * FROM MEMBER WHERE EMAIL = #{email}
 	</select>
 	
+	<update id="memberUpdate" parameterType="member">
+		UPDATE MEMBER SET EMAIL=#{email}
+		<if test="name != null and name != ''">
+			,NAME=#{name}
+		</if>
+		<if test="password != null and password != ''">
+			,PASSWORD=#{password}
+		</if>
+		<if test="phone != null and phone != ''">
+			,PHONE=#{phone}
+		</if>
+		WHERE MEMBERNO=#{memberNo}
+	</update>
+	
+	<update id="memberDelete" parameterType="member">
+		UPDATE MEMBER SET MEMBERSTATUS='N'
+		WHERE EMAIL=#{email}
+	</update>
+	
 </mapper>
