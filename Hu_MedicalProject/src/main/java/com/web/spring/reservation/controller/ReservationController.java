@@ -117,7 +117,16 @@ public class ReservationController {
 				return "client/common/msg";
 			}	
 		
+//메인 예약 현황수 받아오기==================================
+	@RequestMapping("/reservation/reservationCount.do")
+	public ModelAndView reservationCount(ModelAndView mv) {
+		int reservationCount=service.reservationCount();
+		logger.debug("reservationCount :"+reservationCount);
+		mv.addObject("reservationCount",reservationCount);
+		mv.setViewName("jsonView");
+		return mv;
 	}
+}
 	
 	
 

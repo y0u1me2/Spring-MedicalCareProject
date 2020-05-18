@@ -5,7 +5,11 @@
 	<jsp:param value="Hello Spring" name="title"/>
 </jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/mainpage.css"/>
+<script>
 
+
+
+</script>
 <section>
         <div class="container-fluid" >
           <!-- Control the column width, and how they should appear on different devices -->
@@ -22,11 +26,11 @@
                 <div id="present">
                     <div class="presentInform ">
                         <div id="possible">접수/예약 가능한 병원<br>
-                        <h2 style="margin-left: 30px;">80,000</h2></div>
+                        <h2 id ="totalHospital" style="margin-left: 30px;"></h2></div>
                     </div>
                     <div class="presentInform">
                     <div id="possible">누적 접수/예약 건수
-                    <h2 style="margin-left: 30px;">200</h2></div>  
+                    <h2 id="totalReservation" style="margin-left: 50px;"></h2></div>  
                     </div> 
                 </div>
             </div>
@@ -119,6 +123,28 @@
                     }
                 }); 
         });
+        
+        $(function(){
+        	$.ajax({
+        		url:'${pageContext.request.contextPath }/member/hospitalCount.do',
+        		type:'POST',
+        		success:function(result){
+        			$('#totalHospital').html(result.hospitalCount);
+        		}
+        	})
+        })
+
+        $(function(){
+        	$.ajax({
+        		url:'${pageContext.request.contextPath }/reservation/reservationCount.do',
+        		type:'POST',
+        		success:function(result){
+        			console.log(result.reservationCount)
+        			$('#totalReservation').html(result.reservationCount);
+        		}
+        	})
+        })
+       
 </script>
 
 

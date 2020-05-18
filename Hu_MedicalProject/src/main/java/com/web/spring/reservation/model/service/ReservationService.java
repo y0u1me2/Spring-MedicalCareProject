@@ -21,4 +21,7 @@ public interface ReservationService {
 	//접수페이지로이동
 	List<Map<String,String>> reservationView(String no);
 	
+	//메인 예약 카운트
+	int reservationCount();
+	
 }

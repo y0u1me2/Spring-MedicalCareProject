@@ -39,6 +39,12 @@ public class HospitalMemberServiceImpl implements HospitalMemberService {
 	public List<Hospital> getHospList(String name) {
 		return dao.getHospList(session, name);
 	}
+
+	//메인-병원 카운트
+	@Override
+	public int hospitalCount() {
+		return dao.hospitalCount(session);
+	}
 	
 
 }

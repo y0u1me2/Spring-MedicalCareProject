@@ -29,6 +29,9 @@
     	SELECT * FROM HOSPITAL_MEMBER M, HOSPITAL2 H
 		WHERE M.HOSPNO=H.HOSPNO 
 		AND M.HOSPNO=#{no}
-    
     </select> 
+    
+    <select id="reservationCount" resultType="_int">
+    	SELECT COUNT(*) FROM RESERVATION
+     </select>
 </mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.mybatis.spring.SqlSessionTemplate;
 
 import com.web.spring.reservation.model.vo.Reservation;
 
@@ -20,5 +21,8 @@ public interface ReservationDao {
 	
 	//접수페이지로이동
 	List<Map<String,String>> reservationView(SqlSession session,String no);
+
+	//메인 예약 카운트
+	int reservationCount(SqlSessionTemplate session);
 	 
 }
