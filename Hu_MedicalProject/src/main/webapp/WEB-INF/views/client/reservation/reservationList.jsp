@@ -193,9 +193,7 @@
     	line-height:80px;/* 세로정렬 */
    		position:relative;
    		left:200px;
-   		top:50px;
-
-   
+   		top:50px;  
     }
     
      div.circle a{
