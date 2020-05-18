@@ -34,6 +34,8 @@ public interface NoticeDao {
 /////////공지사항 수정하기 ///////////
 	int noticeUpdateEnd(SqlSessionTemplate session, Map<String, String> param);
 	int updateNoticeAttachment(SqlSessionTemplate session, NoticeAttachment a);
+/////////공지사항 제목으로 검색 ///////////
+	List<Map<String, String>> searchNotice(SqlSessionTemplate session, Map<String, String> param);
 
 	 
 }
