@@ -191,11 +191,23 @@
     	font-size:12px;
     	text-align:center;/* 가로정렬 */
     	line-height:80px;/* 세로정렬 */
+   		position:relative;
+   		left:50px;
+   		top:50px;
+
+   
     }
     
      div.circle a{
      	text-decoration:none;
      }
+     
+     button#chat{
+		position:relative;
+   		left:170px;
+   		bottom:30px;
+}
+     
     
  
     footer {
@@ -541,7 +553,7 @@
      border: solid 1px rgb(82, 81, 81);
      padding: 20px;
      margin: 1em 25px;
-     min-height:600px;
+     min-height:550px;
 	
 }
 
@@ -549,6 +561,10 @@ div.content1{
 	min-height:200px;
 }
 
+
+div.content2{
+	min-height:200px;
+}
 
 
   </style>
@@ -596,20 +612,24 @@ div.content1{
 		              <p><c:out value="${r['HOSPADDR'] }"/></p>
 		              
 		              <p><c:out value="${r['HOSPDIRECTIONS'] }"/></p>
-		
+				
 		              <p>오늘의 진료시간 <c:out value="${r['OFFICEHOUR1'] }"/></p>
 				</div>
 		              <hr/>
+		        <div class="content2">
 		              <p><c:out value="${r['MEDICALDEPARTMENT'] }"/></p>
 		
 		              <p><c:out value="${r['HOSPTEL'] }"/></p>
 		         
-		           		<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
-		           
 		              <div class="circle">
 		              	<a href="#" class="goCorona">바로접수</a>
-		              </div><br>
-		             <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
+		              </div>
+		           		<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
+		          
+		           
+		              <br/>
+		             <button type="button" id="chat" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">병원chat</button>
+		        </div>  
 		              
 
 		             <!--  <div id="notice">

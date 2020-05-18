@@ -217,7 +217,7 @@ footer {
 			<c:forEach items="${list }" var="r">
 			
 			<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
-			
+
 			</c:forEach>
 
 
@@ -252,7 +252,7 @@ footer {
 					</div>		
 					
 				<button type="button" class="big-gray-btn" 
-				onclick="location.replace('${path}/rv/reservationView')">계속 접수하기</button>
+				onclick="fn_reservation();">계속 접수하기</button>
 				
 				<button type="button" class="big-gray-btn" 
 				onclick="location.replace('${path}/rv/corona')">취소</button>
@@ -327,7 +327,12 @@ footer {
   	  $(".modal-back").hide();
     }
 
- 
+ //예클릭시 계속 접수하기
+ function fn_reservation(){
+	 var hospNo = $('input[name=hospNo]').val();
+		location.replace('${path}/rv/reservationView?no='+hospNo);
+	 
+ }
     
     </script>
     

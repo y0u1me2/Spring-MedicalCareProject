@@ -11,9 +11,9 @@
   
    <!-- 접수하기 -->
     <insert id="insertReservation" parameterType="reservation">
-       INSERT INTO CARECOMMENT VALUES(SEQ_RESERVNO.NEXTVAL, 
-                               #{memberNo}, #{hospitalNo},#{message},
-                                #{office},#{items})
+       INSERT INTO RESERVATION VALUES(SEQ_RESERVNO.NEXTVAL, 
+                               #{memberNo},#{hospNo},#{hospDepartment},
+                                #{message})
     </insert>
     
   <!-- 코로나페이지 -->

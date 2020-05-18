@@ -318,188 +318,165 @@ footer {
 
 
 
-    <div class="container-fluid">
+<!--     <div class="container-fluid">
         
         <div class="row">
-            <div class="col-sm-12">
-
-                <div id="reception-container">
-
-                    <button id="paperweight-btn" 
-                    onclick="location.replace('${path}/rv/coronaUpdate')">
-                        <img src="${path }/resources/images/warning.png" width="30px;" />
-                        <p>원내 감염 방지를 위한 사전문진</p>
-                        <p>확인/수정하기</p>
-                        <p>></p>
-                    </button>
+            <div class="col-sm-12"> -->
 
 
-		<form action="${path}/rv/reservationList">
-                <div id="choice">
 
-                    <p>진료대상<strong>[필수]</strong></p>
-                    
-                    <p>※ 실제 진료 받을 분으로 선택해주세요.</p>
-                    
-                    <div id="patient">
-                        <div class="card">
-                            <img src="${path }/resources/images/profile.png" alt="진료대상" width="100px;">
-                            
-                            <div class="container">
-                                <p>&nbsp;&nbsp;<c:out value="${loginMember.name }" /></p>
-                            </div>                      
-                        </div>
+<form action="${path}/rv/reservationEnd" id="rvFrm" method="post">
 
-                        <div class="family" onclick="popupFamilyAdd();">
-	                  
-	                            <img src="${path }/resources/images/family.png" id="plus" alt="플러스" width="60px;">
-	
-	                            <div class="container">
-	                                <p>가족추가</p>
-	                            </div> 
-	                       
-                        </div>
-                    </div> 
-	      
-	   
-	                           
-	                            
-	                        
+	<div id="reception-container">
+		<button id="paperweight-btn"
+			onclick="location.replace('${path}/rv/coronaUpdate')">
+			<img src="${path }/resources/images/warning.png" width="30px;" />
+			<p>원내 감염 방지를 위한 사전문진</p>
+			<p>확인/수정하기</p>
+			<p>></p>
+		</button>
+		<div id="choice">
 
-              <div class="select">
-                <c:forEach items="${list }" var="r">
-                  
-                    <p>진료항목<strong>[필수]</strong></p>
-                    
-                    
-                    <select>
-                        <option>진료항목 선택</option>
-                         <c:forTokens items="${r['MEDICALDEPARTMENT']}" var="e" delims=",">
-                        	<option><c:out  value="${e}"/></option>
-                        </c:forTokens>
-                    </select>
+			<p>
+				진료대상<strong>[필수]</strong>
+			</p>
 
-                    <div id="words">
-                    <p>원장님께 하고 싶은 말[선택]</p>
-                    <input type="text" name="message" placeholder="&nbsp;&nbsp; ex) 어제부터 열이나요." >
-                    </div>
+			<p>※ 실제 진료 받을 분으로 선택해주세요.</p>
+
+			<div id="patient">
+				<div class="card">
+					<img src="${path }/resources/images/profile.png" alt="진료대상"
+						width="100px;">
+					<div class="container">
+						<p>
+							&nbsp;&nbsp;
+							<c:out value="${loginMember.name }" />
+						</p>
+					</div>
+				</div>
+				<div class="family" onclick="popupFamilyAdd();">
+					<img src="${path }/resources/images/family.png" id="plus" alt="플러스"
+						width="60px;">
+					<div class="container">
+						<p>가족추가</p>
+					</div>
+				</div>
+			</div>
+
+			<input type="hidden" name="memberNo" value="${loginMember.memberNo }" />
+
+
+			<div class="select">
+				<c:forEach items="${list }" var="r">
+					<input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
+
+					<p>
+						진료항목<strong>[필수]</strong>
+					</p>
+
+
+					<select name="hospDepartment">
+						<option>진료항목 선택</option>
+						<c:forTokens items="${r['MEDICALDEPARTMENT']}" var="e" delims=",">
+							<option value="${e}"><c:out value="${e}" /></option>
+						</c:forTokens>
+					</select>
+
+					<div id="words">
+						<p>원장님께 하고 싶은 말[선택]</p>
+						<input type="text" name="message"
+							placeholder="&nbsp;&nbsp; ex) 어제부터 열이나요.">
+					</div>
 				</c:forEach>
-                </div>
+			</div>
 
-                </div>
-                    <div id="notice">
-                        <p>
-                            ※ 병원에 도착하시면 데스크에 도착 여부를 알려주세요.</br>
-                            ※ 접수 후 진료 차례에 병원을 방문하지 않으면 접수가 취소됩니다.</br>
-                            ※ 대기자수는 실제 대기자수와 차이가 있을 수 있습니다.</br>
-                        </p>
-                    </div>
-                    
-                    <button id="reception-btn" onclick="popupOn();">
-                    	접수하기</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-         <!------------- 접수전 모달창 ------------->       
-        <div class="modal-back" id="login">
-			<div class="modal-login animate">
-				<img src="${path }/resources/images/warning.png" width="30px;" id="warning" />
-					
-					<div class="poptext">
-						<h3>Hospital for U 접수 안내</h3>
-						
-						<div id="textP">
-							<p>- 병원에 도착하시면 데스크에 도착 여부를 알려주세요.</p>
-							<p>- 접수 후 진료 차례에 병원을 방문하지 않으면 <strong>접수가<br/>&nbsp;&nbsp;취소됩니다.</strong></p>
-							<p>- 대지가수는 실제 대기자수와 차이가 있을 수 있습니다.</p>
-						</div>
-					</div>		
-					
-				<button type="submit" class="big-gray-btn" >확인</button>
-		</form>
-				
-				
-				
-				
-				<div class="close-btn">
-					<span onclick="popupOff();" class="close" title="Close Modal">&times;</span>
-				</div>
-				
-			</div>
 		</div>
-		
-		 <!------------- 가족추가 모달창 ------------->                      
-	     <div class="modal-family">
-			<div class="modal-f animate">
-				<img src="${path }/resources/images/logo5.png" width="30px;" id="warning" />
-					
-					<div class="poptext2">
-						<h3>가족추가</h3>
-						
-						<div id="textP2">
-							<input type="text" placeholder="이름" />
-							<select>
-								<option>내국인</option>
-								<option>외국인</option>
-							</select>
-							
-							<br/><br/>
-							<input type="text" placeholder="생년월일 (ex.19000101)" />
-							
-							<input type="radio" name="gender" id="gender0" value="M" checked> 
-							<label for="gender0">남</label> 
-						
-							<input type="radio" name="gender" id="gender1" value="F"> 
-							<label for="gender1">여</label>
-							
-							<br/>
-							<p>※ 벙원에서 접수 관련 연락을 받을 휴대폰 번호를 입력하세요.</p>
-							<input type="text" placeholder="01012345678"/>
-							
-						</div>
-					</div>		
-					
-				<button type="button" class="big-gray-btn" 
-				onclick="location.replace('')">완료</button>
-				
-				<div class="close-btn">
-					<span onclick="popupOff2();" class="close" title="Close Modal">&times;</span>
-				</div>
-				
-			</div>
+
+
+
+		<div id="notice">
+			<p>
+				※ 병원에 도착하시면 데스크에 도착 여부를 알려주세요.<br /> ※ 접수 후 진료 차례에 병원을 방문하지 않으면 접수가
+				취소됩니다.<br /> ※ 대기자수는 실제 대기자수와 차이가 있을 수 있습니다.<br />
+			</p>
 		</div>
-        
-      <script>
-      
-      function popupOn(){
-    	  $(".modal-back").show();
-    	  	  
-      }
-      
-      function popupOff(){
-    	  $(".modal-back").hide();
-      }
-      
-         
-      function popupFamilyAdd(){
-    	  $(".modal-family").show();
-    	  	  
-      }
-      
-      function popupOff2(){
-    	  $(".modal-family").hide();
-      }
-      
-      //가족추가 호버시 
-      	$('.family').mouseenter(function() {
-    	    $(this).css("cursor","pointer");
-   	})
-      
-      
-        
-      </script>  
+
+		<button id="reception-btn" onclick="popupOn();">접수하기</button>
+	</div>
+
+
+
+
+	<!--  </div>
+        </div> -->
+
+	<!------------- 접수전 모달창 ------------->
+	<div class="modal-back" id="login">
+		<div class="modal-login animate">
+			<img src="${path }/resources/images/warning.png" width="30px;"
+				id="warning" />
+
+			<div class="poptext">
+				<h3>Hospital for U 접수 안내</h3>
+
+				<div id="textP">
+					<p>- 병원에 도착하시면 데스크에 도착 여부를 알려주세요.</p>
+					<p>
+						- 접수 후 진료 차례에 병원을 방문하지 않으면 <strong>접수가<br />&nbsp;&nbsp;취소됩니다.
+						</strong>
+					</p>
+					<p>- 대지가수는 실제 대기자수와 차이가 있을 수 있습니다.</p>
+				</div>
+			</div>
+
+			<button type="submit" class="big-gray-btn">확인</button>
+
+
+
+			<div class="close-btn">
+				<span onclick="popupOff();" class="close" title="Close Modal">&times;</span>
+			</div>
+
+		</div>
+	</div>
+</form>
+
+
+
+
+
+
+
+
+<script>
+	function popupOn() {
+		$(".modal-back").show();
+
+	}
+
+	function popupOff() {
+		$(".modal-back").hide();
+	}
+
+	function popupFamilyAdd() {
+		$(".modal-family").show();
+
+	}
+
+	function popupOff2() {
+		$(".modal-family").hide();
+	}
+
+	//가족추가 호버시 
+	$('.family').mouseenter(function() {
+		$(this).css("cursor", "pointer");
+	})
+
+	//접수완료하기
+	/*  $(".big-gray-btn").click(function(){
+	$("#rvFrm").submit();
+	}); */
+</script>  
         
         
  <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>  
