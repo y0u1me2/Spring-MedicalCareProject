@@ -70,7 +70,7 @@ footer {
         background-color: #fefefe;
         margin: 2% auto 15% auto;
         position: relative;
-        top:200px;
+        top:100px;
     }
     
     /* Add Zoom Animation 
@@ -168,10 +168,10 @@ footer {
 </style> 
 
 
-    <div class="container-fluid">
-        
-        <div class="row">
-            <div class="col-sm-12">
+ 
+	 <div class="container-fluid">
+		<div class="row">					
+			<div class="col-sm-6 col-sm-12" style="text-align:center;">
 
                 <div id="corona-container">
 
@@ -214,55 +214,61 @@ footer {
                         <button id="complete-btn" type="button">문진완료</button>
                     </div>
 	
-			<c:forEach items="${list }" var="r">
-			
-			<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
-
-			</c:forEach>
-
-
-             </div>
-            </div>
-        </div>
-    </div>
-    
-      <div class="modal-back" id="login">
-			<div class="modal-login animate">
-				<img src="${path }/resources/images/logo5.png" width="50px;" id="warning" />
+					<c:forEach items="${list }" var="r">
 					
-					<div class="poptext">
-						<h3>선별진료소 검진 권장 안내 안내</h3>
-						<hr>
-						
-						<div id="textP">
-						
-							<h4><strong>코로나 바이러스감염증-19 증상</strong></h4>
-							<p>- 최근 중국 및 유행국가 방문 및 확진자 직접/동선 접촉후 <br/>&nbsp;&nbsp;
-								발열 또는 호흡기 증상이 나타나는 경우, <strong>코로나바이러스  <br/>&nbsp;&nbsp;
-								감염증-19 감염이 의심</strong>될 수 있습니다.</p>
+					<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
+		
+					</c:forEach>
+
+			</div>			      
+		 </div>		    
+     </div>
+  </div>   
+  
+  
+ <!--  <div class="container-fluid">
+		<div class="row">					
+			<div class="col-sm-6 col-sm-12" style="text-align:center;"> -->
+			  
+		      <div class="modal-back" id="login">
+					<div class="modal-login animate">
+						<img src="${path }/resources/images/logo5.png" width="50px;" id="warning" />
+							
+							<div class="poptext">
+								<h3>선별진료소 검진 권장 안내 안내</h3>
+								<hr>
 								
-							<h4><strong>선별진료소란?</strong></h4>	
-							<p>- 감염증 의심환자가 응급실 또는 의료기관 출입<br/>&nbsp;&nbsp; 
-							  	전에 진료를 받도록 하는 공간입니다.</p>
-							  	
-							<h4><strong>증상이 의심될 땐 전화상담</strong></h4>	 			  	
-							<p>- 질병관리본부 콜센터 : <strong>1399로 전화하세요</strong></p>
-												
-						</div>
-					</div>		
-					
-				<button type="button" class="big-gray-btn" 
-				onclick="fn_reservation();">계속 접수하기</button>
-				
-				<button type="button" class="big-gray-btn" 
-				onclick="location.replace('${path}/rv/corona')">취소</button>
+								<div id="textP">
+								
+									<h4><strong>코로나 바이러스감염증-19 증상</strong></h4>
+									<p>- 최근 중국 및 유행국가 방문 및 확진자 직접/동선 접촉후 <br/>&nbsp;&nbsp;
+										발열 또는 호흡기 증상이 나타나는 경우, <strong>코로나바이러스  <br/>&nbsp;&nbsp;
+										감염증-19 감염이 의심</strong>될 수 있습니다.</p>
 										
-				<div class="close-btn">
-					<span onclick="popupOff();" class="close" title="Close Modal">&times;</span>
+									<h4><strong>선별진료소란?</strong></h4>	
+									<p>- 감염증 의심환자가 응급실 또는 의료기관 출입<br/>&nbsp;&nbsp; 
+									  	전에 진료를 받도록 하는 공간입니다.</p>
+									  	
+									<h4><strong>증상이 의심될 땐 전화상담</strong></h4>	 			  	
+									<p>- 질병관리본부 콜센터 : <strong>1399로 전화하세요</strong></p>
+														
+								</div>
+							</div>		
+							
+						<button type="button" class="big-gray-btn" 
+						onclick="fn_reservation();">계속 접수하기</button>
+						
+						<button type="button" class="big-gray-btn" 
+						onclick="location.replace('${path}/rv/corona')">취소</button>
+												
+						<div class="close-btn">
+							<span onclick="popupOff();" class="close" title="Close Modal">&times;</span>
+						</div>
+						
+					</div>
 				</div>
+			
 				
-			</div>
-		</div>
 
     <script>
    $(document).ready(function(){
