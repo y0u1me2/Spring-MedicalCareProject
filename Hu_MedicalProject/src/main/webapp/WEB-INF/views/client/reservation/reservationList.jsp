@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-	<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-	<c:set var="path" value="${pageContext.request.contextPath}"/>
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+   <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+   <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page="/WEB-INF/views/client/common/header.jsp" />
 <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
@@ -559,6 +559,11 @@ div.content2{
    min-height:200px;
 }
 
+#hpChat{
+width:300px;
+margin-left:13px;
+margin-top:70px;
+}
 
   </style>
 
@@ -568,121 +573,118 @@ div.content2{
 <input type="hidden" id="loginMemberName" value="${loginMember.name}">
    
    <div class="container-fluid">
-		<div class="row">		
-			<div class="col-sm-4"></div>						
-			<div class="col-sm-5" style="margin-top:100px; ">      
-	            	<div id="btns">
+      <div class="row">      
+         <div class="col-sm-4"></div>                  
+         <div class="col-sm-5" style="margin-top:100px; ">      
+                  <div id="btns">
 
-	                  <button id="subject">
-	                     	전체 진료과목<img src="${path }/resources/images/triangle.png" width="10px;" />
-	                  </button>
-	                  
-	                  	<p id="bar">|</p>
-	                  	
-	                  <button id="location">
-	                     Google location api?<img
-	                        src="${path }/resources/images/triangle.png" width="10px;" />
-	                  </button>
-	               </div>
-	        </div>      
-	        <div class="col-sm-4"></div>   
-		</div>         
-	</div>              
-	
-	
-	 <div class="container-fluid">
-		<div class="row">		
-			<div class="col-sm-3"></div>						
-				<div class="col-sm-3 col-sm-6" style="margin-top:50px;" id="tag">    	   
-				          
-				   <button>#바로접수가능</button>
-				   <button>#신규접수병원</button>
-				</div> 
-	        <div class="col-sm-3"></div>		
-		</div>
-	</div>
+                     <button id="subject">
+                           전체 진료과목<img src="${path }/resources/images/triangle.png" width="10px;" />
+                     </button>
+                     
+                        <p id="bar">|</p>
+                        
+                     <button id="location">
+                        Google location api?<img
+                           src="${path }/resources/images/triangle.png" width="10px;" />
+                     </button>
+                  </div>
+           </div>      
+           <div class="col-sm-4"></div>   
+      </div>         
+   </div>              
+   
+   
+    <div class="container-fluid">
+      <div class="row">      
+         <div class="col-sm-3"></div>                  
+            <div class="col-sm-3 col-sm-6" style="margin-top:50px;" id="tag">          
+                      
+               <button>#바로접수가능</button>
+               <button>#신규접수병원</button>
+            </div> 
+           <div class="col-sm-3"></div>      
+      </div>
+   </div>
 
 
           
 
  <div class="container-fluid">
-		<div class="row">						
-				<div class="col-sm-12" style="margin-top:20px;">   
-				
-		            <div class="content">
-		               <div id="hospital_content">
-		                  <div class="slider">
-	 
-		                     <c:forEach items="${list }" var="r">
-		                        <figure class="figure">
-		
-		                           <div class="content1">
-		                              <h3>
-		                                 <c:out value="${r['HOSPNAME'] }" />
-		                              </h3>
-		                              <br />
-		                              <p>
-		                                 <c:out value="${r['HOSPADDR'] }" />
-		                              </p>
-		
-		                              <p>
-		                                 <c:out value="${r['HOSPDIRECTIONS'] }" />
-		                              </p>
-		
-		                              <p>
-		                                 오늘의 진료시간
-		                                 <c:out value="${r['OFFICEHOUR1'] }" />
-		                              </p>
-		                           </div>
-		                           <hr />
-		                           <div class="content2">
-		                              <p>
-		                                 <c:out value="${r['MEDICALDEPARTMENT'] }" />
-		                              </p>
-		
-		                              <p>
-		                                 <c:out value="${r['HOSPTEL'] }" />
-		                              </p>
-		
-		                              <div class="circle">
-		                                 <a href="#" class="goCorona">바로접수</a>
-		
-		                              </div>
-		
-		                              <input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
-		                              <br />
-		                              <button type="button" id="chat"
-		                                 class="btn btn-outline-success my-2 my-sm-0"
-		                                 onclick="chatting();">병원chat</button>
-		                           </div>
-		                           <br>
-		                           <button type="button"
-		                              class="btn btn-outline-success my-2 my-sm-0"
-		                              onclick="chatting();">실시간 상담하기</button>
-		
-		
-		
-		                           <!--  <div id="notice">
-		                      <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
-		                              다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
-		            
-		                              월,화,목,금 9:00~18:00
-		                              수 9:00~13:00
-		                              토 9:00~14:00
-		            
-		                              점심시간 13:00~14:00
-		                              일,공휴일 휴무
-		                      </p>
-		                      
-		                    </div> -->
-		                        </figure>
-		                     </c:forEach>
+      <div class="row">                  
+            <div class="col-sm-12" style="margin-top:20px;">   
+            
+                  <div class="content">
+                     <div id="hospital_content">
+                        <div class="slider">
+    
+                           <c:forEach items="${list }" var="r">
+                              <figure class="figure">
+      
+                                 <div class="content1">
+                                    <h3>
+                                       <c:out value="${r['HOSPNAME'] }" />
+                                    </h3>
+                                    <br />
+                                    <p>
+                                       <c:out value="${r['HOSPADDR'] }" />
+                                    </p>
+      
+                                    <p>
+                                       <c:out value="${r['HOSPDIRECTIONS'] }" />
+                                    </p>
+      
+                                    <p>
+                                       오늘의 진료시간
+                                       <c:out value="${r['OFFICEHOUR1'] }" />
+                                    </p>
+                                 </div>
+                                 <hr />
+                                 <div class="content2">
+                                    <p>
+                                       <c:out value="${r['MEDICALDEPARTMENT'] }" />
+                                    </p>
+      
+                                    <p>
+                                       <c:out value="${r['HOSPTEL'] }" />
+                                    </p>
+      
+                                    <div class="circle">
+                                       <a href="#" class="goCorona">바로접수</a>
+      
+                                    </div>
+      
+                                    <input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
+                                    <br />
+                                   <button id="hpChat" class="btn btn-outline-dark" type="button" 
+                    onclick="hpAccessChatting('${loginMember.email}','${r['ID']}');">실시간 문의</button>
+                                 </div>
+                                 <br>
+                                 
+      
+      
+      
+                                 <!--  <div id="notice">
+                            <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
+                                    다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
+                  
+                                    월,화,목,금 9:00~18:00
+                                    수 9:00~13:00
+                                    토 9:00~14:00
+                  
+                                    점심시간 13:00~14:00
+                                    일,공휴일 휴무
+                            </p>
+                            
+                          </div> -->
+                              </figure>
+                           </c:forEach>
 
-		                     
-		                  </div>
-		               </div>
-		            </div>
-          </div>	
+                           
+                        </div>
+                     </div>
+                  </div>
+          </div>   
       </div>
  </div>
 
