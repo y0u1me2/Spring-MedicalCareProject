@@ -51,41 +51,35 @@ public class HospitalMapController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/hospitalFind.do", produces = "application/text; charset=utf-8")
-	private String hospitalFind(@RequestParam(required = false, defaultValue = "") String latitude,
+	private String hospitalFind(
+			@RequestParam(required = false, defaultValue = "") String latitude,
 			@RequestParam(required = false, defaultValue = "") String longitude,
 			@RequestParam(required = false, defaultValue = "1") String pageNo,
-			@RequestParam(required = false, defaultValue = "100") String numOfRows,
-			@RequestParam(required = false, defaultValue = "") String name, HttpServletResponse response)
-			throws IOException {
+			@RequestParam(required = false, defaultValue = "10") String numOfRows,
+			@RequestParam(required = false, defaultValue = "") String name,
+			@RequestParam(required = false, defaultValue = "") String dept, 
+			@RequestParam(required = false, defaultValue = "") String radius, 
+			HttpServletResponse response) throws IOException {
+		
+		System.out.println(radius);
+		System.out.println(dept);
 		System.out.println(latitude);
-		System.out.println(latitude);
-		System.out.println(name);
+		System.out.println(longitude);
 
-		StringBuilder urlBuilder = new StringBuilder(
-				"http://apis.data.go.kr/B551182/hospInfoService/getHospBasisList"); /* URL */
-//        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + URLEncoder.encode("j3l4%2FlL9sulpZEYY467tIsTngXuIhRTIddhNB4wrTzRNtaGQ5w6eGH1Jah%2FmXu2JMdja84GrX0hrpsZ1dludpw%3D%3D", "UTF-8")); /*서비스키*/
-		urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8")
-				+ "=j3l4%2FlL9sulpZEYY467tIsTngXuIhRTIddhNB4wrTzRNtaGQ5w6eGH1Jah%2FmXu2JMdja84GrX0hrpsZ1dludpw%3D%3D"); /*
-																														 * Service
-																														 * Key
-																														 */
-		urlBuilder.append(
-				"&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8")); /* 페이지번호 */
-		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "="
-				+ URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
+		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/hospInfoService/getHospBasisList"); /* URL */
+		urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=j3l4%2FlL9sulpZEYY467tIsTngXuIhRTIddhNB4wrTzRNtaGQ5w6eGH1Jah%2FmXu2JMdja84GrX0hrpsZ1dludpw%3D%3D");
+		urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8")); /* 페이지번호 */
+		urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode(numOfRows, "UTF-8")); /* 한 페이지 결과 수 */
 //        urlBuilder.append("&" + URLEncoder.encode("sidoCd","UTF-8") + "=" + URLEncoder.encode("110000", "UTF-8")); /*시도코드*/
 //        urlBuilder.append("&" + URLEncoder.encode("sgguCd","UTF-8") + "=" + URLEncoder.encode("110019", "UTF-8")); /*시군구코드*/
 //        urlBuilder.append("&" + URLEncoder.encode("emdongNm","UTF-8") + "=" + URLEncoder.encode("이매동", "UTF-8")); /*읍면동명*/
-		urlBuilder.append("&" + URLEncoder.encode("yadmNm", "UTF-8") + "="
-				+ URLEncoder.encode(name, "UTF-8")); /* 병원명 (UTF-8 인코딩 필요) */
+		urlBuilder.append("&" + URLEncoder.encode("yadmNm", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8")); /* 병원명 (UTF-8 인코딩 필요) */
 //        urlBuilder.append("&" + URLEncoder.encode("zipCd","UTF-8") + "=" + URLEncoder.encode("2010", "UTF-8")); /*2010:종합병원, 2030:병원, 2040:요양병원, 2050:치과, 2060:한방, 2070:의원, 2080:보건기관, 2090:조산원*/
 //        urlBuilder.append("&" + URLEncoder.encode("clCd","UTF-8") + "=" + URLEncoder.encode("11", "UTF-8")); /*종별코드*/
-//        urlBuilder.append("&" + URLEncoder.encode("dgsbjtCd","UTF-8") + "=" + URLEncoder.encode("01", "UTF-8")); /*진료과목코드*/
-		urlBuilder.append("&" + URLEncoder.encode("xPos", "UTF-8") + "="
-				+ URLEncoder.encode(longitude, "UTF-8")); /* x좌표(소수점 15) */
-		urlBuilder.append("&" + URLEncoder.encode("yPos", "UTF-8") + "="
-				+ URLEncoder.encode(latitude, "UTF-8")); /* y좌표(소수점 15) */
-//        urlBuilder.append("&" + URLEncoder.encode("radius","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*단위 : 미터(m)*/
+        urlBuilder.append("&" + URLEncoder.encode("dgsbjtCd","UTF-8") + "=" + URLEncoder.encode(dept, "UTF-8")); /*진료과목코드*/
+		urlBuilder.append("&" + URLEncoder.encode("xPos", "UTF-8") + "=" + URLEncoder.encode(longitude, "UTF-8")); /* x좌표(소수점 15) */
+		urlBuilder.append("&" + URLEncoder.encode("yPos", "UTF-8") + "=" + URLEncoder.encode(latitude, "UTF-8")); /* y좌표(소수점 15) */
+        urlBuilder.append("&" + URLEncoder.encode("radius","UTF-8") + "=" + URLEncoder.encode(radius, "UTF-8")); /*단위 : 미터(m)*/
 		urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
 		URL url = new URL(urlBuilder.toString());
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
