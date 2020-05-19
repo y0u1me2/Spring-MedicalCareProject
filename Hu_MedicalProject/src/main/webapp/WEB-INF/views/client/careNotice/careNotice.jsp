@@ -62,7 +62,7 @@ div.container {
 /* 돌보미 등록하기 버튼 */
 button#careEnroll-btn {
 	position: relative;
-	left: 1115px;
+	/* left: 1115px; */
 	top: 50px;
 }
 
@@ -98,12 +98,9 @@ div#pageBar a {
 }
 
 #pageBar {
-	width: 80%;
 	margin: 40px 0 40px 0;
 	text-align: center;
-	position: relative;
-	left: 100px;
-	top: 200px;
+
 }
 
 #pageBar>a, #pageBar>span {
@@ -115,7 +112,6 @@ div#pageBar a {
 	color: #999;
 	background-color: #fff;
 	margin: 0 2px;
-	position: relative;
 	font-size: 13px;
 	font-family: "YoonGothicPro760";
 	display: inline-block;
@@ -124,86 +120,113 @@ div#pageBar a {
 
 footer {
 	position: relative;
-	top: 300px;
+	top: 200px;
 }
 </style>
 
 
 
 <section>
+
 	<div id="section-container">
-		<div class="container-fluid py-5">
-			<div class="row">
-				<div class="col-xl-1 "></div>
-				<div class="col-xl-10 "
-					style="padding-left: 450px; margin-top: 50px; font-size: 30px;">
+   		<div class="container-fluid">
+			 <div class="row">					
+					
+				    <div class="col-sm-5 col-sm-12" style="text-align:center; margin-top: 50px; font-size: 30px;"> 
 					돌보미 찾기 게시판</div>
-				<div class="col-xl-10"
-					style="padding-left: 400px; margin-top: 50px; font-size: 20px;">
-					<q>혼자서 병원에 가기 힘드시다면 돌보미 찾기 서비스를 이용해보세요</q>
-				</div>
-				<div class="col-xl-1 ">
+						
+					<div class="col-sm-5 col-sm-12" style="text-align:center; margin-top: 50px; font-size: 20px;">
+						"혼자서 병원에 가기 힘드시다면 돌보미 찾기 서비스를 이용해보세요"
+					</div>
+	
+			</div>
+		</div>
+	</div>
+
+		<div class="container-fluid" >
+			 <div class="row">
+			 	<div class="col-sm-9"></div>
+			 		<div  class="col-sm-3" style="float:right; margin-top: 50px;">
+						<!-- 돌보미 등록하기 버튼은 요양보호사만 보이기 -->
+						<button type="button" class="btn btn-secondary" id="careEnroll-btn"
+						onclick="location.replace('${path}/care/careEnroll');">돌보미등록하기</button>
+					</div>
+			</div>
+		</div>
+		
+		<div class="container-fluid" >
+		 <div class="row">
+		  <div class="col-sm-1"></div>
+		  
+			 <div class="col-sm-10" style="margin-top: 100px;">
 				
+				<table class="table table-hover" style="border-top-color: black;">
+					<thead>
+						<tr>
+							<th>번호</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>날짜</th>
+							<th>조회수</th>
+						</tr>
+					</thead>
+	
+					<tbody>
+						<c:forEach items="${list }" var="c">
+							<tr>
+								<td><c:out value="${c.careNo }" /></td>
+								<td><a href="${path }/care/careView?no=${c.careNo}"> 
+								<c:out value="${c.careTitle }" />
+								</a></td>
+											
+								<td><c:out value="${c.careWriter }" /></td>
+	
+								<td><fmt:formatDate value="${c.careDate }" type="date" pattern="yyyy/MM/dd"/></td>
+	
+								<td><c:out value="${c.careReadCount }" /></td>
+	
+							</tr>
+						</c:forEach>
+	
+					</tbody>
+				</table>
+				
+				</div>
+				 <div class="col-sm-1"></div>
+			</div>		
+		</div>
+
+
+	<div class="container-fluid" >
+		<div class="row">
+			 <div class="col-sm-12" style="text-align:center; margin-top: 50px; font-size: 20px;">
+				<div style="text-align: center; font-size: 20px;" id="search-container">
+				 <form action="${path }/care/search.do" method="post">
+		            <select name="searchContent" id="searchContent" style="background-color:white; height:35px;">
+		              <option value=""  disabled selected>선택</option>
+		              <option value="careTitle"  <c:if test="${param.searchContent eq 'careTitle' }">selected</c:if>>글제목</option>
+		              <option value="careWriter"  <c:if test="${param.searchContent eq 'careWriter' }">selected</c:if>>작성자</option>
+		            </select>
+		            <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력해주세요" size="20" value="${param.keyword }" required autocomplete="off">
+		            <input type="submit" id="searchBtn" class="search_btn" value="검색"/>
+		           </form>		
 				</div>
 			</div>
 		</div>
-
-
-		<!-- 돌보미 등록하기 버튼은 요양보호사만 보이기 -->
-		<button type="button" class="btn btn-secondary" id="careEnroll-btn"
-		onclick="location.replace('${path}/care/careEnroll');">돌보미등록하기</button>
-		
-		<div class="container" style="margin-top: 50px;">
-			<table class="table table-hover" style="border-top-color: black;">
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>날짜</th>
-						<th>조회수</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<c:forEach items="${list }" var="c">
-						<tr>
-							<td><c:out value="${c.careNo }" /></td>
-							<td><a href="${path }/care/careView?no=${c.careNo}"> 
-							<c:out value="${c.careTitle }" />
-							</a></td>
-										
-							<td><c:out value="${c.careWriter }" /></td>
-
-							<td><fmt:formatDate value="${c.careDate }" type="date" pattern="yyyy/MM/dd"/></td>
-
-							<td><c:out value="${c.careReadCount }" /></td>
-
-						</tr>
-					</c:forEach>
-
-				</tbody>
-			</table>
-		</div>
-
-		<div style="text-align: center; font-size: 20px;" id="search-container">
-		 <form action="${path }/care/search.do" method="post">
-            <select name="searchContent" id="searchContent" style="background-color:white; height:35px;">
-              <option value=""  disabled selected>선택</option>
-              <option value="careTitle"  <c:if test="${param.searchContent eq 'careTitle' }">selected</c:if>>글제목</option>
-              <option value="careWriter"  <c:if test="${param.searchContent eq 'careWriter' }">selected</c:if>>작성자</option>
-            </select>
-            <input type="text" id="keyword" name="keyword" placeholder="검색어를 입력해주세요" size="20" value="${param.keyword }" required autocomplete="off">
-            <input type="submit" id="searchBtn" class="search_btn" value="검색"/>
-           </form>		
-		</div>
+	</div>	
 		
 		
-		
+<div class="container-fluid" >
+		<div class="row">
+		 <div class="col-sm-3"></div>
+			 <div class="col-sm-6" id="pageBar" style="margin-top: 150px;">
+				${pageBar }
+			 </div>
+		 <div class="col-sm-3"></div>
 	</div>
+</div>
 
 
-	<div id="pageBar">${pageBar }</div>
 
 </section>
 

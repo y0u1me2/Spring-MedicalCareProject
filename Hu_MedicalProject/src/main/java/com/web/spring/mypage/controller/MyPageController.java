@@ -70,10 +70,8 @@ public class MyPageController {
 		String loc = "";
 
 		if (result > 0) {
-			System.out.println("성공");
 			msg = "수정 성공";
 		} else {
-			System.out.println("실패");
 			msg = "수정 실패! 홈으로 돌아갑니다.";
 		}
 		model.addAttribute("msg", msg);
@@ -85,14 +83,11 @@ public class MyPageController {
 	@RequestMapping("myPage/reservationStatus")
 	public ModelAndView reservationStatus(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		System.out.println(request.getParameter("no"));
 		int no = Integer.parseInt(request.getParameter("no"));
-		System.out.println(no);
 		List<Map<String, String>> list = service.reservationStatus(no);
 
-		System.out.println(list);
 		mv.addObject("list", list);
-		mv.setViewName("jsonview");
+		mv.setViewName("jsonView");
 
 		return mv;
 	}
