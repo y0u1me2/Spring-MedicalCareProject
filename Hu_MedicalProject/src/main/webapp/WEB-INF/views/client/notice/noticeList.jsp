@@ -22,47 +22,50 @@ div#pageBar a {
 }
 
 /* 페이지바 */
-    #pageBar{
-      width:80%;
-      margin-left:550px;
-      margin-top:30px;
-      margin-bottom:20px;
-      /* text-align:center; */
-   }
-   #pageBar>a,#pageBar>span{
-      width: 40px;
-       height: 40px;
-       text-align: center;
-       line-height: 40px;
-       border: 1px solid #eee;
-       color: #999;
-       background-color: #fff;
-       margin: 0 2px;
-      position: relative;
-       font-size: 13px;
-       font-family: "YoonGothicPro760";
-       display: inline-block;
-       vertical-align: top;
-   }
+ #pageBar{
+   width:80%;
+   margin-left:550px;
+   margin-top:30px;
+   margin-bottom:20px;
+   /* text-align:center; */
+}
+#pageBar>a,#pageBar>span{
+   width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #eee;
+    color: #999;
+    background-color: #fff;
+    margin: 0 2px;
+   position: relative;
+    font-size: 13px;
+    font-family: "YoonGothicPro760";
+    display: inline-block;
+    vertical-align: top;
+}
+.noticeBack{
+	background-image: url( "${path }/resources/images/noticeBack.jpg" );
+	background-attachment: fixed;
+}
+h1{
+	margin-top: 200px;
+	text-align: left;
+	margin-left: 80px;
+	color:white;
+	font-size: 100px;
+	font-weight:700;
+}
    </style>  
 <section>
-<div id="notice-container">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xl-1 ">
-        </div>
-        <div class="col-xl-10 " style="padding-left:450px;margin-top:50px;font-size: 30px;">
-        공지사항
-      </div>
-        <div class="col-xl-1 "></div>
-    </div>
-</div>
-     <c:if test="${loginMember.email eq 'admin' }">
-   		 <button type="button" class="btn btn-secondary" id="noticeBtn" style="margin-left:1020px;"onclick="noticeInsert();"> 공지사항 작성</button>
-     </c:if>
+<div class="container-fluid p-0 border" style="">
+	<div class="noticeBack border" style="height:600px;">
+		<h1>HU의 공지사항<br>알려드립니다.</h1>
+	</div>
    
-  <div class="container" style="margin-top:50px;">
+  <div class="container" style="margin-top:50px;height:350px; background-color:white;">
    <p>공지사항 총 <c:out value="${count }"/>건</p>
+   
     <table class="table table-hover" style="border-top-color: black;">
         <thead>
           <tr>
@@ -91,9 +94,13 @@ div#pageBar a {
                 	<td><c:out value="${n['readCount'] }"/></td>	
 				</tr>
 			</c:forEach>
+		
  	  </tbody>
 	 </table>
  </div>
+ <c:if test="${loginMember.email eq 'admin' }">
+   		 <button type="button" class="btn btn-secondary" id="noticeBtn" style="margin-left:1100px;"onclick="noticeInsert();"> 공지사항 작성</button>
+     </c:if>
     <div style="text-align: center; font-size: 20px;" id="search-container">
 		 <form action="${path }/notice/search.do" method="post">
             <select name="searchContent" id="searchContent" style="background-color:white; height:35px;">
@@ -104,11 +111,11 @@ div#pageBar a {
             <input type="submit" id="searchBtn" class="search_btn" value="검색"/>
            </form>		
 		</div>
-		</div>
+			
   <div id="pageBar">
   	${pageBar }
   </div>
- 
+ </div>
 </section>
 
 <script>

@@ -19,7 +19,71 @@ pageEncoding="UTF-8"%>
 }
 </style>
 <section class="container-fluid border" >
-	
+
+<form id="form1" class="form-inline">
+  <label for="sel1" class="mr-sm-2">진료과목:</label>
+  <select class="form-control mb-2 mr-sm-2" id="sel1" name="dept">
+  	<option hidden>진료과목 선택</option>
+    <option value="01">내과</option>
+    <option value="02">신경과</option>
+    <option value="03">정신건강의학과</option>
+    <option value="04">외과</option>
+    <option value="05">정형외과</option>
+    <option value="06">신경외과</option>
+    <option value="07">흉부외과</option>
+    <option value="08">성형외과</option>
+    <option value="09">마취통증의학과</option>
+    <option value="10">산부인과</option>
+    <option value="11">소아청소년과</option>
+    <option value="12">안과</option>
+    <option value="13">이비인후과</option>
+    <option value="14">피부과</option>
+    <option value="15">비뇨기과</option>
+    <option value="49">치과</option>
+    <option value="90">한방의학과</option>
+  </select>
+  
+  <label for="sel2" class="mr-sm-2">반경:</label>
+  <select class="form-control mb-2 mr-sm-2" id="sel2" name="radius">
+    <option value="500">500m</option>
+    <option value="1000" selected>1km</option>
+  </select>
+  
+  <button type="button" class="btn btn-primary mb-2" onclick="search();">검색</button>
+</form>
+
+
+
+<!-- <div class="form-group mx-auto" style="width:80%;">
+  <select class="" id="sel1" name="dept">
+  	<option hidden>진료과목 선택</option>
+    <option value="01">내과</option>
+    <option value="02">신경과</option>
+    <option value="03">정신건강의학과</option>
+    <option value="04">외과</option>
+    <option value="05">정형외과</option>
+    <option value="06">신경외과</option>
+    <option value="07">흉부외과</option>
+    <option value="08">성형외과</option>
+    <option value="09">마취통증의학과</option>
+    <option value="10">산부인과</option>
+    <option value="11">소아청소년과</option>
+    <option value="12">안과</option>
+    <option value="13">이비인후과</option>
+    <option value="14">피부과</option>
+    <option value="15">비뇨기과</option>
+    <option value="49">치과</option>
+    <option value="90">한방의학과</option>
+  </select>
+  
+  <label for="sel2">반경</label>
+  <select class="" id="sel2" name="radius">
+    <option value="500">500m</option>
+    <option value="1000" selected>1km</option>
+    
+  </select>
+</div> -->
+
 
 
 <div id="map" class="mx-auto my-5" style="width:80%;height:500px;" ondrop="getInfo();"></div>
@@ -37,20 +101,32 @@ var mapOption;
 var map;
 var markers = [];
 var circle;
+var currentLat;
+var currentlng;
 
 $(function() {
     // Geolocation API에 액세스할 수 있는지를 확인
     if (navigator.geolocation) {
         //위치 정보를 얻기
-        navigator.geolocation.getCurrentPosition (function(pos) {
+        navigator.geolocation.getCurrentPosition (function(position) {
+        	var lat = position.coords.latitude, // 위도
+            lon = position.coords.longitude; // 경도
+        
+			var locPosition = new kakao.maps.LatLng(lat, lon);
+            
+			var marker = new kakao.maps.Marker({
+			    position: locPosition
+			});
             
 			mapOption = { 
-				center: new kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude), // 지도의 중심좌표
+				center: locPosition, // 지도의 중심좌표
 				level: 3 // 지도의 확대 레벨
 			};
 
        	 	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
         	map = new kakao.maps.Map(mapContainer, mapOption);
+       	 	
+        	marker.setMap(map);
             
         });
     } else {
@@ -59,7 +135,8 @@ $(function() {
     
     $("#map").mousedown(function(){
     	$('body').one("mouseup", function(){
-    		moveMap(map.getCenter().getLat(), map.getCenter().getLng());
+    		search();
+    		/* moveMap(map.getCenter().getLat(), map.getCenter().getLng()); */
     	})
     })
     
@@ -73,6 +150,40 @@ $(function() {
     
 });
 
+function search(){
+	var params = $("#form1").serialize(); //진료과목, 반경
+	var lat = map.getCenter().getLat();
+	var lng = map.getCenter().getLng();
+	params += "&latitude="+lat+"&longitude="+lng; //지도중심좌표 파라미터로 추가
+	
+	$.ajax({
+		url: "${path}/hospitalFind.do",
+		type: "post",
+		data: params,
+		dataType: 'json',
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		success: function(data){
+			var radius = $("#sel2").val();
+			if(circle){
+				circle.setMap(null);
+			}
+			hideMarkers();
+			markers.length=0;
+			displayMarker(data, lat, lng, radius);
+		},
+		
+		beforeSend:function(){
+	        $('#Progress_Loading').show();
+	    },
+	    
+	    complete:function(){
+	    	$('#Progress_Loading').hide();
+	    }
+
+
+
+	});
+}
 
 function getInfo(){
 	/* alert(map.getCenter().getLat()); */
@@ -114,7 +225,7 @@ function moveMap(lat, lng){
 
 
 
-function displayMarker(data, lat, lng){
+function displayMarker(data, lat, lng, radius){
 	
 	var arr = data.response.body.items.item;
 	var positions = [];
@@ -141,7 +252,7 @@ function displayMarker(data, lat, lng){
 	// 지도에 표시할 원을 생성합니다
 	circle = new kakao.maps.Circle({
 	    center : new kakao.maps.LatLng(lat, lng),  // 원의 중심좌표 입니다 
-	    radius: 100, // 미터 단위의 원의 반지름입니다 
+	    radius: radius, // 미터 단위의 원의 반지름입니다 
 	    strokeWeight: 5, // 선의 두께입니다 
 	    strokeColor: '#75B8FA', // 선의 색깔입니다
 	    strokeOpacity: 0, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
@@ -193,7 +304,19 @@ function hideMarkers() {
     setMarkers(null);    
 }
 
-
+//에이잭스
+function findHospital(){
+	$.ajax({
+		url: "${path}/hospitalFind.do",
+		type: "post",
+		dataType: 'json',
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		success: function(data){
+			alert("데이터 로드 성공");
+			console.log(data);
+		}
+	});
+}
 
 </script>
 
