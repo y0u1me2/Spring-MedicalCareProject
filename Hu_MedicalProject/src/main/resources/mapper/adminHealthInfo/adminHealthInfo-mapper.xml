@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminHealthInfo">
+
+	<select id="selectAllDisesase" resultType="map">
+		SELECT DISESASETITLE FROM DISESASECATEGORY
+	</select>
+
+  	<select id="selectAllHealthInfo" resultType="map" parameterType="String">
+  		SELECT * FROM HEALTHINFO H
+  				JOIN DISESASECATEGORY USING(DISESASENO)
+  				LEFT JOIN MEDICALCATEGORY MC ON(H.MEDICALNO=MC.MEDICALNO)
+  				JOIN CONFIRMER USING(CONFIRMERNO)
+  				WHERE 1=1
+  				<if test="value != null">
+				AND DISESASETITLE = #{value}
+				</if>
+  	</select>
+  	
+  	<select id="healthInfoCount" resultType="_int" parameterType="String">
+  		SELECT COUNT(*) FROM HEALTHINFO H
+  				JOIN DISESASECATEGORY USING(DISESASENO)
+  				LEFT JOIN MEDICALCATEGORY MC ON(H.MEDICALNO=MC.MEDICALNO)
+  				JOIN CONFIRMER USING(CONFIRMERNO)
+  				WHERE 1=1
+  				<if test="value != null">
+				AND DISESASETITLE = #{value}
+				</if>
+  	</select>
+
+</mapper>
