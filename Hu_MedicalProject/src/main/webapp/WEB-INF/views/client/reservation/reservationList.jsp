@@ -36,7 +36,6 @@
       display: flex;
       position: relative;
       top: 30px;
-
     }
 
     /* 전체 진료과목 버튼 */
@@ -662,7 +661,7 @@ div.content2{
 										</div>
 
 										<input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
-										<br />
+										<br/>
 										 <button id="hpChat" class="btn btn-outline-dark" type="button" 
 		              onclick="hpAccessChatting('${loginMember.email}','${r['ID']}');">실시간 문의</button>
 									</div>
