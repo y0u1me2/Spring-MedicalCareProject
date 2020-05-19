@@ -200,7 +200,7 @@
         <div style="text-align:center;">간편한 SNS로그인</div>
             
             <!--  <button type="button" id="otherbtn"><img src="${path }/resources/images/google.png" alt=""></button>&nbsp;&nbsp;-->
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
             <a href="#" onclick="signOut();">Sign out</a>
             <!-- 자동로그인 처리하기 -->
            <%--<button type="button" id="otherbtn"><img src="${path }/resources/images/kakao.png" alt=""></button>&nbsp;&nbsp;
