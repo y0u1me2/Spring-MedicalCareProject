@@ -84,7 +84,7 @@ border-radius:10px;
  }
   </style>
     <script>
-	let websocket=new WebSocket("ws://localhost:9090${pageContext.request.contextPath}/chatting");
+	let websocket=new WebSocket("ws://192.168.120.23:9090${pageContext.request.contextPath}/chatting");
 	let sender='${param.room}';
 	let roomId='${param.roomId}';
 	console.log(roomId);
