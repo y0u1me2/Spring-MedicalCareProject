@@ -76,7 +76,7 @@
                             <a href="${pageContext.request.contextPath }/admin/careNotice.do" class="waves-effect" style="margin-top:20px; text-align: center;"><h4 style="font-size:22px;font-family:'Song Myung',cursive;">돌보미 등록 관리</h4></a>
                         </li>
                         <li>
-                            <a href="map-google.html" class="waves-effect" style="margin-top:20px; text-align: center;"><h4 style="font-size:22px;font-family:'Song Myung',cursive;">건강 정보</h4></a>
+                            <a href="${pageContext.request.contextPath }/admin/healthInfo.do" class="waves-effect" style="margin-top:20px; text-align: center;"><h4 style="font-size:22px;font-family:'Song Myung',cursive;">건강 정보</h4></a>
                         </li>
                     </ul>
                    

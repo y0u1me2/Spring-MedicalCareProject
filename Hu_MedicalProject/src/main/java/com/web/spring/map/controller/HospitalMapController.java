@@ -38,6 +38,11 @@ public class HospitalMapController {
 		return "client/map/hospitalMap";
 	}
 
+	@RequestMapping("/mapTest.do")
+	private String mapTest() {
+		return "client/map/mapTest";
+	}
+	
 	@RequestMapping("/about")
 	private String introduction() {
 		return "client/introduction/introduction";

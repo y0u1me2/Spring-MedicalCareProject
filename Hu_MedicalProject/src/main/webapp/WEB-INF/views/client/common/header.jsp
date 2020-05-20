@@ -520,14 +520,18 @@ function signOut() {
 				requestChatting();
 			}
 			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
+			location.reload();
 		}
 		
 		//관리자문의(병원)
 	 	function hpAdminAccessChatting(room1){//room1=병원회원
-			if(room1){
+			
+			if(${not empty loginHpMember}){
 				hpAdminrequestChatting();
 			}
 			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
+			location.reload();
+
 		}
 		
 		//병원
@@ -540,16 +544,14 @@ function signOut() {
 				open("${path}/hpChattingView?room="+room+"&roomId="+room2,"_blank","width=500,height=490");
 			}
 		}
-		
-		
 
 </script>
 	<c:if test="${not empty loginMember or not empty loginHpMember }">
 	<!--로그인이 되었을때 문의하기!  -->
 		<script>
-			let roomId;
+			let roomId;ws://192.168.120.23:9090/
 			//채팅알람받는 웹소켓 구성하기
-			let alram=new WebSocket("ws://localhost:9090${path}/alram");
+			let alram=new WebSocket("ws://rclass.iptime.org:9999${path}/alram");
 			
 			alram.onopen=function(msg){
 				console.log("msg :"+msg);
