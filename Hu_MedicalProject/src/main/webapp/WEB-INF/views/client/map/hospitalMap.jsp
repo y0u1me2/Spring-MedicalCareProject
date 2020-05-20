@@ -119,9 +119,16 @@ pageEncoding="UTF-8"%>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a74ea60d1848a1ea867826229c40b3f6&libraries=services"></script>
 <script>
-var mapContainer = document.getElementById('map'); // 지도를 표시할 div
-var mapOption;
-var map;
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = { 
+    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+};
+
+//지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+var map = new kakao.maps.Map(mapContainer, mapOption);
+
+
 var markers = [];
 var circle;
 var curLat;
@@ -132,6 +139,7 @@ $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 �
     if (navigator.geolocation) {
         //위치 정보를 얻기
         navigator.geolocation.getCurrentPosition (function(position) {
+        	
         	curLat = position.coords.latitude; // 위도
             curLon = position.coords.longitude; // 경도
 			var locPosition = new kakao.maps.LatLng(curLat, curLon);
@@ -146,8 +154,7 @@ $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 �
 				level: 3 // 지도의 확대 레벨
 			};
 
-       	 	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-        	map = new kakao.maps.Map(mapContainer, mapOption);
+       	 	map.setCenter(locPosition);
         	marker.setMap(map);
         	
         	

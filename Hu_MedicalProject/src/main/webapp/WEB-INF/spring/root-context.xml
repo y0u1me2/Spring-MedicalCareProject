@@ -61,7 +61,7 @@
    <bean id="encryptor" class="com.web.spring.common.AESEncrypt">
       <constructor-arg index="0" value="c:\dev\"/>
    </bean>
-   <!-- 회원가입 메일 인증 -->
+   <!-- 회원가입 메일 인증, 비밀번호 찾기 -->
 	<bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
 		<property name="port" value="587" /><!-- 465 or 25 -->

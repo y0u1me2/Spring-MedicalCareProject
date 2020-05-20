@@ -17,10 +17,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://wowjs.uk/css/libs/animate.css">
     <script src="https://wowjs.uk/dist/wow.min.js"></script>
-
+    
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <meta name="google-signin-client_id" content="415129597970-epgotkdffasbd0r2mqq4shuirovnqsqp.apps.googleusercontent.com">
-   
+
 <!-- 파비콘 -->
    <link rel ="icon" type="image/png"
         href="/resources/images/logo5.png"/>
@@ -101,7 +101,7 @@
          <c:when test = "${not empty loginMember }">
 			<li class="nav-item" style="margin-left:100px;">
 				<a href="${path }/myPage/myPageMain" style="align:right;" ><c:out value="${loginMember.name }"></c:out> 님</a>
-				<button type="button" class="btn btn-outline-dark" onclick="logoutChk();">로그아웃</button>
+				<button type="button" class="btn btn-outline-dark" onclick="signOut()">로그아웃</button>
 				   <button class="btn btn-outline-dark" type="button"
 						onclick="accessChatting('${loginMember.email}');">관리자  실시간 문의</button>
 	        </li>
@@ -200,8 +200,8 @@
         <div style="text-align:center;">간편한 SNS로그인</div>
             
             <!--  <button type="button" id="otherbtn"><img src="${path }/resources/images/google.png" alt=""></button>&nbsp;&nbsp;-->
-            <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-            <a href="#" onclick="signOut();">Sign out</a>
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            	<a href="#" onclick="signOut();">Sign out</a>
             <!-- 자동로그인 처리하기 -->
            <%--<button type="button" id="otherbtn"><img src="${path }/resources/images/kakao.png" alt=""></button>&nbsp;&nbsp;
              <button type="button" id="otherbtn"><img src="${path }/resources/images/naver.png" alt=""></button>&nbsp;&nbsp;
@@ -470,23 +470,45 @@ function emptyFindEmail(){
 	
 }
 //google 로그인
+	 var loginC=0;
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
 	  console.log('Name: ' + profile.getName());
 	  console.log('Image URL: ' + profile.getImageUrl());
 	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+	  $.ajax({
+			type: 'POST',  
+			url:'${path }/googleIdChk.do',
+			data:{"googleEmail":profile.getEmail(),"googleName":profile.getName(),"googlePW":profile.getId(),"loginCount":loginC},
+			success:function(data){
+				console.log(data);
+				alert("로그인 완료");
+				gapi.auth2.getAuthInstance().disconnect();
+				location.reload();	
+			},
+			error:function(request,status,error){
+		        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		       },
+		     complete : function(data) {
+		                 //  실패했어도 완료가 되었을 때 처리
+		        }
+			
+		})
+	  
 }
 function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
+	//console.log(gapi.auth2);
+   // var auth2 = gapi.auth2.getAuthInstance();
+    location.href="${path}/member/logout.do";
     auth2.signOut().then(function () {
-      console.log('User signed out.');
+      //console.log('User signed out.');
     });
-    auth2.disconnect();
+   // auth2.disconnect();
 }
-function logoutChk(){
+/* function logoutChk(){
 	location.href="${path}/member/logout.do";
-}
+} */
 
 //---------------------------------------채팅 시작!--------------------------------------------
 		//admin
