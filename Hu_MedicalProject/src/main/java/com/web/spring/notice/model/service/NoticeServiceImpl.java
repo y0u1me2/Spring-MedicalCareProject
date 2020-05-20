@@ -97,6 +97,12 @@ public class NoticeServiceImpl implements NoticeService {
 	
 		return result;
 	}
+/////////공지사항 제목으로 검색 ///////////
+	@Override
+	public List<Map<String, String>> searchNotice(Map<String, String> param) {
+		return dao.searchNotice(session,param);
+	}
+	
 	
 	
 }

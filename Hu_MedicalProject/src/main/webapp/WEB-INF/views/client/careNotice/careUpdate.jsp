@@ -57,13 +57,7 @@
         text-decoration: none;
     }
 
-    /* 등록,목록 버튼 */
-    div.btns {
-        position: relative;
-        top: 30px;
-        left: 440px;
-    }
-
+ 
     /* 등록버튼 */
     button#btnSave {
         height: 40px;
@@ -107,7 +101,7 @@
     
     footer{
     	position:relative;
-    	top:300px;
+    	top:200px;
     }
 </style>
 
@@ -115,20 +109,18 @@
 
     <section>
         <div id="section-container">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xl-1 ">
-                </div>
-                <div class="col-xl-10 " style="padding-left:450px;margin-top:50px;font-size: 30px;">
-                    돌보미 수정하기
-                </div>
-                <div class="col-xl-1 ">
+	   		<div class="container-fluid">
+				 <div class="row">					
+						
+					    <div class="col-sm-5 col-sm-12" style="text-align:center; margin-top:50px; font-size: 30px;"> 
+                    		돌보미 수정하기
+                		</div>
                 </div>
             </div>
         </div>
 
 
-        <div class="container" role="main">
+        <div class="container" role="main" style="margin-top:150px;">
 
 
 
@@ -182,12 +174,15 @@
                 </div>
 
 
-            <div class="btns">
+            <div class="container-fluid">
+					 <div class="row">	
+						 <div class="col-sm-12" style="text-align:center; margin-top:50px; ">
 
-                <button type="submit" id="btnSave">수정</button>
-
-                <button type="button" id="delete-btn" onclick="deleteCare();">삭제</button>
-
+			                <button type="submit" id="btnSave">수정</button>
+			
+			                <button type="button" id="delete-btn" onclick="deleteCare();">삭제</button>
+			              </div>
+					</div>
             </div>
             </form>
 

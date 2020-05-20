@@ -64,4 +64,13 @@
                                 RENAMEDFILENAME=#{renamedFilename},UPLOADDATE=DEFAULT WHERE NOTICENO=#{noticeNo}
                                 
     </update> 
+<!-- ///////// 공지사항 제목으로 검색  /////////-->
+    <select id="searchNotice" parameterType="map" resultType="notice">
+		SELECT * FROM NOTICE
+			WHERE 1=1
+		<if test="searchContent != null and searchContent !='' ">
+			AND ${searchContent} like '%'||#{keyword}||'%'
+		</if>
+		ORDER BY NOTICEDATE DESC
+	</select>
 </mapper>

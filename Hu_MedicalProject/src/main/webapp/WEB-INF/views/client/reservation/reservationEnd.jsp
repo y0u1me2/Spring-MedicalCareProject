@@ -10,8 +10,7 @@
 
     div#reception-container{
         position: relative;
-        top:200px;
-        left:300px;
+        top:150px;
         text-align: left;
     }
     
@@ -20,9 +19,10 @@
       background: rgb(247, 245, 245);
       border: none;
       height:60px;
-      width: 500px;
+      width: 80% ;
       border-radius: 7px;
       display: flex;
+      text-algin:center;
     }
 
     /* 경고 이미지 */
@@ -81,7 +81,7 @@
 
      /* 어제부터 열이나요 */
      div#words>input{
-        width: 300px;
+        width: 70%;
         height: 50px;
         border: 1px solid rgb(204, 203, 203);
 
@@ -97,7 +97,7 @@
 /* 프로필 */
 div.card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
+  /* transition: 0.3s; */
   width:100px;
   height:130px;
 
@@ -106,26 +106,6 @@ div.card {
   padding: 2px 16px;
 }
 
-/* 가족추가  */
-div#patient{
-    display: flex;
-}
-
-div.family{
-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width:100px;
-  height:130px;
-  position: relative;
-    left:20px;
-    
-}
-
-/* 플러스 이미지 */
-img#plus{
-    padding-left: 40px;
-    padding-top: 40px;
-  
 }
 
 div.select{
@@ -145,7 +125,6 @@ div.select{
          font-size: 15px;
          color: rgb(233, 233, 229);
          position: relative;
-         left: 120px;
          top: 150px;
      }
      button#reception-btn:hover{
@@ -155,7 +134,7 @@ div.select{
 
 footer {
 	position: relative;
-	top: 400px;
+	top: 500px;
 }
 
 /* 가족추가 팝업창 */
@@ -198,7 +177,7 @@ footer {
 	}
 
 
-/* 접수전 팝업창 */
+/* =====================접수전 팝업창================================== */
     .modal-back {
         display: none;
         z-index: 4;
@@ -317,120 +296,148 @@ footer {
 
 
 
-
-<!--     <div class="container-fluid">
-        
-        <div class="row">
-            <div class="col-sm-12"> -->
-
-
-
-
 	<div id="reception-container">
-		<button id="paperweight-btn"
-			onclick="location.replace('${path}/rv/coronaUpdate')">
-			<img src="${path }/resources/images/warning.png" width="30px;" />
-			<p>원내 감염 방지를 위한 사전문진</p>
-			<p>확인/수정하기</p>
-			<p>></p>
-		</button>
+
+	 <div class="container-fluid">
+		<div class="row">		
 		
-<form action="${path}/rv/reservationEnd" id="rvFrm" method="post">
-		<div id="choice">
-
-			<p>
-				진료대상
-			</p>
-
+			<div class="col-sm-2" ></div>
+			<div class="col-sm-6 col-sm-10" style="text-align:center;">
 			
+					<button id="paperweight-btn"
+						onclick="location.replace('${path}/rv/coronaUpdate')">
+						<img src="${path }/resources/images/warning.png" width="30px;" />
+						<p>원내 감염 방지를 위한 사전문진</p>
+						<p>확인/수정하기</p>
+						<p>></p>
+					</button>
+				</div>
+			<div class="col-sm-2" ></div>	
+		</div>
+	</div>		
+</div>		
 
-			<div id="patient">
-				<div class="card">
-					<img src="${path }/resources/images/profile.png" alt="진료대상"
-						width="100px;">
-					<div class="container">
+
+
+	<div class="container-fluid">
+		<div class="row">		
+			
+			<div class="col-sm-2"></div>
+			<div class="col-sm-6 col-sm-10" style=" margin-top:200px;">
+					
+				<form action="${path}/rv/reservationEnd" id="rvFrm" method="post">
+					<div id="choice">
+			
 						<p>
-							&nbsp;
-							<c:out value="${loginMember.name }" />
+							진료대상
+						</p>
+			
+						
+			
+						<div id="patient">
+							<div class="card">
+								<img src="${path }/resources/images/profile.png" alt="진료대상"
+									width="100px;">
+						
+									<p>
+										&nbsp;
+										<c:out value="${loginMember.name }" />
+									</p>
+							
+							</div>
+							
+						</div>
+			
+						<input type="hidden" name="memberNo" value="${loginMember.memberNo }" />
+			
+							<br/><br/><br/>
+						 <div class="select">
+							<c:forEach items="${list }" var="r">
+								<input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
+			
+								<p>
+									진료항목<strong>[필수]</strong>
+								</p>
+			
+			
+								  <select name="hospDepartment">
+									<option>진료항목 선택</option>
+									<c:forTokens items="${r['MEDICALDEPARTMENT']}" var="e" delims=",">
+										<option value="${e}"><c:out value="${e}" /></option>
+									</c:forTokens>
+								</select>   
+			
+							</c:forEach>
+						</div> 
+						
+						
+								<div id="words">
+									<p>원장님께 하고 싶은 말[선택]</p>
+									<input type="text" name="message" placeholder="&nbsp;&nbsp; ex) 어제부터 열이나요.">
+								</div>
+			
+					</div>
+				</form>
+					<div id="notice">
+						<p>
+							※ 병원에 도착하시면 데스크에 도착 여부를 알려주세요.<br /> ※ 접수 후 진료 차례에 병원을 방문하지 않으면 접수가
+							취소됩니다.<br /> ※ 대기자수는 실제 대기자수와 차이가 있을 수 있습니다.<br />
 						</p>
 					</div>
-				</div>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
+	</div>		
+			
+	
+					
+			
+	<div class="container-fluid">
+		<div class="row">		
+			
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4" style="text-algin:center; margin-left:100px;">
+			<br />
+			<br />
+					<button type="button" id="reception-btn" onclick="popupOn();">접수하기</button>
 				
-			</div>
-
-			<input type="hidden" name="memberNo" value="${loginMember.memberNo }" />
-
-
-			 <div class="select">
-				<c:forEach items="${list }" var="r">
-					<input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
-
-					<p>
-						진료항목<strong>[필수]</strong>
-					</p>
-
-
-					  <select name="hospDepartment">
-						<option>진료항목 선택</option>
-						<c:forTokens items="${r['MEDICALDEPARTMENT']}" var="e" delims=",">
-							<option value="${e}"><c:out value="${e}" /></option>
-						</c:forTokens>
-					</select>   
-
-				</c:forEach>
-			</div> 
-			
-			
-					<div id="words">
-						<p>원장님께 하고 싶은 말[선택]</p>
-						<input type="text" name="message" placeholder="&nbsp;&nbsp; ex) 어제부터 열이나요.">
-					</div>
-
-		</div>
-</form>
-
-
-
-		<div id="notice">
-			<p>
-				※ 병원에 도착하시면 데스크에 도착 여부를 알려주세요.<br /> ※ 접수 후 진료 차례에 병원을 방문하지 않으면 접수가
-				취소됩니다.<br /> ※ 대기자수는 실제 대기자수와 차이가 있을 수 있습니다.<br />
-			</p>
-		</div>
-
-		<button type="button" id="reception-btn" onclick="popupOn();">접수하기</button>
-	</div>
-
-
-	<!------------- 접수전 모달창 ------------->
-	 <div class="modal-back" id="login">
-		<div class="modal-login animate">
-			<img src="${path }/resources/images/warning.png" width="30px;"
-				id="warning" />
-
-			<div class="poptext">
-				<h3>Hospital for U 접수 안내</h3>
-
-				<div id="textP">
-					<p>- 병원에 도착하시면 데스크에 도착 여부를 알려주세요.</p>
-					<p>
-						- 접수 후 진료 차례에 병원을 방문하지 않으면 <strong>접수가<br />&nbsp;&nbsp;취소됩니다.
-						</strong>
-					</p>
-					<p>- 대지가수는 실제 대기자수와 차이가 있을 수 있습니다.</p>
 				</div>
-			</div>
-
-			<button type="button" class="big-gray-btn">확인</button>
-
-
-
-			<div class="close-btn">
-				<span onclick="popupOff();" class="close" title="Close Modal">&times;</span>
-			</div>
-
+			<div class="col-sm-4"></div>
 		</div>
-	</div> 
+	</div>
+	
+			
+			
+	<!------------------------------------------- 접수전 모달창---------------------------------------------->
+	
+				 <div class="modal-back" id="login">
+					<div class="modal-login animate">
+						<img src="${path }/resources/images/warning.png" width="30px;"
+							id="warning" />
+			
+						<div class="poptext">
+							<h3>Hospital for U 접수 안내</h3>
+			
+							<div id="textP">
+								<p>- 병원에 도착하시면 데스크에 도착 여부를 알려주세요.</p>
+								<p>
+									- 접수 후 진료 차례에 병원을 방문하지 않으면 <strong>접수가<br />&nbsp;&nbsp;취소됩니다.
+									</strong>
+								</p>
+								<p>- 대지가수는 실제 대기자수와 차이가 있을 수 있습니다.</p>
+							</div>
+						</div>
+			
+						<button type="button" class="big-gray-btn">확인</button>
+			
+			
+			
+						<div class="close-btn">
+							<span onclick="popupOff();" class="close" title="Close Modal">&times;</span>
+						</div>
+			
+					</div>
+				</div> 
 
 
 

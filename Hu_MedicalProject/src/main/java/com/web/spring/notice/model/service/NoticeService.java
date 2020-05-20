@@ -23,5 +23,7 @@ public interface NoticeService {
 	List<NoticeAttachment> noticeUpdateFile(int no);
 /////////공지사항 수정하기 ///////////
 	int noticeUpdateEnd(Map<String, String> param, List<NoticeAttachment> files, int no);
+/////////공지사항 제목으로 검색 ///////////
+	List<Map<String, String>> searchNotice(Map<String, String> param);
 
 }
