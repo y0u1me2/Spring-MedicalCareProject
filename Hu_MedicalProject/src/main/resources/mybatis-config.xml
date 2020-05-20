@@ -27,6 +27,9 @@
 	<!-- 	
 		<typeAlias type="com.kh.spring.memo.model.vo.Memo" alias="memo" />
 		<typeAlias type="com.kh.spring.board.model.vo.Board" alias="board" /> --> 
+		
+	<typeAlias type="com.web.spring.healthInfo.vo.DisesaseCategory" alias="disesaseCategory" />
+	<typeAlias type="com.web.spring.healthInfo.vo.Confirmer" alias="confirmer" />
 	</typeAliases>
 
 </configuration>
