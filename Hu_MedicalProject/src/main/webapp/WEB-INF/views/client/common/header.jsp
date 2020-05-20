@@ -527,7 +527,7 @@ function logoutChk(){
 	<c:if test="${not empty loginMember or not empty loginHpMember }">
 	<!--로그인이 되었을때 문의하기!  -->
 		<script>
-			let roomId;ws://192.168.120.23:9090/
+			let roomId;
 			//채팅알람받는 웹소켓 구성하기
 			let alram=new WebSocket("ws://rclass.iptime.org:9999${path}/alram");
 			
