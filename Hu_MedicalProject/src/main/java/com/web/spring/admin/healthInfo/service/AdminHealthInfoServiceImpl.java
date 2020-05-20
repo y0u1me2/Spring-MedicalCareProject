@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.web.spring.admin.healthInfo.dao.AdminHealthInfoDao;
+import com.web.spring.healthInfo.vo.Confirmer;
+import com.web.spring.healthInfo.vo.DisesaseCategory;
 
 @Service
 public class AdminHealthInfoServiceImpl implements AdminHealthInfoService {
@@ -24,6 +26,14 @@ public class AdminHealthInfoServiceImpl implements AdminHealthInfoService {
 		// TODO Auto-generated method stub
 		return dao.selectAllDisesase(session);
 	}
+	
+
+	@Override
+	public List<Map<String, String>> selectAllConfirmer() {
+		// TODO Auto-generated method stub
+		return dao.selectAllConfirmer(session);
+	}
+
 
 	//건강정보 전체조회
 	@Override
@@ -36,6 +46,20 @@ public class AdminHealthInfoServiceImpl implements AdminHealthInfoService {
 	public int healthInfoCount(String keyword) {
 		// TODO Auto-generated method stub
 		return dao.healthInfoCount(session, keyword);
+	}
+
+
+	@Override
+	public DisesaseCategory selectDisesaseCategory(DisesaseCategory dc) {
+		// TODO Auto-generated method stub
+		return dao.selectDisesaseCategory(session, dc);
+	}
+
+
+	@Override
+	public Confirmer selectConfirmer(Confirmer c) {
+		// TODO Auto-generated method stub
+		return dao.selectConfirmer(session, c);
 	}
 	
 	

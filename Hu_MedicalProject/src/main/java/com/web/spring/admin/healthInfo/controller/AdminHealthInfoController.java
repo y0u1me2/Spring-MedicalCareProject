@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.spring.admin.healthInfo.service.AdminHealthInfoService;
-import com.web.spring.common.PageFactory;
+import com.web.spring.healthInfo.vo.Confirmer;
+import com.web.spring.healthInfo.vo.DisesaseCategory;
 
 @Controller
 public class AdminHealthInfoController {
@@ -25,8 +26,10 @@ public class AdminHealthInfoController {
 		ModelAndView mv=new ModelAndView();
 		
 		List <Map<String,String>> list=service.selectAllDisesase();
+		List <Map<String,String>> confirmerList=service.selectAllConfirmer();
 		
 		mv.addObject("list", list);
+		mv.addObject("confirmerList",confirmerList);
 		mv.setViewName("admin/healthInfo/healthInfoMain");
 		
 		return mv;
@@ -109,5 +112,25 @@ public class AdminHealthInfoController {
 		return mv;
 	}
 	
+	@RequestMapping("admin/selectDisesaseCategory.do")
+	public ModelAndView selectDisesaseCategory(DisesaseCategory dc) {
+		ModelAndView mv=new ModelAndView();
+		DisesaseCategory reDc=service.selectDisesaseCategory(dc);
+		
+		mv.addObject("dc", reDc);
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
 
+	@RequestMapping("admin/selectConfirmer.do")
+	public ModelAndView selectConfirmer(Confirmer c) {
+		ModelAndView mv=new ModelAndView();
+		Confirmer rec=service.selectConfirmer(c);
+		
+		mv.addObject("c", rec);
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
 }

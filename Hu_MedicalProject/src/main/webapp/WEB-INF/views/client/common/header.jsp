@@ -496,7 +496,6 @@ function logoutChk(){
 			//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
 				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
 				requestChatting();
-				//location.reload();
 			}
 			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
 			location.reload();
@@ -505,9 +504,8 @@ function logoutChk(){
 		//관리자문의(병원)
 	 	function hpAdminAccessChatting(room1){//room1=병원회원
 			
-			if(room1){
+			if(${not empty loginHpMember}){
 				hpAdminrequestChatting();
-				location.reload();
 			}
 			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
 			location.reload();
@@ -522,7 +520,6 @@ function logoutChk(){
 				open("${path}/hpChattingView?room="+room2+"&roomId="+roomId,"_blank","width=500,height=490");
 			}else{
 				open("${path}/hpChattingView?room="+room+"&roomId="+room2,"_blank","width=500,height=490");
-				
 			}
 		}
 		
@@ -532,9 +529,9 @@ function logoutChk(){
 	<c:if test="${not empty loginMember or not empty loginHpMember }">
 	<!--로그인이 되었을때 문의하기!  -->
 		<script>
-			let roomId;
+			let roomId;ws://192.168.120.23:9090/
 			//채팅알람받는 웹소켓 구성하기
-			let alram=new WebSocket("ws://localhost:9090${path}/alram");
+			let alram=new WebSocket("ws://192.168.120.23:9090/${path}/alram");
 			
 			alram.onopen=function(msg){
 				console.log("msg :"+msg);
