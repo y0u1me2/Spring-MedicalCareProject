@@ -496,16 +496,22 @@ function logoutChk(){
 			//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
 				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
 				requestChatting();
+				//location.reload();
 			}
 			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
+			location.reload();
 		}
 		
 		//관리자문의(병원)
 	 	function hpAdminAccessChatting(room1){//room1=병원회원
+			
 			if(room1){
 				hpAdminrequestChatting();
+				location.reload();
 			}
 			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
+			location.reload();
+
 		}
 		
 		//병원
@@ -516,6 +522,7 @@ function logoutChk(){
 				open("${path}/hpChattingView?room="+room2+"&roomId="+roomId,"_blank","width=500,height=490");
 			}else{
 				open("${path}/hpChattingView?room="+room+"&roomId="+room2,"_blank","width=500,height=490");
+				
 			}
 		}
 		
