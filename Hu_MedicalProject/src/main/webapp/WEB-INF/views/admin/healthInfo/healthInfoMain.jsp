@@ -7,7 +7,9 @@
 <c:set var="path" value="${pageContext.request.contextPath}" />
 
 <jsp:include page="/WEB-INF/views/admin/common/header.jsp" />
-	
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
 
@@ -231,19 +233,40 @@ tr.contentTR>td {
 			<div class="disesaseWriteContent">
 				<div class="disesaseWriteTitle">
 					<label for="disesaseSort">질병명 : </label>
-					<select id="disesaseSort">
+					<select id="disesaseSort" name="disesaseSort">
 						<option value="직접입력">직접입력</option>
 						<c:forEach items="${list }" var="d">
-							<option value="${d.DISESASETITLE}"><c:out value="${d.DISESASETITLE}" /></option>
+							<option value="${d.DISESASENO}"><c:out value="${d.DISESASETITLE}" /></option>
 						</c:forEach>
 					</select>
-					<input type="text" id="disesaseTitle" name="disesaseTitle">
+					<input class="name" style="width:40%;" type="text" id="disesaseTitle" name="disesaseTitle">
+					<input type="hidden" id="disesaseNo" name="disesaseNo">
 				</div>
 				<div class="disesaseWriteSubTitle">
 					<textarea rows="1" id="disesaseSubTitle" name="disesaseSubTitle" placeholder="질병의 간단한 내용을 작성하세요."></textarea>
 				</div>
 			</div>
 			<div class="disesaseFile">
+				<div class="custom-file" style="display:inline;">
+                    <input type="file" class="custom-file-input" name="disesaseFile" id="disesaseFile">
+                    <label class="custom-file-label" style="width:80%;" for="disesaseFile">질병을 표현할 사진을 선택하세요</label>
+                </div>
+			</div>
+			<hr class="gline">
+			<br> <br>
+			<div class="confirmerSelect">
+				<label for="confirmerSort">검수자 : </label>
+				<select id="confirmerSort">
+					<option value="직접입력">직접입력</option>
+					<c:forEach items="${confirmerList }" var="c">
+						<option value="${c.CONFIRMERNO}"><c:out value="${c.CONFIRMERNAME}" /></option>
+					</c:forEach>
+				</select>
+				<input class="name" style="width:10%;" type="text" id="confirmerName" name="confirmerName">
+				<input type="hidden" id"="confirmerNo" name="confirmerNo">
+				<input type="hidden" id"="confirmerNo" name="confirmerNo">
+				<input type="hidden" id"="confirmerNo" name="confirmerNo">
+				<input type="hidden" id"="confirmerNo" name="confirmerNo">
 			</div>
 			
 			
@@ -313,15 +336,48 @@ tr.contentTR>td {
 		$('.healthInfoWrite').css('display','block');
 	})
 	
-	$('#disesaseSort').change(function() {
-		if($('#disesaseSort').val()=='직접입력') {
-			$('#disesaseTitle').val('');
+	$('select').change(function() {
+		if($(this).val()=='직접입력') {
+			$(this).siblings('input').val('');
+			$(this).siblings('input.name').focus();
+			$(this).siblings('input.name').prop('readonly',false);
+			$(this).siblings('input.name').attr({placeholder:'직접 입력'});
+			
+			/* $('#disesaseTitle').val('');
 			$('#disesaseTitle').focus();
 			$('#disesaseTitle').prop('readonly',false);
-			$('#disesaseTitle').attr({placeholder:'직접 입력'});
-		}else {
-			$('#disesaseTitle').val($('#disesaseSort option:selected').val());
-			$('#disesaseTitle').prop('readonly',true);
+			$('#disesaseTitle').attr({placeholder:'직접 입력'}); */
+		}else {			
+			$(this).siblings('input').prop('readonly',true);
+			if($(this).attr('name')=='disesaseSort') {
+				$.ajax({
+					url:"${path}/admin/selectDisesaseCategory.do",
+					data:{'disesaseNo':$('#disesaseSort').val()},
+					success:function(data) {
+						console.log(data.dc);
+						$('#disesaseTitle').val(data.dc.disesaseTitle);
+						$('#disesaseSubTitle').val(data.dc.disesaseSubTitle);
+						$('#disesaseFile').val("${path}"+data.dc.disesaseFile);
+						$('#disesaseTitle').prop('readonly',true);
+						$('#disesaseSubTitle').prop('readonly',true);
+						$('#disesaseFile').prop('readonly',true);
+					}
+				})
+			}else {
+				$.ajax({
+					url:"${path}/admin/selectConfirmer.do",
+					data:{'confirmerNo':$('#confirmerSort').val()},
+					success:function(data) {
+						$('#confirmerName').val(data.c.confirmerName);
+						//$('#disesaseSubTitle').val(data.dc.disesaseSubTitle);
+						//$('#disesaseFile').val("${path}"+data.dc.disesaseFile);
+						$('#confirmerName').prop('readonly',true);
+						//$('#disesaseSubTitle').prop('readonly',true);
+						//$('#disesaseFile').prop('readonly',true);
+					}
+				})
+			}
+			
 		}
 	})
 </script>
