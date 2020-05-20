@@ -522,8 +522,6 @@ function logoutChk(){
 				open("${path}/hpChattingView?room="+room+"&roomId="+room2,"_blank","width=500,height=490");
 			}
 		}
-		
-		
 
 </script>
 	<c:if test="${not empty loginMember or not empty loginHpMember }">
@@ -531,7 +529,7 @@ function logoutChk(){
 		<script>
 			let roomId;ws://192.168.120.23:9090/
 			//채팅알람받는 웹소켓 구성하기
-			let alram=new WebSocket("ws://192.168.120.23:9090/${path}/alram");
+			let alram=new WebSocket("ws://rclass.iptime.org:9999${path}/alram");
 			
 			alram.onopen=function(msg){
 				console.log("msg :"+msg);
