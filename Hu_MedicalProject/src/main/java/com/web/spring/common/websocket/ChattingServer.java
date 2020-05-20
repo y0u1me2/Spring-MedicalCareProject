@@ -164,6 +164,7 @@ public class ChattingServer extends TextWebSocketHandler{
 	         WebSocketSession s=c2.next();
 	         if(!s.isOpen()) {
 	            c2.remove();
+	            logger.debug("");
 	         }
 	      }
 	   }
