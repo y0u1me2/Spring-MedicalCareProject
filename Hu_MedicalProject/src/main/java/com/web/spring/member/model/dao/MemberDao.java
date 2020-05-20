@@ -19,6 +19,12 @@ public interface MemberDao {
 	int changeMemberPsw(SqlSessionTemplate session, Map<String, Object> map);
 
 	String findEmail(SqlSessionTemplate session, Map<String, String> param);
+//구글아이디 있니?
+	Member googleIdChk(SqlSessionTemplate session, String googleEmail);
+
+	int googleInsert(SqlSessionTemplate session, Member googleNew);
+
+	Member searchGoogleGetMember(SqlSessionTemplate session, String googleEmail);
 
 	
 	

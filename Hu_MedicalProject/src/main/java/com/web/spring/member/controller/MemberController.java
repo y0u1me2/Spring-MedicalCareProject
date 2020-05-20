@@ -12,7 +12,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ import com.web.spring.member.model.service.MemberService;
 import com.web.spring.member.model.vo.Mail;
 import com.web.spring.member.model.vo.Member;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+
 
 @Controller
 @SessionAttributes(value= {"loginMember"})
@@ -84,6 +84,7 @@ public class MemberController {
 		return "client/common/msg";
 	}
 	
+	@SuppressWarnings("unused")
 	@RequestMapping("/member/memberLogin.do")
 	 public String memberLogin(Member m, Model model) throws Exception{
 		//System.out.println(m);
@@ -92,8 +93,8 @@ public class MemberController {
 		Member loginMember = service.memberLogin(m);
 		
 		System.out.println(loginMember);
-		logger.debug("db : " + loginMember.getPassword());
-		logger.debug("param : " + pwEncoder.encode(m.getPassword()));
+//		logger.debug("db : " + loginMember.getPassword());
+//		logger.debug("param : " + pwEncoder.encode(m.getPassword()));
 		 String msg = "";
 		 String loc = "/";
 		 
@@ -104,15 +105,72 @@ public class MemberController {
 			 }else {
 				 msg="로그인 실패, 비밀번호를 확인하세요!";
 			 }
-		 }else {
-			 msg = "로그인 실패!";
+		 }else{
+				// 아이디가 일치하지 않음
+				msg = "로그인 실패 아이디를 확인하세요";
 		 }	 
 		 model.addAttribute("msg", msg);
 		 model.addAttribute("loc", loc);
 	     
 		 return "client/common/msg";
 	 }
-	
+	@RequestMapping("/googleIdChk.do")
+	public ModelAndView googleIdChk(@RequestParam("googleEmail") String googleEmail,
+									@RequestParam("googleName") String googleName,
+									@RequestParam("googlePW") String googlePW,
+									ModelAndView mv,HttpServletRequest request) {
+		System.out.println(googleEmail + googleName + googlePW);
+		Member member = service.googleIdChk(googleEmail);
+		
+		Member googleNew=null;  //구글 새로운 로그인
+		Member googleNewReal=null;  //구글 새로운 로그인
+		Member googleOld=null; //구글 기존의 사용자
+		Member googleLogin=null; //구글 로그인 해봤던 사람
+		Member googleAccount=null; //구글 계정으로 가입한 사람
+		Member m=null; //구글 계정으로 가입한 사람
+		String loginResult="N";
+		String memeberStatus=null;
+		int loginC=Integer.parseInt(request.getParameter("loginCount"));
+		
+		if(member == null) {	
+			//google아이디로 회원가입 시켜줘야됌!
+			googleNew = new Member(0,googleEmail,googleName, googlePW,null,null,null);
+			System.out.println(googleNew);
+			int result = service.googleInsert(googleNew);
+			if(result>0) {
+			googleNewReal = service.memberLogin(googleNew);
+			memeberStatus=googleNewReal.getMemberStatus();
+			m=googleNewReal;
+			
+			}
+		}else {
+			//이미 같은 이메일로 가입되어있음
+			googleOld=service.searchGoogleGetMember(googleEmail);
+			System.out.println(googleOld);
+			if(googleOld.getPassword()==googlePW) {
+				//구글로 로그인 한사람 비밀번호 같으면 구글로 로그인 실행
+					googleLogin = service.memberLogin(googleOld);
+					memeberStatus=googleLogin.getMemberStatus();
+					m=googleLogin;
+					
+			}else {//구글로 가입했는데 구글로 로그인 한사람 비밀번호 다르면 구글로 가입한 계정으로 로그인
+					googleAccount = service.memberLogin(googleOld);
+					memeberStatus=googleAccount.getMemberStatus();
+					m=googleAccount;	
+					
+			}			
+		}
+		if (m != null&&memeberStatus.equals("Y")) {
+			loginResult="Y";	
+			
+		}
+		mv.addObject("loginMember", m);
+		mv.addObject("loginResult", loginResult);
+		mv.addObject("memeberStatus", memeberStatus);
+		mv.addObject("loginCount",loginC==1?1:10);
+		mv.setViewName("jsonView");  
+		return mv;
+	}
 	@RequestMapping("/member/logout.do")
 	public String logout(SessionStatus status,HttpServletResponse res) {
 		if(!status.isComplete() == true) {

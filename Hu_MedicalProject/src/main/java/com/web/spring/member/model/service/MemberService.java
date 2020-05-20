@@ -18,6 +18,12 @@ public interface MemberService {
 	int changeMemberPsw(Map<String, Object> map);
 	
 	String findEmail(Map<String, String> param);
+	//구글 아이디 있니?
+	Member googleIdChk(String googleEmail);
+	//등록된 구글 아이ㅣㄷ 없으면 회원가입 시키기
+	int googleInsert(Member googleNew);
+	//이미 구글로 가입되어있어서 이메일로 찾아서 가져오기
+	Member searchGoogleGetMember(String googleEmail);
 	
 	
 
