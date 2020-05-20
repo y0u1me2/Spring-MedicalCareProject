@@ -23,9 +23,22 @@ public class MemberDaoImpl implements MemberDao{
 	public Member memberLogin(SqlSessionTemplate session, Member m) {
 		return session.selectOne("member.memberLogin",m);
 	}
+//구글 로그인
+	@Override
+	public Member googleIdChk(SqlSessionTemplate session, String googleEmail) {
+		return session.selectOne("member.googleIdChk",googleEmail);
+	}
 
-	
+	@Override
+	public int googleInsert(SqlSessionTemplate session, Member googleNew) {
+		return session.insert("member.googleInsert",googleNew);
+	}
+@Override
+	public Member searchGoogleGetMember(SqlSessionTemplate session, String googleEmail) {
+	return session.selectOne("member.searchGoogleGetMember",googleEmail);
+	}
 
+	//아이디 찾기
 	@Override
 	public Member searchEmail(SqlSessionTemplate session, String email) {
 		return session.selectOne("member.searchEmail",email);

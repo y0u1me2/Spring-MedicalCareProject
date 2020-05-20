@@ -48,7 +48,7 @@ div#pageBar a {
 	background-image: url( "${path }/resources/images/noticeBack.jpg" );
 	background-attachment: fixed;
 }
-h1{
+#noticeTitle{
 	margin-top: 200px;
 	text-align: left;
 	margin-left: 80px;
@@ -60,7 +60,7 @@ h1{
 <section>
 <div class="container-fluid p-0 border" style="">
 	<div class="noticeBack border" style="height:600px;">
-		<h1>HU의 공지사항<br>알려드립니다.</h1>
+		<h1 id="noticeTitle">HU의 공지사항<br>알려드립니다.</h1>
 	</div>
    
   <div class="container" style="margin-top:50px;height:350px; background-color:white;">
@@ -69,29 +69,27 @@ h1{
     <table class="table table-hover" style="border-top-color: black;">
         <thead>
           <tr>
-            <th>번호</th>
+            <th>NO</th>
             <th style="text-align: center;">제목</th>
             <th>첨부파일</th>
-            <th>날짜</th>
-            <th>조회수</th>
+            <th style="text-align:right;">날짜&emsp;&emsp;</th>
           </tr>
         </thead>
         <tbody>
    			<c:forEach items="${list }" var="n">
 				<tr>
-					<td><c:out value="${n['noticeNo'] }" /></td>
+					<td>&nbsp;<c:out value="${n['noticeNo'] }" /></td>
 					<td>
 					<a href="${path }/notice/noticeView?no=${n.noticeNo }"> 
 						<c:out value="${n['noticeTitle'] }" />
 					</a>
 					</td>
-					<td>
+					<td>&nbsp;&nbsp;&nbsp;
 		                <c:if test="${n.fileCount>0}">
 		                	<img src="${path }/resources/images/file.png" width="16px"/>
 						</c:if>
                 	</td>
-					<td><fmt:formatDate value="${n['noticeDate'] }" type="date" pattern="yyyy/MM/dd"/></td>
-                	<td><c:out value="${n['readCount'] }"/></td>	
+					<td style="text-align:right"><fmt:formatDate value="${n['noticeDate'] }" type="date" pattern="yyyy/MM/dd"/></td>	
 				</tr>
 			</c:forEach>
 		

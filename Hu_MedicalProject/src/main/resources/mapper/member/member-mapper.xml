@@ -7,9 +7,25 @@
 								  #{name},
 								  #{password},
 								  #{phone},
-								  SYSDATE)
+								  SYSDATE,
+								  'Y')
 	</insert>
 	<select id="memberLogin" parameterType="member" resultType="member">
+		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND MEMBERSTATUS = 'Y'
+	</select>
+	<select id="googleIdChk" parameterType="member" resultType="member">
+		SELECT * FROM MEMBER WHERE EMAIL = #{googleEmail}
+	</select>
+	<select id="googleInsert" parameterType="member">
+		INSERT INTO MEMBER VALUES(SEQ_USER_NO.NEXTVAL,
+								  #{email},
+								  #{name},
+								  #{password},
+								  NULL,
+								  SYSDATE,
+								   'Y')
+	</select>
+	<select id="searchGoogleGetMember" parameterType="string" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND MEMBERSTATUS = 'Y'
 	</select>
 	<!-- <select id="findEmail" parameterType="member" resultType="member">

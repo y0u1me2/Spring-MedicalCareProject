@@ -33,7 +33,23 @@ public class MemberServiceImpl implements MemberService{
 
 
 	
+	//구글 아이디 있니?
+	@Override
+	public Member googleIdChk(String googleEmail) {
+		return dao.googleIdChk(session,googleEmail);
+	}
 
+	@Override
+	public int googleInsert(Member googleNew) {
+		return dao.googleInsert(session,googleNew);
+	}
+
+	@Override
+	public Member searchGoogleGetMember(String googleEmail) {
+		return dao.searchGoogleGetMember(session,googleEmail);
+	}
+
+//아이디 찾기
 	@Override
 	public Member searchEmail(String email) {
 		return dao.searchEmail(session,email);
