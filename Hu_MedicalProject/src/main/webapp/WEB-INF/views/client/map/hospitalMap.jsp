@@ -101,7 +101,7 @@ pageEncoding="UTF-8"%>
 <!-- <button onclick="getInfo();">중심좌표</button> -->
 
 
-<div class="map_wrap mx-auto border d-flex" style="width:80%;">
+<div class="map_wrap mx-auto border d-flex" style="width:1100px;">
     <div id="map" style="width:75%;height:600px;position:relative;overflow:hidden;"></div>
 
     <div id="menu_wrap" class="bg_white" style="width:25%;">
