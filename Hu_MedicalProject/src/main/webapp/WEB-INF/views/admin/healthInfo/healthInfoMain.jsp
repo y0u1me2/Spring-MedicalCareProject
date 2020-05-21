@@ -232,7 +232,7 @@ input.confirmerInfo {
 			</div>
 		</div>
 		<!--======================================건강정보 작성==========================================-->
-		<form method="post" id="frm" action="${path }/admin/healthInfoWrite.do" enctype="multipart/form-data">
+		<form id='disesasForm'>
 			<div class="healthInfoWrite">
 				<h1 class="title">건강정보 작성</h1>
 				<hr class="gline">
@@ -261,6 +261,7 @@ input.confirmerInfo {
 	                    <label class="custom-file-label" style="width:80%;" for="disesaseFile">질병을 표현할 사진을 선택하세요</label>
 	                </div>
 				</div>
+				</form>
 				<hr class="gline">
 				<br> <br>
 				<!-- 검수자 등록 -->
@@ -315,7 +316,6 @@ input.confirmerInfo {
 	            </div>
 				<hr class="gline">
 			</div>
-		</form>
 		<!-- =============================================================================================== -->
 	</div>
 </div>

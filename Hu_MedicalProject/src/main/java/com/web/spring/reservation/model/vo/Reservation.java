@@ -25,5 +25,6 @@ public class Reservation {
 	private String message;
 	private Date reservDate;
 	private String reservStatus;
+	private String reservTime;
 	
 }
