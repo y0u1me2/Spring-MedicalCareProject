@@ -13,7 +13,9 @@
 	</div>
 	
 	<script>
-		let websocket=new WebSocket("ws://rclass.iptime.org:9999${pageContext.request.contextPath}/chatting");
+		//let websocket=new WebSocket("ws://rclass.iptime.org:9999${pageContext.request.contextPath}/chatting");
+			let websocket=new WebSocket("ws://localhost:9090${pageContext.request.contextPath}/chatting");
+
 		let room='${param.room}';
 		websocket.onopen=function(data){
 			console.log(data);

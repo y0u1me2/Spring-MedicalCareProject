@@ -677,54 +677,45 @@ function signOut() {
 /* function logoutChk(){
 	location.href="${path}/member/logout.do";
 } */
-
 //---------------------------------------채팅 시작!--------------------------------------------
-		//admin
-		function accessChatting(room1){//병원회원-일반회원일때 매개변수 2개 받기
-			//room은 로그인된 userId가 매개변수로 들어간다.
-			if(${loginMember.email ne "admin"  } ){
-			//로그인된 회원이 병원회원이라면 requestChatting()실행!(input hidden에 넣어서 email값 받아오기)
-				//로그인된 아이디가 admin이 아니면 requestChatting()메서드 실행!
+		//by혜진, 관리자-일반회원 채팅 메서드 userId=일반회원EMAIL
+		function accessChatting(room1){
+			if(${loginMember.email ne "admin" } ){
 				requestChatting();
 			}
 			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
-			location.reload();
 		}
 		
-		//관리자문의(병원)
+		//by혜진, 관리자-병원회원 채팅 메서드 userId=병원회원ID
 	 	function hpAdminAccessChatting(room1){//room1=병원회원
 			
 			if(${not empty loginHpMember}){
 				hpAdminrequestChatting();
 			}
 			open("${path}/chattingView?room="+room1,"_blank","width=500,height=490");
-			location.reload();
-
 		}
 		
-		//병원
+	 	//by혜진, 병원-일반회원 채팅 메서드(room=일반회원,room2=병원회원) 
 		 function hpAccessChatting(room,room2){
-		//room1은일반회원(요청한회원) room2는 병원회원(요청받은회원) 
 			if(${not empty loginMember}){
 				hpRequestChatting(room2,roomId);
 				open("${path}/hpChattingView?room="+room2+"&roomId="+roomId,"_blank","width=500,height=490");
 			}else{
 				open("${path}/hpChattingView?room="+room+"&roomId="+room2,"_blank","width=500,height=490");
+				location.reload();
 			}
 		}
 
 </script>
-
-
+	
 	<c:if test="${not empty loginMember or not empty loginHpMember }">
-	<!--로그인이 되었을때 문의하기!  -->
 		<script>
 			let roomId;
-			//채팅알람받는 웹소켓 구성하기
-			let alram=new WebSocket("ws://rclass.iptime.org:9999${path}/alram");
+			//let alram=new WebSocket("ws://rclass.iptime.org:9999${path}/alram");
+			let alram=new WebSocket("ws://localhost:9090${pageContext.request.contextPath}/alram");
+
 			
 			alram.onopen=function(msg){
-				console.log("msg :"+msg);
 				
 				if(${not empty loginMember}){
 					alram.send(JSON.stringify(new AlramMessage("client","접속","${loginMember.email}","")));
@@ -738,7 +729,7 @@ function signOut() {
 			
 			alram.onmessage=function(msg){
 				const data=JSON.parse(msg.data);
-				//console.log("??"+data.msg);
+				console.log("??"+data.msg);
 				switch(data.type){
 					case "client" : roomId=data.msg;break;
 					//관리자문의(일반)
@@ -750,37 +741,37 @@ function signOut() {
 				}
 			}
 //--------------------------------------관리자 알림---------------------------------------------------			
-			//관리자문의(일반)
+			//by혜진, 관리자 알림 메서드
 			function openChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
 					accessChatting(data.sender);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
-			//관리자문의(병원)
+			//by혜진, 관리자 알림 메서드
 			function hpAdminOpenChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
 					console.log("snrn?"+data);
 					hpAdminAccessChatting(data.sender,data.msg);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
-			//병원
+			//by혜진, 병원 알림 메서드
 			function hpOpenChatting(data){
 				if(confirm(data.sender+"님 1:1문의가 들어왔습니다 \n 응답하시겠습니까?")){
 					hpAccessChatting(data.sender,data.msg);//관리자도(병원도) 창을 띄워줘야하므로!
 				}
 			}
 //------------------------요청 보내기-------------------------------------------------------------------			
-			//관리자문의(일반)
+			
+			//by혜진, 일반회원->관리자 문의 메서드
 			function requestChatting(){
 				alram.send(JSON.stringify(new AlramMessage("newchat","문의합니다.","${loginMember.email}","admin")));//
-			//일반회원이 admin에게 채팅보냄
 			}
 			
-			//관리자문의(병원)
+			//by혜진, 일반회원->관리자 문의 메서드
 			function hpAdminrequestChatting(){
 				alram.send(JSON.stringify(new AlramMessage("hpAdminChat","문의","${loginHpMember.id}","admin")));//
 			}
-			//병원
+			//by혜진, 일반회원->관리자 문의 메서드
 			 function hpRequestChatting(room2,roomId){
 				 console.log("병원 :"+room2,roomId);
 				alram.send(JSON.stringify(new AlramMessage("hospitalChat",roomId,"${loginMember.email}",room2)));
