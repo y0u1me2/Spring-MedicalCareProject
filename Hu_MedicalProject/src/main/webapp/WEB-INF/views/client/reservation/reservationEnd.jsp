@@ -355,12 +355,27 @@ footer {
 							<c:forEach items="${list }" var="r">
 								<input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
 			
+								<select name="hospTime">
+									<option>진료시간 선택</option>
+									<option>9:00</option>
+									<option>10:00</option>
+									<option>11:00</option>
+									<option>12:00</option>
+									<option>13:00</option>
+									<option>14:00</option>
+									<option>15:00</option>
+									<option>16:00</option>
+									<option>17:00</option>
+									<option>18:00</option>
+									
+								</select>  
+								
 								<p>
 									진료항목<strong>[필수]</strong>
 								</p>
-			
-			
-								  <select name="hospDepartment">
+								
+									
+								  <select name="hospDepartment" required>
 									<option>진료항목 선택</option>
 									<c:forTokens items="${r['MEDICALDEPARTMENT']}" var="e" delims=",">
 										<option value="${e}"><c:out value="${e}" /></option>

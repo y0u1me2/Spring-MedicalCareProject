@@ -30,6 +30,7 @@
 		
 	<typeAlias type="com.web.spring.healthInfo.vo.DisesaseCategory" alias="disesaseCategory" />
 	<typeAlias type="com.web.spring.healthInfo.vo.Confirmer" alias="confirmer" />
+	<typeAlias type="com.web.spring.healthInfo.vo.HealthInfoContentPic" alias="healthInfoContentPic" />
 	</typeAliases>
 
 </configuration>

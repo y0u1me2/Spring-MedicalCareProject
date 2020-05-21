@@ -596,7 +596,7 @@ var password=$('#password').val();
 		if($('#password').attr('class')=='error' || $('#psw-repeat').attr('class')=='error') {
 			return false;
 		}else {
-			if($('#password').val()==$('#psw-repeat').val()) {
+			if($('#password').val()!="" && $('#password').val()==$('#psw-repeat').val()) {
 				return true;				
 			}else {
 				return false;
