@@ -229,9 +229,9 @@
 
 .content {
   margin: auto;
-  padding: 20px;
+   padding: 20px; 
   width: 100%;
-  height:100%;
+  height:600px;
 
 }
 
@@ -572,7 +572,22 @@ div.content2{
 	min-height:200px;
 }
 
+div.entry{
+	margin-top: 30px;
+	width:100%;
+	height:700px;
+	background-image:url('${path }/resources/images/reserv.png');
+}
 
+h1#title{
+	margin-bottm:20px;
+	text-align: left;
+	 color: rgb(50, 155, 155);
+	font-size: 60px;
+	font-weight:500;
+	text-shadow:1px 1px 2px #666666;
+	
+}
   </style>
 
 
@@ -583,25 +598,16 @@ div.content2{
 		<div class="row">
 			<div class="col-sm-12">
 				<!-- ================================================================ -->
-				<div id="menu">
-					<div id="btns">
-						<button id="subject">
-							전체 진료과목<img src="${path }/resources/images/triangle.png"
-								width="10px;" />
-						</button>
-						<p id="bar">|</p>
-						<button id="location">
-							Google location api?<img
-								src="${path }/resources/images/triangle.png" width="10px;" />
-						</button>
-					</div>
+				
+			<div class="container-fluid">
+				<div class="row">
+					<div class="entry" >
 
-					<div id="tag">
-						<button>#가까운_접수병원</button>
-						<button>#바로접수가능</button>
-						<button>#신규접수병원</button>
+						<h1 id="title">HU 병원 접수하기</h1>
 					</div>
 				</div>
+			</div>
+						
 		              <hr/>
 		              <p><c:out value="${r['MEDICALDEPARTMENT'] }"/></p>
 		
@@ -609,14 +615,7 @@ div.content2{
 		         
 		           		<input type="hidden" name="hospNo" value="${r['HOSPNO']}"/>
 		           		
-		             <!--  <div class="circle">
-		              	<a href="#" class="goCorona">바로접수</a>
-		              </div><br> -->
-		             
-		            <!--  <button type="button" class="btn btn-outline-success my-2 my-sm-0" onclick="chatting();">실시간 상담하기</button> -->
-		             <!-- <div id="notice">
-=======
-
+		          
 
 				<!-- ============================= 병원정보들 ===================================================== -->
 
