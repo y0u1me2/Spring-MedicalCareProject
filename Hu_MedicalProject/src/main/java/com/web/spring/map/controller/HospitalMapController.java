@@ -33,9 +33,14 @@ public class HospitalMapController {
 	@Autowired
 	private MapService service;
 	
-	@RequestMapping("/hospitalMap.do")
+	@RequestMapping("/map/hospitalMap")
 	private String hospitalMap() {
 		return "client/map/hospitalMap";
+	}
+	
+	@RequestMapping("/map/maskMap")
+	private String maskMap() {
+		return "client/map/maskMap";
 	}
 
 	
