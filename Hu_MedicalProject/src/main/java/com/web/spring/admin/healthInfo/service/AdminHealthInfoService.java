@@ -17,4 +17,6 @@ public interface AdminHealthInfoService {
 	
 	DisesaseCategory selectDisesaseCategory(DisesaseCategory dc);
 	Confirmer selectConfirmer(Confirmer c);
+	
+	int insertDisesase(DisesaseCategory dc);
 }

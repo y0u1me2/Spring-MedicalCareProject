@@ -61,6 +61,13 @@ public class AdminHealthInfoServiceImpl implements AdminHealthInfoService {
 		// TODO Auto-generated method stub
 		return dao.selectConfirmer(session, c);
 	}
+
+
+	@Override
+	public int insertDisesase(DisesaseCategory dc) {
+		// TODO Auto-generated method stub
+		return dao.insertDisesase(session, dc);
+	}
 	
 	
 	

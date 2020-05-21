@@ -435,6 +435,7 @@ var password=$('#password').val();
 			$('#reservList>div').html('');
 		}
 		if($(this).attr('name')=='myPage-reservation') {
+			$('#reservList>div').html('');
 			$('#personInfoFrm')[0].reset();
 			$('.myPage-deleteMember').css('display', 'none');
 			$('.personalInfo-update').css('display', 'none');
@@ -443,7 +444,6 @@ var password=$('#password').val();
 				url:"${path}/myPage/reservationStatus",
 				data:{'no':$('#memberNo').val()},
 				success:function(data) {
-					console.log(data);
 					var tableHead='<table class="reservList">'
 										+'<tr class="table-head">'
 											+'<th class="hospName">병원이름</th>'

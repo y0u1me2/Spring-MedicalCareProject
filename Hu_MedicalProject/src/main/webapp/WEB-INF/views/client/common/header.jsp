@@ -61,9 +61,11 @@
         <a class="nav-link" href="${path }/healthInfo/healthInfoMain">건강정보</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="${path }/hospitalMap.do">병원찾기</a>
+        <a class="nav-link" href="${path }/map/hospitalMap">병원찾기</a>
       </li>
-      
+      <li class="nav-item">
+        <a class="nav-link" href="${path }/map/maskMap">마스크 지도</a>
+      </li>
      
       <!-- <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>

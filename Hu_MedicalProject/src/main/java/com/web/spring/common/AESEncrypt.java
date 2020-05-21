@@ -32,9 +32,10 @@ public class AESEncrypt {
 	   private static SecretKey key;
 	   private String path;
 	   
-	   public AESEncrypt(String path) {
+	   public AESEncrypt() {
 	      //생성자, 객체가 생성될때 key값을 초기화하기(listener로 )
-	      this.path=path;
+		  String path = AESEncrypt.class.getResource("/").getPath();
+		  this.path=path.substring(0, path.indexOf("classes"));
 	      File f = new File(path+"/secret.bs");
 	      System.out.println("파일있니?" +f.exists());
 	      if(f.exists()) {//파일이 있으면?

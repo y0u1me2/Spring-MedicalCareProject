@@ -57,6 +57,13 @@ public class AdminHealthInfoDaoImpl implements AdminHealthInfoDao {
 		return session.selectOne("adminHealthInfo.selectConfirmer",c);
 	}
 
+
+	@Override
+	public int insertDisesase(SqlSession session, DisesaseCategory dc) {
+		// TODO Auto-generated method stub
+		return session.insert("adminHealthInfo.insertDisesase", dc);
+	}
+
 	
 	
 }

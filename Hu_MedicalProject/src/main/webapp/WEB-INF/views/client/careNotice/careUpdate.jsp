@@ -161,7 +161,7 @@
 
                     <label for="tag">자격증 등록</label>
                     <span> *요양보호사 자격증을 업로드 해주세요.</span>
-						<input type="file" class="form-control" name="upFile" id="upFile">
+						<input type="file" class="form-control" name="upFile" id="upFile" multiple>
 
 			
 				<c:forEach items="${files}" var="f" varStatus="vs">				
