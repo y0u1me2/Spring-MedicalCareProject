@@ -325,7 +325,7 @@ footer {
 			<div class="col-sm-2"></div>
 			<div class="col-sm-6 col-sm-10" style=" margin-top:200px;">
 					
-				<form action="${path}/rv/reservationEnd" id="rvFrm" method="post">
+				<form action="${path}/rv/reservationEnd" name="rvFrm" id="rvFrm" method="post">
 					<div id="choice">
 			
 						<p>
@@ -340,7 +340,7 @@ footer {
 									width="100px;">
 						
 									<p>
-										&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;
 										<c:out value="${loginMember.name }" />
 									</p>
 							
@@ -355,28 +355,35 @@ footer {
 							<c:forEach items="${list }" var="r">
 								<input type="hidden" name="hospNo" value="${r['HOSPNO']}" />
 			
-								<select name="hospTime">
-									<option>진료시간 선택</option>
-									<option>9:00</option>
-									<option>10:00</option>
-									<option>11:00</option>
-									<option>12:00</option>
-									<option>13:00</option>
-									<option>14:00</option>
-									<option>15:00</option>
-									<option>16:00</option>
-									<option>17:00</option>
-									<option>18:00</option>
+			
+								<p>
+									진료시간<strong>[필수]</strong>
+								</p>
+								
+								<select name="reservTime">
+									<option selected value="">진료시간 선택</option>
+									<option value="9:00">9:00</option>
+									<option value="10:00">10:00</option>
+									<option value="11:00">11:00</option>
+									<option value="12:00">12:00</option>
+									<option value="13:00">13:00</option>
+									<option value="14:00">14:00</option>
+									<option value="15:00">15:00</option>
+									<option value="16:00">16:00</option>
+									<option value="17:00">17:00</option>
+									<option value="18:00">18:00</option>
 									
 								</select>  
 								
+								
 								<p>
+								<br/>
 									진료항목<strong>[필수]</strong>
 								</p>
 								
 									
-								  <select name="hospDepartment" required>
-									<option>진료항목 선택</option>
+								  <select name="hospDepartment">
+									<option selected value="">진료항목 선택</option>
 									<c:forTokens items="${r['MEDICALDEPARTMENT']}" var="e" delims=",">
 										<option value="${e}"><c:out value="${e}" /></option>
 									</c:forTokens>
@@ -463,28 +470,33 @@ footer {
 
 <script>
 
+	
+		  
+
 	//접수전 주의사항 팝업
 	function popupOn() {
 		
-	//var department =  $('.select').siblings('select').val();
-
-		//if(department>0){
-				
-			$(".modal-back").show();
-			
+		 if(!document.rvFrm.reservTime.value ||document.rvFrm.reservTime.value==""){
+				alert("진료시간을 선택해주세요.");
+				rvFrm.reservTime.focus();
+				return;
+			}
+		 
+		 if(!document.rvFrm.hospDepartment.value ||document.rvFrm.hospDepartment.value==""){
+			alert("진료항목을 선택해주세요.");
+			rvFrm.hospDepartment.focus();
+			return;
+		}
+		 
+			  
+		$(".modal-back").show();
 			//접수완료하기
 			$(".big-gray-btn").click(function(){
-					console.log($('select[name=hospDepartment]').val());
-				$("#rvFrm").submit();
-			});
-			
-		//}else{
-		//	alert('진료항목을 선택해주세요!');
-		//}
-				
-			
+
+					$("#rvFrm").submit();
+			});											
 	}
-		
+			
 	//접수전 주의사항 팝업 닫기
 	function popupOff() {
 		$(".modal-back").hide();

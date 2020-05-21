@@ -60,9 +60,11 @@
         <a class="nav-link" href="${path }/healthInfo/healthInfoMain">건강정보</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="${path }/hospitalMap.do">병원찾기</a>
+        <a class="nav-link" href="${path }/map/hospitalMap">병원찾기</a>
       </li>
-      
+      <li class="nav-item">
+        <a class="nav-link" href="${path }/map/maskMap">마스크 지도</a>
+      </li>
      
       <!-- <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>
@@ -260,7 +262,7 @@
       <input type="hidden" class="idChecked" name="idChk" value="0">
       <button type="button" class="emailChk" onclick="searchEmail();" style="background-color:#DAF1DE">이메일 확인</button><br>
       <div style="text-align:center;">
-      <button class="findPswBtn" id="findPswBtn" type="button" onclick="sendEmail();" style="background-color:#DAF1DE">인증번호 전송</button>
+      <button class="findPswBtn" id="findPswBtn" type="button" onclick="findPWsendEmail();" style="background-color:#DAF1DE">인증번호 전송</button>
   	</div>
    </div>
   <div><br><br></div>
@@ -343,11 +345,11 @@ function searchEmail(){
 		}
 	})
 } 
-function sendEmail(){
+function findPWsendEmail(){
 	 if (document.findPswForm.idChk.value==0)
 	 {
 		alert("이메일을 확인 하세요");
-		console.log("dididi");
+		//console.log("dididi");
 	     /* $("#memberEmail").focus();    */
 	    return false;
 	 }else{

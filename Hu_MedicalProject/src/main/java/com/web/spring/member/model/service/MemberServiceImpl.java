@@ -25,13 +25,17 @@ public class MemberServiceImpl implements MemberService{
 		return dao.insertPerson(session,m);
 	}
 
+	//이메일 인증
+	@Override
+	public int emailComplete(String email) {
+		return dao.emailComplete(session,email);
+	}
+
 
 	@Override
 	public Member memberLogin(Member m) {
 		return dao.memberLogin(session,m);
 	}
-
-
 	
 	//구글 아이디 있니?
 	@Override

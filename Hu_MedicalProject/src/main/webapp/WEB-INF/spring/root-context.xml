@@ -59,7 +59,7 @@
    </aop:config>
 
    <bean id="encryptor" class="com.web.spring.common.AESEncrypt">
-      <constructor-arg index="0" value="c:\dev\"/>
+      
    </bean>
    <!-- 회원가입 메일 인증, 비밀번호 찾기 -->
 	<bean id="mailSender"	class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -75,9 +75,9 @@
             </props>
         </property>
 	</bean>	
-	<bean id="email" class="com.web.spring.member.model.vo.Mail">
+	<bean id="email" class="com.web.spring.member.model.vo.Email">
 	</bean>
-	<bean id="emailSender" class="com.web.spring.common.MailSender">
+	<bean id="emailSender" class="com.web.spring.common.EmailSender">
 	</bean>
 
 </beans>

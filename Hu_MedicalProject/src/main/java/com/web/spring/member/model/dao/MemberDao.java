@@ -13,6 +13,8 @@ public interface MemberDao {
 	int insertPerson(SqlSessionTemplate session, Member m);
 	
 	Member memberLogin(SqlSessionTemplate session, Member m);
+	//이메일 인증
+	int emailComplete(SqlSessionTemplate session, String email);
 	
 	Member searchEmail(SqlSessionTemplate session, String email);
 
@@ -25,6 +27,7 @@ public interface MemberDao {
 	int googleInsert(SqlSessionTemplate session, Member googleNew);
 
 	Member searchGoogleGetMember(SqlSessionTemplate session, String googleEmail);
+
 
 	
 	
