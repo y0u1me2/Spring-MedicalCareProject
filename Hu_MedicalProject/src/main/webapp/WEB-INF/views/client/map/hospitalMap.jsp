@@ -124,6 +124,7 @@ var markers = [];
 var circle;
 var curLat;
 var curLon;
+var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 찍어주기
     // Geolocation API에 액세스할 수 있는지를 확인
@@ -179,8 +180,8 @@ $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 �
         	    }
         	    
         	    map.panTo(latlng);//클릭한 지점으로 지도중심좌표 이동시키기
-				searchHospital(latlng.getLat(), latlng.getLng(), radius);//병원 검색
         	    
+				searchHospital(latlng.getLat(), latlng.getLng(), radius);//병원 검색
         	});
             
         });
@@ -211,21 +212,25 @@ function searchHospital(lat, lng, radius, pageNo){
 			var totalCount = data.response.body.totalCount;
 			var totalPage;
 			
-			if(totalCount != '0'){
+			if(totalCount=='0'){
+				alert("검색결과가 없습니다.");
+				return;
+			}else{
 				totalPage = Math.ceil(Number(totalCount)/10);
 			}
+			
 			if(!places){
 				alert("검색결과가 없습니다.");
 				return;
 			}
+			
+			displayPlaces(places, lat, lng, radius);
+			displayPagination(lat, lng, radius, pageNo, totalPage);
+
 			if(circle){
 				circle.setMap(null);
 			}
-			/* hideMarkers();
-			markers.length=0; */
-			/* displayMarker(data, lat, lng, radius); */
-			displayPlaces(places, lat, lng, radius);
-			displayPagination(lat, lng, radius, pageNo, totalPage);
+			displayCircle(lat, lng, radius);
 		},
 		
 		beforeSend:function(){
@@ -274,6 +279,24 @@ function displayPlaces(places, lat, lng, radius) {
             marker = addMarker(placePosition, i, places[i].yadmNm), 
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
+            (function(marker, title) {
+                kakao.maps.event.addListener(marker, 'mouseover', function() {
+                    displayInfowindow(marker, title);
+                });
+
+                kakao.maps.event.addListener(marker, 'mouseout', function() {
+                    infowindow.close();
+                });
+
+                itemEl.onmouseover =  function () {
+                    displayInfowindow(marker, title);
+                };
+
+                itemEl.onmouseout =  function () {
+                    infowindow.close();
+                };
+            })(marker, places[i].yadmNm);    
+            
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
         bounds.extend(placePosition);
@@ -288,7 +311,12 @@ function displayPlaces(places, lat, lng, radius) {
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     //map.setBounds(bounds);
     
- // 지도에 표시할 원을 생성합니다
+ 
+    
+}
+
+
+function displayCircle(lat, lng, radius){
 	circle = new kakao.maps.Circle({
 	    center : new kakao.maps.LatLng(lat, lng),  // 원의 중심좌표 입니다 
 	    radius: radius, // 미터 단위의 원의 반지름입니다 
@@ -300,9 +328,7 @@ function displayPlaces(places, lat, lng, radius) {
 	    fillOpacity: 0.5  // 채우기 불투명도 입니다   
 	}); 
 
-	// 지도에 원을 표시합니다 
-	circle.setMap(map);
-    
+	circle.setMap(map);//지도 표시
 }
 
 // 검색결과 항목을 Element로 반환하는 함수입니다

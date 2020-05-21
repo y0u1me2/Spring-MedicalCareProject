@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Hospital2 {
-	private String hospId;
+	private String hospNo;
 	private String hospName;
 	private String hospAddr;
 	private String hospTel;

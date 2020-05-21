@@ -261,7 +261,7 @@ public class HospitalMapController {
 					Element eElement = (Element) nNode;
 					
 					Hospital2 h = new Hospital2();
-					h.setHospId(getTagValue("hpid", eElement));
+					h.setHospNo(getTagValue("hpid", eElement));
 					h.setHospName(getTagValue("dutyName", eElement));
 					h.setHospAddr(getTagValue("dutyAddr", eElement));
 					h.setHospTel(getTagValue("dutyTel1", eElement));
