@@ -26,7 +26,9 @@
     <script src="${pageContext.request.contextPath }/resources/js/jquery.flot.tooltip.min.js"></script>
     <script src="${pageContext.request.contextPath }/resources/js/flot-data.js"></script>
     <script src="${pageContext.request.contextPath }/resources/js/jQuery.style.switcher.js"></script>
-
+	<style>
+		body{width:1366px;}
+	</style>
 </head>
 
 

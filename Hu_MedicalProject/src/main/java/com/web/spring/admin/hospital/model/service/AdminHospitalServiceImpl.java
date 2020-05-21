@@ -20,8 +20,8 @@ public class AdminHospitalServiceImpl implements AdminHospitalService {
 	private SqlSessionTemplate session;
 	
 	@Override
-	public List<HospitalMember> selectAllMembers() {
-		return dao.selectAllMembers(session);
+	public List<HospitalMember> selectAllMembers(int cPage, int numPerPage) {
+		return dao.selectAllMembers(session, cPage, numPerPage);
 	}
 
 	@Override
@@ -38,5 +38,11 @@ public class AdminHospitalServiceImpl implements AdminHospitalService {
 	public int updateMemberStatus(int no) {
 		return dao.updateMemberStatus(session, no);
 	}
+
+	@Override
+	public int totalMemberCount() {
+		return dao.totalMemberCount(session);
+	}
+
 
 }

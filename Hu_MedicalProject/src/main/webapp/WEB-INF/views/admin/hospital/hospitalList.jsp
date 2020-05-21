@@ -12,44 +12,7 @@
 	margin: 0;
 }
 
-body {
-	width: 1366px;
-	height: auto;
-}
 
-/* 섹션안 공간  */
-div.back {
-	position: relative;
-	left: 370px;
-	top: 50px;
-	margin-bottom:25px;
-}
-
-/* content 공간 */
-div.goodsback {
-	width: 80%;
-}
-
-/* 전체 1:1상담 목록 텍스트 */
-h1#title {
-	font-weight: bolder;
-	font-size: 30px;
-	position: relative;
-	top: 10px;
-}
-
-/* 제목밑에 선 */
-hr#gline {
-	border: 1px solid rgb(177, 174, 174);
-	position: relative;
-	top: 20px;
-	width: 80%;
-}
-/* content 위치 */
-div.list-container {
-	position: relative;
-	top: 10px;
-}
 
 /* 테이블 선 색상 */
 div.box>th, tr, td {
@@ -76,29 +39,8 @@ table.box {
 	border-collapse: collapse;
 }
 
-/* 문의내용이 존재하지 않습니다. */
-td#conbox {
-	text-align: center;
-	height: 300px;
-	font-size: 15px;
-	position: relative;
-	width: 100%;
-}
 
-/* 페이지바 위치 */
-div#pageBar {
-	position: relative;
-	top: 20px;
-}
-
-/* 페이지바 a태그  */
-div#pageBar a {
-	text-decoration: none;
-	color: rgb(95, 93, 93);
-}
-
-/* 답변상태 버튼 */
-#inquiry-btn {
+.btn_white {
 	position: relative;
 	height: 30px;
 	width: 80px;
@@ -110,83 +52,12 @@ div#pageBar a {
 	margin-right: 5px;
 }
 
-#inquiry-btn:hover {
+.btn_white:hover {
 	background: rgb(251, 251, 249);
 	outline: none;
 }
 
-/* 리스트상자  */
-.mListHeader {
-	padding: 7px 15px;
-	padding-bottom: 10px;
-	border: 1px solid #bcbfc4;
-	line-height: 21px;
-	text-align: center;
-	background: rgb(190, 209, 245);
-	position: relative;
-	z-index: 1;
-	margin-bottom: -1px;
-	width: 80%;
-	height: 50px;
-	top: 23px;
-}
 
-/* 삭제 버튼위치 */
-.gleft {
-	position: relative;
-	right: 330px;
-	top: 2px;
-}
-
-#numPerPage {
-	position: relative;
-	left: 370px;
-	top: -25px;
-}
-
-/* 삭제  버튼 스타일 */
-.btn_Wihte {
-	padding: 3px 10px;
-	font-size: 12px;
-	color: rgb(0, 0, 0);
-	text-align: center;
-	background-color: white;
-	border: 1px solid rgb(161, 161, 161);
-}
-
-/* 검색결과 스타일 */
-.total {
-	font-size: 15px;
-	font-family: "Nanum Gothic";
-	color: rgb(49, 49, 49);
-	margin: 2px 8px 0px 0px;
-}
-
-.total>strong {
-	color:  rgb(76, 231, 231);
-}
-
-#pageBar {
-	width: 80%;
-	margin: 40px 0 40px 0;
-	text-align: center;
-}
-
-#pageBar>a, #pageBar>span {
-	width: 40px;
-	height: 40px;
-	text-align: center;
-	line-height: 40px;
-	border: 1px solid #eee;
-	color: #999;
-	background-color: #fff;
-	margin: 0 2px;
-	position: relative;
-	font-size: 13px;
-	font-family: "YoonGothicPro760";
-	display: inline-block;
-	vertical-align: top;
-}
 </style>
 	<jsp:include page="/WEB-INF/views/admin/common/header.jsp" />
 	
@@ -199,7 +70,7 @@ div#pageBar a {
 			
 		</div>
 		
-		<div class="row">
+		<div class="row my-5">
 			<table class="box" style="width:100%;">
 					<tr>					
 						<td>번호</td>
@@ -226,7 +97,7 @@ div#pageBar a {
 								승인 완료
 							</c:if>
 							<c:if test="${m.status eq 'N'}">
-								<button type="button" onclick="approval(${m.no})" id="inquiry-btn">가입 승인</button>
+								<button class="btn_white" type="button" onclick="approval(${m.no})" id="inquiry-btn">가입 승인</button>
 							</c:if>
 						</td>
 						
@@ -236,6 +107,10 @@ div#pageBar a {
 				
 					
 				</table>
+		</div>
+		
+		<div class="container">
+			${pageBar }
 		</div>
 	</div>
 	

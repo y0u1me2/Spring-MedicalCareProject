@@ -9,12 +9,14 @@ import com.web.spring.member.model.vo.HospitalMember;
 
 public interface AdminHospitalDao {
 
-	List<HospitalMember> selectAllMembers(SqlSessionTemplate session);
+	List<HospitalMember> selectAllMembers(SqlSessionTemplate session, int cPage, int numPerPage);
 
 	Hospital2 selectOneHospital(SqlSessionTemplate session, String hospNo);
 
 	int updateOneHospital(SqlSessionTemplate session, Hospital2 h);
 
 	int updateMemberStatus(SqlSessionTemplate session, int no);
+
+	int totalMemberCount(SqlSessionTemplate session);
 
 }

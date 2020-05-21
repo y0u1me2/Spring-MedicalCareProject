@@ -50,4 +50,8 @@
 		SELECT * FROM HOSPITAL_MEMBER JOIN HOSPITAL2 USING(HOSPNO)
 	</select>
 	
+	<select id="totalMemberCount" resultType="_int">
+		SELECT COUNT(*) FROM HOSPITAL_MEMBER
+	</select>
+	
 </mapper>

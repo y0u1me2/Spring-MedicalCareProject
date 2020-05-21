@@ -7,12 +7,14 @@ import com.web.spring.member.model.vo.HospitalMember;
 
 public interface AdminHospitalService {
 
-	List<HospitalMember> selectAllMembers();
+	List<HospitalMember> selectAllMembers(int cPage, int numPerPage);
 
 	Hospital2 selectOneHospital(String hospNo);
 
 	int updateOneHospital(Hospital2 h);
 
 	int updateMemberStatus(int no);
+
+	int totalMemberCount();
 
 }
