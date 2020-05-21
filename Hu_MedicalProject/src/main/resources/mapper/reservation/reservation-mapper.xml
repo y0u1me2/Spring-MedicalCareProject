@@ -13,7 +13,7 @@
     <insert id="insertReservation" parameterType="reservation">
        INSERT INTO RESERVATION VALUES(SEQ_RESERVNO.NEXTVAL, 
                                #{memberNo},#{hospNo},#{hospDepartment},
-                                #{message},DEFAULT,DEFAULT)
+                                #{message},DEFAULT,DEFAULT,#{reservTime})
     </insert>
     
   <!-- 코로나페이지 -->
