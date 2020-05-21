@@ -3,16 +3,14 @@ package com.web.spring.member.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.swing.text.html.HTML;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +19,16 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.web.spring.common.MailSender;
+import com.web.spring.common.EmailSender;
 import com.web.spring.member.model.service.MemberService;
-import com.web.spring.member.model.vo.Mail;
+import com.web.spring.member.model.vo.Email;
 import com.web.spring.member.model.vo.Member;
-import javax.servlet.http.Cookie;
 
 
 @Controller
@@ -51,11 +46,13 @@ public class MemberController {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+
 	@Autowired
-	private MailSender emailSender;
-	@Autowired
-	private Mail mail;
+	private Email email;
 	
+	@Autowired
+	private EmailSender emailsender;
+
 	@RequestMapping("/member/personEnroll.do")
 	public String personEnroll() {
 		return "client/member/personEnroll";
@@ -65,25 +62,85 @@ public class MemberController {
 		return "client/member/hospitalEnroll";
 	}
 	
-	
 	@RequestMapping("/member/personEnrollEnd.do")
-	public String insertPerson(Member m,Model model) throws Exception {
-		
-		logger.debug("암호화 전 : " + m.getPassword());
-		m.setPassword(pwEncoder.encode(m.getPassword()));
-		logger.debug("암호화 후 :" + m.getPassword());
-		
-		int result = service.insertPerson(m);
-		System.out.println(result);
-		
-		String msg=result>0?"회원가입 성공":"회원가입 실패";
-		String loc=result>0?"":"member/personEnrollEnd.do";
-		model.addAttribute("msg",msg);
-		model.addAttribute("loc",loc);
-		
-		return "client/common/msg";
-	}
+	   public String insertPerson(@RequestParam("email") String email,
+									    @RequestParam("joinName") String name,
+									    @RequestParam("password") String password,
+									    @RequestParam("joinPhone") String phone,
+									    HttpServletRequest request,Model model) throws Exception {
 	
+		  Member m = new Member(0,email,name,password,phone,null,null);
+		  String userEmail = m.getEmail();
+		  System.out.println(m);
+	      logger.debug("암호화 전 : " + m.getPassword());
+	      m.setPassword(pwEncoder.encode(m.getPassword()));
+	      logger.debug("암호화 후 :" + m.getPassword());
+	      
+	      int result = service.insertPerson(m);
+	      System.out.println(result);
+	      
+	      String host =request.getRequestURL().toString().replace(request.getRequestURI(),"")+request.getContextPath()+"/";
+	      String msg="";
+	      String loc="";
+	      
+			if(result > 0) {
+				String setfrom = "qkrejrgus4713@gmail.com";
+		        String tomail = m.getEmail();    //받는 사람의 이메일
+		        String title = "HU 회원가입 인증 이메일 입니다.";    //제목
+		        String content =
+		               "안녕하세요 회원님 저희 홈페이지를 찾아주셔서 감사합니다."     
+		             +
+		               "<a href="+ host + "member/emailComplete.do?userEmail="+userEmail+">회원가입 인증하기</a>"; // 내용
+		       
+		        try {
+
+		            MimeMessage message = mailSender.createMimeMessage();
+		            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+
+		            messageHelper.setFrom(setfrom); // 보내는사람 생략하면 정상작동을 안함
+		            messageHelper.setTo(tomail); // 받는사람 이메일
+		            messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+		            messageHelper.setText(content, true); // 메일 내용
+		            
+		            mailSender.send(message);
+		    
+		        } catch (Exception e) {
+		            System.out.println(e);
+		        }
+		        msg = "이메일이 발송되었습니다. 이메일 인증을 해주세요!";
+		       
+			}else {
+				  msg = "이메일 발송 실패, 다시 시도 해주세요";
+	        	  loc= "client/member/personEnroll";
+			}
+			 model.addAttribute("msg", msg);
+		     model.addAttribute("loc", loc);
+			return "client/common/msg";
+	   }
+	
+	   @RequestMapping("/member/emailComplete.do")
+	    public String emailComplete(@RequestParam("userEmail") String email, Model model) {
+	   
+		   System.out.println(email);
+		/*
+		 * Member m = service.searchEmail(email); 
+		 * System.out.println("나나" + m);
+		 */
+	       int join = service.emailComplete(email);
+	       String msg = "";
+	       String loc = "/";
+	       
+	       if(join > 0) {
+	          msg = "이메일 인증 완료되었습니다. 로그인 후 이용하세요!";
+	       }else{
+	         msg = "이메일 인증 실패...";
+	       }    
+	       model.addAttribute("msg", msg);
+	       model.addAttribute("loc", loc);
+	        
+	       return "client/common/msg";
+	   }
+	   
 	@SuppressWarnings("unused")
 	@RequestMapping("/member/memberLogin.do")
 	 public String memberLogin(Member m, Model model) throws Exception{
@@ -201,7 +258,7 @@ public class MemberController {
 		 return mv;
 	}
 	@RequestMapping("/emailOk")
-	public ModelAndView emailOk(@RequestParam String email, ModelAndView mv) {
+	public ModelAndView emailOk(@RequestParam("email") String email, ModelAndView mv) {
 		System.out.println(email);
 		
 		Member member = service.searchEmail(email);
@@ -407,4 +464,7 @@ public class MemberController {
 		
 		return mv;
     }
+    
+//    @RequestMapping("/emailChk.do")
+//    public 
 }

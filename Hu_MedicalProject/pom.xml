@@ -254,6 +254,7 @@
 		    <artifactId>spring-integration-mail</artifactId>
 		    <version>${org.springframework-version}</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>

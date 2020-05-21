@@ -7,15 +7,15 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import com.web.spring.member.model.vo.Mail;
+import com.web.spring.member.model.vo.Email;
 
-public class MailSender {
+public class EmailSender {
 
 	@Autowired
 	private JavaMailSender mailSender;
 
 	
-	public void SendEmail(Mail mail) throws Exception {
+	public void SendEmail(Email mail) throws Exception {
 		System.out.println(mail);
 		MimeMessage msg = mailSender.createMimeMessage();
 		try {

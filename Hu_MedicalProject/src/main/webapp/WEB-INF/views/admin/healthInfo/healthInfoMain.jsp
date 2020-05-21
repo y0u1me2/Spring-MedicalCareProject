@@ -191,7 +191,6 @@ input.confirmerInfo {
 .healthInfoWriteSubTitle>textarea {
 	width: 80%;
 }
-
 </style>
 
 <div class="content-wrapper">

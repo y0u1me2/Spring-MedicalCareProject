@@ -179,7 +179,7 @@ function validate(){
 		// alert("전화번호를 입력하세요");
 		 $("#joinPhone").focus();
 		 return false; 
-	}else if(phoneCheck.test($("#phone").val())==false){
+	}else if(phoneCheck.test($("#joinPhone").val())==false){
 		alert("핸드폰 번호를 알맞게 작성해주세요");
 		$("#joinPhone").focus();
 		 return false;
@@ -213,6 +213,10 @@ function emailOk(){
 		}
 	})
 } 
+function sendEmailChk(){
+	var email = $('#email').val();
+	location.href="${path }/emailChk.do?email="+email;
+}
 function openModal1(){
 	$("#modal1").modal();
 	$('html').css({'overflow': 'hidden'});

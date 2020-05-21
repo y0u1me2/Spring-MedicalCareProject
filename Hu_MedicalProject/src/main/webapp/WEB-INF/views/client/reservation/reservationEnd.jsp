@@ -340,7 +340,7 @@ footer {
 									width="100px;">
 						
 									<p>
-										&nbsp;
+										&nbsp;&nbsp;&nbsp;&nbsp;
 										<c:out value="${loginMember.name }" />
 									</p>
 							
