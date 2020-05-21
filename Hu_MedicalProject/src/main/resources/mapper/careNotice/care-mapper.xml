@@ -44,8 +44,7 @@
     <insert id="insertAttachment" parameterType="attachment">
        INSERT INTO CAREATTACHMENT VALUES(SEQ_ATTACHMENT.NEXTVAL, 
                                #{careNo}, #{originalFilename},
-                                #{renamedFilename},DEFAULT,DEFAULT,
-                                DEFAULT)
+                                #{renamedFilename},DEFAULT,DEFAULT)
     </insert> 
     
     <!--돌보미 상세페이지  -->
