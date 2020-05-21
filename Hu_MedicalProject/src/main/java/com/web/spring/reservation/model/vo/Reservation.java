@@ -3,6 +3,12 @@ package com.web.spring.reservation.model.vo;
 
 
 
+
+
+
+
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +23,8 @@ public class Reservation {
 	private String hospNo;
 	private String hospDepartment;
 	private String message;
+	private Date reservDate;
+	private String reservStatus;
+	private String reservTime;
 	
 }

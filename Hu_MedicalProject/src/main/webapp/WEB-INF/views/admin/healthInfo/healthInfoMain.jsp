@@ -185,7 +185,12 @@ tr.contentTR>td {
 #disesaseSubTitle {
 	width: 100%;
 }
-
+input.confirmerInfo {
+	width: 30%;
+}
+.healthInfoWriteSubTitle>textarea {
+	width: 80%;
+}
 </style>
 
 <div class="content-wrapper">
@@ -226,51 +231,90 @@ tr.contentTR>td {
 			</div>
 		</div>
 		<!--======================================건강정보 작성==========================================-->
-		<div class="healthInfoWrite">
-			<h1 class="title">건강정보 작성</h1>
-			<hr class="gline">
-			<br> <br>
-			<div class="disesaseWriteContent">
-				<div class="disesaseWriteTitle">
-					<label for="disesaseSort">질병명 : </label>
-					<select id="disesaseSort" name="disesaseSort">
+		<form id='disesasForm'>
+			<div class="healthInfoWrite">
+				<h1 class="title">건강정보 작성</h1>
+				<hr class="gline">
+				<br> <br>
+				<!-- 질병 등록 -->
+				<div class="disesaseWriteContent">
+					<div class="disesaseWriteTitle">
+						<label for="disesaseSort">질병명 : </label>
+						<select id="disesaseSort" name="disesaseSort">
+							<option value="직접입력">직접입력</option>
+							<c:forEach items="${list }" var="d">
+								<option value="${d.DISESASENO}"><c:out value="${d.DISESASETITLE}" /></option>
+							</c:forEach>
+						</select>
+						<input class="name" style="width:40%;" type="text" id="disesaseTitle" name="disesaseTitle">
+						<input type="hidden" id="disesaseNo" name="disesaseNo">
+						<input type="hidden" id="medicalNo" name="medicalNo">
+					</div>
+					<div class="disesaseWriteSubTitle">
+						<textarea rows="1" style=" resize:none;" id="disesaseSubTitle" name="disesaseSubTitle" placeholder="질병의 간단한 내용을 작성하세요."></textarea>
+					</div>
+				</div>
+				<div class="disesaseFile">
+					<div class="custom-file" style="display:inline;">
+	                    <input type="file" class="custom-file-input" name="disesaseFile" id="disesaseFile">
+	                    <label class="custom-file-label" style="width:80%;" for="disesaseFile">질병을 표현할 사진을 선택하세요</label>
+	                </div>
+				</div>
+				</form>
+				<hr class="gline">
+				<br> <br>
+				<!-- 검수자 등록 -->
+				<div class="confirmerSelect">
+					<label for="confirmerSort">검수자 : </label>
+					<select id="confirmerSort">
 						<option value="직접입력">직접입력</option>
-						<c:forEach items="${list }" var="d">
-							<option value="${d.DISESASENO}"><c:out value="${d.DISESASETITLE}" /></option>
+						<c:forEach items="${confirmerList }" var="c">
+							<option value="${c.CONFIRMERNO}"><c:out value="${c.CONFIRMERNAME}" /></option>
 						</c:forEach>
 					</select>
-					<input class="name" style="width:40%;" type="text" id="disesaseTitle" name="disesaseTitle">
-					<input type="hidden" id="disesaseNo" name="disesaseNo">
+					<input class="name" style="width:10%;" type="text" id="confirmerName" name="confirmerName">
+					<input type="hidden" id="confirmerNo" name="confirmerNo">
+					<input type="hidden" id="medicalNo" name="medicalNo">
 				</div>
-				<div class="disesaseWriteSubTitle">
-					<textarea rows="1" id="disesaseSubTitle" name="disesaseSubTitle" placeholder="질병의 간단한 내용을 작성하세요."></textarea>
+				<div class="confirmerInfo" style="display:flex; justify-content:space-between; width:80%;">
+					<input class="confirmerInfo" type="text" id="confirmerWork" placeholder="현재 일하는 직장" name="confirmerWork">
+					<input class="confirmerInfo" type="text" id="confirmerJob" placeholder="현재 직급" name="confirmerJob">
+					<input class="confirmerInfo" type="text" id="confirmerInfo" placeholder="부가 설명" name="confirmerInfo">
 				</div>
+				<div class="confirmerFile">
+					<div class="custom-file" style="display:inline;">
+	                    <input type="file" class="custom-file-input" name="confirmerPic" id="confirmerPic">
+	                    <label class="custom-file-label" style="width:80%;" for="confirmerPic">검수자 사진을 선택하세요</label>
+	                </div>
+				</div>
+				<hr class="gline">
+				<br> <br>
+				<!-- 건강정보 본문 글 -->
+				<div class="disesaseWriteContent">
+					<div class="healthInfo">
+						<label for="healthInfoTitle">건강 정보 제목 : </label>
+						<input id="healthInfoTitle" name="healthInfoTitle">				
+					</div>
+					<div class="healthInfoWriteSubTitle" style="width:500px; margin-left:50px; resize:none;">
+						<textarea rows="1" id="healthInfoSubTitle" name="healthInfoSubTitle" placeholder="건강 정보의 간단한 내용을 작성하세요."></textarea>
+					</div>
+				</div>
+				<div class="healthInfoFile">
+					<div class="custom-file" style="display:inline;">
+	                    <input type="file" class="custom-file-input" name="healthInfoMainPic" id="healthInfoMainPic">
+	                    <label class="custom-file-label" style="width:80%;" for="healthInfoMainPic">건강정보 타이틀 사진을 선택하세요</label>
+	                </div>
+				</div>	
+	            <div class="custom-file" style="display:inline;">
+		            <input type="file" class="custom-file-input" name="healthInfoContentPic" id="healthInfoContentPic" multiple>
+		            <label class="custom-file-label" style="width:80%;" for="healthInfoContentPic">건강정보 내용 사진들을 선택하세요</label>
+	            </div>
+	            <div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
+		            <button type="submit" class="inquiry-btn" id="complete">완료</button>
+		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
+	            </div>
+				<hr class="gline">
 			</div>
-			<div class="disesaseFile">
-				<div class="custom-file" style="display:inline;">
-                    <input type="file" class="custom-file-input" name="disesaseFile" id="disesaseFile">
-                    <label class="custom-file-label" style="width:80%;" for="disesaseFile">질병을 표현할 사진을 선택하세요</label>
-                </div>
-			</div>
-			<hr class="gline">
-			<br> <br>
-			<div class="confirmerSelect">
-				<label for="confirmerSort">검수자 : </label>
-				<select id="confirmerSort">
-					<option value="직접입력">직접입력</option>
-					<c:forEach items="${confirmerList }" var="c">
-						<option value="${c.CONFIRMERNO}"><c:out value="${c.CONFIRMERNAME}" /></option>
-					</c:forEach>
-				</select>
-				<input class="name" style="width:10%;" type="text" id="confirmerName" name="confirmerName">
-				<input type="hidden" id"="confirmerNo" name="confirmerNo">
-				<input type="hidden" id"="confirmerNo" name="confirmerNo">
-				<input type="hidden" id"="confirmerNo" name="confirmerNo">
-				<input type="hidden" id"="confirmerNo" name="confirmerNo">
-			</div>
-			
-			
-		</div>
 		<!-- =============================================================================================== -->
 	</div>
 </div>
@@ -343,10 +387,25 @@ tr.contentTR>td {
 			$(this).siblings('input.name').prop('readonly',false);
 			$(this).siblings('input.name').attr({placeholder:'직접 입력'});
 			
-			/* $('#disesaseTitle').val('');
-			$('#disesaseTitle').focus();
-			$('#disesaseTitle').prop('readonly',false);
-			$('#disesaseTitle').attr({placeholder:'직접 입력'}); */
+			if($(this).attr('name')=='disesaseSort') {
+				$('#disesaseNo').val('');
+				$('#disesaseTitle').val('');
+				$('#disesaseSubTitle').val('');
+				$('#disesaseFile').next('label').text('질병을 표현할 사진을 선택하세요');
+				$('#disesaseTitle').prop('readonly',false);
+				$('#disesaseSubTitle').prop('readonly',false);
+				$('#disesaseFile').prop('readonly',false);
+			}else {
+				$('#confirmerNo').val('');
+				$('#confirmerName').val('');
+				$('#confirmerWork').val('');
+				$('#confirmerInfo').val('');
+				$('#disesaseFile').next('label').text('검수자 사진을 선택하세요');
+				$('#confirmerName').prop('readonly',false);
+				$('#confirmerWork').prop('readonly',false);
+				$('#confirmerJob').prop('readonly',false);
+				$('#confirmerInfo').prop('readonly',false);
+			}			
 		}else {			
 			$(this).siblings('input').prop('readonly',true);
 			if($(this).attr('name')=='disesaseSort') {
@@ -354,10 +413,10 @@ tr.contentTR>td {
 					url:"${path}/admin/selectDisesaseCategory.do",
 					data:{'disesaseNo':$('#disesaseSort').val()},
 					success:function(data) {
-						console.log(data.dc);
+						$('#disesaseNo').val(data.dc.disesaseNo);
 						$('#disesaseTitle').val(data.dc.disesaseTitle);
 						$('#disesaseSubTitle').val(data.dc.disesaseSubTitle);
-						$('#disesaseFile').val("${path}"+data.dc.disesaseFile);
+						$('#disesaseFile').next('label').text("${path}"+data.dc.disesaseFile);
 						$('#disesaseTitle').prop('readonly',true);
 						$('#disesaseSubTitle').prop('readonly',true);
 						$('#disesaseFile').prop('readonly',true);
@@ -368,12 +427,17 @@ tr.contentTR>td {
 					url:"${path}/admin/selectConfirmer.do",
 					data:{'confirmerNo':$('#confirmerSort').val()},
 					success:function(data) {
+						$('#confirmerNo').val(data.c.confirmerNo);
 						$('#confirmerName').val(data.c.confirmerName);
-						//$('#disesaseSubTitle').val(data.dc.disesaseSubTitle);
-						//$('#disesaseFile').val("${path}"+data.dc.disesaseFile);
+						$('#confirmerWork').val(data.c.confirmerWork);
+						$('#confirmerJob').val(data.c.confirmerJob);
+						$('#confirmerInfo').val(data.c.confirmerInfo);
+						$('#confirmerPic').next('label').text((data.c.confirmerPic!="")?"${path}"+data.c.confirmerPic:"사진 파일이 없습니다.");
+						
 						$('#confirmerName').prop('readonly',true);
-						//$('#disesaseSubTitle').prop('readonly',true);
-						//$('#disesaseFile').prop('readonly',true);
+						$('#confirmerWork').prop('readonly',true);
+						$('#confirmerJob').prop('readonly',true);
+						$('#confirmerInfo').prop('readonly',true);
 					}
 				})
 			}

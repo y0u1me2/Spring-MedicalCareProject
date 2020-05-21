@@ -101,7 +101,7 @@ pageEncoding="UTF-8"%>
 <!-- <button onclick="getInfo();">중심좌표</button> -->
 
 
-<div class="map_wrap mx-auto border d-flex" style="width:1100px;">
+<div class="map_wrap mx-auto border d-flex" style="width:80%;">
     <div id="map" style="width:75%;height:600px;position:relative;overflow:hidden;"></div>
 
     <div id="menu_wrap" class="bg_white" style="width:25%;">
@@ -119,8 +119,6 @@ pageEncoding="UTF-8"%>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=a74ea60d1848a1ea867826229c40b3f6&libraries=services"></script>
 <script>
-var mapContainer = document.getElementById('map'); // 지도를 표시할 div
-var mapOption;
 var map;
 var markers = [];
 var circle;
@@ -132,22 +130,23 @@ $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 �
     if (navigator.geolocation) {
         //위치 정보를 얻기
         navigator.geolocation.getCurrentPosition (function(position) {
+        	
         	curLat = position.coords.latitude; // 위도
             curLon = position.coords.longitude; // 경도
 			var locPosition = new kakao.maps.LatLng(curLat, curLon);
-            
-			var marker = new kakao.maps.Marker({
-				title: "현재 내 위치",
-			    position: locPosition
-			});
-            
+			
+            var mapContainer = document.getElementById('map');
 			mapOption = {
 				center: locPosition, // 지도의 중심좌표
 				level: 3 // 지도의 확대 레벨
 			};
+			map = new kakao.maps.Map(mapContainer, mapOption);
 
-       	 	// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-        	map = new kakao.maps.Map(mapContainer, mapOption);
+			
+			var marker = new kakao.maps.Marker({
+				title: "현재 내 위치",
+			    position: locPosition
+			});
         	marker.setMap(map);
         	
         	

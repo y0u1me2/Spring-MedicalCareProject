@@ -295,12 +295,7 @@ button.file-btn p {
 	<div class="back-div bottom">
 		<h2>${c.careTitle }</h2>
 
-		<div class="buttons">
-	
-
-
-
-			
+		<div class="buttons">	
 				<c:if   test="${loginMember.name eq c.careWriter }">
 				<button id="update-btn1" onclick="updateCare();">수정</button>
 				</c:if>
