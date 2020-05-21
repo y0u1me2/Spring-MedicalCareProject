@@ -248,7 +248,7 @@ input.confirmerInfo {
 							</c:forEach>
 						</select>
 						<input class="name" style="width:40%;" type="text" id="disesaseTitle" name="disesaseTitle">
-						<input type="hidden" id="disesaseNo" name="disesaseNo">
+						<input type="text" id="disesaseNo" name="disesaseNo" value="new">
 						<input type="hidden" id="medicalNo" name="medicalNo">
 					</div>
 					<div class="disesaseWriteSubTitle">
@@ -398,7 +398,7 @@ input.confirmerInfo {
 			$(this).siblings('input.name').attr({placeholder:'직접 입력'});
 			
 			if($(this).attr('name')=='disesaseSort') {
-				$('#disesaseNo').val(null);
+				$('#disesaseNo').val('new');
 				$('#disesaseTitle').val('');
 				$('#disesaseSubTitle').val('');
 				$('#disesaseFile').next('label').text('질병을 표현할 사진을 선택하세요');

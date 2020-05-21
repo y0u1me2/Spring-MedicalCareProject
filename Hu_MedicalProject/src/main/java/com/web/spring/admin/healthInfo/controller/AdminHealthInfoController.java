@@ -153,26 +153,26 @@ public class AdminHealthInfoController {
 		//세부경로
 		String details="";
 		switch(dc.getDisesaseNo()) {
-			case "D1" : details="cold/"; break;
-			case "D2" : details="coldWave/"; break;
-			case "D3" : details="diarrhea/"; break;
-			case "D4" : details="bronchiectasis/"; break;
-			case "D5" : details="helminth/"; break;
-			case "D6" : details="malaria/"; break;
-			case "D7" : details="childrenVision/"; break;
-			case "D8" : details="epilepsy/"; break;
-			case "D9" : details="stroke/"; break;
-			case "D10" : details="meningitis/"; break;
-			case "D11" : details="glaucoma/"; break;
-			case "D12" : details="wrinkle/"; break;
-			default : details=dc.getDisesaseTitle()+"/"; break;
+			case "D1" : details="cold"; break;
+			case "D2" : details="coldWave"; break;
+			case "D3" : details="diarrhea"; break;
+			case "D4" : details="bronchiectasis"; break;
+			case "D5" : details="helminth"; break;
+			case "D6" : details="malaria"; break;
+			case "D7" : details="childrenVision"; break;
+			case "D8" : details="epilepsy"; break;
+			case "D9" : details="stroke"; break;
+			case "D10" : details="meningitis"; break;
+			case "D11" : details="glaucoma"; break;
+			case "D12" : details="wrinkle"; break;
+			default : details=dc.getDisesaseTitle()+""; break;
 		}
-		if(dc.getDisesaseNo()==null) {
-			String path = session.getServletContext().getRealPath("/resources/images");		
+		if(dc.getDisesaseNo().equals("new")) {
+			String path = session.getServletContext().getRealPath("/resources/images/healthInfomation");		
 	//		List<CareAttachment> files = new ArrayList();
 			File f = new File(path);				
 	//		//폴더가 없으면 생성하기
-			if(f.exists()) f.mkdirs();		
+			if(!f.exists()) f.mkdirs();		
 	//		//파일 저장로직 구현 - 파일 rename처리
 			if(!upFile.isEmpty()) {
 	//			//파일명생성
@@ -180,7 +180,7 @@ public class AdminHealthInfoController {
 				String ext = oriName.substring(oriName.lastIndexOf("."));//확장자 자르기				
 	//			//리네임 규칙설정
 	//										
-				String rename = "/healthInformation"+details+dc.getDisesaseTitle()+ext;						
+				String rename = "/healthInformation/"+details+"/"+dc.getDisesaseTitle()+ext;						
 				try {
 	//				//파일저장
 					upFile.transferTo(new File(f+"/"+rename));
