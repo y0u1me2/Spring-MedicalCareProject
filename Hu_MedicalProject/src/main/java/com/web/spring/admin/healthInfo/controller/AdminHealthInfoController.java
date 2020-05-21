@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.web.spring.admin.healthInfo.service.AdminHealthInfoService;
 import com.web.spring.healthInfo.vo.Confirmer;
 import com.web.spring.healthInfo.vo.DisesaseCategory;
+import com.web.spring.healthInfo.vo.HealthInfoContentPic;
 import com.web.spring.healthInfo.vo.HealthInformation;
 
 @Controller
@@ -138,8 +139,12 @@ public class AdminHealthInfoController {
 	
 	@RequestMapping("admin/healthInfoWrite.do")
 	public ModelAndView healthInfoWrite(MultipartFile[] upFile, ModelAndView mv,
-			HttpSession session, DisesaseCategory dc, Confirmer c, HealthInformation hi) {
+			HttpSession session, DisesaseCategory dc, Confirmer c, HealthInformation hi, HealthInfoContentPic hicp) {
 		
+		System.out.println(dc);
+		System.out.println(c);
+		System.out.println(hi);
+		System.out.println(hicp);
 		
 		return mv;
 	}
