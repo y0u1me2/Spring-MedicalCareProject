@@ -24,6 +24,8 @@ public interface MemberService {
 	int googleInsert(Member googleNew);
 	//이미 구글로 가입되어있어서 이메일로 찾아서 가져오기
 	Member searchGoogleGetMember(String googleEmail);
+	//이메일 인증 완료
+	int emailComplete(String email);
 	
 	
 

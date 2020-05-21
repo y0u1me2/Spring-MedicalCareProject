@@ -18,12 +18,21 @@ public class MemberDaoImpl implements MemberDao{
 		// TODO Auto-generated method stub
 		return session.insert("member.insertPerson",m);
 	}
-
+//이메일 인증
+	@Override
+	public int emailComplete(SqlSessionTemplate session, String email) {
+		// TODO Auto-generated method stub
+		return session.update("member.emailComplete",email);
+	}
+	
+	
 	@Override
 	public Member memberLogin(SqlSessionTemplate session, Member m) {
 		return session.selectOne("member.memberLogin",m);
 	}
-//구글 로그인
+
+
+	//구글 로그인
 	@Override
 	public Member googleIdChk(SqlSessionTemplate session, String googleEmail) {
 		return session.selectOne("member.googleIdChk",googleEmail);

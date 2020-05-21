@@ -75,9 +75,9 @@
             </props>
         </property>
 	</bean>	
-	<bean id="email" class="com.web.spring.member.model.vo.Mail">
+	<bean id="email" class="com.web.spring.member.model.vo.Email">
 	</bean>
-	<bean id="emailSender" class="com.web.spring.common.MailSender">
+	<bean id="emailSender" class="com.web.spring.common.EmailSender">
 	</bean>
 
 </beans>

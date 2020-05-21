@@ -260,7 +260,7 @@
       <input type="hidden" class="idChecked" name="idChk" value="0">
       <button type="button" class="emailChk" onclick="searchEmail();" style="background-color:#DAF1DE">이메일 확인</button><br>
       <div style="text-align:center;">
-      <button class="findPswBtn" id="findPswBtn" type="button" onclick="sendEmail();" style="background-color:#DAF1DE">인증번호 전송</button>
+      <button class="findPswBtn" id="findPswBtn" type="button" onclick="findPWsendEmail();" style="background-color:#DAF1DE">인증번호 전송</button>
   	</div>
    </div>
   <div><br><br></div>
@@ -343,11 +343,11 @@ function searchEmail(){
 		}
 	})
 } 
-function sendEmail(){
+function findPWsendEmail(){
 	 if (document.findPswForm.idChk.value==0)
 	 {
 		alert("이메일을 확인 하세요");
-		console.log("dididi");
+		//console.log("dididi");
 	     /* $("#memberEmail").focus();    */
 	    return false;
 	 }else{

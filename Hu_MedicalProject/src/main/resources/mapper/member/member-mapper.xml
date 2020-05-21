@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="member">
-	<insert id="insertPerson" parameterType="member">
-		INSERT INTO MEMBER VALUES(SEQ_USER_NO.NEXTVAL,
-								  #{email},
-								  #{name},
-								  #{password},
-								  #{phone},
-								  SYSDATE,
-								  'Y')
-	</insert>
+   <insert id="insertPerson" parameterType="member">
+      INSERT INTO MEMBER VALUES(SEQ_USER_NO.NEXTVAL,
+                          #{email},
+                          #{name},
+                          #{password},
+                          #{phone},
+                          SYSDATE,
+                          'N')
+   </insert>
+
+	<update id="emailComplete" parameterType="string">
+		UPDATE MEMBER SET MEMBERSTATUS = 'Y' WHERE EMAIL=#{email}
+	</update>
 	<select id="memberLogin" parameterType="member" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND MEMBERSTATUS = 'Y'
 	</select>
@@ -28,22 +32,11 @@
 	<select id="searchGoogleGetMember" parameterType="string" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND MEMBERSTATUS = 'Y'
 	</select>
-	<!-- <select id="findEmail" parameterType="member" resultType="member">
-		SELECT * FROM MEMBER WHERE EMAIL = #{email}
-	</select> -->
-	<!-- <select id="selectMember" parameterType="member" resultType="member">
-		SELECT * FROM MEMBER WHERE EMAIL = #{email}
-	</select> -->
+
 	<select id="searchEmail" parameterType="string" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND MEMBERSTATUS = 'Y'
 	</select>
-	<!-- <select id="emailSendPW" parameterType="member" resultType="member">
-		SELECT PASSWORD FROM MEMBER WHERE EMAIL = #{email}
-	</select> -->
-	<!-- <update id="emailSendPW" parameterType="member">
-		SELECT PASSWORD FROM MEMBER WHERE EMAIL = #{email}
-		UPDATE MEMBER SET PASSWORD = #{password} WHERE EMAIL=#{email}
-	</update> -->
+
 	<update id="changeMemberPsw" parameterType="member">
 		UPDATE MEMBER SET PASSWORD = #{memberPsw} WHERE EMAIL=#{memberId} AND MEMBERSTATUS = 'Y'		
 	</update>
