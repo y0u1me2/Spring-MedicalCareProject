@@ -39,5 +39,9 @@
   	<select id="selectConfirmer" parameterType="confirmer" resultType="confirmer">
   		SELECT * FROM CONFIRMER WHERE CONFIRMERNO = #{confirmerNo}
   	</select>
+  	
+  	<insert id="insertDisesase" parameterType="disesaseCategory">
+  		INSERT INTO DISESASECATEGORY VALUES (SEQ_DISESASECATEGORY.NEXTVAL,null,#{disesaseTitle},#{disesaseSubTitle},#{disesaseFile})
+  	</insert>
 
 </mapper>

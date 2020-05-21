@@ -11,6 +11,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+<script src="${pageContext.request.contextPath }/resources/js/jquery.MultiFile.min.js"></script>
+
 <style>
 
 /* 섹션안 공간 */
@@ -232,8 +234,8 @@ input.confirmerInfo {
 			</div>
 		</div>
 		<!--======================================건강정보 작성==========================================-->
-		<form id='disesasForm'>
 			<div class="healthInfoWrite">
+			<form id='disesaseForm' enctype="multipart/form-data" method="POST">
 				<h1 class="title">건강정보 작성</h1>
 				<hr class="gline">
 				<br> <br>
@@ -257,14 +259,20 @@ input.confirmerInfo {
 				</div>
 				<div class="disesaseFile">
 					<div class="custom-file" style="display:inline;">
-	                    <input type="file" class="custom-file-input" name="disesaseFile" id="disesaseFile">
-	                    <label class="custom-file-label" style="width:80%;" for="disesaseFile">질병을 표현할 사진을 선택하세요</label>
-	                </div>
+	                    <input type="file" class="form-control" name="disesaseFile" id="disesaseFile" required>
+	                    <!-- <input type="file" class="custom-file-input" name="disesaseFile" id="disesaseFile">
+	                    <label class="custom-file-label" style="width:80%;" for="disesaseFile">질병을 표현할 사진을 선택하세요</label> -->
+	            	</div>
 				</div>
+				<div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
+		            <button type="button" class="inquiry-btn" id="complete">완료</button>
+		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
+	            </div>
 				</form>
 				<hr class="gline">
 				<br> <br>
 				<!-- 검수자 등록 -->
+				<form id="confirmerForm" enctype="multipart/form-data" method="POST">
 				<div class="confirmerSelect">
 					<label for="confirmerSort">검수자 : </label>
 					<select id="confirmerSort">
@@ -282,15 +290,17 @@ input.confirmerInfo {
 					<input class="confirmerInfo" type="text" id="confirmerJob" placeholder="현재 직급" name="confirmerJob">
 					<input class="confirmerInfo" type="text" id="confirmerInfo" placeholder="부가 설명" name="confirmerInfo">
 				</div>
-				<div class="confirmerFile">
+				<!-- <div class="confirmerFile">
 					<div class="custom-file" style="display:inline;">
 	                    <input type="file" class="custom-file-input" name="confirmerPic" id="confirmerPic">
 	                    <label class="custom-file-label" style="width:80%;" for="confirmerPic">검수자 사진을 선택하세요</label>
 	                </div>
-				</div>
+				</div> -->
+				</form>
 				<hr class="gline">
 				<br> <br>
 				<!-- 건강정보 본문 글 -->
+				<form id="healthInfoForm" enctype="multipart/form-data" method="POST">
 				<div class="disesaseWriteContent">
 					<div class="healthInfo">
 						<label for="healthInfoTitle">건강 정보 제목 : </label>
@@ -300,7 +310,7 @@ input.confirmerInfo {
 						<textarea rows="1" id="healthInfoSubTitle" name="healthInfoSubTitle" placeholder="건강 정보의 간단한 내용을 작성하세요."></textarea>
 					</div>
 				</div>
-				<div class="healthInfoFile">
+				<!-- <div class="healthInfoFile">
 					<div class="custom-file" style="display:inline;">
 	                    <input type="file" class="custom-file-input" name="healthInfoMainPic" id="healthInfoMainPic">
 	                    <label class="custom-file-label" style="width:80%;" for="healthInfoMainPic">건강정보 타이틀 사진을 선택하세요</label>
@@ -309,11 +319,12 @@ input.confirmerInfo {
 	            <div class="custom-file" style="display:inline;">
 		            <input type="file" class="custom-file-input" name="healthInfoContentPic" id="healthInfoContentPic" multiple>
 		            <label class="custom-file-label" style="width:80%;" for="healthInfoContentPic">건강정보 내용 사진들을 선택하세요</label>
-	            </div>
-	            <div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
-		            <button type="submit" class="inquiry-btn" id="complete">완료</button>
+	            </div> -->
+	            <!-- <div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
+		            <button type="button" class="inquiry-btn" id="complete">완료</button>
 		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
-	            </div>
+	            </div> -->
+	            </form>
 				<hr class="gline">
 			</div>
 		<!-- =============================================================================================== -->
@@ -389,7 +400,7 @@ input.confirmerInfo {
 			$(this).siblings('input.name').attr({placeholder:'직접 입력'});
 			
 			if($(this).attr('name')=='disesaseSort') {
-				$('#disesaseNo').val('');
+				$('#disesaseNo').val(null);
 				$('#disesaseTitle').val('');
 				$('#disesaseSubTitle').val('');
 				$('#disesaseFile').next('label').text('질병을 표현할 사진을 선택하세요');
@@ -417,7 +428,7 @@ input.confirmerInfo {
 						$('#disesaseNo').val(data.dc.disesaseNo);
 						$('#disesaseTitle').val(data.dc.disesaseTitle);
 						$('#disesaseSubTitle').val(data.dc.disesaseSubTitle);
-						$('#disesaseFile').next('label').text("${path}"+data.dc.disesaseFile);
+						$('#disesaseFile').val(data.dc.disesaseFile);
 						$('#disesaseTitle').prop('readonly',true);
 						$('#disesaseSubTitle').prop('readonly',true);
 						$('#disesaseFile').prop('readonly',true);
@@ -433,7 +444,7 @@ input.confirmerInfo {
 						$('#confirmerWork').val(data.c.confirmerWork);
 						$('#confirmerJob').val(data.c.confirmerJob);
 						$('#confirmerInfo').val(data.c.confirmerInfo);
-						$('#confirmerPic').next('label').text((data.c.confirmerPic!="")?"${path}"+data.c.confirmerPic:"사진 파일이 없습니다.");
+						$('#confirmerPic').val((data.c.confirmerPic!="")?data.c.confirmerPic:"사진 파일이 없습니다.");
 						
 						$('#confirmerName').prop('readonly',true);
 						$('#confirmerWork').prop('readonly',true);
@@ -441,10 +452,64 @@ input.confirmerInfo {
 						$('#confirmerInfo').prop('readonly',true);
 					}
 				})
-			}
-			
+			}			
 		}
 	})
+	
+	/* var disesaseForm=$('#disesaseForm').serialize();
+	var confirmerForm=$('#confirmerForm').serialize();
+	var healthInfoForm=$('#healthInfoForm').serialize(); */
+	
+	var disesaseForm=$('#disesaseForm');
+	var confirmerForm=$('#confirmerForm');
+	var healthInfoForm=$('#healthInfoForm');
+	
+
+/* 	var confirmerFormData=new FormData(confirmerForm);
+	var healthInfoFormData=new FormData(healthInfoForm); */
+	
+	
+	/* confirmerFormData.append("file", $("#confirmerPic")[0].files[0]);
+	healthInfoFormData.append("file", $("#healthInfoMainPic")[0].files[0]); */
+	
+	$('#complete').click(function() {
+		console.log($("#disesaseNo").val());
+		var disesaseFormData=new FormData();
+		disesaseFormData.append("upFile", $("#disesaseFile")[0].files[0]);
+		disesaseFormData.append("disesaseNo", $("#disesaseNo").val());
+		disesaseFormData.append("disesaseTitle", $("#disesaseTitle").val());
+		disesaseFormData.append("disesaseSubTitle", $("#disesaseSubTitle").val());
+		$.ajax({
+			url:"${path}/admin/disesaseForm.do",
+			processData:false,
+			contentType:false,
+			type:"post",
+			data: disesaseFormData,
+			success:function(data1) {
+				console.log(data1);
+				/* $.ajax({
+					url:"${path}/admin/confirmerForm.do",
+					processData:false,
+					contentType:false,
+					data: confirmerForm,
+					success:function(data2) {
+						
+						$.ajax({
+							url:"${path}/admin/healthInfoForm.do",
+							processData:false,
+							contentType:false,
+							data: healthInfoForm,
+							success:function(data3) {
+								
+							}
+						});
+						
+					}
+				}); */
+				
+			}
+		});
+	});
 </script>
 
 

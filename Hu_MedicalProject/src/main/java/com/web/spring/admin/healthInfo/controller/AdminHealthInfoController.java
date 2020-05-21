@@ -1,5 +1,8 @@
 package com.web.spring.admin.healthInfo.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.web.spring.admin.healthInfo.service.AdminHealthInfoService;
+import com.web.spring.carenotice.model.vo.CareAttachment;
 import com.web.spring.healthInfo.vo.Confirmer;
 import com.web.spring.healthInfo.vo.DisesaseCategory;
 import com.web.spring.healthInfo.vo.HealthInfoContentPic;
@@ -137,16 +141,108 @@ public class AdminHealthInfoController {
 		return mv;
 	}
 	
-	@RequestMapping("admin/healthInfoWrite.do")
-	public ModelAndView healthInfoWrite(MultipartFile[] upFile, ModelAndView mv,
-			HttpSession session, DisesaseCategory dc, Confirmer c, HealthInformation hi, HealthInfoContentPic hicp) {
+	@RequestMapping("admin/disesaseForm.do")
+	public ModelAndView disesaseForm(MultipartFile upFile, ModelAndView mv,
+			HttpSession session, DisesaseCategory dc) {
 		
+		System.out.println(upFile);
 		System.out.println(dc);
+		
+		//파일업로드 처리하기
+		//경로설정
+		//세부경로
+		String details="";
+		switch(dc.getDisesaseNo()) {
+			case "D1" : details="cold/"; break;
+			case "D2" : details="coldWave/"; break;
+			case "D3" : details="diarrhea/"; break;
+			case "D4" : details="bronchiectasis/"; break;
+			case "D5" : details="helminth/"; break;
+			case "D6" : details="malaria/"; break;
+			case "D7" : details="childrenVision/"; break;
+			case "D8" : details="epilepsy/"; break;
+			case "D9" : details="stroke/"; break;
+			case "D10" : details="meningitis/"; break;
+			case "D11" : details="glaucoma/"; break;
+			case "D12" : details="wrinkle/"; break;
+			default : details=dc.getDisesaseTitle()+"/"; break;
+		}
+		if(dc.getDisesaseNo()==null) {
+			String path = session.getServletContext().getRealPath("/resources/images");		
+	//		List<CareAttachment> files = new ArrayList();
+			File f = new File(path);				
+	//		//폴더가 없으면 생성하기
+			if(f.exists()) f.mkdirs();		
+	//		//파일 저장로직 구현 - 파일 rename처리
+			if(!upFile.isEmpty()) {
+	//			//파일명생성
+				String oriName = upFile.getOriginalFilename();
+				String ext = oriName.substring(oriName.lastIndexOf("."));//확장자 자르기				
+	//			//리네임 규칙설정
+	//										
+				String rename = "/healthInformation"+details+dc.getDisesaseTitle()+ext;						
+				try {
+	//				//파일저장
+					upFile.transferTo(new File(f+"/"+rename));
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+					
+				dc.setDisesaseFile(rename);
+					
+				System.out.println(rename);
+				System.out.println(oriName);
+			}
+			int result = 0;
+			try {
+				result = service.insertDisesase(dc);			
+			}catch(RuntimeException e) {
+				e.printStackTrace();
+				//업로드 실패시 업로드된 파일 지우기
+	//			for(CareAttachment a : files) {
+	//				File delF = new File(path+"/"+a.getRenamedFilename());
+	//				if(delF.exists()) {
+	//					delF.delete();
+	//				}
+	//			}
+		}
+		System.out.println(result);
+//		String msg = "";
+//		String loc = "";
+//						
+//		if(result>0) {
+//			msg="돌보미 등록이 성공하였습니다.";
+//			loc="/care/careNotice";
+//		}else {
+//			msg="돌보미 등록이 실패하였습니다.";
+//			loc="/care/careEnroll";
+//		}
+//				
+//		mv.addObject("msg",msg);
+//		mv.addObject("loc",loc);
+		}
+		mv.setViewName("jsonView");
+				
+		return mv;
+	}
+	
+	
+	@RequestMapping("admin/confirmerForm.do")
+	public ModelAndView confirmerForm(MultipartFile[] upFile, ModelAndView mv,
+			HttpSession session, Confirmer c) {
+		
 		System.out.println(c);
+		
+		return mv;
+	}
+	
+	@RequestMapping("admin/healthInfoForm.do")
+	public ModelAndView healthInfoForm(MultipartFile[] upFile, ModelAndView mv,
+			HttpSession session, HealthInformation hi, HealthInfoContentPic hicp) {
+				
 		System.out.println(hi);
 		System.out.println(hicp);
 		
 		return mv;
 	}
-	
 }

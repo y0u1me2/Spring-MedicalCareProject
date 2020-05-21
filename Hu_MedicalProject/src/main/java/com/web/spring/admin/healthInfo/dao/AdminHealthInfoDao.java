@@ -21,4 +21,6 @@ public interface AdminHealthInfoDao {
 	DisesaseCategory selectDisesaseCategory(SqlSession session, DisesaseCategory dc);
 	
 	Confirmer selectConfirmer(SqlSession session, Confirmer c);
+	
+	int insertDisesase(SqlSession session, DisesaseCategory dc);
 }
