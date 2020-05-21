@@ -1,6 +1,7 @@
 package com.web.spring.member.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -37,6 +38,23 @@ public class HospitalMemberDaoImpl implements HospitalMemberDao {
 	@Override
 	public int hospitalCount(SqlSessionTemplate session) {
 		return session.selectOne("hospital.hospitalCount");
+	}
+
+	//아이디 찾기
+	@Override
+	public String findHPId(SqlSessionTemplate session, Map<String, String> param) {
+		return session.selectOne("hpMember.findHPId",param);
+	}
+
+	//비밀번호 찾기
+	@Override
+	public HospitalMember searchHPEmail(SqlSessionTemplate session, String email) {
+		return session.selectOne("hpMember.searchHPEmail",email);
+	}
+	//비밀번호 변경
+	@Override
+	public int changeHPMemberPsw(SqlSessionTemplate session, Map<String, Object> map) {
+		return session.update("hpMember.changeHPMemberPsw",map);
 	}
 	
 	

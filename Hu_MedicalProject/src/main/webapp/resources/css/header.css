@@ -46,8 +46,15 @@ color:grey;
 }
 
 /* 입력 창 스타일 */
-input[type=text]#uemail,input[type=password]#psw,
-input[type=text]#hospitalEmail,input[type=password]#hospitalPsw{
+input[type=text]#uemail,input[type=password]#psw{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+input[type=text]#hospitalId,input[type=password]#hospitalPsw{
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -177,7 +184,17 @@ input[type=text]#phone{
 	box-sizing: border-box;
 	
 }
-.emailChk{
+input[type=text]#hospitalEmail,input[type=text]#hpName,
+input[type=text]#hpPhone{
+	height: 40px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	
+}
+.emailChk,.hpEmailChk{
   /* background-color: red; */
   color: black;
   padding: 10px 10px;
@@ -185,7 +202,7 @@ input[type=text]#phone{
   border: none;
   cursor: pointer;
 }
-.findPswBtn,.findEmailBtn{
+.findPswBtn,.findEmailBtn,.findHPPswBtn,.findHPEmailBtn{
 	color: black;
   padding: 10px 10px;
   margin: 8px 0;

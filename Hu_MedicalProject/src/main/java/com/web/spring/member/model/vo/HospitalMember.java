@@ -19,4 +19,5 @@ public class HospitalMember {
 	private String managerEmail;
 	private String managerPhone;
 	private Date enrollDate;
+	private String status;
 }

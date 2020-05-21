@@ -19,6 +19,7 @@
     <script src="https://wowjs.uk/dist/wow.min.js"></script>
     
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <meta name="google-signin-client_id" content="415129597970-epgotkdffasbd0r2mqq4shuirovnqsqp.apps.googleusercontent.com">
 
 <!-- 파비콘 -->
@@ -199,14 +200,8 @@
       
         <div style="text-align:center;">간편한 SNS로그인</div>
             
-            <!--  <button type="button" id="otherbtn"><img src="${path }/resources/images/google.png" alt=""></button>&nbsp;&nbsp;-->
-            <div class="g-signin2" data-onsuccess="onSignIn"></div>
-            	<a href="#" onclick="signOut();">Sign out</a>
-            <!-- 자동로그인 처리하기 -->
-           <%--<button type="button" id="otherbtn"><img src="${path }/resources/images/kakao.png" alt=""></button>&nbsp;&nbsp;
-             <button type="button" id="otherbtn"><img src="${path }/resources/images/naver.png" alt=""></button>&nbsp;&nbsp;
-             <button type="button" id="otherbtn"><img src="${path }/resources/images/daum.png" alt=""></button>
-       --%>
+           <div class="g-signin2" data-onsuccess="onSignIn" ></div>
+           
     </div>
     <div class="containerlogin" style="background-color:white; margin:0 auto;">
     	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
@@ -232,20 +227,20 @@
 	      <input type="text" placeholder="아이디" id="hospitalId" name="id" autocomplete="off" required>
 	      <input type="password" placeholder="비밀번호" id="hospitalPsw" name="password" required>
 	      <label>
-	        <input type="checkbox" id="store" name="saveId">아이디 저장
+	        <input type="checkbox" id="store1" name="saveId">아이디 저장
 	      </label>
 	
 	      <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE;">병원 회원 Login</button>   
 	
 	     <div class="containerlogin" style="background-color:white; text-align:center;">
-	    	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
+	    	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findHPEmail').style.display='block'">아이디 찾기</button>
 	        &nbsp;/&nbsp;
-	         <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findPsw').style.display='block'">비밀번호 찾기</button>
+	         <button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findHPPsw').style.display='block'">비밀번호 찾기</button>
 	    </div>    
 	</div>
 	</form>
 </div>
-
+<!-- -------------------------------------------------일반회원 정보 찾기--------------------------------------------------- -->
 <!-- 비밀번호 찾기 -->
 <div id="findPsw" class="modal" >
   <form class="modal-content animate" name="findPswForm" style="width:50%;">
@@ -289,7 +284,51 @@
   <div><br><br></div>
   </form>
 </div>
+<!-- -----------------------------------------------병원 관계자 정보 찾기 ------------------------------------------------ -->
 
+<!-- 병원 관계자 비밀번호 찾기 -->
+<div id="findHPPsw" class="modal" >
+  <form class="modal-content animate" name="findHPPswForm" style="width:50%;">
+  <!-- action="${path}/searchPwd.do" method="post" -->
+      <div class="imgcontainer" style="height:10px">
+        <span onclick="document.getElementById('findHPPsw').style.display='none'" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
+      </div>
+      <br>
+   <div class="containerNewHPPSW" style="margin:0 auto;">
+   <h2 class="text-center">비밀번호 찾기</h2>
+      <input type="text" placeholder="E-mail" id="hospitalEmail" name="hospitalEmail" autocomplete="off" required>
+      <input type="hidden" class="hpIdChecked" name="hpIdChk" value="0">
+      <button type="button" class="hpEmailChk" onclick="searchHPEmail();" style="background-color:#DAF1DE">이메일 확인</button><br>
+      <div style="text-align:center;">
+      <button class="findHPPswBtn" id="findHPPswBtn" type="button" onclick="findHPPswSendEmail();" style="background-color:#DAF1DE">인증번호 전송</button>
+  	</div>
+   </div>
+  <div><br><br></div>
+     
+  </form>
+  
+</div>
+
+<!-- 병원 관계자 아이디 찾기 -->
+<div id="findHPEmail" class="modal" >
+  <form class="modal-content animate" method="post" style="width:50%;">
+      <div class="imgcontainer" style="height:10px">
+        <span onclick="emptyFindID()" class="joinClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
+      </div>
+      <br>
+   <div class="containerFindHPEmail" style="margin:0 auto;">
+   <h2 class="text-center">아이디 찾기</h2>
+      <input type="text" placeholder="이름 입력" name="hpName" id="hpName" required><br>
+      <input type="text" placeholder="핸드폰 번호 입력 (-는 제외)" name="hpPhone" id="hpPhone" required><br>
+      <div style="text-align:center;">
+      <button onclick="findHPEmail();" class="findHPEmailBtn" id="findHPEmailBtn" type="button" style="background-color:#DAF1DE">아이디 찾기</button>
+  	</div>
+  	<span id="hpEmailList" style="text-align:center;"></span>
+  	
+  </div>
+  <div><br><br></div>
+  </form>
+</div>
  <script>
   new WOW().init();
  
@@ -321,7 +360,8 @@ window.onload = function() {
 function hospitalLogin(){
 	location.href="${path}/member/hospitalEnroll.do";
 }
-
+//////////////////////////////////////////////일반 회원 정보 찾기////////////////////////////////////////////////////////////
+//일반 회원 비밀번호 찾기 -> 회원 중 해당 이메일이 있나 확인
 function searchEmail(){
 	var email = $('#memberEmail').val();
 	console.log(email);
@@ -356,63 +396,7 @@ function findPWsendEmail(){
 	 }
 }
 
-function pswCode(){
-	location.href="${path}/pass_injeung.do";
-}
-//아이디 저장
-$(document).ready(function(){
- 
-    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
-    var key = getCookie("key");
-    $("#uemail").val(key); 
-     
-    if($("#uemail").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
-        $("#store").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
-    }
-     
-    $("#store").change(function(){ // 체크박스에 변화가 있다면,
-        if($("#store").is(":checked")){ // ID 저장하기 체크했을 때,
-            setCookie("key", $("#uemail").val(), 7); // 7일 동안 쿠키 보관
-        }else{ // ID 저장하기 체크 해제 시,
-            deleteCookie("key");
-        }
-    });
-     
-    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-    $("#uemail").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
-        if($("#store").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-            setCookie("key", $("#uemail").val(), 7); // 7일 동안 쿠키 보관
-        }
-    });
-});
- 
-function setCookie(cookieName, value, exdays){
-    var exdate = new Date();
-    exdate.setDate(exdate.getDate() + exdays);
-    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
-    document.cookie = cookieName + "=" + cookieValue;
-}
- 
-function deleteCookie(cookieName){
-    var expireDate = new Date();
-    expireDate.setDate(expireDate.getDate() - 1);
-    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
-}
- 
-function getCookie(cookieName) {
-    cookieName = cookieName + '=';
-    var cookieData = document.cookie;
-    var start = cookieData.indexOf(cookieName);
-    var cookieValue = '';
-    if(start != -1){
-        start += cookieName.length;
-        var end = cookieData.indexOf(';', start);
-        if(end == -1)end = cookieData.length;
-        cookieValue = cookieData.substring(start, end);
-    }
-    return unescape(cookieValue);
-}
-//아이디 찾기
+//일반 회원 아이디 찾기
 function findEmail(){
 	var userName = $('#name').val();
 	var call = $('#phone').val();
@@ -462,6 +446,8 @@ function findEmail(){
 		
 	})
 }
+
+//일반 회원 아이디 찾기 후 비워주고, 모달 닫기
 function emptyFindEmail(){
 	$('#name').val('');
 	$('#phone').val('');
@@ -469,8 +455,188 @@ function emptyFindEmail(){
 	document.getElementById('findEmail').style.display='none';
 	
 }
+
+//////////////////////////////////////////////관계자 회원 정보 찾기////////////////////////////////////////////////////////////
+
+//관계자 회원 아이디 찾기
+function findHPEmail(){
+	var hospitalName = $('#hpName').val();
+	var hospitalCall = $('#hpPhone').val();
+	
+	var phoneCheck = /^\d{3}\d{3,4}\d{4}$/;
+	var nameCheck=/^[가-힣]|[a-zA-Z]+$/; 
+	
+	if($("#hpName").val()==""){
+		// alert("이름을 입력하세요");
+		 $("#hpName").focus();
+		 return false;	 
+	 }else if(!nameCheck.test($("#hpName").val())){
+		//유효성 검사
+		alert("이름을 알맞게 작성해주세요.");
+		$("#hpName").focus();
+		 return false;
+	}
+	
+	if($("#hpPhone").val()==""){
+		// alert("전화번호를 입력하세요");
+		 $("#hpPhone").focus();
+		 return false; 
+	}else if(phoneCheck.test($("#hpPhone").val())==false){
+		alert("핸드폰 번호를 알맞게 작성해주세요");
+		$("#hpPhone").focus();
+		 return false;
+	}
+	/* console.log(userName);	
+	console.log(call); */
+	
+	$.ajax({
+		type: 'POST',  
+		url:'${path }/findUserHPEmail.do',
+		data:{"hospitalName":hospitalName,"hospitalCall":hospitalCall},
+		success:function(data){
+			console.log("왔어?" + data.userMail);
+			if(data.userMail != 1){
+				$("#hpEmailList").append("<h4>"+"등록된 이메일"+"<br>"+data.userMail+"</h4>");
+				document.getElementById("findHPEmailBtn").disabled = true;
+			}else{
+				alert("회원 등록이 되어있지않습니다. 회원가입 후 이용하세요!");
+				document.getElementById("findHPEmailBtn").disabled = false;
+			}
+			
+			
+		}
+		
+	})
+}
+
+//관계자 회원 아이디 찾기 빈칸 검사, 모달 닫기
+function emptyFindID(){
+	$('#hpName').val('');
+	$('#hpPhone').val('');
+	$('#hpEmailList').text('');
+	document.getElementById('findHPEmail').style.display='none';
+	
+}
+///////////관계자 비밀번호 찾기
+function searchHPEmail(){
+	var email = $('#hospitalEmail').val();
+	console.log(email);
+	
+	$.ajax({
+		url:"${path }/searchHPEmail.do",
+		data:{"HPemail":email},
+		success:function(data){
+			console.log("이거디"+data.member);
+			
+			if(data.member != 1){
+				alert("이메일이 존재합니다. 비밀번호 변경 버튼을 누르면 이메일이 전송됩니다.");
+				document.findHPPswForm.hpIdChk.value=1;
+			}else{
+				alert("이메일이 존재하지 않습니다. 회원가입 후 이용하세요!");
+				//location.reload();
+			}
+			
+		}
+	})
+} 
+function findHPPswSendEmail(){
+	 if (document.findHPPswForm.hpIdChk.value==0)
+	 {
+		alert("이메일을 확인 하세요");
+		//console.log("dididi");
+	     /* $("#memberEmail").focus();    */
+	    return false;
+	 }else{
+		 var email = $('#hospitalEmail').val();
+		location.href="${path }/findHPPass.do?hospitalEmail="+email;
+	 }
+}
+
+// 일반 회원 아이디 저장////////////////////////////////////////////////////////////////////////////////////////////////////
+$(document).ready(function(){
+ 
+    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
+    var key = getCookie("key");
+    $("#uemail").val(key); 
+     
+    if($("#uemail").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+        $("#store").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+    }
+     
+    $("#store").change(function(){ // 체크박스에 변화가 있다면,
+        if($("#store").is(":checked")){ // ID 저장하기 체크했을 때,
+            setCookie("key", $("#uemail").val(), 7); // 7일 동안 쿠키 보관
+        }else{ // ID 저장하기 체크 해제 시,
+            deleteCookie("key");
+        }
+    });
+     
+    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+    $("#uemail").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+        if($("#store").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+            setCookie("key", $("#uemail").val(), 7); // 7일 동안 쿠키 보관
+        }
+    });
+});
+
+//관계자 회원 아이디 저장////////////////////////////////////////////////////////////////////////////////////////////////////
+$(document).ready(function(){
+    // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
+    var hospitalKey = getCookie("hospitalId");
+    $("#hospitalId").val(hospitalKey); 
+     
+    if($("#hospitalId").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+        $("#store1").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+    }
+     
+    $("#store").change(function(){ // 체크박스에 변화가 있다면,
+        if($("#store1").is(":checked")){ // ID 저장하기 체크했을 때,
+            setCookie("hospitalKey", $("#hospitalId").val(), 7); // 7일 동안 쿠키 보관
+        }else{ // ID 저장하기 체크 해제 시,
+            deleteCookie("hospitalKey");
+        }
+    });
+     
+    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+    $("#hospitalId").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+        if($("#store1").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+            setCookie("hospitalKey", $("#hospitalId").val(), 7); // 7일 동안 쿠키 보관
+        }
+    });
+});
+ 
+function setCookie(cookieName, value, exdays){
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + exdays);
+    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+    document.cookie = cookieName + "=" + cookieValue;
+}
+ 
+function deleteCookie(cookieName){
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() - 1);
+    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+}
+ 
+function getCookie(cookieName) {
+    cookieName = cookieName + '=';
+    var cookieData = document.cookie;
+    var start = cookieData.indexOf(cookieName);
+    var cookieValue = '';
+    if(start != -1){
+        start += cookieName.length;
+        var end = cookieData.indexOf(';', start);
+        if(end == -1)end = cookieData.length;
+        cookieValue = cookieData.substring(start, end);
+    }
+    return unescape(cookieValue);
+}
+
+//아이디 저장 끝/////////////////////////////////////////////////////////////////////////////////////////////
+
 //google 로그인
 	 var loginC=0;
+	  
 function onSignIn(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.

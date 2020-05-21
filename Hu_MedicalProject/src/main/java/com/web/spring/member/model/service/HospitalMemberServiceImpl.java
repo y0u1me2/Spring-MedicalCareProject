@@ -1,6 +1,7 @@
 package com.web.spring.member.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,24 @@ public class HospitalMemberServiceImpl implements HospitalMemberService {
 	public int hospitalCount() {
 		return dao.hospitalCount(session);
 	}
-	
 
+
+	//아이디 찾기
+	@Override
+	public String findHPId(Map<String, String> param) {
+		return dao.findHPId(session,param);
+	}
+
+	//비밀번호 찾기
+	@Override
+	public HospitalMember searchHPEmail(String email) {
+		return dao.searchHPEmail(session,email);
+	}
+	//비밀번호 변경
+	@Override
+	public int changeHPMemberPsw(Map<String, Object> map) {
+		return dao.changeHPMemberPsw(session,map);
+	}
+	
+	  
 }

@@ -1,6 +1,7 @@
 package com.web.spring.member.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -20,4 +21,13 @@ public interface HospitalMemberDao {
 
 	//메인-병원카운트
 	int hospitalCount(SqlSessionTemplate session);
+
+	//아이디 찾기
+	String findHPId(SqlSessionTemplate session, Map<String, String> param);
+
+	//비밀번호 찾기
+	HospitalMember searchHPEmail(SqlSessionTemplate session, String email);
+
+	//비밀번호 변경
+	int changeHPMemberPsw(SqlSessionTemplate session, Map<String, Object> map);
 }

@@ -62,6 +62,7 @@ public class MemberController {
 		return "client/member/hospitalEnroll";
 	}
 	
+	// 회원가입 + 이메일 인증////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping("/member/personEnrollEnd.do")
 	   public String insertPerson(@RequestParam("email") String email,
 									    @RequestParam("joinName") String name,
@@ -140,7 +141,9 @@ public class MemberController {
 	        
 	       return "client/common/msg";
 	   }
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 	   
+	// 로그인 ////////////////////////////////////////////////////////////////////////////////////////////////////   
 	@SuppressWarnings("unused")
 	@RequestMapping("/member/memberLogin.do")
 	 public String memberLogin(Member m, Model model) throws Exception{
@@ -171,6 +174,8 @@ public class MemberController {
 	     
 		 return "client/common/msg";
 	 }
+	
+	// 구글 로그인  /////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping("/googleIdChk.do")
 	public ModelAndView googleIdChk(@RequestParam("googleEmail") String googleEmail,
 									@RequestParam("googleName") String googleName,
@@ -228,6 +233,8 @@ public class MemberController {
 		mv.setViewName("jsonView");  
 		return mv;
 	}
+	
+	// 로그아웃 ////////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping("/member/logout.do")
 	public String logout(SessionStatus status,HttpServletResponse res) {
 		if(!status.isComplete() == true) {
@@ -240,8 +247,10 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/searchEmail")
-	public ModelAndView searchEmail(@RequestParam String email, ModelAndView mv) {
+	
+	// 아이디 찾기 ->  ////////////////////////////////////////////////////////////////////////////////////////////////////
+	@RequestMapping("/emailOk")
+	public ModelAndView emailOk(@RequestParam("email") String email, ModelAndView mv) {
 		System.out.println(email);
 		
 		Member member = service.searchEmail(email);
@@ -257,8 +266,11 @@ public class MemberController {
 		}
 		 return mv;
 	}
-	@RequestMapping("/emailOk")
-	public ModelAndView emailOk(@RequestParam("email") String email, ModelAndView mv) {
+	
+	// 비밀번호 찾기 /////////////////////////////////////////////////////////////////////////////////////////////////
+	//등록된 회원인지 검사
+	@RequestMapping("/searchEmail")
+	public ModelAndView searchEmail(@RequestParam String email, ModelAndView mv) {
 		System.out.println(email);
 		
 		Member member = service.searchEmail(email);
@@ -465,6 +477,5 @@ public class MemberController {
 		return mv;
     }
     
-//    @RequestMapping("/emailChk.do")
-//    public 
+
 }
