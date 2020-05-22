@@ -147,6 +147,7 @@ public class AdminHealthInfoController {
 		
 		System.out.println(upFile);
 		System.out.println(dc);
+		DisesaseCategory reDc=null;
 		
 		//파일업로드 처리하기
 		//경로설정
@@ -168,7 +169,7 @@ public class AdminHealthInfoController {
 			default : details=dc.getDisesaseTitle()+""; break;
 		}
 		if(dc.getDisesaseNo().equals("new")) {
-			String path = session.getServletContext().getRealPath("/resources/images/healthInfomation");		
+			String path = session.getServletContext().getRealPath("/resources/images/healthInformation/"+details+"/");		
 	//		List<CareAttachment> files = new ArrayList();
 			File f = new File(path);				
 	//		//폴더가 없으면 생성하기
@@ -178,9 +179,9 @@ public class AdminHealthInfoController {
 	//			//파일명생성
 				String oriName = upFile.getOriginalFilename();
 				String ext = oriName.substring(oriName.lastIndexOf("."));//확장자 자르기				
-	//			//리네임 규칙설정
+	//			//리네임 규칙설정 
 	//										
-				String rename = "/healthInformation/"+details+"/"+dc.getDisesaseTitle()+ext;						
+				String rename = dc.getDisesaseTitle()+ext;						
 				try {
 	//				//파일저장
 					upFile.transferTo(new File(f+"/"+rename));
@@ -188,38 +189,28 @@ public class AdminHealthInfoController {
 					e.printStackTrace();
 				}
 					
-				dc.setDisesaseFile(rename);
+				dc.setDisesaseFile("/healthInformation/"+details+"/"+rename);
 					
 				System.out.println(rename);
 				System.out.println(oriName);
 			}
 			int result = 0;
 			try {
-				result = service.insertDisesase(dc);			
+				result = service.insertDisesase(dc);
+				reDc=service.selectDisesaseNo(dc);
+				mv.addObject("disesaseNo", reDc.getDisesaseNo());
 			}catch(RuntimeException e) {
 				e.printStackTrace();
 				//업로드 실패시 업로드된 파일 지우기
 	//			for(CareAttachment a : files) {
-	//				File delF = new File(path+"/"+a.getRenamedFilename());
-	//				if(delF.exists()) {
-	//					delF.delete();
-	//				}
+				/*
+				 * File delF = new File(path+"/"+upFile..getRenamedFilename());
+				 * if(delF.exists()) { delF.delete(); }
+				 */
 	//			}
-		}
-		System.out.println(result);
-//		String msg = "";
-//		String loc = "";
-//						
-//		if(result>0) {
-//			msg="돌보미 등록이 성공하였습니다.";
-//			loc="/care/careNotice";
-//		}else {
-//			msg="돌보미 등록이 실패하였습니다.";
-//			loc="/care/careEnroll";
-//		}
-//				
-//		mv.addObject("msg",msg);
-//		mv.addObject("loc",loc);
+			}
+		}else {
+			mv.addObject("disesaseNo",dc.getDisesaseNo());
 		}
 		mv.setViewName("jsonView");
 				
@@ -228,20 +219,120 @@ public class AdminHealthInfoController {
 	
 	
 	@RequestMapping("admin/confirmerForm.do")
-	public ModelAndView confirmerForm(MultipartFile[] upFile, ModelAndView mv,
+	public ModelAndView confirmerForm(MultipartFile upFile, ModelAndView mv,
 			HttpSession session, Confirmer c) {
 		
 		System.out.println(c);
+		Confirmer reC=null;
+		
+		if(c.getConfirmerNo().equals("new")) {
+			String path = session.getServletContext().getRealPath("/resources/images/healthInformation/Confirmer/");		
+	//		List<CareAttachment> files = new ArrayList();
+			File f = new File(path);				
+	//		//폴더가 없으면 생성하기
+			if(!f.exists()) f.mkdirs();		
+	//		//파일 저장로직 구현 - 파일 rename처리
+			if(!upFile.isEmpty()) {
+	//			//파일명생성
+				String oriName = upFile.getOriginalFilename();
+				String ext = oriName.substring(oriName.lastIndexOf("."));//확장자 자르기				
+	//			//리네임 규칙설정 
+	//										
+				String rename = c.getConfirmerName()+ext;						
+				try {
+	//				//파일저장
+					upFile.transferTo(new File(f+"/"+rename));
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+					
+				c.setConfirmerPic("/healthInformation/Confirmer/"+rename);
+					
+				System.out.println(rename);
+				System.out.println(oriName);
+			}
+			int result = 0;
+			try {
+				result = service.insertConfirmer(c);
+				reC=service.selectConfirmerNo(c);
+				mv.addObject("disesaseNo", reC.getConfirmerNo());
+			}catch(RuntimeException e) {
+				e.printStackTrace();
+				//업로드 실패시 업로드된 파일 지우기
+	//			for(CareAttachment a : files) {
+				/*
+				 * File delF = new File(path+"/"+upFile..getRenamedFilename());
+				 * if(delF.exists()) { delF.delete(); }
+				 */
+	//			}
+			}
+		}else {
+			mv.addObject("confirmerNo",c.getConfirmerNo());
+		}
+		mv.setViewName("jsonView");
+		
 		
 		return mv;
 	}
 	
 	@RequestMapping("admin/healthInfoForm.do")
-	public ModelAndView healthInfoForm(MultipartFile[] upFile, ModelAndView mv,
-			HttpSession session, HealthInformation hi, HealthInfoContentPic hicp) {
+	public ModelAndView healthInfoForm(MultipartFile upFile, ModelAndView mv,
+			HttpSession session, HealthInformation hi) {
 				
-		System.out.println(hi);
-		System.out.println(hicp);
+		System.out.println("hi   "+hi);
+		DisesaseCategory dc=new DisesaseCategory();
+		dc.setDisesaseNo(hi.getDisesaseNo());
+		DisesaseCategory reDc=service.selectDisesaseCategory(dc);
+		
+		String stepPath=service.getStepCount(hi)==0?reDc.getDisesaseTitle()+1:reDc.getDisesaseTitle()+(service.getStepCount(hi)+1);
+		
+		String details=reDc.getDisesaseTitle()+"Data/"+hi.getHealthInfoStep()+"/";
+		
+			String path = session.getServletContext().getRealPath("/resources/images/healthInformation/"+details+"/"+stepPath+"/");		
+	//		List<CareAttachment> files = new ArrayList();
+			File f = new File(path);				
+	//		//폴더가 없으면 생성하기
+			if(!f.exists()) f.mkdirs();		
+	//		//파일 저장로직 구현 - 파일 rename처리
+			if(!upFile.isEmpty()) {
+	//			//파일명생성
+				String oriName = upFile.getOriginalFilename();
+				String ext = oriName.substring(oriName.lastIndexOf("."));//확장자 자르기				
+	//			//리네임 규칙설정 
+				String rename="";
+				switch(hi.getHealthInfoStep()) {
+					case "STEP_1":rename = dc.getDisesaseTitle()+"1_";						
+					case "STEP_2":rename = dc.getDisesaseTitle()+"2_";						
+					case "STEP_3":rename = dc.getDisesaseTitle()+"3_";						
+				}
+				rename+=stepPath+ext;
+				try {
+	//				//파일저장
+					upFile.transferTo(new File(f+"/"+rename));
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+					
+				hi.setHealthInfoMainPic(path+rename);
+					
+				System.out.println(rename);
+				System.out.println(oriName);
+			}
+			int result = 0;
+			try {
+				result = service.insertHealthInformation(hi);
+			}catch(RuntimeException e) {
+				e.printStackTrace();
+				//업로드 실패시 업로드된 파일 지우기
+	//			for(CareAttachment a : files) {
+				/*
+				 * File delF = new File(path+"/"+upFile..getRenamedFilename());
+				 * if(delF.exists()) { delF.delete(); }
+				 */
+	//			}
+			}
+		mv.setViewName("jsonView");
+		
 		
 		return mv;
 	}

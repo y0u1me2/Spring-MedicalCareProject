@@ -41,7 +41,28 @@
   	</select>
   	
   	<insert id="insertDisesase" parameterType="disesaseCategory">
-  		INSERT INTO DISESASECATEGORY VALUES (SEQ_DISESASECATEGORY.NEXTVAL,null,#{disesaseTitle},#{disesaseSubTitle},#{disesaseFile})
+  		INSERT INTO DISESASECATEGORY VALUES ('D'||SEQ_DISESASECATEGORY.NEXTVAL,null,#{disesaseTitle},#{disesaseSubTitle},#{disesaseFile})
+  	</insert>
+  	
+  	<select id="selectDisesaseNo" parameterType="disesaseCategory" resultType="disesaseCategory">
+  		SELECT DISESASENO FROM DISESASECATEGORY WHERE DISESASETITLE = #{disesaseTitle}
+  	</select>
+
+	<insert id="insertConfirmer" parameterType="confirmer">
+  		INSERT INTO CONFIRMER VALUES ('C'||SEQ_CONFIRMER.NEXTVAL,null,#{confirmerName},#{confirmerWork},#{confirmerJob},#{confirmerInfo},#{confirmerPic})
+  	</insert>
+  	
+  	<select id="selectConfirmerNo" parameterType="confirmer" resultType="confirmer">
+  		SELECT CONFIRMERNO FROM CONFIRMER WHERE CONFIRMERNAME = #{confirmerName}
+  	</select>
+  	
+  	<select id="getStepCount" parameterType="healthInfo" resultType="_int">
+  		SELECT COUNT(*) FROM HEALTHINFORMATION DISESASENO = #{disesaseNo}
+  	</select>
+  	
+  	<insert id="insertHealthInformation" parameterType="healthInfo">
+  		INSERT INTO HealthInformation VALUES ('H'||SEQ_HEALTHINFORMATION.NEXTVAL,#{confirmerNo},#{disesaseNo},null,#{healthInfoTitle},#{healthInfoSubTitle},
+  												#{healthInfoMainPic}, #{healthInfoStep}, #{healthInfoStepTitle})
   	</insert>
 
 </mapper>

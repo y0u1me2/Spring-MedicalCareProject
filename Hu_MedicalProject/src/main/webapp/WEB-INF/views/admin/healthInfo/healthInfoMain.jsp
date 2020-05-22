@@ -258,14 +258,9 @@ input.confirmerInfo {
 				<div class="disesaseFile">
 					<div class="custom-file" style="display:inline;">
 	                    <input type="file" class="form-control" name="disesaseFile" id="disesaseFile" required>
-	                    <!-- <input type="file" class="custom-file-input" name="disesaseFile" id="disesaseFile">
-	                    <label class="custom-file-label" style="width:80%;" for="disesaseFile">질병을 표현할 사진을 선택하세요</label> -->
 	            	</div>
 				</div>
-				<div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
-		            <button type="button" class="inquiry-btn" id="complete">완료</button>
-		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
-	            </div>
+				
 				</form>
 				<hr class="gline">
 				<br> <br>
@@ -280,7 +275,7 @@ input.confirmerInfo {
 						</c:forEach>
 					</select>
 					<input class="name" style="width:10%;" type="text" id="confirmerName" name="confirmerName">
-					<input type="hidden" id="confirmerNo" name="confirmerNo">
+					<input type="hidden" id="confirmerNo" name="confirmerNo" value="new">
 					<input type="hidden" id="medicalNo" name="medicalNo">
 				</div>
 				<div class="confirmerInfo" style="display:flex; justify-content:space-between; width:80%;">
@@ -288,12 +283,11 @@ input.confirmerInfo {
 					<input class="confirmerInfo" type="text" id="confirmerJob" placeholder="현재 직급" name="confirmerJob">
 					<input class="confirmerInfo" type="text" id="confirmerInfo" placeholder="부가 설명" name="confirmerInfo">
 				</div>
-				<!-- <div class="confirmerFile">
+				<div class="confirmerFile">
 					<div class="custom-file" style="display:inline;">
-	                    <input type="file" class="custom-file-input" name="confirmerPic" id="confirmerPic">
-	                    <label class="custom-file-label" style="width:80%;" for="confirmerPic">검수자 사진을 선택하세요</label>
+	                    <input type="file" class="form-control" name="confirmerPic" id="confirmerPic">
 	                </div>
-				</div> -->
+				</div>
 				</form>
 				<hr class="gline">
 				<br> <br>
@@ -308,13 +302,12 @@ input.confirmerInfo {
 						<textarea rows="1" id="healthInfoSubTitle" name="healthInfoSubTitle" placeholder="건강 정보의 간단한 내용을 작성하세요."></textarea>
 					</div>
 				</div>
-				<!-- <div class="healthInfoFile">
+				<div class="healthInfoFile">
 					<div class="custom-file" style="display:inline;">
-	                    <input type="file" class="custom-file-input" name="healthInfoMainPic" id="healthInfoMainPic">
-	                    <label class="custom-file-label" style="width:80%;" for="healthInfoMainPic">건강정보 타이틀 사진을 선택하세요</label>
+	                    <input type="file" class="form-control" name="healthInfoMainPic" id="healthInfoMainPic" placeholder="건강정보 타이틀 사진을 선택하세요">
 	                </div>
 				</div>	
-	            <div class="custom-file" style="display:inline;">
+	            <!-- <div class="custom-file" style="display:inline;">
 		            <input type="file" class="custom-file-input" name="healthInfoContentPic" id="healthInfoContentPic" multiple>
 		            <label class="custom-file-label" style="width:80%;" for="healthInfoContentPic">건강정보 내용 사진들을 선택하세요</label>
 	            </div> -->
@@ -323,6 +316,10 @@ input.confirmerInfo {
 		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
 	            </div> -->
 	            </form>
+	            <div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
+		            <button type="button" class="inquiry-btn" id="complete">완료</button>
+		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
+	            </div>
 				<hr class="gline">
 			</div>
 		<!-- =============================================================================================== -->
@@ -406,7 +403,7 @@ input.confirmerInfo {
 				$('#disesaseSubTitle').prop('readonly',false);
 				$('#disesaseFile').prop('readonly',false);
 			}else {
-				$('#confirmerNo').val('');
+				$('#confirmerNo').val('new');
 				$('#confirmerName').val('');
 				$('#confirmerWork').val('');
 				$('#confirmerInfo').val('');
@@ -463,8 +460,8 @@ input.confirmerInfo {
 	var healthInfoForm=$('#healthInfoForm');
 	
 
-/* 	var confirmerFormData=new FormData(confirmerForm);
-	var healthInfoFormData=new FormData(healthInfoForm); */
+/* 	
+	 */
 	
 	
 	/* confirmerFormData.append("file", $("#confirmerPic")[0].files[0]);
@@ -484,26 +481,47 @@ input.confirmerInfo {
 			type:"post",
 			data: disesaseFormData,
 			success:function(data1) {
-				console.log(data1);
-				/* $.ajax({
+				$('#disesaseNo').val(data1.disesaseNo);
+				var confirmerFormData=new FormData();
+				confirmerFormData.append("upFile", $("#confirmerPic")[0].files[0]);
+				confirmerFormData.append("confirmerNo", $("#confirmerNo").val());
+				confirmerFormData.append("confirmerName", $("#confirmerName").val());
+				confirmerFormData.append("confirmerWork", $("#confirmerWork").val());
+				confirmerFormData.append("confirmerJob", $("#confirmerJob").val());
+				confirmerFormData.append("confirmerInfo", $("#confirmerInfo").val());
+				$.ajax({
 					url:"${path}/admin/confirmerForm.do",
 					processData:false,
 					contentType:false,
-					data: confirmerForm,
+					type:"post",
+					data: confirmerFormData,
 					success:function(data2) {
+						$('#confirmerNo').val(data2.confirmerNo);
+						console.log($('#confirmerNo')+"aaaaaaaa"+$('#disesaseNo'));
+						var healthInfoFormData=new FormData();
+						healthInfoFormData.append("upFile", $("#healthInfoMainPic")[0].files[0]);
+						healthInfoFormData.append("disesaseNo", $("#disesaseNo").val());
+						healthInfoFormData.append("disesaseTitle", $("#disesaseTitle").val());
+						healthInfoFormData.append("confirmerNo", $("#confirmerNo").val());
+						healthInfoFormData.append("healthInfoTitle", $("#healthInfoTitle").val());
+						healthInfoFormData.append("healthInfoSubTitle", $("#healthInfoSubTitle").val());
+						healthInfoFormData.append("healthInfoMainPic", $("#healthInfoMainPic").val());
+						healthInfoFormData.append("healthInfoStep", $("#healthInfoStep").val());
+						healthInfoFormData.append("healthInfoStepTitle", $("#healthInfoStepTitle").val());
 						
 						$.ajax({
 							url:"${path}/admin/healthInfoForm.do",
 							processData:false,
 							contentType:false,
-							data: healthInfoForm,
+							type:"post",
+							data: healthInfoFormData,
 							success:function(data3) {
 								
 							}
 						});
 						
 					}
-				}); */
+				});
 				
 			}
 		});

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.web.spring.admin.healthInfo.dao.AdminHealthInfoDao;
 import com.web.spring.healthInfo.vo.Confirmer;
 import com.web.spring.healthInfo.vo.DisesaseCategory;
+import com.web.spring.healthInfo.vo.HealthInformation;
 
 @Service
 public class AdminHealthInfoServiceImpl implements AdminHealthInfoService {
@@ -67,6 +68,41 @@ public class AdminHealthInfoServiceImpl implements AdminHealthInfoService {
 	public int insertDisesase(DisesaseCategory dc) {
 		// TODO Auto-generated method stub
 		return dao.insertDisesase(session, dc);
+	}
+
+
+	@Override
+	public DisesaseCategory selectDisesaseNo(DisesaseCategory dc) {
+		// TODO Auto-generated method stub
+		return dao.selectDisesaseNo(session, dc);
+	}
+
+
+	@Override
+	public int insertConfirmer(Confirmer c) {
+		// TODO Auto-generated method stub
+		return dao.insertConfirmer(session, c);
+	}
+
+
+	@Override
+	public Confirmer selectConfirmerNo(Confirmer c) {
+		// TODO Auto-generated method stub
+		return dao.selectConfirmerNo(session, c);
+	}
+
+
+	@Override
+	public int getStepCount(HealthInformation hi) {
+		// TODO Auto-generated method stub
+		return dao.getStepCount(session, hi);
+	}
+
+
+	@Override
+	public int insertHealthInformation(HealthInformation hi) {
+		// TODO Auto-generated method stub
+		return dao.insertHealthInformation(session, hi);
 	}
 	
 	

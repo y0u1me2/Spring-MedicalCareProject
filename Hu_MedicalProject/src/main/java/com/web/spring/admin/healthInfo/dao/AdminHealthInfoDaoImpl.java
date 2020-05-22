@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.web.spring.healthInfo.vo.Confirmer;
 import com.web.spring.healthInfo.vo.DisesaseCategory;
+import com.web.spring.healthInfo.vo.HealthInformation;
 
 @Repository
 public class AdminHealthInfoDaoImpl implements AdminHealthInfoDao {
@@ -62,6 +63,41 @@ public class AdminHealthInfoDaoImpl implements AdminHealthInfoDao {
 	public int insertDisesase(SqlSession session, DisesaseCategory dc) {
 		// TODO Auto-generated method stub
 		return session.insert("adminHealthInfo.insertDisesase", dc);
+	}
+
+
+	@Override
+	public DisesaseCategory selectDisesaseNo(SqlSession session, DisesaseCategory dc) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminHealthInfo.selectDisesaseNo",dc);
+	}
+
+
+	@Override
+	public int insertConfirmer(SqlSession session, Confirmer c) {
+		// TODO Auto-generated method stub
+		return session.insert("adminHealthInfo.insertConfirmer",c);
+	}
+
+
+	@Override
+	public Confirmer selectConfirmerNo(SqlSession session, Confirmer c) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminHealthInfo.selectConfirmerNo",c);
+	}
+
+
+	@Override
+	public int getStepCount(SqlSession session, HealthInformation hi) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminHealthInfo.getStepCount", hi);
+	}
+
+
+	@Override
+	public int insertHealthInformation(SqlSession session, HealthInformation hi) {
+		// TODO Auto-generated method stub
+		return session.insert("adminHealthInfo.insertHealthInformation",hi);
 	}
 
 	

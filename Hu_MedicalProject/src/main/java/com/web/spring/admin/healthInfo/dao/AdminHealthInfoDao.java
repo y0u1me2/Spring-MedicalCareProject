@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.web.spring.healthInfo.vo.Confirmer;
 import com.web.spring.healthInfo.vo.DisesaseCategory;
+import com.web.spring.healthInfo.vo.HealthInformation;
 
 public interface AdminHealthInfoDao {
 	
@@ -23,4 +24,14 @@ public interface AdminHealthInfoDao {
 	Confirmer selectConfirmer(SqlSession session, Confirmer c);
 	
 	int insertDisesase(SqlSession session, DisesaseCategory dc);
+
+	DisesaseCategory selectDisesaseNo(SqlSession session, DisesaseCategory dc);
+	
+	int insertConfirmer(SqlSession session, Confirmer c);
+	
+	Confirmer selectConfirmerNo(SqlSession session, Confirmer c);
+	
+	int getStepCount(SqlSession session, HealthInformation hi);
+	
+	int insertHealthInformation(SqlSession session, HealthInformation hi);
 }

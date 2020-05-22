@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.web.spring.healthInfo.vo.Confirmer;
 import com.web.spring.healthInfo.vo.DisesaseCategory;
+import com.web.spring.healthInfo.vo.HealthInformation;
 
 public interface AdminHealthInfoService {
 	
@@ -19,4 +20,14 @@ public interface AdminHealthInfoService {
 	Confirmer selectConfirmer(Confirmer c);
 	
 	int insertDisesase(DisesaseCategory dc);
+
+	DisesaseCategory selectDisesaseNo(DisesaseCategory dc);
+	
+	int insertConfirmer(Confirmer c);
+	
+	Confirmer selectConfirmerNo(Confirmer c);
+	
+	int getStepCount(HealthInformation hi);
+	
+	int insertHealthInformation(HealthInformation hi);
 }
