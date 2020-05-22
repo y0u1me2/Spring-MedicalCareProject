@@ -711,9 +711,8 @@ function signOut() {
 	<c:if test="${not empty loginMember or not empty loginHpMember }">
 		<script>
 			let roomId;
-			let alram=new WebSocket("ws://rclass.iptime.org:9999${path}/alram");
+			let alram=new WebSocket("wss://rclass.iptime.org${path}/alram");
 			//let alram=new WebSocket("ws://localhost:9090${pageContext.request.contextPath}/alram");
-
 			
 			alram.onopen=function(msg){
 				

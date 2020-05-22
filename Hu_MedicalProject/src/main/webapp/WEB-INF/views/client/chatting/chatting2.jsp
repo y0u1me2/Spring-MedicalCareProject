@@ -84,7 +84,7 @@ border-radius:10px;
  }
   </style>
     <script>
-	let websocket=new WebSocket("ws://rclass.iptime.org:9999${pageContext.request.contextPath}/chatting");
+	let websocket=new WebSocket("wss://rclass.iptime.org${pageContext.request.contextPath}/chatting");
 	//	let websocket=new WebSocket("ws://localhost:9090${pageContext.request.contextPath}/chatting");
 
 	let sender='${param.room}';
