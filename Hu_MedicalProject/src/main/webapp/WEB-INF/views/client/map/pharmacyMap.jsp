@@ -21,7 +21,7 @@ pageEncoding="UTF-8"%>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
 .map_wrap {position:relative;width:100%;height:600px;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+#menu_wrap {padding:5px;overflow-x: auto;overflow-y:auto;background:light-gray;z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option{text-align: center;}
@@ -59,38 +59,6 @@ pageEncoding="UTF-8"%>
 </style>
 <section class="container-fluid border" >
 
-<form id="form1" class="form-inline">
-  <label for="sel1" class="mr-sm-2">진료과목:</label>
-  <select class="form-control mb-2 mr-sm-2" id="sel1" name="dept">
-  	<option hidden>진료과목 선택</option>
-    <option value="01">내과</option>
-    <option value="02">신경과</option>
-    <option value="03">정신건강의학과</option>
-    <option value="04">외과</option>
-    <option value="05">정형외과</option>
-    <option value="06">신경외과</option>
-    <option value="07">흉부외과</option>
-    <option value="08">성형외과</option>
-    <option value="09">마취통증의학과</option>
-    <option value="10">산부인과</option>
-    <option value="11">소아청소년과</option>
-    <option value="12">안과</option>
-    <option value="13">이비인후과</option>
-    <option value="14">피부과</option>
-    <option value="15">비뇨기과</option>
-    <option value="49">치과</option>
-    <option value="80">한방의학과</option>
-  </select>
-  
-  <!-- <label for="sel2" class="mr-sm-2">반경:</label>
-  <select class="form-control mb-2 mr-sm-2" id="sel2" name="radius">
-    <option value="100" selected>100m</option>
-    <option value="500">500m</option>
-    <option value="1000">1km</option>
-  </select> -->
-  
-  <button type="button" class="btn btn-primary mb-2" onclick="search();">검색</button>
-</form>
 
 
 
@@ -102,7 +70,7 @@ pageEncoding="UTF-8"%>
 
 
 <div class="map_wrap mx-auto border d-flex" style="width:80%;">
-    <div id="map" style="width:100%;height:600px;position:relative;overflow:hidden;"></div>
+    <div id="map" style="width:75%;height:600px;position:relative;overflow:hidden;"></div>
 
     <div id="menu_wrap" class="bg_white" style="width:25%;">
         
@@ -125,10 +93,6 @@ var circle;
 var curLat;
 var curLon;
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-
-var overlay;
-
-
 
 $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 찍어주기
     // Geolocation API에 액세스할 수 있는지를 확인
@@ -183,9 +147,11 @@ $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 �
         	    	break;
         	    }
         	    
-        	    map.panTo(latlng);//클릭한 지점으로 지도중심좌표 이동시키기
         	    
-				searchHospital(latlng.getLat(), latlng.getLng(), radius);//병원 검색
+        	    
+        	    map.panTo(latlng);//클릭한 지점으로 지도중심좌표 이동시키기
+				searchPhrm(latlng.getLat(), latlng.getLng(), radius);
+        	    
         	});
             
         });
@@ -199,60 +165,34 @@ $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 �
     
 });
 
-function searchHospital(lat, lng, radius, pageNo){
-	var params = $("#form1").serialize(); //진료과목, 반경
-	/* var lat = map.getCenter().getLat();
-	var lng = map.getCenter().getLng(); */
-	params += "&latitude="+lat+"&longitude="+lng+"&radius="+radius+"&pageNo="+pageNo; //파라미터 추가
+
+
+
+
+
+
+function searchPhrm(lat, lng, radius){
 	
 	$.ajax({
-		url: "${path}/hospitalFind.do",
-		type: "post",
-		data: params,
+		url: "${path}/searchPhrm.do",
+		data: {lng:lng, lat:lat},
 		dataType: 'json',
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function(data){
-			var places = data.response.body.items.item;
-			var totalCount = data.response.body.totalCount;
-			var totalPage;
+			console.log(data);
+			/* var places = data.stores;
+			console.log(places);
 			
-			if(totalCount=='0'){
-				alert("검색결과가 없습니다.");
-				return;
-			}else{
-				totalPage = Math.ceil(Number(totalCount)/10);
-			}
-			
-			if(!places){
-				alert("검색결과가 없습니다.");
-				return;
-			}
-			
-			displayPlaces(places, lat, lng, radius);
-			displayPagination(lat, lng, radius, pageNo, totalPage);
-
 			if(circle){
 				circle.setMap(null);
 			}
-			displayCircle(lat, lng, radius);
-		},
-		
-		beforeSend:function(){
-	        $('#Progress_Loading').show();
-	    },
-	    
-	    complete:function(){
-	    	$('#Progress_Loading').hide();
-	    }
-
-
-
+			
+			displayPlaces(places, lat, lng, radius); */
+			
+		}
 	});
+	
 }
-
-
-
-
 
 
 
@@ -266,7 +206,6 @@ function displayPlaces(places, lat, lng, radius) {
 	
     var listEl = document.getElementById('placesList'), 
     menuEl = document.getElementById('menu_wrap'),
-    fragment = document.createDocumentFragment(), 
     bounds = new kakao.maps.LatLngBounds(), 
     listStr = '';
     
@@ -277,12 +216,14 @@ function displayPlaces(places, lat, lng, radius) {
     removeMarker();
     
     for ( var i=0; i<places.length; i++ ) {
-
+		console.log(i);
         // 마커를 생성하고 지도에 표시합니다
-        var placePosition = new kakao.maps.LatLng(places[i].YPos, places[i].XPos),
-            marker = addMarker(placePosition, i, places[i].yadmNm), 
+        var placePosition = new kakao.maps.LatLng(places[i].lat, places[i].lng),
+            marker = addMarker(placePosition, i, places[i].name), 
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
+        
+            
             (function(marker, title) {
                 kakao.maps.event.addListener(marker, 'mouseover', function() {
                     displayInfowindow(marker, title);
@@ -291,11 +232,7 @@ function displayPlaces(places, lat, lng, radius) {
                 kakao.maps.event.addListener(marker, 'mouseout', function() {
                     infowindow.close();
                 });
-				
-                kakao.maps.event.addListener(marker, 'click', function() {
-                    overlay.setMap(map);
-                });
-                
+
                 itemEl.onmouseover =  function () {
                     displayInfowindow(marker, title);
                 };
@@ -303,28 +240,19 @@ function displayPlaces(places, lat, lng, radius) {
                 itemEl.onmouseout =  function () {
                     infowindow.close();
                 };
-            })(marker, places[i].yadmNm);    
+            })(marker, places[i].name);    
             
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        bounds.extend(placePosition);
-
-        fragment.appendChild(itemEl);
+        listEl.appendChild(itemEl);
     }
 
     // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
-    listEl.appendChild(fragment);
+    
     menuEl.scrollTop = 0;
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
     //map.setBounds(bounds);
     
- 
-    
-}
-
-
-function displayCircle(lat, lng, radius){
+ // 지도에 표시할 원을 생성합니다
 	circle = new kakao.maps.Circle({
 	    center : new kakao.maps.LatLng(lat, lng),  // 원의 중심좌표 입니다 
 	    radius: radius, // 미터 단위의 원의 반지름입니다 
@@ -336,21 +264,47 @@ function displayCircle(lat, lng, radius){
 	    fillOpacity: 0.5  // 채우기 불투명도 입니다   
 	}); 
 
-	circle.setMap(map);//지도 표시
+	// 지도에 원을 표시합니다 
+	circle.setMap(map);
+    
 }
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
-
+	
+	var stock;
+	var updateTime = (places.stock_at==null)?"정보 없음":places.stock_at;
+	
+	switch (places.remain_stat){
+	case 'plenty':
+		stock = "100개 이상";
+		break;
+	case 'some':
+		stock = "30개 이상 100개 미만";
+		break;
+	case 'few':
+		stock = "2개 이상 30개 미만";
+		break;
+	case 'empty':
+		stock = "1개 이하";
+		break;
+	case 'break':
+		stock = "판매 중지";
+		break;
+	default:
+		stock = "확인 불가";
+	}
+	
     var el = document.createElement('li'),
-    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+    itemStr = '<span>'+(index+1)+'</span>' +
                 '<div class="info">' +
-                '   <h5>' + places.yadmNm + '</h5>';
+                '   <h5>' + places.name + '</h5>';
 
     itemStr += '    <span>' +  places.addr  + '</span>'; 
     
-                 
-    itemStr += '  <span class="tel">' + places.telno  + '</span>' +
+    itemStr += '    <span> 재고상태 : ' + stock  + '</span>';
+    
+    itemStr += '  <span>업데이트 시간 : ' + updateTime  + '</span>'
                 '</div>';           
 
     el.innerHTML = itemStr;
@@ -361,18 +315,25 @@ function getListItem(index, places) {
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
-    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+    /* var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
         imageSize = new kakao.maps.Size(36, 37),  // 마커 이미지의 크기
         imgOptions =  {
             spriteSize : new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
             spriteOrigin : new kakao.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
             offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
         },
-        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
-            marker = new kakao.maps.Marker({
+        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions), */
+        
+        var imageSrc = '${path}/resources/images/mask.png'; // 마커이미지의 주소입니다    
+        var imageSize = new kakao.maps.Size(30, 30); // 마커이미지의 크기입니다
+        /* var imageOption = {offset: new kakao.maps.Point(27, 69)}; */
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+        
+        
+        var marker = new kakao.maps.Marker({
             position: position, // 마커의 위치
             title: title,
-            image: markerImage 
+            image: markerImage
         });
 
     marker.setMap(map); // 지도 위에 마커를 표출합니다
@@ -423,7 +384,7 @@ function displayPagination(lat, lng, radius, pageNo, totalPage) {
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 // 인포윈도우에 장소명을 표시합니다
 function displayInfowindow(marker, title) {
-    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+    var content = '<div style="padding:5px;z-index:1; text-align:center;">' + title + '</div>';
 
     infowindow.setContent(content);
     infowindow.open(map, marker);
@@ -437,10 +398,7 @@ function removeAllChildNods(el) {
 }
  
  
-//커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-function closeOverlay() {
-    overlay.setMap(null);     
-}
+ 
  
  
  
