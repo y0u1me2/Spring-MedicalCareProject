@@ -643,10 +643,16 @@ h1#title{
 											<c:out value="${r['HOSPDIRECTIONS'] }" />
 										</p>
 
+									<c:set var="d" value="day" />
+									<c:choose>
+										<c:when test="${d eq '월' }" >
 										<p>
 											오늘의 진료시간
 											<c:out value="${r['OFFICEHOUR1'] }" />
 										</p>
+										</c:when>
+										
+									</c:choose>	
 									</div>
 									<hr />
 									<div class="content2">
@@ -792,7 +798,10 @@ h1#title{
         });  
       }); 
     
-    
+   
+  let today = new Date();   
+  let day = today.getDay(); // 요일
+  
     </script>
 
 

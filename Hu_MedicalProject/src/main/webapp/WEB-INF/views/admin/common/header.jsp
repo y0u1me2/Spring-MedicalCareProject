@@ -28,6 +28,12 @@
     <script src="${pageContext.request.contextPath }/resources/js/jQuery.style.switcher.js"></script>
 	<style>
 		body{width:1366px;}
+		
+		* {
+        margin: 0;
+        font-family: "Nanum Gothic" !important;
+    }
+    
 	</style>
 </head>
 

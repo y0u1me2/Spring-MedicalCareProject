@@ -21,7 +21,8 @@
     <!-- 검색어로 조회 -->
     <select id="searchContent" parameterType="map" resultType="care">
 		SELECT * FROM CARENOTICE
-			WHERE 1=1
+			WHERE 1=1 
+			AND  CARESTATUS='Y'
 		<if test="searchContent != null and searchContent !='' ">
 			AND ${searchContent} like '%'||#{keyword}||'%'
 		</if>
