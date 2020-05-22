@@ -5,14 +5,53 @@
 		INSERT INTO HOSPITAL VALUES(#{hospNo}, #{hospName}, #{hospAddr}, #{hospUrl}, #{hospTel}, #{latitude}, #{longitude})
 	</insert>
 	
-	<select id="selectList" parameterType="string" resultType="hospital">
-		SELECT * FROM HOSPITAL WHERE HOSPNAME LIKE '%'||#{name}||'%'
-	</select>
-	
 	<insert id="insertData2" parameterType="hospital2">
 		INSERT INTO HOSPITAL2 VALUES(#{hospId}, #{hospName}, #{hospAddr}, #{hospTel}, #{hospDirections}, #{hospLat}, #{hospLon}, #{medicalDepartment}, #{officeHour1}, #{officeHour2}, #{officeHour3}, #{officeHour4}, #{officeHour5}, #{officeHour6}, #{officeHour7}, #{officeHour8})
 	</insert>
+
 	<select id="hospitalCount" resultType="_int">
 		SELECT COUNT(*) FROM HOSPITAL2
 	</select>
+	
+	
+	<!-- 병원 하나만 선택해서 vo로 추출 -->
+	<select id="selectOneHospital" parameterType="string" resultType="hospital2">
+		SELECT * FROM HOSPITAL2 WHERE HOSPNO = #{hospNo}
+	</select>
+
+	<!-- 병원 정보 수정 -->
+	<update id="updateOneHospital" parameterType="hospital2">
+		UPDATE HOSPITAL2
+			SET HOSPNAME = #{hospName},
+				HOSPADDR = #{hospAddr},
+				HOSPTEL = #{hospTel}, 
+				HOSPDIRECTIONS = #{hospDirections}, 
+				MEDICALDEPARTMENT = #{medicalDepartment},
+				OFFICEHOUR1 = #{officeHour1},
+				OFFICEHOUR2 = #{officeHour2},
+				OFFICEHOUR3 = #{officeHour3},
+				OFFICEHOUR4 = #{officeHour4},
+				OFFICEHOUR5 = #{officeHour5},
+				OFFICEHOUR6 = #{officeHour6},
+				OFFICEHOUR7 = #{officeHour7},
+				OFFICEHOUR8 = #{officeHour8}
+		WHERE HOSPNO = #{hospNo}
+	</update>
+	
+	<!-- 병원회원 가입 승인 -->
+	<update id="updateMemberStatus" parameterType="_int">
+		UPDATE HOSPITAL_MEMBER
+			SET STATUS = 'Y'
+		WHERE NO = #{no}
+	</update>
+	
+	<!-- 병원 회원 전체 가져오기 -->
+	<select id="selectAllMembers" resultType="hpMember">
+		SELECT * FROM HOSPITAL_MEMBER JOIN HOSPITAL2 USING(HOSPNO)
+	</select>
+	
+	<select id="totalMemberCount" resultType="_int">
+		SELECT COUNT(*) FROM HOSPITAL_MEMBER
+	</select>
+	
 </mapper>
