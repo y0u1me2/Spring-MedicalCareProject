@@ -16,7 +16,7 @@
 /* 섹션안 공간 */
 div.back {
 	position: relative;
-	left: 370px;
+	text-align: -webkit-center;
 	top: 50px;
 	margin-bottom: 25px;
 } /* content 공간 */
@@ -40,7 +40,6 @@ hr.gline {
 	position: relative;
 	top: 20px;
 	width: 80%;
-	float: left;
 }
 /* content 위치 */
 div.list-container {
@@ -191,9 +190,12 @@ input.confirmerInfo {
 .healthInfoWriteSubTitle>textarea {
 	width: 80%;
 }
+input[type=file] {
+	width: 80% !important;
+}
 
 </style>
-
+		<div class="container-fluid">
 <div class="content-wrapper">
 	<div class="back">
 	<!-- ========================================= 건강정보 등록 관리 ========================================-->
@@ -232,6 +234,7 @@ input.confirmerInfo {
 			</div>
 		</div>
 		<!--======================================건강정보 작성==========================================-->
+
 			<div class="healthInfoWrite">
 			<form id='disesaseForm' enctype="multipart/form-data" method="POST">
 				<h1 class="title">건강정보 작성</h1>
@@ -247,8 +250,8 @@ input.confirmerInfo {
 								<option value="${d.DISESASENO}"><c:out value="${d.DISESASETITLE}" /></option>
 							</c:forEach>
 						</select>
-						<input class="name" style="width:40%;" type="text" id="disesaseTitle" name="disesaseTitle">
-						<input type="text" id="disesaseNo" name="disesaseNo" value="new">
+						<input class="name" style="width:35%;" type="text" id="disesaseTitle" name="disesaseTitle">
+						<input type="hidden" id="disesaseNo" name="disesaseNo" value="new">
 						<input type="hidden" id="medicalNo" name="medicalNo">
 					</div>
 					<div class="disesaseWriteSubTitle">
@@ -275,7 +278,7 @@ input.confirmerInfo {
 						</c:forEach>
 					</select>
 					<input class="name" style="width:10%;" type="text" id="confirmerName" name="confirmerName">
-					<input type="hidden" id="confirmerNo" name="confirmerNo" value="new">
+					<input type="hidden" id="healthInfoStep" name="healthInfoStep">
 					<input type="hidden" id="medicalNo" name="medicalNo">
 				</div>
 				<div class="confirmerInfo" style="display:flex; justify-content:space-between; width:80%;">
@@ -296,11 +299,15 @@ input.confirmerInfo {
 				<div class="disesaseWriteContent">
 					<div class="healthInfo">
 						<label for="healthInfoTitle">건강 정보 제목 : </label>
-						<input id="healthInfoTitle" name="healthInfoTitle">				
+						<input style="width:50%;" type="text" id="healthInfoTitle" name="healthInfoTitle">				
 					</div>
 					<div class="healthInfoWriteSubTitle" style="width:500px; margin-left:50px; resize:none;">
 						<textarea rows="1" id="healthInfoSubTitle" name="healthInfoSubTitle" placeholder="건강 정보의 간단한 내용을 작성하세요."></textarea>
-					</div>
+					</div>					
+				</div>
+				<div style="display:flex; justify-content: space-around;">
+					<input type="text" style="width:30%;" id="healthInfoTitle" name="healthInfoTitle" placeholder="STEP_1/STEP_2/STEP_3 택 1">
+					<input type="text" style="width:30%;" id="healthInfoStepTitle" name="healthInfoStepTitle" placeholder="스텝의 설명을 작성하세요">
 				</div>
 				<div class="healthInfoFile">
 					<div class="custom-file" style="display:inline;">
@@ -325,6 +332,7 @@ input.confirmerInfo {
 		<!-- =============================================================================================== -->
 	</div>
 </div>
+		</div>
 
 
 <script>
