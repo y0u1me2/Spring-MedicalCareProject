@@ -35,9 +35,13 @@ public class AESEncrypt {
 	   public AESEncrypt() {
 	      //생성자, 객체가 생성될때 key값을 초기화하기(listener로 )
 		  String path = AESEncrypt.class.getResource("/").getPath();
-		  this.path=path.substring(0, path.indexOf("classes"));
-		  this.path=path.substring(0, path.indexOf("target"));
-		  File f = new File(path+"/WEB-INF/secret.bs");
+		  
+		  this.path=path.substring(0, path.indexOf("classes"));//서버에 올릴때
+		  //this.path=path.substring(0, path.indexOf("target"));//로컬에서 돌릴때
+		  
+		  File f = new File(path+"secret.bs");//서버에 올릴때
+		  //File f = new File(path+"/WEB-INF/secret.bs");//로컬에서 돌릴때
+		  
 	      System.out.println("파일있니?" +f.exists());
 	      if(f.exists()) {//파일이 있으면?
 	         //있는 파일 불러오기
