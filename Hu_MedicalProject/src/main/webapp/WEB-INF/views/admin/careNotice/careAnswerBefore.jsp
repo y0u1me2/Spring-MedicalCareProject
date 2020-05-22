@@ -9,28 +9,11 @@
 		
 <style>
 
-div.content-wrapper{
-	background-color:white;
-	position: relative;
-	left: 350px;
-}
-
-div.goodsback{
-	width:80%;
-	height:auto;
-	position: relative;
-	top: 50px;
-	margin-bottom:25px;
-}
 
 * {
 	margin: 0;
 }
 
-body {
-	width: 1366px;
-	height: auto;
-}
 
 
 /* 1:1문의 텍스트 */
@@ -47,7 +30,7 @@ hr#line1 {
 	   border: 1px solid rgb(177, 174, 174);
         position: relative;
         top: 20px;
-        width: 80%;
+        width: 90%;
 }
 
 h1#title2 {
@@ -58,9 +41,8 @@ h1#title2 {
 }
 
 table#tbl-detail {
-	width: 820px;
+	width: 100%;
 	height: 300px;
-	margin: 0 auto;
 	border-collapse: collapse;
 	clear: both;
 }
@@ -123,24 +105,30 @@ table#tbl-detail td {
 
 <!-- ============================================================== -->
 
-<div class="content-wrapper">
 
 
+
+<div class="container-fluid" style="position:relative;left:120px;">
 	<form action="${path }/admin/careNoticeYes?no=${c.careNo}" method="post">
 
-
-			<div class="goodsback">
+   
+   
+      <div class="row my-3" style="position:relative;right:100px;">
+  
 		<h1 id="title">돌보미 등록 승인하기</h1>
 		<hr id="line1">
-		<br>
-		<br>
-
-			<div>
+		<br/>
+		<br/>
+		<br/>
+			
 				<h1 id="title2">고객님의 돌보미 등록 글입니다.</h1>
-			</div>
-			<br>
+			
+		</div>
+			
 		<div id="detailBack">
 
+
+<div class="row my-3">
 			<table id="tbl-detail">
 				<tr>
 					<th>제목</th>
@@ -176,11 +164,13 @@ table#tbl-detail td {
 			</table>
 			</div>
 			
+			</div>
 			</form>
+			</div>
 			
-		</div>
+	
 		
-</div>
+
 
 <script>
 //파일다운로드

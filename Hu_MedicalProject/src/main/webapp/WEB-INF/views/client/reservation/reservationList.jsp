@@ -607,6 +607,9 @@ h1#title{
 					</div>
 				</div>
 			</div>
+			
+			
+			
 						
 		              <hr/>
 		              <p><c:out value="${r['MEDICALDEPARTMENT'] }"/></p>
