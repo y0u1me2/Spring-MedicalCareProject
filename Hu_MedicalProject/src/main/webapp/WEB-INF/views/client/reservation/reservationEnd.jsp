@@ -198,7 +198,7 @@ footer {
         background-color: #fefefe;
         margin: 2% auto 15% auto;
         position: relative;
-        top:200px;
+        top:50px;
     }
     
     /* Add Zoom Animation 

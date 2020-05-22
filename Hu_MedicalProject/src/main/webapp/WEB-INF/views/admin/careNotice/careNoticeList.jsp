@@ -12,23 +12,6 @@
 	margin: 0;
 }
 
-body {
-	width: 1366px;
-	height: auto;
-}
-
-/* 섹션안 공간  */
-div.back {
-	position: relative;
-	left: 370px;
-	top: 50px;
-	margin-bottom:25px;
-}
-
-/* content 공간 */
-div.goodsback {
-	width: 80%;
-}
 
 /* 전체 1:1상담 목록 텍스트 */
 h1#title {
@@ -45,11 +28,11 @@ hr#gline {
 	top: 20px;
 	width: 80%;
 }
-/* content 위치 */
+ /* content 위치 */
 div.list-container {
 	position: relative;
-	top: 10px;
-}
+	bottom:30px;
+} 
 
 /* 테이블 선 색상 */
 div.box>th, tr, td {
@@ -70,7 +53,7 @@ tr:first-of-type {
 
 /* 테이블 스타일 */
 table.box {
-	width: 80%;
+	width: 100%;
 	text-align: center;
 	border: 1px solid #e2e0e0;
 	border-collapse: collapse;
@@ -85,7 +68,7 @@ td#conbox {
 	width: 100%;
 }
 
-/* 페이지바 위치 */
+ /* 페이지바 위치 */
 div#pageBar {
 	position: relative;
 	top: 20px;
@@ -95,7 +78,7 @@ div#pageBar {
 div#pageBar a {
 	text-decoration: none;
 	color: rgb(95, 93, 93);
-}
+} 
 
 /* 답변상태 버튼 */
 #inquiry-btn {
@@ -104,6 +87,18 @@ div#pageBar a {
 	width: 80px;
 	border: solid 1px rgb(190, 190, 196);
 	background: white;
+	border-radius: 3px;
+	font-size: 15px;
+	color: rgb(134, 134, 133);
+	margin-right: 5px;
+}
+
+#inquiry-btn2{
+	position: relative;
+	height: 30px;
+	width: 80px;
+	border: none;
+	background:none;
 	border-radius: 3px;
 	font-size: 15px;
 	color: rgb(134, 134, 133);
@@ -160,14 +155,17 @@ div#pageBar a {
 	font-family: "Nanum Gothic";
 	color: rgb(49, 49, 49);
 	margin: 2px 8px 0px 0px;
+	position:relative;
+	top:20px;
 }
+
 
 .total>strong {
 	color:  rgb(76, 231, 231);
 }
 
 #pageBar {
-	width: 80%;
+	width: 100%;
 	margin: 40px 0 40px 0;
 	text-align: center;
 }
@@ -190,14 +188,13 @@ div#pageBar a {
 </style>
 	<jsp:include page="/WEB-INF/views/admin/common/header.jsp" />
 	
-	<div class="content-wrapper">
-	<div class="back">
+	<div class="container-fluid">
+   
+   
+      <div class="row my-3">
+         <h1 class="text-themecolor m-b-0 m-t-0" style="width:100%; text-align:center;">돌보미 등록 관리</h1>
+      </div>
 
-		<div class="goodsback">
-
-
-			<h1 id="title">돌보미 등록 관리</h1>
-			<hr id="gline">
 
 			<br> <br>
 
@@ -206,39 +203,12 @@ div#pageBar a {
 				검색결과<strong>&nbsp;<c:out value="${count }"/></strong>건
 			</p>
 
-
 			<div class="list-container">
 
-			
-				<div class="mListHeader">
-					<div class="gleft">
-						
-					</div>
-
-					<%-- <div class="gright" id="numPerPage-container">
-
-						<form name="numPerPageFrm" id="numPerPageFrm"
-							action="<%=request.getContextPath()%>/admin/InquiryList">
-
-							<input type="hidden" name="cPage" value="<%=cPage%>"> <select
-								name="numPerPage" id="numPerPage">
-								<option value="30"
-									<%=numPer == null || numPer.equals("30") ? "selected" : ""%>>30개씩
-									보기</option>
-								<option value="20"
-									<%=numPer == null || numPer.equals("20") ? "selected" : ""%>>20개씩
-									보기</option>
-								<option value="10"
-									<%=numPer == null || numPer.equals("10") ? "selected" : ""%>>10개씩
-									보기</option>
-							</select>
-
-						</form>
-
-					</div> --%>
-				</div>
+				
 				<br/>
 
+			<div class="row my-5" style="width:100%;">
 				<table class="box">
 					<tr>					
 						<td>번호</td>
@@ -256,7 +226,7 @@ div#pageBar a {
 						<td><a><c:out value="${c.careTitle}"/></a></td>
 
 						<c:if test="${c.answerStatus eq 'Y' }">
-						<td><button id="inquiry-btn">승인완료</button></td>
+						<td><button id="inquiry-btn2">승인완료</button></td>
 						</c:if>
 					
 							<c:if test="${c.answerStatus eq 'N' }">
@@ -275,19 +245,19 @@ div#pageBar a {
 					</tr>
 				</c:forEach>
 				
-				
 					
 				</table>
-
-				<div id="pageBar">
-					${pageBar }
 				</div>
 
-			</div>
+				
+				<div class="container">
+			${pageBar }
 		</div>
+
+			</div>
+	
+	
 	</div>
-	
-	
 	
 	
 	

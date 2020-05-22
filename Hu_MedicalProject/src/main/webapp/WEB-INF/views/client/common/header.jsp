@@ -216,7 +216,7 @@
  <!-- 관계자 로그인 -->
 <div id="id02" class="modalLogin" style="display: none; ">
   
-  <form class="modal-content animate" id="loginForm" name="loginForm" action="${path }/member/hospitalLogin.do" method="post" style="width:30%;">
+  <form class="modal-content animate" id="HPloginForm" name="HPloginForm" action="${path }/member/hospitalLogin.do" method="post" style="width:30%;">
    
     <div class="imgcontainer">
       <span onclick="document.getElementById('id02').style.display='none'" class="loginClose" title="Close Modal">&times;&nbsp;&nbsp;</span>
@@ -274,7 +274,7 @@
       </div>
       <br>
    <div class="containerFindEmail" style="margin:0 auto;">
-   <h2 class="text-center">이메일 찾기</h2>
+   <h2 class="text-center">아이디 찾기</h2>
       <input type="text" placeholder="이름 입력" name="name" id="name" required><br>
       <input type="text" placeholder="핸드폰 번호 입력 (-는 제외)" name="phone" id="phone" required><br>
       <div style="text-align:center;">
@@ -584,14 +584,14 @@ $(document).ready(function(){
 //관계자 회원 아이디 저장////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function(){
     // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
-    var hospitalKey = getCookie("hospitalId");
+    var hospitalKey = getCookie("hospitalKey");
     $("#hospitalId").val(hospitalKey); 
      
     if($("#hospitalId").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
         $("#store1").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
     }
      
-    $("#store").change(function(){ // 체크박스에 변화가 있다면,
+    $("#store1").change(function(){ // 체크박스에 변화가 있다면,
         if($("#store1").is(":checked")){ // ID 저장하기 체크했을 때,
             setCookie("hospitalKey", $("#hospitalId").val(), 7); // 7일 동안 쿠키 보관
         }else{ // ID 저장하기 체크 해제 시,
@@ -651,9 +651,15 @@ function onSignIn(googleUser) {
 			data:{"googleEmail":profile.getEmail(),"googleName":profile.getName(),"googlePW":profile.getId(),"loginCount":loginC},
 			success:function(data){
 				console.log(data);
-				alert("로그인 완료");
-				gapi.auth2.getAuthInstance().disconnect();
-				location.reload();	
+				if(data.num == 0){
+					alert("로그인 완료. 마이페이지를 통해 비밀번호를 추가해주세요!");
+					gapi.auth2.getAuthInstance().disconnect();
+					location.reload();	
+				}else{
+					alert("로그인 완료.");
+					gapi.auth2.getAuthInstance().disconnect();
+					location.reload();	
+				}
 			},
 			error:function(request,status,error){
 		        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
