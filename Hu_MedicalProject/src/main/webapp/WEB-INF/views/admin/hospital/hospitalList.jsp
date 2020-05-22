@@ -67,7 +67,6 @@ table.box {
 	
 		<div class="row my-3">
 			<h1 class="text-themecolor m-b-0 m-t-0" style="width:100%; text-align:center;">병원 회원 리스트</h1>
-			
 		</div>
 		
 		<div class="row my-5">

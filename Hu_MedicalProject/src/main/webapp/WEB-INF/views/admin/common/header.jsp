@@ -69,7 +69,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" style="margin-bottom: 50px;">
                         <li>
-                            <a href="${pageContext.request.contextPath }/admin/person.do" class="waves-effect" style="margin-top:50px; text-align: center;"><h4 style="font-size:22px; font-family:'Song Myung',cursive;">일반 회원 관리</h4></a>
+                            <a href="${pageContext.request.contextPath }/admin/memberInfo.do" class="waves-effect" style="margin-top:50px; text-align: center;"><h4 style="font-size:22px; font-family:'Song Myung',cursive;">일반 회원 관리</h4></a>
                         </li>
                         <li>
                             <a href="${pageContext.request.contextPath }/admin/hospitalList" class="waves-effect" style="margin-top:20px; text-align: center;"><h4 style="font-size:22px;font-family:'Song Myung',cursive;">병원 회원 관리</h4></a>
