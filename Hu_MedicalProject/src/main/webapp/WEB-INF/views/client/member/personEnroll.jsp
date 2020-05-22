@@ -47,8 +47,9 @@ form a:link, form a:visited, form a:hover {
 				<div class="mb-5">
 					<p><b>일반 회원 기본 정보</b></p>
 					 <div class="form-group">
-					  <input type="text" placeholder="이메일 ( @를 포함한 이메일 입력 )" id="email" name="email" style="width:330px;" required>
-					<button type="button" id="emailOK" name="emailOK" onclick="emailOk();">중복체크</button>
+					  <input type="text" placeholder="이메일 ( @를 포함한 이메일 입력 )" id="email" name="email" style="width:300px;" required>
+					<button type="button" class="btn btn-secondary" id="emailOK" name="emailOK" onclick="emailOk();">중복체크</button>
+					<input type="hidden" class="idChecked" name="idChk" value="0">
 					 </div>
 					<div class="form-group">
 					   <input type="text" placeholder="이름 ( 실명 ) 입력" name="joinName" id="joinName" required>
@@ -191,6 +192,14 @@ function validate(){
 		$('#psw-repeat').focus();
 		return false;
 	}
+	
+	if (document.personEnrollFrm.idChk.value==0)
+	 {
+		alert("아이디 중복체크를 해야합니다.");
+
+	    return false;
+	 }
+	
 	$("#personEnrollFrm").submit();
 }
 function emailOk(){
@@ -203,16 +212,22 @@ function emailOk(){
 		success:function(data){
 			console.log("이거디"+data.member);
 			
-			if(data.member != 1){
+			if(data.member == 0){
 				alert("존재하는 이메일 입니다. 다른 이메일을 사용하세요!");
 				email.focus();
-			}else{
-				alert("사용가능한 이메일 입니다.");
+			}else if(data.member == 1){
+				alert("탈퇴한 회원입니다. 아이디를 이용할 수 없습니다.");
+			}else
+				if(email == ""){
+					alert("이메일을 입력하세요!")
+				}else{
+					alert("사용가능한 이메일 입니다.");
+					document.personEnrollFrm.idChk.value=1;
+				}
 			}
-			
-		}
 	})
 } 
+
 function sendEmailChk(){
 	var email = $('#email').val();
 	location.href="${path }/emailChk.do?email="+email;
@@ -239,5 +254,6 @@ function checkAgree(){
 		return false;
 	}
 }
+
 </script>
 <jsp:include page="/WEB-INF/views/client/common/footer.jsp"/>

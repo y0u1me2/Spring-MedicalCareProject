@@ -17,7 +17,8 @@ public interface MemberDao {
 	int emailComplete(SqlSessionTemplate session, String email);
 	
 	Member searchEmail(SqlSessionTemplate session, String email);
-
+	Member leaveEmail(SqlSessionTemplate session, String email);
+	
 	int changeMemberPsw(SqlSessionTemplate session, Map<String, Object> map);
 
 	String findEmail(SqlSessionTemplate session, Map<String, String> param);
@@ -27,6 +28,8 @@ public interface MemberDao {
 	int googleInsert(SqlSessionTemplate session, Member googleNew);
 
 	Member searchGoogleGetMember(SqlSessionTemplate session, String googleEmail);
+
+	
 
 
 	
