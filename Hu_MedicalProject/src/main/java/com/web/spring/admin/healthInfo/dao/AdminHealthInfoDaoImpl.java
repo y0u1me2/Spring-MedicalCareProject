@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.web.spring.healthInfo.vo.Confirmer;
 import com.web.spring.healthInfo.vo.DisesaseCategory;
+import com.web.spring.healthInfo.vo.HealthInfoContentPic;
 import com.web.spring.healthInfo.vo.HealthInformation;
 
 @Repository
@@ -49,6 +50,16 @@ public class AdminHealthInfoDaoImpl implements AdminHealthInfoDao {
 	public DisesaseCategory selectDisesaseCategory(SqlSession session, DisesaseCategory dc) {
 		// TODO Auto-generated method stub
 		return session.selectOne("adminHealthInfo.selectDisesaseCategory",dc);
+	}
+	
+	
+
+
+	@Override
+	public List<HealthInformation> selectHealthInformationStep(SqlSession session, DisesaseCategory dc) {
+		// TODO Auto-generated method stub
+		return session.selectList("adminHealthInfo.selectHealthInformationStep",dc);
+		
 	}
 
 
@@ -98,6 +109,13 @@ public class AdminHealthInfoDaoImpl implements AdminHealthInfoDao {
 	public int insertHealthInformation(SqlSession session, HealthInformation hi) {
 		// TODO Auto-generated method stub
 		return session.insert("adminHealthInfo.insertHealthInformation",hi);
+	}
+
+
+	@Override
+	public int insertHealthInfoContentPic(SqlSession session, HealthInfoContentPic hicp) {
+		// TODO Auto-generated method stub
+		return session.insert("adminHealthInfo.insertHealthInfoContentPic",hicp);
 	}
 
 	

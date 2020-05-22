@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.web.spring.healthInfo.vo.Confirmer;
 import com.web.spring.healthInfo.vo.DisesaseCategory;
+import com.web.spring.healthInfo.vo.HealthInfoContentPic;
 import com.web.spring.healthInfo.vo.HealthInformation;
 
 public interface AdminHealthInfoService {
@@ -17,6 +18,8 @@ public interface AdminHealthInfoService {
 	int healthInfoCount(String keyword);
 	
 	DisesaseCategory selectDisesaseCategory(DisesaseCategory dc);
+	List<HealthInformation> selectHealthInformationStep(DisesaseCategory dc);
+	
 	Confirmer selectConfirmer(Confirmer c);
 	
 	int insertDisesase(DisesaseCategory dc);
@@ -30,4 +33,6 @@ public interface AdminHealthInfoService {
 	int getStepCount(HealthInformation hi);
 	
 	int insertHealthInformation(HealthInformation hi);
+	
+	int insertHealthInfoContentPic(HealthInformation hi, List<HealthInfoContentPic> files);
 }

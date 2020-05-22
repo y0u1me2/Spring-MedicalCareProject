@@ -278,8 +278,7 @@ input[type=file] {
 						</c:forEach>
 					</select>
 					<input class="name" style="width:10%;" type="text" id="confirmerName" name="confirmerName">
-					<input type="hidden" id="healthInfoStep" name="healthInfoStep">
-					<input type="hidden" id="medicalNo" name="medicalNo">
+					<input type="hidden" id="confirmerNo" name="confirmerNo">
 				</div>
 				<div class="confirmerInfo" style="display:flex; justify-content:space-between; width:80%;">
 					<input class="confirmerInfo" type="text" id="confirmerWork" placeholder="현재 일하는 직장" name="confirmerWork">
@@ -306,7 +305,11 @@ input[type=file] {
 					</div>					
 				</div>
 				<div style="display:flex; justify-content: space-around;">
-					<input type="text" style="width:30%;" id="healthInfoTitle" name="healthInfoTitle" placeholder="STEP_1/STEP_2/STEP_3 택 1">
+					<select id="healthInfoStepSelect" name="healthInfoStepSelect">
+						<option value="tag">질병항목을 선택해주세요</option>
+						<option value="new">직접 입력</option>
+					</select>
+					<input type="text" style="width:30%;" id="healthInfoStep" name="healthInfoStep">
 					<input type="text" style="width:30%;" id="healthInfoStepTitle" name="healthInfoStepTitle" placeholder="스텝의 설명을 작성하세요">
 				</div>
 				<div class="healthInfoFile">
@@ -314,10 +317,9 @@ input[type=file] {
 	                    <input type="file" class="form-control" name="healthInfoMainPic" id="healthInfoMainPic" placeholder="건강정보 타이틀 사진을 선택하세요">
 	                </div>
 				</div>	
-	            <!-- <div class="custom-file" style="display:inline;">
-		            <input type="file" class="custom-file-input" name="healthInfoContentPic" id="healthInfoContentPic" multiple>
-		            <label class="custom-file-label" style="width:80%;" for="healthInfoContentPic">건강정보 내용 사진들을 선택하세요</label>
-	            </div> -->
+	            <div class="custom-file" style="display:inline;">
+		            <input type="file" class="form-control" name="healthInfoContentPic" id="healthInfoContentPic" placeholder="건강정보 내용 사진들을 선택하세요" multiple>
+	            </div>
 	            <!-- <div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
 		            <button type="button" class="inquiry-btn" id="complete">완료</button>
 		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
@@ -431,10 +433,31 @@ input[type=file] {
 						$('#disesaseNo').val(data.dc.disesaseNo);
 						$('#disesaseTitle').val(data.dc.disesaseTitle);
 						$('#disesaseSubTitle').val(data.dc.disesaseSubTitle);
-						$('#disesaseFile').val(data.dc.disesaseFile);
+						/* $('#disesaseFile').val(data.dc.disesaseFile); */
 						$('#disesaseTitle').prop('readonly',true);
 						$('#disesaseSubTitle').prop('readonly',true);
 						$('#disesaseFile').prop('readonly',true);
+						
+						var optionTag="";
+						$('option.addedOption').remove();
+						for(let i=0;i<data.hi.length;i++) {
+							optionTag="<option class='addedOption' value='"+data.hi[i].HEALTHINFOSTEP+"'>"+data.hi[i].HEALTHINFOSTEP+"</option>";
+							$('select#healthInfoStepSelect').append(optionTag);
+						}
+						$('select#healthInfoStepSelect').change(function() {
+							for(let i=0;i<data.hi.length;i++) {
+								if($('select#healthInfoStepSelect').val()==data.hi[i].HEALTHINFOSTEP) {
+									$('input#healthInfoStep').val(data.hi[i].HEALTHINFOSTEP);
+									$('input#healthInfoStep').prop('readonly',true);
+									$('input#healthInfoStepTitle').val(data.hi[i].HEALTHINFOSTEPTITLE);
+								}if($('select#healthInfoStepSelect').val()=='new') {
+									$('input#healthInfoStep').val('');
+									$('input#healthInfoStepTitle').val('');
+									$('input#healthInfoStep').prop('readonly',false);
+									$('input#healthInfoStepTitle').prop('readonly',false);
+								}								
+							}
+						})					
 					}
 				})
 			}else {
@@ -447,7 +470,7 @@ input[type=file] {
 						$('#confirmerWork').val(data.c.confirmerWork);
 						$('#confirmerJob').val(data.c.confirmerJob);
 						$('#confirmerInfo').val(data.c.confirmerInfo);
-						$('#confirmerPic').val((data.c.confirmerPic!="")?data.c.confirmerPic:"사진 파일이 없습니다.");
+						/* $('#confirmerPic').val((data.c.confirmerPic!="")?data.c.confirmerPic:"사진 파일이 없습니다."); */
 						
 						$('#confirmerName').prop('readonly',true);
 						$('#confirmerWork').prop('readonly',true);
@@ -476,7 +499,6 @@ input[type=file] {
 	healthInfoFormData.append("file", $("#healthInfoMainPic")[0].files[0]); */
 	
 	$('#complete').click(function() {
-		console.log($("#disesaseNo").val());
 		var disesaseFormData=new FormData();
 		disesaseFormData.append("upFile", $("#disesaseFile")[0].files[0]);
 		disesaseFormData.append("disesaseNo", $("#disesaseNo").val());
@@ -505,7 +527,7 @@ input[type=file] {
 					data: confirmerFormData,
 					success:function(data2) {
 						$('#confirmerNo').val(data2.confirmerNo);
-						console.log($('#confirmerNo')+"aaaaaaaa"+$('#disesaseNo'));
+						console.log($('#confirmerNo').val()+"aaaaaaaa"+$('#disesaseNo'));
 						var healthInfoFormData=new FormData();
 						healthInfoFormData.append("upFile", $("#healthInfoMainPic")[0].files[0]);
 						healthInfoFormData.append("disesaseNo", $("#disesaseNo").val());
@@ -525,6 +547,26 @@ input[type=file] {
 							data: healthInfoFormData,
 							success:function(data3) {
 								
+								var healthInfoNo=data3.hi.HEALTHINFONO;
+								var disesaseNo=data3.hi.DISESASENO;
+								/* var disesaseNo=data3.hi.HEALTHINFONO;
+								var healthInfoNo=data3.hi.HEALTHINFONO;
+								var healt */hInfoNo=data3.hi.HEALTHINFONO;
+								var healthInfoContentFormData=new FormData();
+								healthInfoContentFormData.append("upFile", $('#healthInfoContentPic')[0].files[0]);
+								healthInfoContentFormData.append("healthInfoNo", healthInfoNo);
+								healthInfoContentFormData.append("disesaseNo", disesaseNo);
+								
+								$.ajax({
+									url:"${path}/admin/healthInfoContentForm.do",
+									processData:false,
+									contentType:false,
+									type:"post",
+									data: healthInfoContentFormData,
+									success:function(result) {
+										
+									}
+								});
 							}
 						});
 						
