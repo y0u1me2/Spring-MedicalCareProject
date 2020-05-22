@@ -68,7 +68,7 @@ td#conbox {
 	width: 100%;
 }
 
-/* 페이지바 위치 */
+ /* 페이지바 위치 */
 div#pageBar {
 	position: relative;
 	top: 20px;
@@ -78,7 +78,7 @@ div#pageBar {
 div#pageBar a {
 	text-decoration: none;
 	color: rgb(95, 93, 93);
-}
+} 
 
 /* 답변상태 버튼 */
 #inquiry-btn {
@@ -249,9 +249,10 @@ div#pageBar a {
 				</table>
 				</div>
 
-				<div id="pageBar">
-					${pageBar }
-				</div>
+				
+				<div class="container">
+			${pageBar }
+		</div>
 
 			</div>
 	

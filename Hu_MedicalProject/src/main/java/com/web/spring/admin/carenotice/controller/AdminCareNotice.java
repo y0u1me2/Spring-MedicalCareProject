@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.web.spring.admin.carenotice.service.AdminCareNoticeService;
 import com.web.spring.carenotice.model.vo.CareAttachment;
 import com.web.spring.carenotice.model.vo.CareNotice;
-import com.web.spring.common.PageFactory;
+import com.web.spring.common.PageFactory2;
 
 @Controller
 public class AdminCareNotice {
@@ -42,7 +42,7 @@ public class AdminCareNotice {
 		mv.addObject("list", list);
 		mv.addObject("count", totalCount);
 		mv.addObject("today",todayCount);
-		mv.addObject("pageBar", PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/admin/careNotice.do"));
+		mv.addObject("pageBar", PageFactory2.getPage(totalCount, cPage, numPerpage, "/spring/admin/careNotice.do"));
 		mv.setViewName("admin/careNotice/careNoticeList");
 		return mv;	
 }
