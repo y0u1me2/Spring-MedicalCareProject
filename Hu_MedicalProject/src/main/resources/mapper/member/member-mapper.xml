@@ -36,7 +36,11 @@
 	<select id="searchEmail" parameterType="string" resultType="member">
 		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND MEMBERSTATUS = 'Y'
 	</select>
-
+	
+	<select id="leaveEmail" parameterType="string" resultType="member">
+		SELECT * FROM MEMBER WHERE EMAIL = #{email} AND MEMBERSTATUS = 'N'
+	</select>
+	
 	<update id="changeMemberPsw" parameterType="member">
 		UPDATE MEMBER SET PASSWORD = #{memberPsw} WHERE EMAIL=#{memberId} AND MEMBERSTATUS = 'Y'		
 	</update>

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.web.spring.admin.person.service.AdminPersonService;
 import com.web.spring.common.PageFactory;
+import com.web.spring.common.PageFactory2;
 import com.web.spring.member.model.vo.Member;
 import com.web.spring.notice.model.vo.Notice;
 import com.web.spring.notice.model.vo.NoticeAttachment;
@@ -22,7 +23,7 @@ public class AdminPersonController {
 	@Autowired
 	private AdminPersonService service;
 	
-	@RequestMapping("/admin/person.do")
+	@RequestMapping("/admin/memberInfo.do")
 	public ModelAndView adminPerson(@RequestParam(required=false, defaultValue="1") int cPage, 
 			   @RequestParam(required=false, defaultValue="5") int numPerpage,
 			   ModelAndView mv) {
@@ -32,8 +33,8 @@ public class AdminPersonController {
 		mv.addObject("list",list);
 		mv.addObject("count",totalCount);
 
-		mv.addObject("pageBar",PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/admin/person.do"));
-		mv.setViewName("admin/person/personList");
+		mv.addObject("pageBar",PageFactory2.getPage(totalCount, cPage, numPerpage, "/spring/admin/memberInfo.do"));
+		mv.setViewName("admin/member/member");
 		return mv;
 	}
 	
