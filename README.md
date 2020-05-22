@@ -1,5 +1,5 @@
 # 병원 온라인 접수 사이트
-- 프로젝트명 : Hospital or U
+- 프로젝트명 : Hospital For U
 - 근처 병원을 찾아 진료예약을 할 수 있는 웹사이트 입니다.
 - 2020-04-20 ~ 2020-05-25
 - [바로가기](http://rclass.iptime.org:9999/20AM_HU_MedicalProject_final/)
