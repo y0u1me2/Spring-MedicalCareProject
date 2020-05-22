@@ -6,8 +6,6 @@
 <c:set var="path" value="${pageContext.request.contextPath}" />
 
 <style>
-
-
 * {
 	margin: 0;
 }
@@ -189,13 +187,10 @@ div#pageBar a {
 }
 </style>
 	<jsp:include page="/WEB-INF/views/admin/common/header.jsp" />
-	
-	<div class="content-wrapper">
-	<div class="back">
-
-		<div class="goodsback">
-
-			<h1 id="title">일반 회원 관리</h1>
+<div class="container-fluid">	
+	 <div class="row my-3">
+         <h1 class="text-themecolor m-b-0 m-t-0" style="width:100%; text-align:center;">일반 회원 관리</h1>
+	 </div>		
 			<hr id="gline">
 
 			<br> <br>
@@ -204,18 +199,9 @@ div#pageBar a {
 				총 회원 수<strong>&nbsp;<c:out value="${count }"/></strong> 명 
 			</p>
 
-			<div class="list-container">
-	
-				<div class="mListHeader">
-					<div class="gleft">
-						
-					</div>
-
-				</div>
-				<br/>
-
-				<table class="box">
-					<tr>					
+			<div class="row my-5">
+        	 <table class="box" style="width:100%;">
+             		<tr>              					
 						<td>번호</td>
 						<td>회원 아이디</td>
 						<td>회원명</td>
@@ -250,8 +236,7 @@ div#pageBar a {
 
 			</div>
 		</div>
-	</div>
-	</div>
+	
 <script>
 function personDelChk(){
 	

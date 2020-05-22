@@ -22,7 +22,7 @@ public class AdminPersonController {
 	@Autowired
 	private AdminPersonService service;
 	
-	@RequestMapping("/admin/person.do")
+	@RequestMapping("/admin/memberInfo.do")
 	public ModelAndView adminPerson(@RequestParam(required=false, defaultValue="1") int cPage, 
 			   @RequestParam(required=false, defaultValue="5") int numPerpage,
 			   ModelAndView mv) {
@@ -32,8 +32,8 @@ public class AdminPersonController {
 		mv.addObject("list",list);
 		mv.addObject("count",totalCount);
 
-		mv.addObject("pageBar",PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/admin/person.do"));
-		mv.setViewName("admin/person/personList");
+		mv.addObject("pageBar",PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/admin/memberInfo.do"));
+		mv.setViewName("admin/member/member");
 		return mv;
 	}
 	

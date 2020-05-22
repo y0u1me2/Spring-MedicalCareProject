@@ -59,6 +59,12 @@ public class MemberServiceImpl implements MemberService{
 		return dao.searchEmail(session,email);
 	}
 
+	 //탈퇴회원인가?
+	@Override
+	public Member leaveEmail(String email) {
+		return dao.leaveEmail(session,email);
+	}
+
 	@Override
 	public int changeMemberPsw(Map<String, Object> map) {
 		return dao.changeMemberPsw(session,map);

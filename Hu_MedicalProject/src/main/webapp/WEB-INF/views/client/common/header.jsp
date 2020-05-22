@@ -274,7 +274,7 @@
       </div>
       <br>
    <div class="containerFindEmail" style="margin:0 auto;">
-   <h2 class="text-center">이메일 찾기</h2>
+   <h2 class="text-center">아이디 찾기</h2>
       <input type="text" placeholder="이름 입력" name="name" id="name" required><br>
       <input type="text" placeholder="핸드폰 번호 입력 (-는 제외)" name="phone" id="phone" required><br>
       <div style="text-align:center;">
@@ -651,9 +651,15 @@ function onSignIn(googleUser) {
 			data:{"googleEmail":profile.getEmail(),"googleName":profile.getName(),"googlePW":profile.getId(),"loginCount":loginC},
 			success:function(data){
 				console.log(data);
-				alert("로그인 완료");
-				gapi.auth2.getAuthInstance().disconnect();
-				location.reload();	
+				if(data.num == 0){
+					alert("로그인 완료. 마이페이지를 통해 비밀번호를 추가해주세요!");
+					gapi.auth2.getAuthInstance().disconnect();
+					location.reload();	
+				}else{
+					alert("로그인 완료.");
+					gapi.auth2.getAuthInstance().disconnect();
+					location.reload();	
+				}
 			},
 			error:function(request,status,error){
 		        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리

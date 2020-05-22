@@ -53,6 +53,12 @@ public class MemberDaoImpl implements MemberDao{
 		return session.selectOne("member.searchEmail",email);
 	}
 
+	//탈퇴 회원인가?
+	@Override
+	public Member leaveEmail(SqlSessionTemplate session, String email) {
+		return session.selectOne("member.leaveEmail",email);
+	}
+	
 	@Override
 	public int changeMemberPsw(SqlSessionTemplate session, Map<String, Object> map) {
 		return session.update("member.changeMemberPsw", map);

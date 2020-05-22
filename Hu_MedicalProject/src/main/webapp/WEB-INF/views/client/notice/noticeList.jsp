@@ -24,7 +24,7 @@ div#pageBar a {
 /* 페이지바 */
  #pageBar{
    width:80%;
-   margin-left:550px;
+   margin-left:650px;
    margin-top:30px;
    margin-bottom:20px;
    /* text-align:center; */
@@ -55,6 +55,24 @@ div#pageBar a {
 	color:white;
 	font-size: 100px;
 	font-weight:700;
+}
+/* 검색버튼 */
+input#searchBtn {
+	height: 40px;
+	width: 70px;
+	border: solid 1px rgb(147, 147, 194);
+	background: white;
+	border-radius: 5px;
+	font-size: 15px;
+	color: rgb(121, 121, 79);
+	position: relative;
+	bottom: 1px;
+	left: 10px;
+}
+
+input#searchBtn:hover {
+	background: rgb(251, 251, 249);
+	outline: none;
 }
    </style>  
 <section>

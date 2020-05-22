@@ -192,6 +192,7 @@ public class MemberController {
 		Member m=null; //구글 계정으로 가입한 사람
 		String loginResult="N";
 		String memeberStatus=null;
+		int num=0;
 		int loginC=Integer.parseInt(request.getParameter("loginCount"));
 		
 		if(member == null) {	
@@ -203,6 +204,7 @@ public class MemberController {
 			googleNewReal = service.memberLogin(googleNew);
 			memeberStatus=googleNewReal.getMemberStatus();
 			m=googleNewReal;
+			num=0;
 			
 			}
 		}else {
@@ -214,12 +216,12 @@ public class MemberController {
 					googleLogin = service.memberLogin(googleOld);
 					memeberStatus=googleLogin.getMemberStatus();
 					m=googleLogin;
-					
+					num=1;
 			}else {//구글로 가입했는데 구글로 로그인 한사람 비밀번호 다르면 구글로 가입한 계정으로 로그인
 					googleAccount = service.memberLogin(googleOld);
 					memeberStatus=googleAccount.getMemberStatus();
 					m=googleAccount;	
-					
+					num=1;;
 			}			
 		}
 		if (m != null&&memeberStatus.equals("Y")) {
@@ -227,6 +229,7 @@ public class MemberController {
 			
 		}
 		mv.addObject("loginMember", m);
+		mv.addObject("num", num);
 		mv.addObject("loginResult", loginResult);
 		mv.addObject("memeberStatus", memeberStatus);
 		mv.addObject("loginCount",loginC==1?1:10);
@@ -254,16 +257,24 @@ public class MemberController {
 		System.out.println(email);
 		
 		Member member = service.searchEmail(email);
+		Member leaveMember = service.leaveEmail(email);
+		
 		//String id = member.getEmail();
 		//System.out.println(id);
 		System.out.println(member);
-		if(member != null) {
+		System.out.println(leaveMember);
+		
+		if(member != null && leaveMember == null) {
 			mv.addObject("member",0);
 			mv.setViewName("jsonView");
-		}else {
+		}else if(member == null && leaveMember != null) {
 			mv.addObject("member",1);
 			mv.setViewName("jsonView");
+		}else {
+			mv.addObject("member",2);
+			mv.setViewName("jsonView");
 		}
+		
 		 return mv;
 	}
 	
@@ -297,17 +308,11 @@ public class MemberController {
          String tomail = memberEmail;    //받는 사람의 이메일
          String title = "비밀번호 찾기 인증 이메일 입니다.";    //제목
          String content =
-         
-               
-                 "안녕하세요 회원님 저희 홈페이지를 찾아주셔서 감사합니다."
-                 
-                +
-         
-                 "비밀번호 찾기 인증번호는 " +dice+ " 입니다. "
-                 
+        	"안녕하세요 회원님 저희 홈페이지를 찾아주셔서 감사합니다."
+               +         
+                 "비밀번호 찾기 인증번호는 " +dice+ " 입니다. " 
                +
                  "받으신 인증번호를 홈페이지에 입력해 주시면 다음으로 넘어갑니다."; // 내용
-         
          try {
 
              MimeMessage message = mailSender.createMimeMessage();
@@ -333,7 +338,7 @@ public class MemberController {
 
          response_email.setContentType("text/html; charset=UTF-8");
          PrintWriter out_email = response_email.getWriter();
-         out_email.println("<script>alert('이메일이 발송되었습니다. 인증번호를 입력해주세요.');</script>");
+         out_email.println("<script>alert('이메일이 발송되었습니다. 인증번호를 확인해주세요!');</script>");
          out_email.flush();
          
          
@@ -384,7 +389,7 @@ public class MemberController {
 	        
 	        response_equals.setContentType("text/html; charset=UTF-8");
 	        PrintWriter out_equals = response_equals.getWriter();
-	        out_equals.println("<script>alert('인증번호가 일치하지않습니다. 인증번호를 다시 입력해주세요.'); history.go(-1);</script>");
+	        out_equals.println("<script>alert('인증번호가 일치하지않습니다. 인증번호를 다시 확인해주세요.'); history.back();</script>");
 	        out_equals.flush();
 	        
 	

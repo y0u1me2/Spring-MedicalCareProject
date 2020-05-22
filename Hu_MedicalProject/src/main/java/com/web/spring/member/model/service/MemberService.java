@@ -13,7 +13,8 @@ public interface MemberService {
 	Member memberLogin(Member m);
 	
 	Member searchEmail(String email);
-	
+	//탈퇴한 회원인지?
+	Member leaveEmail(String email);
 	
 	int changeMemberPsw(Map<String, Object> map);
 	
@@ -26,6 +27,7 @@ public interface MemberService {
 	Member searchGoogleGetMember(String googleEmail);
 	//이메일 인증 완료
 	int emailComplete(String email);
+	
 	
 	
 
