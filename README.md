@@ -19,14 +19,17 @@
 * 회원-관리자 1:1 채팅
 
 > ### 개발 환경
-* spring
+* bootstrap
 * java
+* servlet
+* jsp
 * javascript
 * jquery
 * jstl
-* mysql
+* oracle
 * mybatis
 * css
 * ajax
 * tomcat
+* bootstrap
 
