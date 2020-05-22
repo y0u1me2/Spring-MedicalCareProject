@@ -21,7 +21,6 @@
 > ### 개발 환경
 * spring
 * java
-* servlet
 * jsp
 * javascript
 * jquery
@@ -29,6 +28,7 @@
 * oracle
 * mybatis
 * css
+* html
 * ajax
 * tomcat
 * bootstrap
