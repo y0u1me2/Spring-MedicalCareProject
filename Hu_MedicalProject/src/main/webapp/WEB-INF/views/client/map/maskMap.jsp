@@ -30,7 +30,7 @@ pageEncoding="UTF-8"%>
 #placesList li {list-style: none;}
 #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
 #placesList .item span {display: block;margin-top:4px;}
-#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;}
 #placesList .item .info{padding:10px 0 10px 55px;}
 #placesList .info .gray {color:#8a8a8a;}
 #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
@@ -87,12 +87,16 @@ pageEncoding="UTF-8"%>
         
         <ul id="placesList">
         	
-        		<h1 class="font-weight-bold py-5 text-center" style="font-size:40px;">지도 이용방법</h1>
-        		<p class="p-4" style="font-size:20px">1. 검색 카테고리 선택 후 지도에서 원하는 위치를 클릭하면 그 지점을 중심으로 검색합니다.</p>
-        		<p class="p-4" style="font-size:20px">2. 지도 안에서 마우스를 스크롤하여 지도 레벨을 바꾸면 검색 반경을 자동으로 조절합니다.(최대 2km)</p>
-        	<!-- <li class="list-group-item list-group-item-light py-3" style="font-size:30px; border:none;">지도 이용 방법</li>
-        	<li class="list-group-item list-group-item-light" style="font-size:15px; border:none;">1. 검색 카테고리 선택 후 지도에서 원하는 위치를 클릭하면 그 지점을 중심으로 검색합니다.</li>
-        	<li class="list-group-item list-group-item-light" style="font-size:15px; border:none;">2. 마우스를 스크롤하여 지도 레벨을 바꾸면 검색 반경을 자동으로 조절합니다.(최대 2km)</li> -->
+        		<h1 class="font-weight-bold pt-5 text-center" style="font-size:40px;">지도 이용방법</h1>
+	       		<p class="px-4 pt-5 pb-3" style="font-size:20px">1. 내 주변 약국 찾기</p>
+	       		<p class="px-4" style="font-size:15px">지도에서 원하는 위치를 클릭하면 그 지점을 중심으로 검색합니다.</p>
+	       		
+	       		<p class="px-4 pt-5 pb-3" style="font-size:18px">2. 현재 영업 중인 약국 찾기</p>
+	       		<p class="px-4" style="font-size:15px">현재 시간 기준으로 영업 중인 약국만 검색합니다. (최대 100건)</p>
+	       		
+	       		<p class="px-4 pt-5 pb-3" style="font-size:20px">3. 마스크 지도 보기</p>
+	       		<p class="px-4" style="font-size:15px">재고 업데이트 시간을 반드시 확인해주세요.</p>
+        	
         </ul>
         <div id="pagination"></div>
     </div>
@@ -145,7 +149,7 @@ $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 �
         	marker.setMap(map);
         	
         	
-        	//지도에 이벤트 등록(지도에서 특정 지점 클릭 시 그 지점을 기준으로 병원 검색)
+        	//지도에 이벤트 등록
         	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
         	    
         	    var latlng = mouseEvent.latLng;
@@ -303,7 +307,6 @@ function displayPlaces1(places, lat, lng, radius) {
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
     
-    console.log(places);
     for ( var i=0; i<places.length; i++ ) {
 
         // 마커를 생성하고 지도에 표시합니다
@@ -490,8 +493,6 @@ function displayPlaces2(places, lat, lng) {
 
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
-    
-    
     
     var startSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png', // 출발 마커이미지의 주소입니다    
     startSize = new kakao.maps.Size(50, 45), // 출발 마커이미지의 크기입니다 
@@ -791,7 +792,7 @@ function addMarker3(position, idx, title) {
 /* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 
 
-
+//공통 함수들
 
 
 // 지도 위에 표시되고 있는 마커를 모두 제거합니다
@@ -802,36 +803,6 @@ function removeMarker() {
     markers = [];
 }
 
-// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(lat, lng, radius, pageNo, totalPage) {
-    var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
-        i; 
-
-    // 기존에 추가된 페이지번호를 삭제합니다
-    while (paginationEl.hasChildNodes()) {
-        paginationEl.removeChild (paginationEl.lastChild);
-    }
-
-    for (i=1; i<=totalPage; i++) {
-        var el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
-
-        if (i==pageNo) {
-            el.className = 'on';
-        } else {
-            el.onclick = (function(i) {
-                return function() {
-                    searchHospital(lat, lng, radius, i);
-                }
-            })(i);
-        }
-
-        fragment.appendChild(el);
-    }
-    paginationEl.appendChild(fragment);
-}
 
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 // 인포윈도우에 장소명을 표시합니다
@@ -865,79 +836,6 @@ function displayCircle(lat, lng, radius){
 	circle.setMap(map);//지도 표시
 }
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-function displayMarker(data, lat, lng, radius){
-	
-	var arr = data.response.body.items.item;
-	var positions = [];
-	
-	for(p in arr){
-		var p = {
-				title : arr[p].yadmNm,
-				latlng : new kakao.maps.LatLng(arr[p].YPos, arr[p].XPos)
-		};
-		positions.push(p)
-	}
-	
-    
-	for (var i = 0; i < positions.length; i ++) {
-	    
-	    addMarker(positions[i]);
-	    
-	}
-	
-	
-	// 지도에 표시할 원을 생성합니다
-	circle = new kakao.maps.Circle({
-	    center : new kakao.maps.LatLng(lat, lng),  // 원의 중심좌표 입니다 
-	    radius: radius, // 미터 단위의 원의 반지름입니다 
-	    strokeWeight: 5, // 선의 두께입니다 
-	    strokeColor: '#75B8FA', // 선의 색깔입니다
-	    strokeOpacity: 0, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-	    strokeStyle: 'solid', // 선의 스타일 입니다
-	    fillColor: '#CFE7FF', // 채우기 색깔입니다
-	    fillOpacity: 0.5  // 채우기 불투명도 입니다   
-	}); 
-
-	// 지도에 원을 표시합니다 
-	circle.setMap(map);
-	
-	
-}
-
-
-
-//배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
-function setMarkers(map) {
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
-    }            
-}
-
-// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
-function showMarkers() {
-    setMarkers(map)    
-}
-
-// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
-function hideMarkers() {
-    setMarkers(null);    
-}
-
 
 
 </script>
