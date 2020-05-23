@@ -44,9 +44,9 @@ public class HospitalMapController {
 		return "client/map/hospitalMap";
 	}
 	
-	@RequestMapping("/map/maskMap")
-	private String maskMap() {
-		return "client/map/maskMap";
+	@RequestMapping("/map/pharmacyMap")
+	private String pharmacyMap() {
+		return "client/map/pharmacyMap";
 	}
 
 	
