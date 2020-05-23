@@ -171,7 +171,8 @@ public class AdminHealthInfoController {
 			default : details=dc.getDisesaseTitle()+""; break;
 		}
 		if(dc.getDisesaseNo().equals("new")) {
-			String path = session.getServletContext().getRealPath("/resources/images/healthInformation/"+details+"/");		
+			String path = session.getServletContext().getRealPath("/resources/images/healthInformation/"+details+"/");
+			String dbPath="/healthInformation/"+details+"/";
 	//		List<CareAttachment> files = new ArrayList();
 			File f = new File(path);				
 	//		//폴더가 없으면 생성하기
@@ -228,7 +229,8 @@ public class AdminHealthInfoController {
 		Confirmer reC=null;
 		
 		if(c.getConfirmerNo().equals("new")) {
-			String path = session.getServletContext().getRealPath("/resources/images/healthInformation/Confirmer/");		
+			String path = session.getServletContext().getRealPath("/resources/images/healthInformation/Confirmer/");
+			String dbPath = "/healthInformation/Confirmer/";
 	//		List<CareAttachment> files = new ArrayList();
 			File f = new File(path);				
 	//		//폴더가 없으면 생성하기
@@ -313,7 +315,8 @@ public class AdminHealthInfoController {
 		
 		String details=stepPath+"/"+stepPath +"Data/"+hi.getHealthInfoStep().replaceAll("_", "")+"/";
 		
-			String path = session.getServletContext().getRealPath("/resources/images/healthInformation/"+details+"/"+stepPath+stepPathNo+"/");		
+			String path = session.getServletContext().getRealPath("/resources/images/healthInformation/"+details+"/"+stepPath+stepPathNo+"/");
+			String dbPath = "/healthInformation/"+details+"/"+stepPath+stepPathNo+"/";
 	//		List<CareAttachment> files = new ArrayList();
 			File f = new File(path);				
 	//		//폴더가 없으면 생성하기
@@ -339,7 +342,7 @@ public class AdminHealthInfoController {
 					e.printStackTrace();
 				}
 					
-				hi.setHealthInfoMainPic(path+rename);
+				hi.setHealthInfoMainPic(dbPath+rename);
 					
 				System.out.println(rename);
 				System.out.println(oriName);
@@ -365,12 +368,13 @@ public class AdminHealthInfoController {
 	
 	@RequestMapping("admin/healthInfoContentForm.do")
 	public ModelAndView healthInfoContentForm(MultipartFile[] upFile, ModelAndView mv,
-												HttpSession session, HealthInformation hi) {
+												HttpSession session, HealthInformation getHi) {
 		
 		//파일업로드 처리하기
 		DisesaseCategory dc=new DisesaseCategory();
-		dc.setDisesaseNo(hi.getDisesaseNo());
+		dc.setDisesaseNo(getHi.getDisesaseNo());
 		DisesaseCategory reDc=service.selectDisesaseCategory(dc);
+		HealthInformation hi=service.selectHealthInformationWithTitleAndSubTitle(getHi);
 		
 		String stepPath="";
 		
@@ -393,43 +397,17 @@ public class AdminHealthInfoController {
 		if(service.getStepCount(hi)==0) {
 			stepPathNo="1";
 		}else {
-			stepPathNo=""+(service.getStepCount(hi)+1);
+			stepPathNo=""+service.getStepCount(hi);
 		}
-		System.out.println("control stepPath : "+stepPath);
 		
 		String details=stepPath+"/"+stepPath +"Data/"+hi.getHealthInfoStep().replaceAll("_", "")+"/";
 		
-			String path = session.getServletContext().getRealPath("/resources/images/healthInformation/"+details+"/"+stepPath+stepPathNo+"/");		
-	//		List<CareAttachment> files = new ArrayList();
-//			File f = new File(path);				
-//	//		//폴더가 없으면 생성하기
-//			if(!f.exists()) f.mkdirs();		
-//	//		//파일 저장로직 구현 - 파일 rename처리
-//			if(!upFile.isEmpty()) {
-//	//			//파일명생성
-//				String oriName = upFile.getOriginalFilename();
-//				String ext = oriName.substring(oriName.lastIndexOf("."));//확장자 자르기				
-//	//			//리네임 규칙설정 
-//				String rename="";
-//				String step=hi.getHealthInfoStep();
-//				switch(step) {
-//					case "STEP_1":rename = stepPath+"1_"; break;						
-//					case "STEP_2":rename = stepPath+"2_"; break;						
-//					case "STEP_3":rename = stepPath+"3_"; break;						
-//				}
-//				rename+=stepPathNo+ext;
-//				try {
-//	//				//파일저장
-//					upFile.transferTo(new File(f+"/"+rename));
-//				}catch(Exception e) {
-//					e.printStackTrace();
-//				}
-//					
-//				hi.setHealthInfoMainPic(path+rename);
-//					
-//				System.out.println(rename);
-//				System.out.println(oriName);
-//			}
+		System.out.println("control stepPath : "+stepPath);
+		System.out.println("control stepPathNo : "+stepPathNo);
+		System.out.println("control details : "+details);
+
+		String path = session.getServletContext().getRealPath("/resources/images/healthInformation/"+details+"/"+stepPath+stepPathNo+"/");		
+		String dbPath = "/healthInformation/"+details+"/"+stepPath+stepPathNo+"/";		
 				
 		List<HealthInfoContentPic> files = new ArrayList();
 				
@@ -438,9 +416,9 @@ public class AdminHealthInfoController {
 		//폴더가 없으면 생성하기
 		if(f.exists()) f.mkdirs();
 				
+		int i=1;
 		//파일 저장로직 구현 - 파일 rename처리
 		for(MultipartFile mf : upFile) {
-			int i=1;
 			if(!mf.isEmpty()) {
 				//파일명생성
 				String oriName = mf.getOriginalFilename();
@@ -454,15 +432,15 @@ public class AdminHealthInfoController {
 					case "STEP_3":rename = stepPath+"3_"; break;						
 				}
 				rename+=stepPathNo+"_"+i+ext;
-				i++;
 				try {
 					//파일저장
 					mf.transferTo(new File(f+"/"+rename));
+					i+=1;
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
 				HealthInfoContentPic hicp = new HealthInfoContentPic();
-				hicp.setHealthInfoContentPic(path+rename);
+				hicp.setHealthInfoContentPic(dbPath+rename);
 				files.add(hicp);
 			}
 		}
@@ -482,20 +460,16 @@ public class AdminHealthInfoController {
 			}
 		}
 				
-		String msg = "";
-		String loc = "";
+		String returnResult = "";
 				
 		if(result>0) {
-			msg="등록이 성공하였습니다.";
-			loc="/admin/healthInfoMain";
+			returnResult="true";
 		}else {
-			msg="등록이 실패하였습니다.";
-			loc="/admin/healthInfoMain";
+			returnResult="false";
 		}
 		
-		mv.addObject("msg",msg);
-		mv.addObject("loc",loc);
-		mv.setViewName("client/common/msg");
+		mv.addObject("result",returnResult);
+		mv.setViewName("jsonView");
 		
 		
 		return mv;

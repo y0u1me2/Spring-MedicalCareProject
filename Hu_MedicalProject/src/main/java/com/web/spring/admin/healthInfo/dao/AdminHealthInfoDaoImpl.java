@@ -118,6 +118,13 @@ public class AdminHealthInfoDaoImpl implements AdminHealthInfoDao {
 		return session.insert("adminHealthInfo.insertHealthInfoContentPic",hicp);
 	}
 
+
+	@Override
+	public HealthInformation selectHealthInformationWithTitleAndSubTitle(SqlSession session, HealthInformation getHi) {
+		// TODO Auto-generated method stub
+		return session.selectOne("adminHealthInfo.selectHealthInformationWithTitleAndSubTitle", getHi);
+	}
+
 	
 	
 }

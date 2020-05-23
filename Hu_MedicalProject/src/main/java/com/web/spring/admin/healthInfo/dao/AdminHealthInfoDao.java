@@ -39,4 +39,6 @@ public interface AdminHealthInfoDao {
 	int insertHealthInformation(SqlSession session, HealthInformation hi);
 	
 	int insertHealthInfoContentPic(SqlSession session, HealthInfoContentPic hicp);
+	
+	HealthInformation selectHealthInformationWithTitleAndSubTitle(SqlSession session, HealthInformation getHi);
 }

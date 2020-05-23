@@ -35,4 +35,6 @@ public interface AdminHealthInfoService {
 	int insertHealthInformation(HealthInformation hi);
 	
 	int insertHealthInfoContentPic(HealthInformation hi, List<HealthInfoContentPic> files);
+	
+	HealthInformation selectHealthInformationWithTitleAndSubTitle(HealthInformation getHi);
 }

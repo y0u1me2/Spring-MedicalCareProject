@@ -316,15 +316,13 @@ input[type=file] {
 					<div class="custom-file" style="display:inline;">
 	                    <input type="file" class="form-control" name="healthInfoMainPic" id="healthInfoMainPic" placeholder="건강정보 타이틀 사진을 선택하세요">
 	                </div>
-				</div>	
-	            <div class="custom-file" style="display:inline;">
-		            <input type="file" class="form-control" name="healthInfoContentPic" id="healthInfoContentPic" placeholder="건강정보 내용 사진들을 선택하세요" multiple>
-	            </div>
-	            <!-- <div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
-		            <button type="button" class="inquiry-btn" id="complete">완료</button>
-		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
-	            </div> -->
+				</div>		           
 	            </form>
+	            <div class="custom-file" style="display:inline;">
+	            <form id="multiFileForm" enctype="multipart/form-data" method="POST">
+		            <input type="file" class="form-control" name="healthInfoContentPic" id="healthInfoContentPic" placeholder="건강정보 내용 사진들을 선택하세요" multiple="multiple">
+	            </form>
+	            </div>
 	            <div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
 		            <button type="button" class="inquiry-btn" id="complete">완료</button>
 		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
@@ -526,8 +524,6 @@ input[type=file] {
 					type:"post",
 					data: confirmerFormData,
 					success:function(data2) {
-						$('#confirmerNo').val(data2.confirmerNo);
-						console.log($('#confirmerNo').val()+"aaaaaaaa"+$('#disesaseNo'));
 						var healthInfoFormData=new FormData();
 						healthInfoFormData.append("upFile", $("#healthInfoMainPic")[0].files[0]);
 						healthInfoFormData.append("disesaseNo", $("#disesaseNo").val());
@@ -547,24 +543,46 @@ input[type=file] {
 							data: healthInfoFormData,
 							success:function(data3) {
 								
-								var healthInfoNo=data3.hi.HEALTHINFONO;
-								var disesaseNo=data3.hi.DISESASENO;
-								/* var disesaseNo=data3.hi.HEALTHINFONO;
-								var healthInfoNo=data3.hi.HEALTHINFONO;
-								var healt */hInfoNo=data3.hi.HEALTHINFONO;
-								var healthInfoContentFormData=new FormData();
-								healthInfoContentFormData.append("upFile", $('#healthInfoContentPic')[0].files[0]);
-								healthInfoContentFormData.append("healthInfoNo", healthInfoNo);
-								healthInfoContentFormData.append("disesaseNo", disesaseNo);
 								
+								console.log(data3.hi);
+								var healthInfoTitle=data3.hi.healthInfoTitle;
+								var healthInfoSubTitle=data3.hi.healthInfoSubTitle;
+								var disesaseNo=data3.hi.disesaseNo;
+								var healthInfoStep=data3.hi.healthInfoStep;
+								/* var disesaseNo=data3.hi.HEALTHINFONO;
+								var healthInfoNo=data3.hi.HEALTHINFONO*/
+								//var healthInfoContentFormData=new FormData();
+								//healthInfoContentFormData.append("upFile", $('#healthInfoContentPic')[0].files[0]);
+								var healthInfoContentFormData = new FormData();
+								var files = $('#healthInfoContentPic').prop('files');
+								for(var i=0;i<files.length;i++){
+									healthInfoContentFormData.append('upFile', $('#healthInfoContentPic')[0].files[i]);
+									console.log(i+" : "+$('#healthInfoContentPic')[0].files[i]);
+								}
+								//healthInfoContentFormData.append("upFile", files);
+								healthInfoContentFormData.append("healthInfoTitle", healthInfoTitle);
+								healthInfoContentFormData.append("healthInfoSubTitle", healthInfoSubTitle);
+								healthInfoContentFormData.append("disesaseNo", disesaseNo);
+								healthInfoContentFormData.append("healthInfoStep", healthInfoStep);
+								
+								console.log(healthInfoTitle);
+								console.log(disesaseNo);
+								console.log(healthInfoStep);
+								console.log(healthInfoSubTitle);
 								$.ajax({
 									url:"${path}/admin/healthInfoContentForm.do",
+									enctype: 'multipart/form-data',
 									processData:false,
 									contentType:false,
 									type:"post",
 									data: healthInfoContentFormData,
 									success:function(result) {
-										
+										if(result.result=="true") {
+											alert("등록성공!");
+											location.replace("/");
+										}else {
+											alert("등록실패!");
+										}
 									}
 								});
 							}

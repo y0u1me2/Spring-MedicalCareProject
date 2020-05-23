@@ -136,6 +136,13 @@ public class AdminHealthInfoServiceImpl implements AdminHealthInfoService {
 	
 		return result;
 	}
+
+
+	@Override
+	public HealthInformation selectHealthInformationWithTitleAndSubTitle(HealthInformation getHi) {
+		// TODO Auto-generated method stub
+		return dao.selectHealthInformationWithTitleAndSubTitle(session, getHi);
+	}
 	
 	
 	

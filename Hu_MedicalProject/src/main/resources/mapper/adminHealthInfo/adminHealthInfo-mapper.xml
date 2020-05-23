@@ -72,5 +72,9 @@
   	<insert id="insertHealthInfoContentPic" parameterType="healthInfoContentPic">
   		INSERT INTO HEALTHINFOCONTENTPIC VALUES ('HC'||SEQ_HEALTHINFOCONTENT.NEXTVAL, #{healthInfoNo}, #{healthInfoContentPic})
   	</insert>
+  	
+  	<select id="selectHealthInformationWithTitleAndSubTitle" parameterType="healthInfo" resultType="healthInfo">
+  		SELECT * FROM HEALTHINFO WHERE HEALTHINFOTITLE = #{healthInfoTitle} AND HEALTHINFOSUBTITLE = #{healthInfoSubTitle}
+  	</select>
 
 </mapper>
