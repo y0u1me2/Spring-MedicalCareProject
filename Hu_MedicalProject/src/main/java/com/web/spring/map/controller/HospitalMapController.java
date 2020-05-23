@@ -8,12 +8,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.json.JSONObject;
+import org.json.XML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +26,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.web.spring.map.model.service.MapService;
 import com.web.spring.map.model.vo.Hospital;
 import com.web.spring.map.model.vo.Hospital2;
+
+
 
 @Controller
 public class HospitalMapController {
@@ -117,29 +120,27 @@ public class HospitalMapController {
 	
 	
 	@ResponseBody
-	@RequestMapping(value = "/searchPhrm.do", produces = "application/text; charset=utf-8")
-	private void searchPhrm(
+	@RequestMapping(value = "/searchPhrm1.do", produces = "application/text; charset=utf-8")
+	private String searchPhrm1(
 			@RequestParam(required = false, defaultValue = "") String latitude,
 			@RequestParam(required = false, defaultValue = "") String longitude,
 			@RequestParam(required = false, defaultValue = "1") String pageNo,
 			@RequestParam(required = false, defaultValue = "10") String numOfRows,
-			@RequestParam(required = false, defaultValue = "") String name,
-			@RequestParam(required = false, defaultValue = "") String dept, 
 			@RequestParam(required = false, defaultValue = "") String radius, 
 			HttpServletResponse response) throws IOException {
 		
 
 		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/pharmacyInfoService/getParmacyBasisList"); /*URL*/
         urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=j3l4%2FlL9sulpZEYY467tIsTngXuIhRTIddhNB4wrTzRNtaGQ5w6eGH1Jah%2FmXu2JMdja84GrX0hrpsZ1dludpw%3D%3D");
-        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
-        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
-        urlBuilder.append("&" + URLEncoder.encode("sidoCd","UTF-8") + "=" + URLEncoder.encode("110000", "UTF-8")); /*시도코드*/
-        urlBuilder.append("&" + URLEncoder.encode("sgguCd","UTF-8") + "=" + URLEncoder.encode("110019", "UTF-8")); /*시군구코드*/
-        urlBuilder.append("&" + URLEncoder.encode("emdongNm","UTF-8") + "=" + URLEncoder.encode("신내동", "UTF-8")); /*읍면동명*/
-        urlBuilder.append("&" + URLEncoder.encode("yadmNm","UTF-8") + "=" + URLEncoder.encode("온누리건강", "UTF-8")); /*병원명*/
-        urlBuilder.append("&" + URLEncoder.encode("xPos","UTF-8") + "=" + URLEncoder.encode("127.0965441345503", "UTF-8")); /*x좌표*/
-        urlBuilder.append("&" + URLEncoder.encode("yPos","UTF-8") + "=" + URLEncoder.encode("37.60765568913871", "UTF-8")); /*y좌표*/
-        urlBuilder.append("&" + URLEncoder.encode("radius","UTF-8") + "=" + URLEncoder.encode("3000", "UTF-8")); /*반경*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8")); /*페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(numOfRows, "UTF-8")); /*한 페이지 결과 수*/
+        //urlBuilder.append("&" + URLEncoder.encode("sidoCd","UTF-8") + "=" + URLEncoder.encode("110000", "UTF-8")); /*시도코드*/
+        //urlBuilder.append("&" + URLEncoder.encode("sgguCd","UTF-8") + "=" + URLEncoder.encode("110019", "UTF-8")); /*시군구코드*/
+        //urlBuilder.append("&" + URLEncoder.encode("emdongNm","UTF-8") + "=" + URLEncoder.encode("신내동", "UTF-8")); /*읍면동명*/
+        //urlBuilder.append("&" + URLEncoder.encode("yadmNm","UTF-8") + "=" + URLEncoder.encode("온누리건강", "UTF-8")); /*병원명*/
+        urlBuilder.append("&" + URLEncoder.encode("xPos","UTF-8") + "=" + URLEncoder.encode(longitude, "UTF-8")); /*x좌표*/
+        urlBuilder.append("&" + URLEncoder.encode("yPos","UTF-8") + "=" + URLEncoder.encode(latitude, "UTF-8")); /*y좌표*/
+        urlBuilder.append("&" + URLEncoder.encode("radius","UTF-8") + "=" + URLEncoder.encode(radius, "UTF-8")); /*반경*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -161,15 +162,22 @@ public class HospitalMapController {
         
         String xml = sb.toString();
         
-        XmlMapper xmlMapper = new XmlMapper();
-        Map<String, String> map = xmlMapper.readValue(xml, Map.class);
         
-        System.out.println(map);
+        JSONObject jsonObj = XML.toJSONObject(xml);
+        //String json = jsonObj.toString(4);
+        
+        
+//        XmlMapper xmlMapper = new XmlMapper();
+//        Map map = xmlMapper.readValue(xml, java.util.Map.class);
+        
+        //System.out.println(map);
         
         ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(map);
-        
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        Object obj = mapper.readValue(jsonObj.toString(), Object.class);
+        String json = mapper.writeValueAsString(obj);
         System.out.println(json);
+        return json;
     }
 	
 	
@@ -177,7 +185,60 @@ public class HospitalMapController {
 	
 	
 	
-	
+	@ResponseBody
+	@RequestMapping(value = "/searchPhrm2.do", produces = "application/text; charset=utf-8")
+	private String searchPhrm2(
+			@RequestParam(required = false, defaultValue = "") String latitude,
+			@RequestParam(required = false, defaultValue = "") String longitude,
+			@RequestParam(required = false, defaultValue = "1") String pageNo,
+			@RequestParam(required = false, defaultValue = "10") String numOfRows,
+			HttpServletResponse response) throws IOException {
+		
+
+		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyLcinfoInqire"); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=YYNsiXKEtCBRpRwoJKuB310zaVCW4l33tzfncqVwFCUyWK0lH9nLoRi%2BoPzSDoTGiqDqEG9RVCSEUglU7awUmA%3D%3D");
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode(pageNo, "UTF-8")); /*페이지 번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode(numOfRows, "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("WGS84_LON","UTF-8") + "=" + URLEncoder.encode(longitude, "UTF-8")); /*x좌표*/
+        urlBuilder.append("&" + URLEncoder.encode("WGS84_LAT","UTF-8") + "=" + URLEncoder.encode(latitude, "UTF-8")); /*y좌표*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Content-type", "application/xml");
+        System.out.println("Response code: " + conn.getResponseCode());
+        BufferedReader rd;
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        }
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        rd.close();
+        conn.disconnect();
+        
+        String xml = sb.toString();
+        System.out.println(xml);
+        
+        JSONObject jsonObj = XML.toJSONObject(xml);
+        //String json = jsonObj.toString(4);
+        
+        
+//        XmlMapper xmlMapper = new XmlMapper();
+//        Map map = xmlMapper.readValue(xml, java.util.Map.class);
+        
+        //System.out.println(map);
+        
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        Object obj = mapper.readValue(jsonObj.toString(), Object.class);
+        String json = mapper.writeValueAsString(obj);
+        System.out.println(json);
+        return json;
+    }
 	
 	
 	

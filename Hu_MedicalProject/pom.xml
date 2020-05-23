@@ -285,6 +285,14 @@
 		<version>2.8.5</version>
 	</dependency>
 	
+	<!-- https://mvnrepository.com/artifact/org.json/json -->
+	<dependency>
+	    <groupId>org.json</groupId>
+	    <artifactId>json</artifactId>
+	    <version>20160810</version>
+	</dependency>
+	
+	
 	</dependencies>
 	
     <build>
