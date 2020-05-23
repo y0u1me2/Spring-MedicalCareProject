@@ -169,10 +169,10 @@ input.error {
 }
 
 .personalInfo-update {
-	display:block;
+	display:none;
 }
 .myPage-reservation {
-	display:none;
+	display:block;
 }
 
 
@@ -279,8 +279,8 @@ input.error {
 		<div class="left col-2">
 			<h2>마이페이지</h2>
 			<ul id="myMenu">
-				<li><a id="personalInfo-updateA" name="personalInfo-update" class="aSelected" href="#">개인정보수정</a></li>
-				<li><a id="myPage-reservationA" name="myPage-reservation" href="#">예약 현황</a></li>
+				<li><a id="myPage-reservationA" name="myPage-reservation"  class="aSelected" href="#">예약 현황</a></li>
+				<li><a id="personalInfo-updateA" name="personalInfo-update"href="#">개인정보수정</a></li>
 				<li><a id="modal-backA" name="modal-back" href="#">회원 탈퇴</a></li>
 			</ul>
 		</div>
@@ -421,6 +421,39 @@ input.error {
 	</div>
 </section>
 <script>
+$('#reservList>div').html('');
+$('#personInfoFrm')[0].reset();
+$('.myPage-deleteMember').css('display', 'none');
+$('.personalInfo-update').css('display', 'none');
+$('.myPage-reservation').css('display', 'block');
+$.ajax({
+	url:"${path}/myPage/reservationStatus",
+	data:{'no':$('#memberNo').val()},
+	success:function(data) {
+		var tableHead='<table class="reservList">'
+							+'<tr class="table-head">'
+								+'<th class="hospName">병원이름</th>'
+								+'<th class="hospAddr">주소</th>'
+								+'<th class="department">진료과목</th>'
+								+'<th class="hospTel">전화번호</th>'
+								+'<th class="reservDate">예약일시</th>'
+							+'</tr>'
+						+'</table>';
+		$('#reservList>div').append(tableHead);
+		for(let i=0;i<data.list.length;i++) {
+			var tableList="<tr class='table-list'>";
+			tableList+="<td class='hospName'>"+data.list[i].HOSPNAME+"</td>";
+			tableList+="<td class='hospAddr'>"+data.list[i].HOSPADDR+"</td>";
+			tableList+="<td class='department'>"+data.list[i].HOSPDEPARTMENT+"</td>";
+			tableList+="<td class='hospTel'>"+data.list[i].HOSPTEL+"</td>";
+			tableList+="<td class='reservDate'>"+data.list[i].RESERVDATE+"</td>";
+			tableList+="</tr>";
+			$('table.reservList>tbody').append(tableList);
+		}
+	}			
+})
+
+
 var updateMyInfo = $('div.col-xl-8>input');
 var email=$('#email').val();
 var password=$('#password').val();

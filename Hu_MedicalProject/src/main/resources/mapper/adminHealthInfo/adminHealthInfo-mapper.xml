@@ -36,6 +36,10 @@
   		SELECT * FROM DISESASECATEGORY WHERE DISESASENO = #{disesaseNo}
   	</select>
   	
+  	<select id="selectHealthInformationStep" parameterType="disesaseCategory" resultType="map">
+  		 SELECT DISTINCT HEALTHINFOSTEP, HEALTHINFOSTEPTITLE FROM HEALTHINFO WHERE DISESASENO=#{disesaseNo} ORDER BY HEALTHINFOSTEP
+  	</select>
+  	
   	<select id="selectConfirmer" parameterType="confirmer" resultType="confirmer">
   		SELECT * FROM CONFIRMER WHERE CONFIRMERNO = #{confirmerNo}
   	</select>
@@ -57,12 +61,20 @@
   	</select>
   	
   	<select id="getStepCount" parameterType="healthInfo" resultType="_int">
-  		SELECT COUNT(*) FROM HEALTHINFORMATION DISESASENO = #{disesaseNo}
+  		SELECT COUNT(*) FROM HEALTHINFO WHERE DISESASENO = #{disesaseNo} AND HEALTHINFOSTEP = #{healthInfoStep}
   	</select>
   	
   	<insert id="insertHealthInformation" parameterType="healthInfo">
-  		INSERT INTO HealthInformation VALUES ('H'||SEQ_HEALTHINFORMATION.NEXTVAL,#{confirmerNo},#{disesaseNo},null,#{healthInfoTitle},#{healthInfoSubTitle},
+  		INSERT INTO HEALTHINFO VALUES ('H'||SEQ_HEALTHINFO.NEXTVAL,#{disesaseNo},#{confirmerNo},null,#{healthInfoTitle},#{healthInfoSubTitle},
   												#{healthInfoMainPic}, #{healthInfoStep}, #{healthInfoStepTitle})
   	</insert>
+  	
+  	<insert id="insertHealthInfoContentPic" parameterType="healthInfoContentPic">
+  		INSERT INTO HEALTHINFOCONTENTPIC VALUES ('HC'||SEQ_HEALTHINFOCONTENT.NEXTVAL, #{healthInfoNo}, #{healthInfoContentPic})
+  	</insert>
+  	
+  	<select id="selectHealthInformationWithTitleAndSubTitle" parameterType="healthInfo" resultType="healthInfo">
+  		SELECT * FROM HEALTHINFO WHERE HEALTHINFOTITLE = #{healthInfoTitle} AND HEALTHINFOSUBTITLE = #{healthInfoSubTitle}
+  	</select>
 
 </mapper>

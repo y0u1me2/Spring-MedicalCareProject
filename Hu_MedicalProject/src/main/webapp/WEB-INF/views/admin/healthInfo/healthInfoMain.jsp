@@ -278,8 +278,7 @@ input[type=file] {
 						</c:forEach>
 					</select>
 					<input class="name" style="width:10%;" type="text" id="confirmerName" name="confirmerName">
-					<input type="hidden" id="healthInfoStep" name="healthInfoStep">
-					<input type="hidden" id="medicalNo" name="medicalNo">
+					<input type="hidden" id="confirmerNo" name="confirmerNo">
 				</div>
 				<div class="confirmerInfo" style="display:flex; justify-content:space-between; width:80%;">
 					<input class="confirmerInfo" type="text" id="confirmerWork" placeholder="현재 일하는 직장" name="confirmerWork">
@@ -306,23 +305,24 @@ input[type=file] {
 					</div>					
 				</div>
 				<div style="display:flex; justify-content: space-around;">
-					<input type="text" style="width:30%;" id="healthInfoTitle" name="healthInfoTitle" placeholder="STEP_1/STEP_2/STEP_3 택 1">
+					<select id="healthInfoStepSelect" name="healthInfoStepSelect">
+						<option value="tag">질병항목을 선택해주세요</option>
+						<option value="new">직접 입력</option>
+					</select>
+					<input type="text" style="width:30%;" id="healthInfoStep" name="healthInfoStep">
 					<input type="text" style="width:30%;" id="healthInfoStepTitle" name="healthInfoStepTitle" placeholder="스텝의 설명을 작성하세요">
 				</div>
 				<div class="healthInfoFile">
 					<div class="custom-file" style="display:inline;">
 	                    <input type="file" class="form-control" name="healthInfoMainPic" id="healthInfoMainPic" placeholder="건강정보 타이틀 사진을 선택하세요">
 	                </div>
-				</div>	
-	            <!-- <div class="custom-file" style="display:inline;">
-		            <input type="file" class="custom-file-input" name="healthInfoContentPic" id="healthInfoContentPic" multiple>
-		            <label class="custom-file-label" style="width:80%;" for="healthInfoContentPic">건강정보 내용 사진들을 선택하세요</label>
-	            </div> -->
-	            <!-- <div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
-		            <button type="button" class="inquiry-btn" id="complete">완료</button>
-		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
-	            </div> -->
+				</div>		           
 	            </form>
+	            <div class="custom-file" style="display:inline;">
+	            <form id="multiFileForm" enctype="multipart/form-data" method="POST">
+		            <input type="file" class="form-control" name="healthInfoContentPic" id="healthInfoContentPic" placeholder="건강정보 내용 사진들을 선택하세요" multiple="multiple">
+	            </form>
+	            </div>
 	            <div class="buttonDiv" style="margin-top: 30px; text-align: center; width:80%;">
 		            <button type="button" class="inquiry-btn" id="complete">완료</button>
 		            <button type="button" class="inquiry-btn" id="cancel">취소</button>
@@ -431,10 +431,31 @@ input[type=file] {
 						$('#disesaseNo').val(data.dc.disesaseNo);
 						$('#disesaseTitle').val(data.dc.disesaseTitle);
 						$('#disesaseSubTitle').val(data.dc.disesaseSubTitle);
-						$('#disesaseFile').val(data.dc.disesaseFile);
+						/* $('#disesaseFile').val(data.dc.disesaseFile); */
 						$('#disesaseTitle').prop('readonly',true);
 						$('#disesaseSubTitle').prop('readonly',true);
 						$('#disesaseFile').prop('readonly',true);
+						
+						var optionTag="";
+						$('option.addedOption').remove();
+						for(let i=0;i<data.hi.length;i++) {
+							optionTag="<option class='addedOption' value='"+data.hi[i].HEALTHINFOSTEP+"'>"+data.hi[i].HEALTHINFOSTEP+"</option>";
+							$('select#healthInfoStepSelect').append(optionTag);
+						}
+						$('select#healthInfoStepSelect').change(function() {
+							for(let i=0;i<data.hi.length;i++) {
+								if($('select#healthInfoStepSelect').val()==data.hi[i].HEALTHINFOSTEP) {
+									$('input#healthInfoStep').val(data.hi[i].HEALTHINFOSTEP);
+									$('input#healthInfoStep').prop('readonly',true);
+									$('input#healthInfoStepTitle').val(data.hi[i].HEALTHINFOSTEPTITLE);
+								}if($('select#healthInfoStepSelect').val()=='new') {
+									$('input#healthInfoStep').val('');
+									$('input#healthInfoStepTitle').val('');
+									$('input#healthInfoStep').prop('readonly',false);
+									$('input#healthInfoStepTitle').prop('readonly',false);
+								}								
+							}
+						})					
 					}
 				})
 			}else {
@@ -447,7 +468,7 @@ input[type=file] {
 						$('#confirmerWork').val(data.c.confirmerWork);
 						$('#confirmerJob').val(data.c.confirmerJob);
 						$('#confirmerInfo').val(data.c.confirmerInfo);
-						$('#confirmerPic').val((data.c.confirmerPic!="")?data.c.confirmerPic:"사진 파일이 없습니다.");
+						/* $('#confirmerPic').val((data.c.confirmerPic!="")?data.c.confirmerPic:"사진 파일이 없습니다."); */
 						
 						$('#confirmerName').prop('readonly',true);
 						$('#confirmerWork').prop('readonly',true);
@@ -476,7 +497,6 @@ input[type=file] {
 	healthInfoFormData.append("file", $("#healthInfoMainPic")[0].files[0]); */
 	
 	$('#complete').click(function() {
-		console.log($("#disesaseNo").val());
 		var disesaseFormData=new FormData();
 		disesaseFormData.append("upFile", $("#disesaseFile")[0].files[0]);
 		disesaseFormData.append("disesaseNo", $("#disesaseNo").val());
@@ -504,8 +524,6 @@ input[type=file] {
 					type:"post",
 					data: confirmerFormData,
 					success:function(data2) {
-						$('#confirmerNo').val(data2.confirmerNo);
-						console.log($('#confirmerNo')+"aaaaaaaa"+$('#disesaseNo'));
 						var healthInfoFormData=new FormData();
 						healthInfoFormData.append("upFile", $("#healthInfoMainPic")[0].files[0]);
 						healthInfoFormData.append("disesaseNo", $("#disesaseNo").val());
@@ -525,6 +543,48 @@ input[type=file] {
 							data: healthInfoFormData,
 							success:function(data3) {
 								
+								
+								console.log(data3.hi);
+								var healthInfoTitle=data3.hi.healthInfoTitle;
+								var healthInfoSubTitle=data3.hi.healthInfoSubTitle;
+								var disesaseNo=data3.hi.disesaseNo;
+								var healthInfoStep=data3.hi.healthInfoStep;
+								/* var disesaseNo=data3.hi.HEALTHINFONO;
+								var healthInfoNo=data3.hi.HEALTHINFONO*/
+								//var healthInfoContentFormData=new FormData();
+								//healthInfoContentFormData.append("upFile", $('#healthInfoContentPic')[0].files[0]);
+								var healthInfoContentFormData = new FormData();
+								var files = $('#healthInfoContentPic').prop('files');
+								for(var i=0;i<files.length;i++){
+									healthInfoContentFormData.append('upFile', $('#healthInfoContentPic')[0].files[i]);
+									console.log(i+" : "+$('#healthInfoContentPic')[0].files[i]);
+								}
+								//healthInfoContentFormData.append("upFile", files);
+								healthInfoContentFormData.append("healthInfoTitle", healthInfoTitle);
+								healthInfoContentFormData.append("healthInfoSubTitle", healthInfoSubTitle);
+								healthInfoContentFormData.append("disesaseNo", disesaseNo);
+								healthInfoContentFormData.append("healthInfoStep", healthInfoStep);
+								
+								console.log(healthInfoTitle);
+								console.log(disesaseNo);
+								console.log(healthInfoStep);
+								console.log(healthInfoSubTitle);
+								$.ajax({
+									url:"${path}/admin/healthInfoContentForm.do",
+									enctype: 'multipart/form-data',
+									processData:false,
+									contentType:false,
+									type:"post",
+									data: healthInfoContentFormData,
+									success:function(result) {
+										if(result.result=="true") {
+											alert("등록성공!");
+											location.replace("/");
+										}else {
+											alert("등록실패!");
+										}
+									}
+								});
 							}
 						});
 						
