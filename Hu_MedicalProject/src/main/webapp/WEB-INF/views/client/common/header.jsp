@@ -60,12 +60,17 @@
       <li class="nav-item">
         <a class="nav-link" href="${path }/healthInfo/healthInfoMain">건강정보</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="${path }/map/hospitalMap">병원찾기</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="${path }/map/maskMap">마스크 지도</a>
-      </li>
+      
+      <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+		  병원/약국 찾기
+		</a>
+		<div class="dropdown-menu">
+		  <a class="dropdown-item" href="${path }/map/hospitalMap">병원 찾기</a>
+		  <a class="dropdown-item" href="${path }/map/pharmacyMap">약국 찾기</a>
+		</div>
+	</li>
+      
      
       <!-- <li class="nav-item">
         <a class="nav-link" href="#">의약품 검색</a>

@@ -15,15 +15,7 @@ div.box>th, tr, td {
 	padding: 7px;
 }
 
-tr:first-of-type {
-	color: #80878d;
-	text-align: center;
-	vertical-align: middle;
-	font-weight: normal;
-	font-size: 15px;
-	background-color:  rgb(228, 235, 246);
-	padding: 9px 10px 7px;
-}
+
 
 /* 테이블 스타일 */
 table.box {

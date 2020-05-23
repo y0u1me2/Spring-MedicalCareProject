@@ -30,7 +30,7 @@ pageEncoding="UTF-8"%>
 #placesList li {list-style: none;}
 #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
 #placesList .item span {display: block;margin-top:4px;}
-#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;}
 #placesList .item .info{padding:10px 0 10px 55px;}
 #placesList .info .gray {color:#8a8a8a;}
 #placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
@@ -59,10 +59,25 @@ pageEncoding="UTF-8"%>
 </style>
 <section class="container-fluid border" >
 
-<form id="form1" class="form-inline">
-  <label for="sel1" class="mr-sm-2">진료과목:</label>
-  <select class="form-control mb-2 mr-sm-2" id="sel1" name="dept">
-  	<option hidden>진료과목 선택</option>
+<div class="d-flex justify-content-center mt-3" >
+	<div class="btn-group btn-group-toggle" data-toggle="buttons">
+		<label class="btn btn-outline-danger">
+			<input type="radio" name="jb-radio" id="jb-radio-1" value="1" checked> 지도에서 찾기
+		</label>
+		<label class="btn btn-outline-danger">
+			<input type="radio" name="jb-radio" id="jb-radio-2" value="2"> 병원 이름으로 찾기
+		</label>
+		<label class="btn btn-outline-danger">
+			<input type="radio" name="jb-radio" id="jb-radio-3" value="3"> 주소로 찾기
+		</label>
+	</div>
+</div>
+
+<form onsubmit="selectCase(event);" method="post">
+<div class="d-flex justify-content-center mt-3">
+
+<select class="form-control mb-2 mr-sm-2" id="sel1" name="dept" style="width:10%;" required>
+  	<option hidden value="">진료과목 선택</option>
     <option value="01">내과</option>
     <option value="02">신경과</option>
     <option value="03">정신건강의학과</option>
@@ -82,17 +97,21 @@ pageEncoding="UTF-8"%>
     <option value="80">한방의학과</option>
   </select>
   
-  <!-- <label for="sel2" class="mr-sm-2">반경:</label>
-  <select class="form-control mb-2 mr-sm-2" id="sel2" name="radius">
-    <option value="100" selected>100m</option>
-    <option value="500">500m</option>
-    <option value="1000">1km</option>
-  </select> -->
-  
-  <button type="button" class="btn btn-primary mb-2" onclick="search();">검색</button>
+	<div id="searchBox" class="input-group mb-3" style="width:20%; display:none;">
+	  <input id="keyword" type="text" class="form-control" autocomplete="off" required>
+	  <div class="input-group-append">
+	    <button class="btn btn-danger">검색</button>
+	  </div>
+	</div>
+</div>
 </form>
 
 
+
+<div class="d-flex justify-content-between mx-auto mb-2" style="width:80%;">
+	<div>총 검색결과: <span id="total"></span>건</div>
+	<button type="button" class="btn btn-outline-primary" onclick="myPosition();">내 위치로 이동</button>
+</div>
 
 
 
@@ -101,12 +120,23 @@ pageEncoding="UTF-8"%>
 <!-- <button onclick="getInfo();">중심좌표</button> -->
 
 
-<div class="map_wrap mx-auto border d-flex" style="width:80%;">
+<div class="map_wrap mx-auto border d-flex mb-5" style="width:80%;">
     <div id="map" style="width:100%;height:600px;position:relative;overflow:hidden;"></div>
 
     <div id="menu_wrap" class="bg_white" style="width:25%;">
         
-        <ul id="placesList"></ul>
+        <ul id="placesList">
+        	<h1 class="font-weight-bold pt-5 text-center" style="font-size:40px;">지도 이용방법</h1>
+       		<p class="px-4 pt-5 pb-3" style="font-size:20px">1. 지도에서 찾기</p>
+       		<p class="px-4" style="font-size:15px">진료과목 선택 후 지도에서 원하는 위치를 클릭하면 그 지점을 중심으로 검색합니다.</p>
+       		
+       		<p class="px-4 pt-5 pb-3" style="font-size:20px">2. 병원 이름으로 찾기</p>
+       		<p class="px-4" style="font-size:15px">진료과목 선택 후 검색하려는 병원명을 입력해주세요.</p>
+       		
+       		<p class="px-4 pt-5 pb-3" style="font-size:20px">3. 주소로 찾기</p>
+       		<p class="px-4" style="font-size:15px">진료과목 선택 후 검색하려는 주소를 입력해주세요.</p>
+       		
+       	</ul>
         <div id="pagination"></div>
     </div>
 </div>
@@ -124,10 +154,8 @@ var markers = [];
 var circle;
 var curLat;
 var curLon;
+var curPosition;
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-
-var overlay;
-
 
 
 $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 찍어주기
@@ -138,55 +166,27 @@ $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 �
         	
         	curLat = position.coords.latitude; // 위도
             curLon = position.coords.longitude; // 경도
-			var locPosition = new kakao.maps.LatLng(curLat, curLon);
+			curPosition = new kakao.maps.LatLng(curLat, curLon);
 			
             var mapContainer = document.getElementById('map');
 			mapOption = {
-				center: locPosition, // 지도의 중심좌표
+				center: curPosition, // 지도의 중심좌표
 				level: 3 // 지도의 확대 레벨
 			};
 			map = new kakao.maps.Map(mapContainer, mapOption);
-
+			
+			var imageSrc = '${path}/resources/images/here3.png'; // 마커이미지의 주소입니다    
+	        var imageSize = new kakao.maps.Size(50, 50); // 마커이미지의 크기입니다
+	        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 			
 			var marker = new kakao.maps.Marker({
 				title: "현재 내 위치",
-			    position: locPosition
+			    position: curPosition,
+			    image: markerImage
 			});
         	marker.setMap(map);
         	
-        	
-        	//지도에 이벤트 등록(지도에서 특정 지점 클릭 시 그 지점을 기준으로 병원 검색)
-        	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
-        	    
-        	    var latlng = mouseEvent.latLng;
-        	    var level = map.getLevel();
-        	    var radius;
-        	    
-        	    switch(level){
-        	    case 1:
-        	    	radius = 80; 
-        	    	break;
-        	    case 2:
-        	    	radius = 120;
-        	    	break;
-        	    case 3:
-        	    	radius = 200;
-        	    	break;
-        	    case 4:
-        	    	radius = 400;
-        	    	break;
-        	    case 5:
-        	    	radius = 1000;
-        	    	break;
-        	    case 6:
-        	    	radius = 2000;
-        	    	break;
-        	    }
-        	    
-        	    map.panTo(latlng);//클릭한 지점으로 지도중심좌표 이동시키기
-        	    
-				searchHospital(latlng.getLat(), latlng.getLng(), radius);//병원 검색
-        	});
+        	kakao.maps.event.addListener(map, 'click', clickHandler);//기본 선택 옵션이 지도에서 찾기임
             
         });
     } else {
@@ -194,27 +194,129 @@ $(function() {//처음에 페이지 로딩되었을때 지도에 현재 위치 �
     }
     
     
-    
+    //이벤트 세팅
+    //검색옵션 바뀔때마다 검색창 보이거나 숨기기
+    $('input[name="jb-radio"]').change(function(){
+    	var radioVal = $('input[name="jb-radio"]:checked').val();
+	    switch(radioVal){
+		    case '1'://지도에서 찾기
+		    	reset();
+		    	myPosition();
+		    	$("#searchBox").hide();
+		    	$("#sel1").val('');
+		    	kakao.maps.event.addListener(map, 'click', clickHandler);
+		    	break;
+		    case '2':
+		    	reset();
+		    	$("#searchBox").show();
+		    	$("#sel1").val('');
+		    	$("#keyword").val('');
+		    	$("#keyword").attr("placeholder", "병원명을 입력해주세요");
+		    	kakao.maps.event.removeListener(map, 'click', clickHandler);
+		    	break;
+		    case '3':
+		    	reset();
+		    	$("#searchBox").show();
+		    	$("#sel1").val('');
+		    	$("#keyword").val('');
+		    	$("#keyword").attr("placeholder", "읍면동 주소를 입력해주세요");
+		    	kakao.maps.event.removeListener(map, 'click', clickHandler);
+		    	break;
+		    default:
+		    	alert('검색 옵션을 선택해주세요');
+	    }
+    	
+    });
     
     
 });
 
+
+
+//검색버튼 눌렀을때
+function selectCase(e){
+	e.preventDefault();
+	
+	var radioVal = $('input[name="jb-radio"]:checked').val();
+    switch(radioVal){
+	    
+	    case '2':
+	    	reset();
+	    	searchHosp2(1);
+	    	break;
+	    case '3':
+	    	reset();
+	    	searchHosp3(1);
+	    	break;
+	    default:
+	    	alert('검색 옵션을 선택해주세요');
+    }
+}
+
+
+//지도에서 좌표 클릭했을 때
+var clickHandler = function(event) {    
+    reset();
+	var dept = $("#sel1").val();
+    
+    if(!dept){
+    	alert('진료과목을 선택해주세요');
+    	return;
+    }
+    
+    var latlng = event.latLng;
+    var level = map.getLevel();
+    var radius;
+    
+    switch(level){
+    case 1:
+    	radius = 80; 
+    	break;
+    case 2:
+    	radius = 120;
+    	break;
+    case 3:
+    	radius = 200;
+    	break;
+    case 4:
+    	radius = 400;
+    	break;
+    case 5:
+    	radius = 1000;
+    	break;
+    case 6:
+    	radius = 2000;
+    	break;
+    default:
+    	radius = 2000;
+    }
+    
+    map.panTo(latlng);//클릭한 지점으로 지도중심좌표 이동시키기
+	searchHospital(latlng.getLat(), latlng.getLng(), radius);
+};
+
+
+
+
+
+
+/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+//1. 지도에서 찾기
 function searchHospital(lat, lng, radius, pageNo){
-	var params = $("#form1").serialize(); //진료과목, 반경
-	/* var lat = map.getCenter().getLat();
-	var lng = map.getCenter().getLng(); */
-	params += "&latitude="+lat+"&longitude="+lng+"&radius="+radius+"&pageNo="+pageNo; //파라미터 추가
+	var dept = $("#sel1").val();
 	
 	$.ajax({
 		url: "${path}/hospitalFind.do",
 		type: "post",
-		data: params,
+		data: {latitude:lat, longitude:lng, radius:radius, pageNo: pageNo, dept: dept},
 		dataType: 'json',
 		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success: function(data){
 			var places = data.response.body.items.item;
 			var totalCount = data.response.body.totalCount;
 			var totalPage;
+			
+			$("#total").html(totalCount);
 			
 			if(totalCount=='0'){
 				alert("검색결과가 없습니다.");
@@ -223,12 +325,13 @@ function searchHospital(lat, lng, radius, pageNo){
 				totalPage = Math.ceil(Number(totalCount)/10);
 			}
 			
-			if(!places){
-				alert("검색결과가 없습니다.");
-				return;
+			if(totalCount==1){//검색 결과 1건일 경우
+				var place = places;
+				places = [];
+				places.push(place);
 			}
 			
-			displayPlaces(places, lat, lng, radius);
+			displayPlaces(places);
 			displayPagination(lat, lng, radius, pageNo, totalPage);
 
 			if(circle){
@@ -245,24 +348,165 @@ function searchHospital(lat, lng, radius, pageNo){
 	    	$('#Progress_Loading').hide();
 	    }
 
+	});
+}
+
+
+//1. 지도에서 찾기
+function displayPlaces(places) {
+	
+    var listEl = document.getElementById('placesList'), 
+    menuEl = document.getElementById('menu_wrap'),
+    fragment = document.createDocumentFragment(), 
+    listStr = '';
+    
+    // 검색 결과 목록에 추가된 항목들을 제거합니다
+    removeAllChildNods(listEl);
+
+    // 지도에 표시되고 있는 마커를 제거합니다
+    removeMarker();
+    
+    for ( var i=0; i<places.length; i++ ) {
+
+        // 마커를 생성하고 지도에 표시합니다
+        var placePosition = new kakao.maps.LatLng(places[i].YPos, places[i].XPos),
+            marker = addMarker(placePosition, i, places[i].yadmNm), 
+            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+            (function(marker, title) {
+                kakao.maps.event.addListener(marker, 'mouseover', function() {
+                    displayInfowindow(marker, title);
+                });
+
+                kakao.maps.event.addListener(marker, 'mouseout', function() {
+                    infowindow.close();
+                });
+				
+                itemEl.onmouseover =  function () {
+                    displayInfowindow(marker, title);
+                };
+
+                itemEl.onmouseout =  function () {
+                    infowindow.close();
+                };
+            })(marker, places[i].yadmNm);    
+            
+        fragment.appendChild(itemEl);
+    }
+
+    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+    listEl.appendChild(fragment);
+    menuEl.scrollTop = 0;
+
+}
+
+
+//1. 지도에서 찾기
+function displayPagination(lat, lng, radius, pageNo, totalPage) {
+    var paginationEl = document.getElementById('pagination'),
+        fragment = document.createDocumentFragment(),
+        i; 
+
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild (paginationEl.lastChild);
+    }
+
+    for (i=1; i<=totalPage; i++) {
+        var el = document.createElement('a');
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i==pageNo) {
+            el.className = 'on';
+        } else {
+            el.onclick = (function(i) {
+                return function() {
+                    searchHospital(lat, lng, radius, i);
+                }
+            })(i);
+        }
+
+        fragment.appendChild(el);
+    }
+    paginationEl.appendChild(fragment);
+}
+
+//1.지도에서 찾기
+function displayCircle(lat, lng, radius){
+	circle = new kakao.maps.Circle({
+	    center : new kakao.maps.LatLng(lat, lng),  // 원의 중심좌표 입니다 
+	    radius: radius, // 미터 단위의 원의 반지름입니다 
+	    strokeWeight: 5, // 선의 두께입니다 
+	    strokeColor: '#75B8FA', // 선의 색깔입니다
+	    strokeOpacity: 0, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+	    strokeStyle: 'solid', // 선의 스타일 입니다
+	    fillColor: '#CFE7FF', // 채우기 색깔입니다
+	    fillOpacity: 0.5  // 채우기 불투명도 입니다   
+	}); 
+
+	circle.setMap(map);//지도 표시
+}
+
+
+/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+
+//2.병원 이름으로 검색
+function searchHosp2(pageNo){
+	var keyword = $("#keyword").val();
+	var dept = $("#sel1").val();
+	
+	$.ajax({
+		url: "${path}/hospitalFind.do",
+		type: "post",
+		data: {dept: dept, name:keyword, pageNo: pageNo},
+		dataType: 'json',
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		success: function(data){
+			
+			var places = data.response.body.items.item;
+			var totalCount = data.response.body.totalCount;
+			var totalPage;
+
+			if(totalCount=='0'){
+				alert("검색결과가 없습니다.");
+				return;
+			}else{
+				totalPage = Math.ceil(Number(totalCount)/10);
+				if(totalPage>10){
+					totalCount = 100;
+					totalPage = 10;//데이터 최대 100개까지만 표시
+				}
+			}
+			
+			$("#total").html(totalCount);
+			
+			if(totalCount==1){//검색 결과 1건일 경우
+				var place = places;
+				places = [];
+				places.push(place);
+			}
+			
+			displayPlaces2(places);
+			displayPagination2(pageNo, totalPage);
+
+		},
+		
+		beforeSend:function(){
+	        $('#Progress_Loading').show();
+	    },
+	    
+	    complete:function(){
+	    	$('#Progress_Loading').hide();
+	    }
+
 
 
 	});
 }
 
-
-
-
-
-
-
-
-
-
-
-
-//검색 결과 목록과 마커를 표출하는 함수입니다
-function displayPlaces(places, lat, lng, radius) {
+//2. 병원 이름으로 검색
+function displayPlaces2(places) {
 	
     var listEl = document.getElementById('placesList'), 
     menuEl = document.getElementById('menu_wrap'),
@@ -292,9 +536,9 @@ function displayPlaces(places, lat, lng, radius) {
                     infowindow.close();
                 });
 				
-                kakao.maps.event.addListener(marker, 'click', function() {
+                /* kakao.maps.event.addListener(marker, 'click', function() {
                     overlay.setMap(map);
-                });
+                }); */
                 
                 itemEl.onmouseover =  function () {
                     displayInfowindow(marker, title);
@@ -317,27 +561,217 @@ function displayPlaces(places, lat, lng, radius) {
     menuEl.scrollTop = 0;
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-    //map.setBounds(bounds);
-    
- 
+    map.setBounds(bounds);
     
 }
 
 
-function displayCircle(lat, lng, radius){
-	circle = new kakao.maps.Circle({
-	    center : new kakao.maps.LatLng(lat, lng),  // 원의 중심좌표 입니다 
-	    radius: radius, // 미터 단위의 원의 반지름입니다 
-	    strokeWeight: 5, // 선의 두께입니다 
-	    strokeColor: '#75B8FA', // 선의 색깔입니다
-	    strokeOpacity: 0, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-	    strokeStyle: 'solid', // 선의 스타일 입니다
-	    fillColor: '#CFE7FF', // 채우기 색깔입니다
-	    fillOpacity: 0.5  // 채우기 불투명도 입니다   
-	}); 
+//2. 병원 이름으로 검색
+function displayPagination2(pageNo, totalPage) {
+    var paginationEl = document.getElementById('pagination'),
+        fragment = document.createDocumentFragment(),
+        i; 
 
-	circle.setMap(map);//지도 표시
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild (paginationEl.lastChild);
+    }
+
+    for (i=1; i<=totalPage; i++) {
+        var el = document.createElement('a');
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i==pageNo) {
+            el.className = 'on';
+        } else {
+            el.onclick = (function(i) {
+                return function() {
+                	searchHosp2(i);
+                }
+            })(i);
+        }
+
+        fragment.appendChild(el);
+    }
+    paginationEl.appendChild(fragment);
 }
+
+
+/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ  */
+
+
+
+//3.주소로 검색
+function searchHosp3(pageNo){
+	var keyword = $("#keyword").val();
+	var dept = $("#sel1").val();
+	
+	$.ajax({
+		url: "${path}/hospitalFind.do",
+		type: "post",
+		data: {dept: dept, addr:keyword, pageNo: pageNo},
+		dataType: 'json',
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
+		success: function(data){
+			
+			var places = data.response.body.items.item;
+			var totalCount = data.response.body.totalCount;
+			var totalPage;
+
+			if(totalCount=='0'){
+				alert("검색결과가 없습니다.");
+				return;
+			}else{
+				totalPage = Math.ceil(Number(totalCount)/10);
+				if(totalPage>10){
+					totalCount = 100;
+					totalPage = 10;//데이터 최대 100개까지만 표시
+				}
+			}
+			
+			$("#total").html(totalCount);
+			
+			if(totalCount==1){//검색 결과 1건일 경우
+				var place = places;
+				places = [];
+				places.push(place);
+			}
+			
+			displayPlaces3(places);
+			displayPagination3(pageNo, totalPage);
+
+		},
+		
+		beforeSend:function(){
+	        $('#Progress_Loading').show();
+	    },
+	    
+	    complete:function(){
+	    	$('#Progress_Loading').hide();
+	    }
+
+	});
+}
+
+
+//3.주소로 검색
+function displayPlaces3(places) {
+	
+    var listEl = document.getElementById('placesList'), 
+    menuEl = document.getElementById('menu_wrap'),
+    fragment = document.createDocumentFragment(), 
+    bounds = new kakao.maps.LatLngBounds(), 
+    listStr = '';
+    
+    // 검색 결과 목록에 추가된 항목들을 제거합니다
+    removeAllChildNods(listEl);
+
+    // 지도에 표시되고 있는 마커를 제거합니다
+    removeMarker();
+    
+    for ( var i=0; i<places.length; i++ ) {
+
+        // 마커를 생성하고 지도에 표시합니다
+        var placePosition = new kakao.maps.LatLng(places[i].YPos, places[i].XPos),
+            marker = addMarker(placePosition, i, places[i].yadmNm), 
+            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+            (function(marker, title) {
+                kakao.maps.event.addListener(marker, 'mouseover', function() {
+                    displayInfowindow(marker, title);
+                });
+
+                kakao.maps.event.addListener(marker, 'mouseout', function() {
+                    infowindow.close();
+                });
+				
+                /* kakao.maps.event.addListener(marker, 'click', function() {
+                    overlay.setMap(map);
+                }); */
+                
+                itemEl.onmouseover =  function () {
+                    displayInfowindow(marker, title);
+                };
+
+                itemEl.onmouseout =  function () {
+                    infowindow.close();
+                };
+            })(marker, places[i].yadmNm);    
+            
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(placePosition);
+
+        fragment.appendChild(itemEl);
+    }
+
+    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+    listEl.appendChild(fragment);
+    menuEl.scrollTop = 0;
+
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    map.setBounds(bounds);
+    
+}
+
+//3.주소로 검색
+function displayPagination3(pageNo, totalPage) {
+    var paginationEl = document.getElementById('pagination'),
+        fragment = document.createDocumentFragment(),
+        i; 
+
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild (paginationEl.lastChild);
+    }
+
+    for (i=1; i<=totalPage; i++) {
+        var el = document.createElement('a');
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i==pageNo) {
+            el.className = 'on';
+        } else {
+            el.onclick = (function(i) {
+                return function() {
+                	searchHosp3(i);
+                }
+            })(i);
+        }
+
+        fragment.appendChild(el);
+    }
+    paginationEl.appendChild(fragment);
+}
+
+
+/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ  */
+
+//공통 사용 함수
+
+
+//내 위치로 이동하기
+function myPosition(){
+	reset();
+	map.setCenter(curPosition);
+	map.setLevel(3);
+}
+
+
+//지도 리셋하기
+function reset(){
+	$("#placesList").empty();
+	$("#pagination").empty();
+	$("#total").empty();
+	if(circle){
+		circle.setMap(null);
+	}
+	removeMarker();
+}
+
+
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
@@ -389,36 +823,7 @@ function removeMarker() {
     markers = [];
 }
 
-// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
-function displayPagination(lat, lng, radius, pageNo, totalPage) {
-    var paginationEl = document.getElementById('pagination'),
-        fragment = document.createDocumentFragment(),
-        i; 
 
-    // 기존에 추가된 페이지번호를 삭제합니다
-    while (paginationEl.hasChildNodes()) {
-        paginationEl.removeChild (paginationEl.lastChild);
-    }
-
-    for (i=1; i<=totalPage; i++) {
-        var el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
-
-        if (i==pageNo) {
-            el.className = 'on';
-        } else {
-            el.onclick = (function(i) {
-                return function() {
-                    searchHospital(lat, lng, radius, i);
-                }
-            })(i);
-        }
-
-        fragment.appendChild(el);
-    }
-    paginationEl.appendChild(fragment);
-}
 
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 // 인포윈도우에 장소명을 표시합니다
@@ -437,85 +842,6 @@ function removeAllChildNods(el) {
 }
  
  
-//커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-function closeOverlay() {
-    overlay.setMap(null);     
-}
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-function displayMarker(data, lat, lng, radius){
-	
-	var arr = data.response.body.items.item;
-	var positions = [];
-	
-	for(p in arr){
-		var p = {
-				title : arr[p].yadmNm,
-				latlng : new kakao.maps.LatLng(arr[p].YPos, arr[p].XPos)
-		};
-		positions.push(p)
-	}
-	
-    
-	for (var i = 0; i < positions.length; i ++) {
-	    
-	    addMarker(positions[i]);
-	    
-	}
-	
-	
-	// 지도에 표시할 원을 생성합니다
-	circle = new kakao.maps.Circle({
-	    center : new kakao.maps.LatLng(lat, lng),  // 원의 중심좌표 입니다 
-	    radius: radius, // 미터 단위의 원의 반지름입니다 
-	    strokeWeight: 5, // 선의 두께입니다 
-	    strokeColor: '#75B8FA', // 선의 색깔입니다
-	    strokeOpacity: 0, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-	    strokeStyle: 'solid', // 선의 스타일 입니다
-	    fillColor: '#CFE7FF', // 채우기 색깔입니다
-	    fillOpacity: 0.5  // 채우기 불투명도 입니다   
-	}); 
-
-	// 지도에 원을 표시합니다 
-	circle.setMap(map);
-	
-	
-}
-
-
-
-//배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
-function setMarkers(map) {
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
-    }            
-}
-
-// "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
-function showMarkers() {
-    setMarkers(map)    
-}
-
-// "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
-function hideMarkers() {
-    setMarkers(null);    
-}
-
-
 
 </script>
 
