@@ -271,7 +271,7 @@ input[type=file] {
 				<form id="confirmerForm" enctype="multipart/form-data" method="POST">
 				<div class="confirmerSelect">
 					<label for="confirmerSort">검수자 : </label>
-					<select id="confirmerSort">
+					<select id="confirmerSort" name="confirmerSort">
 						<option value="직접입력">직접입력</option>
 						<c:forEach items="${confirmerList }" var="c">
 							<option value="${c.CONFIRMERNO}"><c:out value="${c.CONFIRMERNAME}" /></option>
@@ -307,7 +307,7 @@ input[type=file] {
 				<div style="display:flex; justify-content: space-around;">
 					<select id="healthInfoStepSelect" name="healthInfoStepSelect">
 						<option value="tag">질병항목을 선택해주세요</option>
-						<option value="new">직접 입력</option>
+						<option value="직접입력">직접입력</option>
 					</select>
 					<input type="text" style="width:30%;" id="healthInfoStep" name="healthInfoStep">
 					<input type="text" style="width:30%;" id="healthInfoStepTitle" name="healthInfoStepTitle" placeholder="스텝의 설명을 작성하세요">
@@ -410,7 +410,7 @@ input[type=file] {
 				$('#disesaseTitle').prop('readonly',false);
 				$('#disesaseSubTitle').prop('readonly',false);
 				$('#disesaseFile').prop('readonly',false);
-			}else {
+			}if($(this).attr('name')=='confirmerSort') {
 				$('#confirmerNo').val('new');
 				$('#confirmerName').val('');
 				$('#confirmerWork').val('');
@@ -420,7 +420,12 @@ input[type=file] {
 				$('#confirmerWork').prop('readonly',false);
 				$('#confirmerJob').prop('readonly',false);
 				$('#confirmerInfo').prop('readonly',false);
-			}			
+			}if($(this).attr('name')=='healthInfoStepSelect') {				
+				$('#healthInfoStep').val('');
+				$('#healthInfoStepTitle').val('');
+				$('#healthInfoStep').prop('readonly',false);
+				$('#healthInfoStepTitle').prop('readonly',false);
+			}
 		}else {			
 			$(this).siblings('input').prop('readonly',true);
 			if($(this).attr('name')=='disesaseSort') {

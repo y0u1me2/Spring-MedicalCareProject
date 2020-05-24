@@ -362,7 +362,7 @@
 				for (var i = 0; i < data.list.length; i++) {
 					$('.picContentBox').append("<div class='bottom-InfoContent p-6'></div>");
 					var divTag = $('div.bottom-InfoContent.p-6');
-					$(divTag[i]).html("<img src='${pathImages}"+data.list[i].DISESASEFILE+"'>");
+					$(divTag[i]).html("<img style='width:250px; height:188px;' src='${pathImages}"+data.list[i].DISESASEFILE+"'>");
 					$(divTag[i]).append("<div class='bottom-InfoContent-Info'><div class='bottom-InfoContent-Info-main'>"
 												+ data.list[i].DISESASETITLE
 												+ "</div><div class='bottom-InfoContent-Info-sub'><p>"

@@ -199,7 +199,7 @@
 						<div class='picContentBox'>
 							<c:forEach items="${healthInfoList }" var="healthInfoList">
 								<div class="bottom-InfoContent p-6">
-									<img src='${pathImages}${healthInfoList.HEALTHINFOMAINPIC }'>
+									<img style='width:250px; height:188px;' src='${pathImages}${healthInfoList.HEALTHINFOMAINPIC }'>
 									<div class='bottom-InfoContent-Info'>
 										<div class='bottom-InfoContent-Info-main'>
 											${healthInfoList.HEALTHINFOTITLE }
