@@ -17,7 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://wowjs.uk/css/libs/animate.css">
     <script src="https://wowjs.uk/dist/wow.min.js"></script>
-    
+     <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <meta name="google-signin-client_id" content="415129597970-epgotkdffasbd0r2mqq4shuirovnqsqp.apps.googleusercontent.com">
@@ -128,7 +128,7 @@
     </ul>
  </nav>
 <!-- 로그인 선택 모달 -->
-<div id="loginChoice" class="modal" style="z-index:1;">
+<div id="loginChoice" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
   
       <div class="imgcontainer" style="height:10px">
@@ -156,7 +156,7 @@
   </form>
 </div>
 <!-- 회원가입 선택 모달 -->
-<div id="joinChoice" class="modal" >
+<div id="joinChoice" class="modal">
   <form class="modal-content animate" method="post" style="width:50%;">
   
       <div class="imgcontainer" style="height:10px">
@@ -204,11 +204,11 @@
       </label>
 
       <button onclick="loginCheck();" class="login-button" type="submit" style="background-color:#DAF1DE;">일반 Login</button>   
-      
+      <br>
         <div style="text-align:center;">간편한 SNS로그인</div>
-            
-           <div class="g-signin2" data-onsuccess="onSignIn" ></div>
-           
+            <br>
+         <!--   <div class="g-signin2" data-onsuccess="onSignIn" ></div> -->
+           <div id="my-signin2"></div>
     </div>
     <div class="containerlogin" style="background-color:white; margin:0 auto;">
     	<button type="button" class="btn btn-outline-dark" onclick="document.getElementById('findEmail').style.display='block'">아이디 찾기</button>
@@ -219,7 +219,7 @@
   </form>
 </div>
  <!-- 관계자 로그인 -->
-<div id="id02" class="modalLogin" style="display: none; ">
+<div id="id02" class="modalLogin" style="display: none; z-index:2;">
   
   <form class="modal-content animate" id="HPloginForm" name="HPloginForm" action="${path }/member/hospitalLogin.do" method="post" style="width:30%;">
    
@@ -642,9 +642,19 @@ function getCookie(cookieName) {
 //아이디 저장 끝/////////////////////////////////////////////////////////////////////////////////////////////
 
 //google 로그인
-	 var loginC=0;
-	  
-function onSignIn(googleUser) {
+	 var loginC=0; 
+
+function renderButton() {
+  gapi.signin2.render('my-signin2', {
+    'scope': 'profile email',
+    'width': 350,
+    'height': 50,
+    'longtitle': true,
+    'onsuccess': onSuccess,
+    'onfailure': onFailure
+  });
+}
+function onSuccess(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
 	  console.log('Name: ' + profile.getName());
@@ -676,6 +686,42 @@ function onSignIn(googleUser) {
 		})
 	  
 }
+function onFailure(error) {
+console.log(error);
+}
+/* function onSignIn(googleUser) {
+	  var profile = googleUser.getBasicProfile();
+	  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+	  console.log('Name: ' + profile.getName());
+	  console.log('Image URL: ' + profile.getImageUrl());
+	  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+	  $.ajax({
+			type: 'POST',  
+			url:'${path }/googleIdChk.do',
+			data:{"googleEmail":profile.getEmail(),"googleName":profile.getName(),"googlePW":profile.getId(),"loginCount":loginC},
+			success:function(data){
+				console.log(data);
+				if(data.num == 0){
+					alert("로그인 완료. 마이페이지를 통해 비밀번호를 추가해주세요!");
+					gapi.auth2.getAuthInstance().disconnect();
+					location.reload();	
+				}else{
+					alert("로그인 완료.");
+					gapi.auth2.getAuthInstance().disconnect();
+					location.reload();	
+				}
+			},
+			error:function(request,status,error){
+		        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+		       },
+		     complete : function(data) {
+		                 //  실패했어도 완료가 되었을 때 처리
+		        }
+			
+		})
+	  
+} */
+
 function signOut() {
 	//console.log(gapi.auth2);
    // var auth2 = gapi.auth2.getAuthInstance();

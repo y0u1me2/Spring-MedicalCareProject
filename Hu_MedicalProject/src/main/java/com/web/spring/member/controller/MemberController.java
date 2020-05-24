@@ -72,13 +72,13 @@ public class MemberController {
 	
 		  Member m = new Member(0,email,name,password,phone,null,null);
 		  String userEmail = m.getEmail();
-		  System.out.println(m);
+		 // System.out.println(m);
 	      logger.debug("암호화 전 : " + m.getPassword());
 	      m.setPassword(pwEncoder.encode(m.getPassword()));
 	      logger.debug("암호화 후 :" + m.getPassword());
 	      
 	      int result = service.insertPerson(m);
-	      System.out.println(result);
+	    //  System.out.println(result);
 	      
 	      String host =request.getRequestURL().toString().replace(request.getRequestURI(),"")+request.getContextPath()+"/";
 	      String msg="";
@@ -152,7 +152,7 @@ public class MemberController {
 		logger.debug(""+m);
 		Member loginMember = service.memberLogin(m);
 		
-		System.out.println(loginMember);
+		//System.out.println(loginMember);
 //		logger.debug("db : " + loginMember.getPassword());
 //		logger.debug("param : " + pwEncoder.encode(m.getPassword()));
 		 String msg = "";
@@ -181,7 +181,7 @@ public class MemberController {
 									@RequestParam("googleName") String googleName,
 									@RequestParam("googlePW") String googlePW,
 									ModelAndView mv,HttpServletRequest request) {
-		System.out.println(googleEmail + googleName + googlePW);
+		//System.out.println(googleEmail + googleName + googlePW);
 		Member member = service.googleIdChk(googleEmail);
 		
 		Member googleNew=null;  //구글 새로운 로그인
@@ -261,8 +261,8 @@ public class MemberController {
 		
 		//String id = member.getEmail();
 		//System.out.println(id);
-		System.out.println(member);
-		System.out.println(leaveMember);
+		//System.out.println(member);
+		//System.out.println(leaveMember);
 		
 		if(member != null && leaveMember == null) {
 			mv.addObject("member",0);
@@ -287,7 +287,7 @@ public class MemberController {
 		Member member = service.searchEmail(email);
 		//String id = member.getEmail();
 		//System.out.println(id);
-		System.out.println(member);
+		//System.out.println(member);
 		if(member != null) {
 			mv.addObject("member",0);
 			mv.setViewName("jsonView");
@@ -300,7 +300,7 @@ public class MemberController {
 	@RequestMapping("/findPass.do")
 	public ModelAndView sendEmailAction(HttpServletRequest request,@RequestParam String memberEmail,
             HttpServletResponse response_email, ModelAndView mv) throws IOException {
-		System.out.println(memberEmail);
+		//System.out.println(memberEmail);
 		 Random r = new Random();
          int dice = r.nextInt(157211)+48271;
          
@@ -334,7 +334,7 @@ public class MemberController {
          mv.addObject("dice", dice);
          mv.addObject("memberEmail", memberEmail);
          
-         System.out.println("mv : "+mv);
+        // System.out.println("mv : "+mv);
 
          response_email.setContentType("text/html; charset=UTF-8");
          PrintWriter out_email = response_email.getWriter();

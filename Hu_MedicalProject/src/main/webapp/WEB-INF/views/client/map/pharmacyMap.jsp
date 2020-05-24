@@ -435,11 +435,9 @@ function searchPhrm2(lat, lng, pageNo){
 		data:{"latitude":lat, "longitude":lng, "pageNo":pageNo},
 		dataType: 'json',
 		success: function(data){
-			console.log(data);
 			var places = data.response.body.items.item;
 			var totalCount = data.response.body.totalCount;
 			var totalPage;
-			console.log(places);
 			
 
 			if(totalCount=='0'){
