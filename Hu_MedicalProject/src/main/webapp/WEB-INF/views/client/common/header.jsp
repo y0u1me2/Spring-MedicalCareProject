@@ -128,7 +128,7 @@
     </ul>
  </nav>
 <!-- 로그인 선택 모달 -->
-<div id="loginChoice" class="modal" style="z-index:1;">
+<div id="loginChoice" class="modal" >
   <form class="modal-content animate" method="post" style="width:50%;">
   
       <div class="imgcontainer" style="height:10px">
@@ -156,7 +156,7 @@
   </form>
 </div>
 <!-- 회원가입 선택 모달 -->
-<div id="joinChoice" class="modal" >
+<div id="joinChoice" class="modal">
   <form class="modal-content animate" method="post" style="width:50%;">
   
       <div class="imgcontainer" style="height:10px">
@@ -219,7 +219,7 @@
   </form>
 </div>
  <!-- 관계자 로그인 -->
-<div id="id02" class="modalLogin" style="display: none; ">
+<div id="id02" class="modalLogin" style="display: none; z-index:2;">
   
   <form class="modal-content animate" id="HPloginForm" name="HPloginForm" action="${path }/member/hospitalLogin.do" method="post" style="width:30%;">
    
