@@ -610,7 +610,7 @@ h1#title{
 			
 			<hr/>
 					              
-			<form action="${path }/rv/hospdept.do" onsubmit="select_fn();" method="post" id="rvFrm">
+			<%-- <form action="${path }/rv/hospdept.do" onsubmit="select_fn();" method="post" id="rvFrm">
 				<div class="d-flex justify-content-center mt-3">
 				
 				<select class="form-control mb-2 mr-sm-2" id="sel1" id="dept" style="width:15%;" required>
@@ -644,7 +644,7 @@ h1#title{
 			</form>
 						
 		              
-		         <button class="d-flex justify-content-center mt-3">#가까운_접수병원</button>
+		         <button class="d-flex justify-content-center mt-3">#가까운_접수병원</button> --%>
 		              
 		              
 		              <p><c:out value="${r['MEDICALDEPARTMENT'] }"/></p>
