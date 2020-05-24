@@ -74,10 +74,6 @@ public class HospitalMapController {
 			@RequestParam(required = false, defaultValue = "") String radius, 
 			HttpServletResponse response) throws IOException {
 		
-		System.out.println(radius);
-		System.out.println(dept);
-		System.out.println(latitude);
-		System.out.println(longitude);
 
 		StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/B551182/hospInfoService/getHospBasisList"); /* URL */
 		urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=j3l4%2FlL9sulpZEYY467tIsTngXuIhRTIddhNB4wrTzRNtaGQ5w6eGH1Jah%2FmXu2JMdja84GrX0hrpsZ1dludpw%3D%3D");
@@ -98,7 +94,6 @@ public class HospitalMapController {
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Content-type", "application/json");
-		System.out.println("Response code: " + conn.getResponseCode());
 		BufferedReader rd;
 		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
 			rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -146,7 +141,6 @@ public class HospitalMapController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -177,7 +171,6 @@ public class HospitalMapController {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         Object obj = mapper.readValue(jsonObj.toString(), Object.class);
         String json = mapper.writeValueAsString(obj);
-        System.out.println(json);
         return json;
     }
 	
@@ -206,7 +199,6 @@ public class HospitalMapController {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/xml");
-        System.out.println("Response code: " + conn.getResponseCode());
         BufferedReader rd;
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -222,7 +214,6 @@ public class HospitalMapController {
         conn.disconnect();
         
         String xml = sb.toString();
-        System.out.println(xml);
         
         JSONObject jsonObj = XML.toJSONObject(xml);
         //String json = jsonObj.toString(4);
@@ -237,7 +228,6 @@ public class HospitalMapController {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         Object obj = mapper.readValue(jsonObj.toString(), Object.class);
         String json = mapper.writeValueAsString(obj);
-        System.out.println(json);
         return json;
     }
 	
@@ -300,14 +290,13 @@ public class HospitalMapController {
 		
 		try {
 			String url = urlBuilder.toString();
-			System.out.println(url);
 			DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
 			Document doc = dBuilder.parse(url);
 
 			// root tag
 			doc.getDocumentElement().normalize();
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
 			// 파싱할 tag
 			NodeList nList = doc.getElementsByTagName("item");
@@ -388,7 +377,7 @@ public class HospitalMapController {
 
 			// root tag
 			doc.getDocumentElement().normalize();
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
 			// 파싱할 tag
 			NodeList nList = doc.getElementsByTagName("item");
@@ -470,7 +459,7 @@ public class HospitalMapController {
 			} // if end
 			
 			int result = service.insertData2(list);
-			System.out.println(result);
+			//System.out.println(result);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
