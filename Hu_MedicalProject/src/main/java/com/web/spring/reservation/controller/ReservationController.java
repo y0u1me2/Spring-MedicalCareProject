@@ -105,14 +105,15 @@ public class ReservationController {
 		
 			
 			String msg="";
-			String loc="/rv/reservationList";
+			String loc="";
 				
 			if(result>0) {
 					msg="접수가 완료되었습니다.";	
-					//접수현황페이지 이동으로 바꿀것!
+					loc="/myPage/myPageMain";
 					
 				}else {
 					msg="접수가 실패되었습니다.";
+					loc="/rv/reservationList";
 					
 				}
 			
