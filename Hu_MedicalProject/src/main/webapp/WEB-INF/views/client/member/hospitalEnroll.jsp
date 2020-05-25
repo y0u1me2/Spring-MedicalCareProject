@@ -219,16 +219,16 @@ $(function(){
 	});
 	
 	//입력했는지 확인
-	/* $("#hospital_name").blur(function(){
+	$("#hospital_name").blur(function(){
 		checkHospitalName();
-	}); */
+	});
 	
 	//요양기관번호 유효성 검사
-	/* $("#hospital_number").blur(function(){
+	$("#hospital_number").blur(function(){
 		checkHospitalNumber();
-	}); */
+	});
 	
-	/* $("#manager_name").blur(function(){
+	$("#manager_name").blur(function(){
 		checkManagerName();
 	});
 	
@@ -244,20 +244,7 @@ $(function(){
 		checkAgree();
 	}); */
 	
-	$("#btnSearch").click(function(){
-		getList();
-	});
 	
-	
-	$("#hospital_name").on('change', function(e) {
-		
-		
-		
-		var g=$(this).val();  
-		
-		  var id = $('#hospitalList').find('option').filter(function() { return $.trim( $(this).text() ) === g; }).attr('id');
-		    alert(id);
-    });
 	
 })
 
@@ -423,7 +410,7 @@ function checkHospitalName(){
 
 function checkHospitalNumber(){
 	var hospitalNumber = $("#hospital_number");
-	var hp_num_reg =/^[0-9]{8}$/;
+	var hp_num_reg =/^[A-Za-z][0-9]{7}$/;
 	hospitalNumber.siblings(".invalid-feedback").hide();
 	
 	if(hospitalNumber.val().trim()==''){
@@ -495,12 +482,11 @@ function validate(){
 	if(checkId()==false) result = false;
 	if(checkPw()==false) result = false;
 	if(checkPw2()==false) result = false;
-	/* if(checkHospitalName()==false) result = false;
 	if(checkHospitalNumber()==false) result = false;
 	if(checkManagerName()==false) result = false;
 	if(checkEmail()==false) result = false;
 	if(checkPhone()==false) result = false;
-	if(checkAgree()==false) result = false; */
+	if(checkAgree()==false) result = false;
 	
 	return result;
 	
