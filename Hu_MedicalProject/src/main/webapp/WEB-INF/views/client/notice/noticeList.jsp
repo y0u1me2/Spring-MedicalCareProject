@@ -23,11 +23,13 @@ div#pageBar a {
 
 /* 페이지바 */
  #pageBar{
-   width:80%;
-   margin-left:650px;
+   /* width:80%;
+   margin-left:600px;
    margin-top:30px;
-   margin-bottom:20px;
+   margin-bottom:20px; */
    /* text-align:center; */
+   margin: 40px 0 40px 0;
+	text-align: center;
 }
 #pageBar>a,#pageBar>span{
    width: 40px;

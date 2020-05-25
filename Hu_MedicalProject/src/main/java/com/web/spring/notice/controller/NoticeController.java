@@ -43,14 +43,14 @@ public class NoticeController {
 	@RequestMapping("/notice/noticeList")
 	public ModelAndView noticeList(@RequestParam(required=false, defaultValue="1") int cPage, 
 								   @RequestParam(required=false, defaultValue="5") int numPerpage,
-								   ModelAndView mv) {
+								   ModelAndView mv,HttpServletRequest request) {
 		List<Notice> list = service.notice(cPage,numPerpage);
 		int totalCount = service.noticeCount();
 		
 		mv.addObject("list",list);
 		mv.addObject("count",totalCount);
 
-		mv.addObject("pageBar",PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/notice/noticeList"));
+		mv.addObject("pageBar",PageFactory.getPage(totalCount, cPage, numPerpage, request.getContextPath()+"/notice/noticeList"));
 		mv.setViewName("client/notice/noticeList");
 		return mv;
 	}

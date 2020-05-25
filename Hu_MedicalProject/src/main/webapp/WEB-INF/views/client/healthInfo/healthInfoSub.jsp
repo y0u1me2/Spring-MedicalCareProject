@@ -76,7 +76,7 @@
 					<c:forEach items="${list }" var="HI">
 						<c:if test="${HI.healthInfoStep eq 'STEP_1' }">
 								<div class='bottom-InfoContent p-6'>
-									<img src="${pathImages}${HI.healthInfoMainPic }">
+									<img style='width:250px; height:188px;' src="${pathImages}${HI.healthInfoMainPic }">
 									<div class='bottom-InfoContent-Info'>
 										<div class='bottom-InfoContent-Info-main'>${HI.healthInfoTitle }</div>
 										<div class='bottom-InfoContent-Info-sub'><p>${HI.healthInfoSubTitle }</p></div>
@@ -101,7 +101,7 @@
 					<c:forEach items="${list }" var="HI">
 						<c:if test="${HI.healthInfoStep eq 'STEP_2' }">
 								<div class='bottom-InfoContent p-6'>
-									<img src="${pathImages}${HI.healthInfoMainPic }">
+									<img style='width:250px; height:188px;' src="${pathImages}${HI.healthInfoMainPic }">
 									<div class='bottom-InfoContent-Info'>
 										<div class='bottom-InfoContent-Info-main'>${HI.healthInfoTitle }</div>
 										<div class='bottom-InfoContent-Info-sub'><p>${HI.healthInfoSubTitle }</p></div>
@@ -126,7 +126,7 @@
 				<c:forEach items="${list }" var="HI">
 						<c:if test="${HI.healthInfoStep eq 'STEP_3' }">
 							<div class='bottom-InfoContent p-6'>
-								<img src="${pathImages}${HI.healthInfoMainPic }">
+								<img style='width:250px; height:188px;' src="${pathImages}${HI.healthInfoMainPic }">
 									<div class='bottom-InfoContent-Info'>
 									<div class='bottom-InfoContent-Info-main'>${HI.healthInfoTitle }</div>
 									<div class='bottom-InfoContent-Info-sub'><p>${HI.healthInfoSubTitle }</p></div>

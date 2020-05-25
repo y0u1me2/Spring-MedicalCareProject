@@ -126,7 +126,7 @@ public class ReservationController {
 	@RequestMapping("/reservation/reservationCount.do")
 	public ModelAndView reservationCount(ModelAndView mv) {
 		int reservationCount=service.reservationCount();
-		logger.debug("reservationCount :"+reservationCount);
+		
 		mv.addObject("reservationCount",reservationCount);
 		mv.setViewName("jsonView");
 		return mv;
