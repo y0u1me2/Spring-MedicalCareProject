@@ -35,7 +35,7 @@
  	 <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:100px;">
 </c:if>
  <c:if test="${loginMember != null or loginHpMember !=null  }">
- 	 <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:10px;">
+ 	 <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:0px;">
 </c:if>
     <!-- Brand/logo -->
     <img src="${pageContext.request.contextPath }/resources/images/logo5.png" style="width:50px; padding-right:8px;">
@@ -52,8 +52,6 @@
 		  <a class="dropdown-item" href="${path }/notice/noticeList">공지사항</a>
 		</div>
 	</li>
-        <%-- <li class="nav-item">
-          </li> --%>
       <li class="nav-item">
         <a class="nav-link" href="${path }/rv/reservationList" >병원접수</a>
       </li>
