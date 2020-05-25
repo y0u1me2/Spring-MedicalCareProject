@@ -231,7 +231,7 @@
   margin: auto;
    padding: 20px; 
   width: 100%;
-  height:600px;
+  height:700px;
 
 }
 
@@ -552,8 +552,8 @@
 	 border-radius: 15px;
      border: solid 1px rgb(82, 81, 81);
      padding: 20px;
-     margin: 1em 25px;
-     min-height:550px;
+     margin: 1em 26px;
+     min-height:700px;
 	
 }
 
@@ -569,13 +569,13 @@ margin-left:10px;
 }
 
 div.content2{
-	min-height:200px;
+	min-height:400px;
 }
 
 div.entry{
 	margin-top: 30px;
 	width:100%;
-	height:700px;
+	height:650px;
 	background-image:url('${path }/resources/images/reserv.png');
 }
 
@@ -608,10 +608,45 @@ h1#title{
 				</div>
 			</div>
 			
-			
-			
+			<hr/>
+					              
+			<%-- <form action="${path }/rv/hospdept.do" onsubmit="select_fn();" method="post" id="rvFrm">
+				<div class="d-flex justify-content-center mt-3">
+				
+				<select class="form-control mb-2 mr-sm-2" id="sel1" id="dept" style="width:15%;" required>
+				  	<option value="">진료과목 선택</option>
+				    <option value="01">내과</option>
+				    <option value="02">신경과</option>
+				    <option value="03">정신건강의학과</option>
+				    <option value="04">외과</option>
+				    <option value="05">정형외과</option>
+				    <option value="06">신경외과</option>
+				    <option value="07">흉부외과</option>
+				    <option value="08">성형외과</option>
+				    <option value="09">마취통증의학과</option>
+				    <option value="10">산부인과</option>
+				    <option value="11">소아청소년과</option>
+				    <option value="12">안과</option>
+				    <option value="13">이비인후과</option>
+				    <option value="14">피부과</option>
+				    <option value="15">비뇨기과</option>
+				    <option value="49">치과</option>
+				    <option value="80">한방의학과</option>
+				  </select>
+				  
+					<!-- <div id="searchBox" class="input-group mb-3" style="width:20%;">
+					  <input id="keyword" type="text" class="form-control" autocomplete="off" required>
+					  <div class="input-group-append">
+					    <button class="btn btn-danger">검색</button>
+					  </div>
+					</div> -->
+				</div>
+			</form>
 						
-		              <hr/>
+		              
+		         <button class="d-flex justify-content-center mt-3">#가까운_접수병원</button> --%>
+		              
+		              
 		              <p><c:out value="${r['MEDICALDEPARTMENT'] }"/></p>
 		
 		              <p><c:out value="${r['HOSPTEL'] }"/></p>
@@ -643,16 +678,16 @@ h1#title{
 											<c:out value="${r['HOSPDIRECTIONS'] }" />
 										</p>
 
-									<c:set var="d" value="day" />
-									<c:choose>
-										<c:when test="${d eq '월' }" >
+		
+							
+		
 										<p>
 											오늘의 진료시간
 											<c:out value="${r['OFFICEHOUR1'] }" />
 										</p>
-										</c:when>
+	
 										
-									</c:choose>	
+								
 									</div>
 									<hr />
 									<div class="content2">
@@ -675,20 +710,7 @@ h1#title{
 		              onclick="hpAccessChatting('${loginMember.email}','${r['ID']}');">실시간 문의</button>
 									</div>
 									<br>
-									
-
-
-									<!--  <div id="notice">
->>>>>>> branch 'develop' of https://github.com/y0u1me2/Spring-MedicalCareProject.git
-		                <p>3월부터 수요일 진료시간이 변경되오니 착오 없으시길 바랍니다.
-				                  다른날의 진료시간은 모두 동일하며, 수요일의 진료시간은 오전 8시반~오후1시까지입니다
-				                  월,화,목,금 9:00~18:00
-				                  수 9:00~13:00
-				                  토 9:00~14:00
-				                  점심시간 13:00~14:00
-				                  일,공휴일 휴무
-		                </p>
-            		  </div> -->
+																		
 								</figure>
 							</c:forEach>
 						</div>
@@ -748,6 +770,14 @@ h1#title{
 
 
 <script>   
+    //진료과목 선택
+    function select_fn(){
+    	("#dept").change(function(){
+
+			$("#rvFrm").submit();
+    	})
+    }
+    
     
     //바로접수 호버시 마우스 커서 변화
    	$('.circle').mouseenter(function() {
@@ -801,6 +831,7 @@ h1#title{
    
   let today = new Date();   
   let day = today.getDay(); // 요일
+  console.log(day);
   
     </script>
 
