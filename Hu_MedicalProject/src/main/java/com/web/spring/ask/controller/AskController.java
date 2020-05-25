@@ -41,7 +41,7 @@ public class AskController {
 				List<Ask> list=service.selectAskList(cPage,numPerpage);
 				//Reply리스트불러오기
 				int replyCount=service.selectReplyCount();
-				logger.debug("replyCount :"+replyCount);
+				//logger.debug("replyCount :"+replyCount);
 				
 				mv.addObject("list",list);
 				mv.setViewName("client/ask/askList");
