@@ -242,7 +242,7 @@ $(function(){
 	
 	$("#agree").change(function(){
 		checkAgree();
-	}); */
+	});
 	
 	
 	
@@ -479,14 +479,30 @@ function checkAgree(){
 function validate(){
 	var result = true;
 	
-	if(checkId()==false) result = false;
-	if(checkPw()==false) result = false;
-	if(checkPw2()==false) result = false;
-	if(checkHospitalNumber()==false) result = false;
-	if(checkManagerName()==false) result = false;
-	if(checkEmail()==false) result = false;
-	if(checkPhone()==false) result = false;
-	if(checkAgree()==false) result = false;
+	if(checkId()==false) {
+		result = false;
+	}
+	if(checkPw()==false) {
+		result = false;
+	}
+	if(checkPw2()==false) {
+		result = false;
+	}
+	if(checkHospitalNumber()==false) {
+		result = false;
+	}
+	if(checkManagerName()==false) {
+		result = false;
+	}
+	if(checkEmail()==false) {
+		result = false;
+	}
+	/* if(checkPhone()==false) {
+		result = false;
+	} */
+	if(checkAgree()==false) {
+		result = false;
+	}
 	
 	return result;
 	
