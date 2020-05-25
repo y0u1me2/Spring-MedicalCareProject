@@ -49,11 +49,10 @@
 		<div class="dropdown-menu">
 		  <a class="dropdown-item" href="${path }/about">About HU</a>
 		  <a class="dropdown-item" href="${path }/service">서비스 소개</a>
+		  <a class="dropdown-item" href="${path }/notice/noticeList">공지사항</a>
 		</div>
 	</li>
-        <li class="nav-item">
-            <a class="nav-link" href="${path }/notice/noticeList">공지사항</a>
-          </li>
+       
       <li class="nav-item">
         <a class="nav-link" href="${path }/rv/reservationList" >병원접수</a>
       </li>
