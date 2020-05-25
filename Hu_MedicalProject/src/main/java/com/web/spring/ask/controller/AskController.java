@@ -3,8 +3,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
+import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +31,7 @@ public class AskController {
 	@RequestMapping("/ask/ask.do")
 	public ModelAndView ask(ModelAndView mv,
 			@RequestParam(required=false, defaultValue="1") int cPage,
-			@RequestParam(required=false, defaultValue="5") int numPerpage) {
+			@RequestParam(required=false, defaultValue="5") int numPerpage,HttpServletRequest request) {
 			
 		//param은 게시물정보 fileNames 파일
 				int totalCount=service.selectAskCount();
@@ -46,7 +47,8 @@ public class AskController {
 				mv.setViewName("client/ask/askList");
 				mv.addObject("count",totalCount);
 				mv.addObject("replyCount",replyCount);
-				mv.addObject("pageBar",PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/ask/ask.do"));
+				mv.addObject("pageBar",PageFactory.getPage(totalCount, cPage, numPerpage, request.getContextPath()+"/ask/ask.do"));
+				
 		return mv;
 	}
 	
