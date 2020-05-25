@@ -33,7 +33,7 @@ public class AdminCareNotice {
 //돌보미 등록 관리 페이지 이동 / 페이징처리 ======================================
 @RequestMapping("/admin/careNotice.do")
 	public ModelAndView adminCareNotice(@RequestParam(required = false, defaultValue = "1") int cPage,
-			@RequestParam(required = false, defaultValue = "5") int numPerpage, ModelAndView mv) {
+			@RequestParam(required = false, defaultValue = "5") int numPerpage, ModelAndView mv,HttpServletRequest request) {
 
 		List<CareNotice> list = service.careNotice(cPage, numPerpage);
 		int totalCount = service.careCount();
@@ -42,11 +42,11 @@ public class AdminCareNotice {
 		mv.addObject("list", list);
 		mv.addObject("count", totalCount);
 		mv.addObject("today",todayCount);
-		mv.addObject("pageBar", PageFactory2.getPage(totalCount, cPage, numPerpage, "/spring/admin/careNotice.do"));
+		mv.addObject("pageBar", PageFactory2.getPage(totalCount, cPage, numPerpage, request.getContextPath()+"/admin/careNotice.do"));
 		mv.setViewName("admin/careNotice/careNoticeList");
 		return mv;	
 }
-
+ 
 //돌보미 등록 승인하기 페이지로 이동 =============================================
 @RequestMapping("/admin/careAnswerView")
 	public ModelAndView careAnwerView(@RequestParam("no") int no, ModelAndView mv) {

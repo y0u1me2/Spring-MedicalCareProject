@@ -50,14 +50,14 @@ public class CareNoticeController {
 
 	@RequestMapping("/care/careNotice")
 	public ModelAndView careNotice(@RequestParam(required = false, defaultValue = "1") int cPage,
-			@RequestParam(required = false, defaultValue = "5") int numPerpage, ModelAndView mv) {
+			@RequestParam(required = false, defaultValue = "5") int numPerpage, ModelAndView mv,HttpServletRequest request) {
 
 		List<CareNotice> list = service.careNotice(cPage, numPerpage);
 		int totalCount = service.careCount();
 
 		mv.addObject("list", list);
 		mv.addObject("count", totalCount);
-		mv.addObject("pageBar", PageFactory.getPage(totalCount, cPage, numPerpage, "/spring/care/careNotice"));
+		mv.addObject("pageBar", PageFactory.getPage(totalCount, cPage, numPerpage, request.getContextPath()+"/care/careNotice"));
 		mv.setViewName("client/careNotice/careNotice");
 		return mv;
 	}
