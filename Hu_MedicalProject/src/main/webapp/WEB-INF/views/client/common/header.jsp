@@ -35,7 +35,7 @@
  	 <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:100px;">
 </c:if>
  <c:if test="${loginMember != null or loginHpMember !=null  }">
- 	 <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:0px;">
+ 	 <nav class="navbar navbar-expand" style="background-color:#DAF1DE;padding-left:10px;">
 </c:if>
     <!-- Brand/logo -->
     <img src="${pageContext.request.contextPath }/resources/images/logo5.png" style="width:50px; padding-right:8px;">
@@ -49,9 +49,11 @@
 		<div class="dropdown-menu">
 		  <a class="dropdown-item" href="${path }/about">About HU</a>
 		  <a class="dropdown-item" href="${path }/service">서비스 소개</a>
-		  <a class="dropdown-item" href="${path }/notice/noticeList">공지사항</a>
 		</div>
 	</li>
+        <li class="nav-item">
+            <a class="nav-link" href="${path }/notice/noticeList">공지사항</a>
+          </li>
       <li class="nav-item">
         <a class="nav-link" href="${path }/rv/reservationList" >병원접수</a>
       </li>
@@ -645,7 +647,7 @@ function getCookie(cookieName) {
 function renderButton() {
   gapi.signin2.render('my-signin2', {
     'scope': 'profile email',
-    'width': 380,
+    'width': 360,
     'height': 50,
     'longtitle': true,
     'onsuccess': onSuccess,
