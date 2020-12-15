@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminHealthInfo">
+
+	<select id="selectAllDisesase" resultType="map">
+		SELECT * FROM DISESASECATEGORY
+	</select>
+	
+	<select id="selectAllConfirmer" resultType="map">
+		SELECT * FROM CONFIRMER
+	</select>
+
+  	<select id="selectAllHealthInfo" resultType="map" parameterType="String">
+  		SELECT * FROM HEALTHINFO H
+  				JOIN DISESASECATEGORY USING(DISESASENO)
+  				LEFT JOIN MEDICALCATEGORY MC ON(H.MEDICALNO=MC.MEDICALNO)
+  				JOIN CONFIRMER USING(CONFIRMERNO)
+  				WHERE 1=1
+  				<if test="value != null">
+				AND DISESASETITLE = #{value}
+				</if>
+  	</select>
+  	
+  	<select id="healthInfoCount" resultType="_int" parameterType="String">
+  		SELECT COUNT(*) FROM HEALTHINFO H
+  				JOIN DISESASECATEGORY USING(DISESASENO)
+  				LEFT JOIN MEDICALCATEGORY MC ON(H.MEDICALNO=MC.MEDICALNO)
+  				JOIN CONFIRMER USING(CONFIRMERNO)
+  				WHERE 1=1
+  				<if test="value != null">
+				AND DISESASETITLE = #{value}
+				</if>
+  	</select>
+  	
+  	<select id="selectDisesaseCategory" parameterType="disesaseCategory" resultType="disesaseCategory">
+  		SELECT * FROM DISESASECATEGORY WHERE DISESASENO = #{disesaseNo}
+  	</select>
+  	
+  	<select id="selectHealthInformationStep" parameterType="disesaseCategory" resultType="map">
+  		 SELECT DISTINCT HEALTHINFOSTEP, HEALTHINFOSTEPTITLE FROM HEALTHINFO WHERE DISESASENO=#{disesaseNo} ORDER BY HEALTHINFOSTEP
+  	</select>
+  	
+  	<select id="selectConfirmer" parameterType="confirmer" resultType="confirmer">
+  		SELECT * FROM CONFIRMER WHERE CONFIRMERNO = #{confirmerNo}
+  	</select>
+  	
+  	<insert id="insertDisesase" parameterType="disesaseCategory">
+  		INSERT INTO DISESASECATEGORY VALUES ('D'||SEQ_DISESASECATEGORY.NEXTVAL,null,#{disesaseTitle},#{disesaseSubTitle},#{disesaseFile})
+  	</insert>
+  	
+  	<select id="selectDisesaseNo" parameterType="disesaseCategory" resultType="disesaseCategory">
+  		SELECT DISESASENO FROM DISESASECATEGORY WHERE DISESASETITLE = #{disesaseTitle}
+  	</select>
+
+	<insert id="insertConfirmer" parameterType="confirmer">
+  		INSERT INTO CONFIRMER VALUES ('C'||SEQ_CONFIRMER.NEXTVAL,null,#{confirmerName},#{confirmerWork},#{confirmerJob},#{confirmerInfo},#{confirmerPic})
+  	</insert>
+  	
+  	<select id="selectConfirmerNo" parameterType="confirmer" resultType="confirmer">
+  		SELECT CONFIRMERNO FROM CONFIRMER WHERE CONFIRMERNAME = #{confirmerName}
+  	</select>
+  	
+  	<select id="getStepCount" parameterType="healthInfo" resultType="_int">
+  		SELECT COUNT(*) FROM HEALTHINFO WHERE DISESASENO = #{disesaseNo} AND HEALTHINFOSTEP = #{healthInfoStep}
+  	</select>
+  	
+  	<insert id="insertHealthInformation" parameterType="healthInfo">
+  		INSERT INTO HEALTHINFO VALUES ('H'||SEQ_HEALTHINFO.NEXTVAL,#{disesaseNo},#{confirmerNo},null,#{healthInfoTitle},#{healthInfoSubTitle},
+  												#{healthInfoMainPic}, #{healthInfoStep}, #{healthInfoStepTitle})
+  	</insert>
+  	
+  	<insert id="insertHealthInfoContentPic" parameterType="healthInfoContentPic">
+  		INSERT INTO HEALTHINFOCONTENTPIC VALUES ('HC'||SEQ_HEALTHINFOCONTENT.NEXTVAL, #{healthInfoNo}, #{healthInfoContentPic})
+  	</insert>
+  	
+  	<select id="selectHealthInformationWithTitleAndSubTitle" parameterType="healthInfo" resultType="healthInfo">
+  		SELECT * FROM HEALTHINFO WHERE HEALTHINFOTITLE = #{healthInfoTitle} AND HEALTHINFOSUBTITLE = #{healthInfoSubTitle}
+  	</select>
+
+</mapper>

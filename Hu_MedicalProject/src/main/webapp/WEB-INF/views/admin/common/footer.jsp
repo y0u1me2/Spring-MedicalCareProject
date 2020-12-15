@@ -1,12 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
+			<footer class="footer text-center" style="width:1126px;">
+		       © 2020&nbsp;&nbsp;HospitalForYou&nbsp;&nbsp;Admin by HU 
+		    </footer>
+    	</div>
+	</div>
 </body>
 </html>

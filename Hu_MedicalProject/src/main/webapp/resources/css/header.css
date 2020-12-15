@@ -7,10 +7,10 @@ nav>a:first-child{
 nav>ul:first-child{
     padding-left:200px;
 }
-ul>li>a{
+nav>ul>li>a{
     color:black;
 }
-ul>li{
+nav>ul>li{
     padding-right: 30px;
 }
 
@@ -33,4 +33,181 @@ color:grey;
     text-decoration: none;
 }
 
+/* ==================로그인================== */
 
+ /* Bordered form */
+.modal-content {
+  border: 3px solid #f1f1f1;
+  height: auto;
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+	width: 30%;
+}
+
+/* 입력 창 스타일 */
+input[type=text]#uemail,input[type=password]#psw{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+input[type=text]#hospitalId,input[type=password]#hospitalPsw{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+/* 로고 사진 설정 */
+#loginLogo{
+	weight:70%;
+  height: 80px;
+}
+/*버튼 스타일 */
+.login-button{
+  /* background-color: red; */
+  color: black;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+	weight:auto;
+	height:150px;
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+.containerlogin {
+  padding: 16px;
+  margin: 0 auto;
+}
+/* The Modal (background) */
+.modalLogin {
+     display: none; /* Hidden by default */
+	 position: fixed; /* Stay in place */
+	 z-index: 1; /* Sit on top */
+	 left: 0;
+	 top: 0;
+	 width: 100%; /* Full width */
+	 height: 100%;  /* Full height */
+	 overflow: auto; /* Enable scroll if needed */
+	 background-color: rgb(0,0,0); /* Fallback color */
+	 background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	 padding-top: 60px;
+}
+
+/* (x) 닫기 버튼 */
+.loginClose{
+	position: absolute;
+    right: -2%;
+    top: -10%;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+.joinClose {
+	position: absolute;
+    right: -1%;
+    top: -150%;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+.loginClose:hover,
+.loginClose:focus {
+  color: red;
+  cursor: pointer;
+}
+.joinClose:hover,
+.joinClose:focus {
+  color: red;
+  cursor: pointer;
+}
+/* 로그인 화면 켜질 때 애니매니션 */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+/* 로그인 끝 */
+
+ #otherbtn{ 
+  border: 1px solid #DAF1DE;     
+  background-color: rgba(0,0,0,0); 
+  color: black;
+  padding: 5px; 
+  width:50px;
+  height:50px;
+}
+#personjoinBtn,#hospitaljoinBtn,
+#personLoginsBtn,#hospitalLoginBtn{
+       margin: 0 auto;
+       width: 200px;
+       height: 200px;
+}
+#JoinChoice1,#loginChoice1{
+    margin:0 auto;
+}
+        
+/* 로그인 끝 */
+/* 비밀번호,아이디 찾기*/
+input[type=text]#memberEmail,input[type=text]#name,
+input[type=text]#phone{
+	height: 40px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	
+}
+input[type=text]#hospitalEmail,input[type=text]#hpName,
+input[type=text]#hpPhone{
+	height: 40px;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	
+}
+.emailChk,.hpEmailChk{
+  /* background-color: red; */
+  color: black;
+  padding: 10px 10px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+}
+.findPswBtn,.findEmailBtn,.findHPPswBtn,.findHPEmailBtn{
+	color: black;
+  padding: 10px 10px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width:200px;
+  height:40px;
+}

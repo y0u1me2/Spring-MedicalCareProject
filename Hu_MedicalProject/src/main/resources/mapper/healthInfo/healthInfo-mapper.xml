@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="healthInfo">
+  	
+  	<select id="totalCount" resultType="_int">
+  		SELECT COUNT(*) FROM HEALTHINFO
+  	</select>
+  <!-- 건강정보 #태그 검색어 리스트 -->
+    <select id="healthTagInfo" resultType="map">
+     	SELECT * FROM DISESASECATEGORY
+    </select>
+    <!-- 건강정보 #태그 총개수 -->
+    <select id="healthTagCount" resultType="_int">
+    	SELECT COUNT(*) FROM DISESASECATEGORY
+    </select>
+    <!-- 건강정보 버튼 분류 리스트 -->
+    <select id="healthBtnInfo" resultType="map">
+    	SELECT * FROM MEDICALCATEGORY
+    </select> 
+    <!-- 메인에서 자주찾는 건강정보 사진 클릭시 리스트 -->
+    <resultMap type="healthInfo" id="healthInformation">
+		<result column="healthinfocontentpic" property="healthInfoContentPic" typeHandler="arrayType"/>
+	</resultMap>
+    <select id="frequentInfoPic" parameterType="healthInfo" resultMap="healthInformation">
+    	SELECT * FROM HEALTHINFO WHERE DISESASENO = #{disesaseNo}
+    </select>
+    <!-- 서브에서 자주찾는 건강정보 사진 클릭시 리스트 -->
+    <select id="subFrequentInfoPic" parameterType="healthInfo" resultMap="healthInformation">
+    	SELECT * FROM HEALTHINFO WHERE HEALTHINFONO = #{healthInfoNo}
+    </select>
+    <select id="searchInfoPicStep" parameterType="healthInfo" resultMap="healthInformation">
+    	SELECT * FROM HEALTHINFO WHERE HEALTHINFOSTEP = #{healthInfoStep}
+    </select>
+    
+    <select id="selectConfirmer" parameterType="String" resultType="map">
+    	SELECT * FROM CONFIRMER WHERE CONFIRMERNO = #{confirmerNo}
+    </select>
+    
+    <select id="subFrequentInfoContent" parameterType="String" resultType="map">
+    	SELECT * FROM HEALTHINFOCONTENTPIC WHERE HEALTHINFONO=#{HEALTHINFONO}
+    </select>
+    <!-- 검색어 -->
+    <select id="searchInformation" parameterType="String" resultType="map">
+    	SELECT HEALTHINFOTITLE FROM HEALTHINFO WHERE HEALTHINFOTITLE LIKE '%'||#{keyword}||'%'
+    </select>
+    <!-- 검색어 실행 -->
+    <select id="searchHealthInfoKeyword" parameterType="String" resultMap="healthInformation">
+    	SELECT * FROM HEALTHINFO WHERE HEALTHINFOTITLE = #{searchKeyword}
+    </select>
+    <!-- 검색 결과 -->
+     <select id="searchHealthInfoList" parameterType="String" resultType="map">
+    	SELECT * FROM HEALTHINFO WHERE HEALTHINFOTITLE LIKE '%'||#{searchListKeyword}||'%'
+    </select>
+</mapper>

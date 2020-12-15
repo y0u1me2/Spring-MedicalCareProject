@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd">
+<!--빈 등록하기 -->
+<bean id="ChattingHandler" class="com.web.spring.common.websocket.ChattingServer">
+</bean>
+<bean id="alramAhadler" class="com.web.spring.common.websocket.AlramServer"/>
+
+
+<!-- 웹소켓 리스트 빈 등록 -->
+<!-- <bean id="ChattingHandler1" class="com.web.spring.common.websocket.hospitalList">
+</bean> -->
+
+	<!--소켓설정하기  -->
+	<!--소켓은 통신이 다르다. 일반적인 TCP->HTTP로 넘어오는데 
+	특정구분자에 의해서 통신이 분리가 된다. 웹소켓에 해당되는 주소가 넘어오면 웹소켓핸들러로 넘어온다.  
+	스프링에서 핸들러 등록을 해서 연결을 해준다.(서블릿->xml로)-->
+	<!--handler :웹소켓 서버역할을 하는 객체->Object POJO->빈으로 등록해야 가져다 쓸수 있다.
+		/ path:웹소켓으로 등록한 객체의 주소  -->	
+
+	<websocket:handlers>
+		<websocket:mapping handler="ChattingHandler" path="/chatting"/>
+		<websocket:mapping handler="alramAhadler" path="/alram"/>
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
+	
+	<!-- <websocket:handlers>
+		<websocket:mapping handler="ChattingHandler1" path="/chattingAdmin"/>
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
+	 -->
+	
+	<!--메세지파싱 객체 등록 ObjectMapper  -->
+	<bean class="com.fasterxml.jackson.databind.ObjectMapper"/>
+	
+	
+	
+	
+	
+
+</beans>

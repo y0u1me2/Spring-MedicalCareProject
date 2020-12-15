@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="reply">
+	
+	<insert id="insertReply" parameterType="map">
+		INSERT INTO ASKREPLY VALUES(SEQ_REPLYNO.NEXTVAL,#{replyContent},SYSDATE,#{replyRefNo})
+	</insert>
+	
+	<select id="selectReplyView" resultType="reply">
+		SELECT * FROM ASKREPLY WHERE REPLYREFNO=#{no}
+	</select>
+	
+	<delete id="deleteReply" parameterType="_int">
+		DELETE FROM ASKREPLY WHERE REPLYREFNO=#{no}
+	
+	</delete>
+	
+	<update id="updateReply" parameterType="map">
+		UPDATE ASKREPLY SET REPLYCONTENT=#{replyContent} WHERE REPLYREFNO=#{replyNo}
+	</update>
+	
+	<select id="selectReplyCount" resultType="_int">
+		SELECT COUNT(*) FROM ASKREPLY
+	</select>
+	
+	<select id="selectReplyList" resultType="ask">
+		SELECT * FROM ASKREPLY ORDER BY REPLYDATE DESC
+	</select>
+	
+	
+</mapper>

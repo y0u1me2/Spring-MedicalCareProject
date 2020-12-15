@@ -25,6 +25,8 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
 			/WEB-INF/spring/appServlet/servlet-context.xml
+			/WEB-INF/spring/appServlet/aspect-context.xml
+			/WEB-INF/spring/appServlet/websocket-context.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
@@ -43,6 +45,10 @@
          <param-name>encoding</param-name>
          <param-value>utf-8</param-value>
       </init-param>
+       <init-param>
+         <param-name>forceEncoding</param-name>
+         <param-value>true</param-value>
+      </init-param>
    </filter>
    
    <filter-mapping>
@@ -53,15 +59,13 @@
 	<!-- 에러페이지 등록하기 -->	
 	<error-page>
         <error-code>404</error-code>
-       <loaction>/WEB-INF/views/client/common/errorPage404.jsp</loaction>
+       <location>/WEB-INF/views/client/common/errorPage404.jsp</location>
   	</error-page>
   
    	<error-page>
         <error-code>500</error-code> 
-        <loaction>/WEB-INF/views/client/common/errorPage500.jsp</loaction>
+        <location>/WEB-INF/views/client/common/errorPage500.jsp</location>
  	 </error-page>
-  
-  
   
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

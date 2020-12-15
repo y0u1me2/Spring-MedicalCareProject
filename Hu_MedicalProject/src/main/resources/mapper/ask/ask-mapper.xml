@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ask">
+	<select id="selectAskCount" resultType="_int">
+		SELECT COUNT(*) FROM ASK
+	</select>
+	
+	<select id="selectAskList" resultType="ask">
+		SELECT * FROM ASK ORDER BY ASKDATE DESC
+	</select>
+	
+	<insert id="insertAsk" parameterType="ask">
+		INSERT INTO ASK VALUES(SEQ_ASKNO.NEXTVAL,#{askWriter},#{askTitle},#{askContent},SYSDATE,DEFAULT,#{askClassification})
+	</insert>
+	
+	<select id="selectAsk" parameterType="_int" resultType="ask">
+		SELECT * FROM ASK WHERE ASKNO=#{no}
+	</select>
+	
+	<update id="updateAsk" parameterType="ask">
+		UPDATE ASK SET ASKTITLE=#{askTitle}, ASKCONTENT=#{askContent},ASKCLASSIFICATION=#{askClassification} where ASKNO=#{askNo}
+	</update>
+	
+	<delete id="deleteAsk" parameterType="_int">
+		DELETE FROM ASK WHERE ASKNO=#{askNo} 
+	</delete>
+	
+	<update id="replyCnt" parameterType="_int">
+		UPDATE ASK SET REPLYCNT=REPLYCNT+1 WHERE ASKNO=#{replyRefNo}
+	</update>
+	
+	<update id="deleteReplyCnt" parameterType="_int">
+		UPDATE ASK SET REPLYCNT=REPLYCNT-1 WHERE ASKNO=#{no}
+	</update>
+	
+	<select id="searchList" parameterType="map" resultType="ask">
+		SELECT * FROM ASK
+		
+			WHERE 1=1
+		<if test="searchType != null and searchType !='' ">
+			 AND ASKCLASSIFICATION = #{searchType}
+		</if>
+		<if test="keyword != null and keyword !='' ">
+			AND ASKTITLE LIKE '%'||#{keyword}||'%'
+		</if>
+		ORDER BY ASKDATE DESC
+	</select>
+	
+	<!-- <select id="searchAskCount" parameterType="map" resultType="ask">
+		SELECT COUNT(*) FROM ASK
+			WHERE 1=1
+		<if test="searchType != null and searchType !='' ">
+			AND ${searchType} like '%'||#{keyword}||'%'
+		</if>
+	</select>
+	 -->
+</mapper>

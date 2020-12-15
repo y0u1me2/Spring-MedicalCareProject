@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rv">
+  
+  <!-- 리스트페이지  -->
+  	<select id="reservationList" resultType="map">
+  		SELECT * FROM HOSPITAL_MEMBER M, HOSPITAL2 H
+		WHERE M.HOSPNO = H.HOSPNO
+  	</select>
+  
+  
+   <!-- 접수하기 -->
+    <insert id="insertReservation" parameterType="reservation">
+       INSERT INTO RESERVATION VALUES(SEQ_RESERVNO.NEXTVAL, 
+                               #{memberNo},#{hospNo},#{hospDepartment},
+                                #{message},DEFAULT,DEFAULT,#{reservTime})
+    </insert>
+    
+  <!-- 코로나페이지 -->
+    <select id="corona" resultType="map"  parameterType="String">
+    	SELECT * FROM HOSPITAL_MEMBER M, HOSPITAL2 H
+		WHERE M.HOSPNO=H.HOSPNO 
+		AND M.HOSPNO=#{no}
+    
+    </select>
+    
+    <!-- 접수페이지 -->
+    <select id="reservationView" resultType="map"  parameterType="String">
+    	SELECT * FROM HOSPITAL_MEMBER M, HOSPITAL2 H
+		WHERE M.HOSPNO=H.HOSPNO 
+		AND M.HOSPNO=#{no}
+    </select> 
+    
+    <select id="reservationCount" resultType="_int">
+    	SELECT COUNT(*) FROM RESERVATION
+     </select>
+</mapper>

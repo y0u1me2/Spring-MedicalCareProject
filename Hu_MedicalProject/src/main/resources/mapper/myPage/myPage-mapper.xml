@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="myPage">
+	
+	<select id="passwordCheck"  parameterType="member" resultType="member">
+		SELECT * FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+	
+		<update id="memberUpdate" parameterType="member">
+		UPDATE MEMBER SET EMAIL=#{email}
+		<if test="name != null and name != ''">
+			,NAME=#{name}
+		</if>
+		<if test="password != null and password != ''">
+			,PASSWORD=#{password}
+		</if>
+		<if test="phone != null and phone != ''">
+			,PHONE=#{phone}
+		</if>
+		WHERE MEMBERNO=#{memberNo}
+	</update>
+	
+	<update id="memberDelete" parameterType="member">
+		UPDATE MEMBER SET MEMBERSTATUS='N'
+		WHERE EMAIL=#{email}
+	</update>
+	
+	
+	<select id="reservationStatus" parameterType="_int" resultType="map">
+		SELECT * FROM RESERVATION R
+				JOIN HOSPITAL_MEMBER HM USING(HOSPNO)
+				JOIN HOSPITAL2 H USING(HOSPNO)
+				WHERE MEMBERNO = #{no} AND RESERVSTATUS = 'Y'
+	</select>
+</mapper>
